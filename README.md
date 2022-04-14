@@ -1,17 +1,15 @@
 # YouTube Playlist
-The YouTube playlist for this project can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b) with a description that explains each video
+It can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b) and each video has a description with an explanation
 
 # Screenshots from the Real World Test
-<p align="center"> <img src="screenshots/roof_1.png" width=400> </p>
-<p align="center"> <img src="screenshots/roof_2.png" width=400> </p>
-<p align="center"> <img src="screenshots/bonnet_1.png" width=400> </p>
-<p align="center"> <img src="screenshots/bonnet_2.png" width=400> </p>
+<p align="center"> <img src="screenshots/roof_1.png"> </p>
+<p align="center"> <img src="screenshots/roof_2.png"> </p>
+<p align="center"> <img src="screenshots/bonnet_1.png"> </p>
+<p align="center"> <img src="screenshots/bonnet_2.png"> </p>
 
 
 # Performance of the Software
-<p align="center">
-  <img src="tests/graphs/fps_all.png">
-</p>
+<p align="center"> <img src="tests/graphs/fps_all.png"> </p>
 <h4 align="center">
   Desktop = Ryzen 5800x, GTX 960 4 GB, and 32 GB RAM
 
