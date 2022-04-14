@@ -1,0 +1,6 @@
+# Projects
+.idea/
+build/
+
+# Exceeds 100 MB
+resources/yolo/yolov4.weights
