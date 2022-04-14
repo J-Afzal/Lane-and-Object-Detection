@@ -1,5 +1,14 @@
-# YouTube Playlist
-It can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b) and each video has a description with an explanation
+# About
+Lane and object detection that can be used in autonomous vehicles. A YouTube playlist can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b) where each video has a description with an explanation.
+
+# Building [![Build with CMake](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml)
+Use the following CMake command in the project root directory:
+```
+cmake -S . -B build
+```
+
+# Warning
+The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit but can be downloaded from [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to the `yolo` folder.
 
 # Screenshots from the Real World Test
 <p align="center"> <img src="screenshots/roof_1.png"> </p>
@@ -7,8 +16,7 @@ It can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7
 <p align="center"> <img src="screenshots/bonnet_1.png"> </p>
 <p align="center"> <img src="screenshots/bonnet_2.png"> </p>
 
-
-# Performance of the Software
+# Performance
 <p align="center"> <img src="tests/graphs/fps_all.png"> </p>
 <h4 align="center">
   Desktop = Ryzen 5800x, GTX 960 4 GB, and 32 GB RAM
@@ -16,7 +24,7 @@ It can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7
   Jetson Nano = Jetson Nano 4 GB (B01 Model)
 </h4>
 
-# Components used in the final software-hardware package:
+# Components used in the Real World Test
 * Jetson Nano 4 GB (B01 Model)
 * HDMI cable for Jetson Nano output
 * Micro-USB cable or barrel plug for power
@@ -73,7 +81,6 @@ It can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7
         * add cudart.lib
 
 # Instructions for Setting up the Jetson Nano (4hrs) / Ubuntu Desktop (1.5hrs)
-
 0. Setup Jetson Nano (Skip for Ubuntu Desktop)
     * Download NVIDIA Jetpack SDK 4.5.1 from https://developer.nvidia.com/embedded/jetpack
     * Format and flash SD card with the downloaded file
@@ -132,9 +139,6 @@ It can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7
        sudo make install -j4 && \
        sudo sh -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf' && \
        sudo ldconfig
-
-# WARNING
-The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit but can be downloaded from [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to the `yolo` folder.
 
 # Running the software
 0. Assuming that you are in the Third-Year-Project/code folder
@@ -195,9 +199,3 @@ The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit
         ```c++
         constexpr int m_BlobSize = 288;
         ```
-
-# Difference Between Third-Year-Project
-* No thesis.pdf
-* Source code refactored into an OOP style
-* Repository directory structure re-organised
-* MATLAB scripts replaced with python
