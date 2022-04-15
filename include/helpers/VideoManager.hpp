@@ -21,7 +21,7 @@ class VideoManager
 {
 public:
     explicit VideoManager(const std::string &InputVideoPath,
-                          const Enumerations::Detector &YoloType = Enumerations::Detector::STANDARD,
+                          const Enumerations::Detector &ObjectDetectorType = Enumerations::Detector::STANDARD,
                           const Enumerations::BackEnd &BackEndType = Enumerations::BackEnd::CUDA,
                           const Enumerations::BlobSize &BlobSize = Enumerations::BlobSize::FIVE,
                           const bool &RecordFrameTimes = false);
@@ -50,4 +50,6 @@ private:
 
     const int m_VIDEO_WIDTH = 1920, m_VIDEO_HEIGHT = 1080, m_FONT_FACE = cv::FONT_HERSHEY_DUPLEX, m_FONT_THICKNESS = 1, m_FONT_SCALE = 1;
     const cv::Rect m_RECORDING_STATUS_RECT = cv::Rect(1495, 410, 400, 50);
+
+    static bool String_Is_Integer(const std::string &Input);
 };

@@ -12,19 +12,22 @@
 #include "helpers/Exceptions.hpp"
 
 VideoManager::VideoManager(const std::string &InputVideoPath,
-                           const Enumerations::Detector &YoloType,
+                           const Enumerations::Detector &ObjectDetectorType,
                            const Enumerations::BackEnd &BackEndType,
                            const Enumerations::BlobSize &BlobSize,
                            const bool &RecordFrameTimes)
 {
-    m_InputVideo.open(InputVideoPath);
+    if (String_Is_Integer(InputVideoPath))
+        m_InputVideo.open(std::stoi(InputVideoPath, nullptr, 10));
+    else
+        m_InputVideo.open(InputVideoPath);
     m_InputVideo.set(cv::CAP_PROP_FRAME_WIDTH, 1920);
     m_InputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, 1080);
 
     if (!m_InputVideo.isOpened())
         throw Exceptions::InputVideoFileNotFound();
 
-    m_Obj.Setup(YoloType, BackEndType, BlobSize);
+    m_Obj.Setup(ObjectDetectorType, BackEndType, BlobSize);
 
     m_RecordFrameTimes = RecordFrameTimes;
     m_Perf.Setup(m_RecordFrameTimes);
@@ -134,4 +137,12 @@ void VideoManager::Toggle_Recording()
         if (!m_OutputVideo.isOpened())
             throw Exceptions::OutputVideoFileNotCreated();
     }
+}
+
+bool VideoManager::String_Is_Integer(const std::string &Input)
+{
+    for (const char &i : Input)
+        if (!isdigit(i))
+            return false;
+    return true;
 }
