@@ -19,11 +19,11 @@ void Performance::Stop_Timer()
 {
     if (m_RecordFrameTimes)
     {
-        m_FrameTimes.push_back(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count());
-        m_CurrentFPS = 1000000 / (double)m_FrameTimes.back();
+        m_FrameTimes.push_back(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count());
+        m_CurrentFPS = 1000 / (double)m_FrameTimes.back();
     }
     else
-        m_CurrentFPS = 1000000 / (double)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count();
+        m_CurrentFPS = 1000 / (double)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count();
 
     // Calculate Average FPS
     m_FrameCount++;
