@@ -15,7 +15,7 @@ namespace Enumerations
 {
     enum class Detector { NONE=0, STANDARD=1, TINY=2 };
 
-    enum class BackEnd { NONE=0, CPU=0, CUDA=1 };
+    enum class BackEnd { CPU=0, CUDA=1 };
 
-    enum class BlobSize { ZERO=0, ONE=288, TWO=320, THREE=416, FOUR=512, FIVE=608 };
+    enum class BlobSize { ONE=288, TWO=320, THREE=416, FOUR=512, FIVE=608 };
 }
