@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.21)
 
 project(Lane-and-Object-Detection)
 
-Set(OpenCV_DIR C:/dev/opencv/build)
+set(CMAKE_CXX_STANDARD 20)
+
+Set(OpenCV_DIR C:\\dev\\opencv\\build)
 
 find_package(OpenCV REQUIRED)
-
-set(CMAKE_CXX_STANDARD 20)
 
 include_directories(include)
 
