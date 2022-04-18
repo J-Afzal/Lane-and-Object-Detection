@@ -40,7 +40,7 @@
             * add opencv_world451.lib
             * add cudart.lib
 
-# Jetson Nano / Ubuntu
+# Ubuntu / Jetson Nano 
 0. Setup Jetson Nano (Skip for Ubuntu)
     * Download NVIDIA Jetpack SDK 4.5.1 from https://developer.nvidia.com/embedded/jetpack
     * Format and flash SD card with the downloaded file
