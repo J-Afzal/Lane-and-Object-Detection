@@ -1,5 +1,5 @@
 # About
-Lane and object detection that can be used in autonomous vehicles. A YouTube playlist can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b) where each video has a description with an explanation.
+Lane and object detection for use in autonomous vehicles. A YouTube playlist can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b) where each video has a description with an explanation.
 
 # Building [![Build with CMake](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml)
 For instructions on how to build the development environment, please refer to the `resources/README.md` file. To build the project, use the following CMake command in the project root directory:
