@@ -1,8 +1,5 @@
 # Screenshots from the Real-World Test
-<p align="center"> <img src="screenshots/roof_1.png"> </p>
-<p align="center"> <img src="screenshots/roof_2.png"> </p>
-<p align="center"> <img src="screenshots/bonnet_1.png"> </p>
-<p align="center"> <img src="screenshots/bonnet_2.png"> </p>
+<p align="center"> <img src="screenshots/output.gif"> </p>
 
 # Performance
 <p align="center"> <img src="tests/graphs/fps_all.png"> </p>
