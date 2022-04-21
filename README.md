@@ -12,23 +12,23 @@ The software is run by instantiating the VideoManger class with a string to the 
 
 The following optional parameters can be passed at instantiation:
 
-`Enumerations::Detector &ObjectDetectorType`
+`Enumerations::Detector ObjectDetectorType`
 * Enumerations::Detector::NONE = No object detection
 * Enumerations::Detector::STANDARD = Standard object detection (default)
 * Enumerations::Detector::TINY = Lower accuracy but higher FPS object detection
 
-`Enumerations::BackEnd &BackEndType`
+`Enumerations::BackEnd BackEndType`
 * Enumerations::BackEnd::CPU = CPU
 * Enumerations::BackEnd::CUDA = NVIDIA CUDA (default)
 
-`Enumerations::BlobSize &BlobSize`
+`Enumerations::BlobSize BlobSize`
 * Enumerations::BlobSize::ONE = 288
 * Enumerations::BlobSize::TWO = 320
 * Enumerations::BlobSize::THREE = 416
 * Enumerations::BlobSize::FOUR = 512
 * Enumerations::BlobSize::FIVE = 608 (default)
 
-`bool &RecordFrameTimes`
+`bool RecordFrameTimes`
 * true = Run() will return a std::vector<int> of time taken to compute every frame
 * false = Run() will return nothing (default)
 
