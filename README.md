@@ -1,4 +1,3 @@
-# Screenshots from the Real-World Test
 <p align="center"> <img src="screenshots/output.gif"> </p>
 
 # Performance
