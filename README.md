@@ -33,7 +33,7 @@ The following optional parameters can be passed at instantiation:
 * false = Run() will return nothing (default)
 
 # Building [![CMake](https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml)
-For instructions on how to build the development environment, please refer to the `resources/README.md` file. To build the project, use the following CMake command in the project root directory:
+For instructions on how to build the development environment (OpenCV optionally with CUDA), please refer to the `resources/README.md` file. To build the project, use the following CMake command in the project root directory:
 ```
 cmake -S . -B build
 ```
