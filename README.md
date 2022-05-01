@@ -1,12 +1,9 @@
 <p align="center"> <img src="screenshots/output.gif"> </p>
 
-# Performance
-<p align="center"> <img src="tests/graphs/fps_all.png"> </p>
-<h4 align="center"> Desktop = Ryzen 5800x, GTX 960 4 GB, and 32 GB RAM </h4>
-<h4 align="center"> Jetson Nano = Jetson Nano 4 GB (B01 Model) </h4>
-
 # About
-Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4. A YouTube playlist can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b), check the description of each video for an explanation.
+Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.
+
+A YouTube playlist can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b), check the description of each video for an explanation. </p>
 
 The software is run by instantiating the VideoManger class with a string to the input video file and then calling it's Run() method. If a camera input is desired, then pass the appropriate integer as a string.
 
@@ -31,6 +28,11 @@ The following optional parameters can be passed at instantiation:
 `bool RecordFrameTimes`
 * true = Run() will return a std::vector<int> of time taken to compute every frame
 * false = Run() will return nothing (default)
+
+# Performance
+<p align="center"> <img src="tests/graphs/fps_all.png"> </p>
+<h4 align="center"> Desktop = Ryzen 5800x, GTX 960 4 GB, and 32 GB RAM </h4>
+<h4 align="center"> Jetson Nano = Jetson Nano 4 GB (B01 Model) </h4>
 
 # Building [![CMake](https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml)
 For instructions on how to build the development environment (OpenCV optionally with CUDA), please refer to the `resources/README.md` file. To build the project, use the following CMake command in the project root directory:
