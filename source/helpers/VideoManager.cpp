@@ -81,6 +81,14 @@ std::optional<std::vector<int>> VideoManager::Run()
         return {};
 }
 
+bool VideoManager::String_Is_Integer(const std::string &Input)
+{
+    for (const char &i : Input)
+        if (!isdigit(i))
+            return false;
+    return true;
+}
+
 void VideoManager::Generate_Next_Frame()
 {
     m_InputVideo >> m_Frame;
@@ -88,12 +96,6 @@ void VideoManager::Generate_Next_Frame()
 
     if (m_Frame.empty())
         throw Exceptions::OutOfFrames();
-}
-
-void VideoManager::Process_Current_Frame()
-{
-    if (m_RecordOutput)
-        m_OutputVideo << m_Frame;
 }
 
 void VideoManager::Print_Recording_Status_To_Frame()
@@ -121,6 +123,12 @@ void VideoManager::Print_Recording_Status_To_Frame()
     }
 }
 
+void VideoManager::Process_Current_Frame()
+{
+    if (m_RecordOutput)
+        m_OutputVideo << m_Frame;
+}
+
 void VideoManager::Toggle_Recording()
 {
     m_RecordOutput = !m_RecordOutput;
@@ -137,12 +145,4 @@ void VideoManager::Toggle_Recording()
         if (!m_OutputVideo.isOpened())
             throw Exceptions::OutputVideoFileNotCreated();
     }
-}
-
-bool VideoManager::String_Is_Integer(const std::string &Input)
-{
-    for (const char &i : Input)
-        if (!isdigit(i))
-            return false;
-    return true;
 }

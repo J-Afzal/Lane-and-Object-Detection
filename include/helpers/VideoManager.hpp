@@ -30,14 +30,6 @@ public:
 
     std::optional<std::vector<int>> Run();
 
-    void Generate_Next_Frame();
-
-    void Process_Current_Frame();
-
-    void Print_Recording_Status_To_Frame();
-
-    void Toggle_Recording();
-
 private:
     cv::VideoCapture m_InputVideo;
     cv::VideoWriter m_OutputVideo;
@@ -52,4 +44,12 @@ private:
     const cv::Rect m_RECORDING_STATUS_RECT = cv::Rect(1495, 410, 400, 50);
 
     static bool String_Is_Integer(const std::string &Input);
+
+    void Generate_Next_Frame();
+
+    void Process_Current_Frame();
+
+    void Print_Recording_Status_To_Frame();
+
+    void Toggle_Recording();
 };
