@@ -1,24 +1,22 @@
 <p align="center"> <img src="screenshots/output.gif"> </p>
 
 # About
-Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.
-
-The software is run by instantiating the `VideoManger` class with a string to the input video file and then calling it's `Run()` method. If a camera input is desired, then pass the appropriate integer, as required by OpenCV, as a string.
+Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4. The software is run by instantiating the `VideoManger` class with a string to the input video file and yolo resources folder and then calling it's `Run()` method. If a camera input is desired, then pass the appropriate integer, as required by OpenCV, as a string.
 
 A YouTube playlist can be found [here](https://youtube.com/playlist?list=PLFJGOGaRWoxDm-Em5-mNv7JbYHmCRMm9b), check the description of each video for an explanation. </p>
 
 The following optional parameters can be passed at instantiation:
 
-`Detector ObjectDetectorType`
+`ObjectDetectorType`
 * Detector::NONE = No object detection
 * Detector::STANDARD = Standard object detection (default)
 * Detector::TINY = Lower accuracy but higher FPS object detection
 
-`BackEnd BackEndType`
+`BackEndType`
 * BackEnd::CPU = CPU
 * BackEnd::CUDA = NVIDIA CUDA (default)
 
-`BlobSize BlobSize`
+`BlobSize`
 * BlobSize::ONE = 288
 * BlobSize::TWO = 320
 * BlobSize::THREE = 416
