@@ -11,19 +11,12 @@
 
 #include "helpers/Performance.hpp"
 
-void Performance::Setup(const bool &RecordFrameTimes) { m_RecordFrameTimes = RecordFrameTimes; }
-
 void Performance::Start_Timer() { m_StartTime = std::chrono::high_resolution_clock::now(); }
 
 void Performance::Stop_Timer()
 {
-    if (m_RecordFrameTimes)
-    {
-        m_FrameTimes.push_back(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count());
-        m_CurrentFPS = 1000 / (double)m_FrameTimes.back();
-    }
-    else
-        m_CurrentFPS = 1000 / (double)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count();
+    m_FrameTimes.push_back(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count());
+    m_CurrentFPS = 1000 / (double)m_FrameTimes.back();
 
     // Calculate Average FPS
     m_FrameCount++;
@@ -39,6 +32,7 @@ void Performance::Print_FPS_To_Frame(cv::Mat &Frame)
     std::stringstream ss1;
     ss1 << std::fixed << std::setprecision(2) << m_AverageFPS;
     std::string FPSText = "Average FPS: " + ss1.str();
+    // The next four lines are used to center the text horizontally and vertically
     int baseline = 0;
     cv::Size textSize = cv::getTextSize(FPSText, m_FONT_FACE, m_FONT_SCALE, m_FONT_THICKNESS, &baseline);
     baseline += m_FONT_THICKNESS;
@@ -48,6 +42,7 @@ void Performance::Print_FPS_To_Frame(cv::Mat &Frame)
     std::stringstream ss2;
     ss2 << std::fixed << std::setprecision(2) << m_CurrentFPS;
     FPSText = "Current FPS: " + ss2.str();
+    // The next four lines are used to center the text horizontally and vertically
     baseline = 0;
     textSize = cv::getTextSize(FPSText, m_FONT_FACE, m_FONT_SCALE, m_FONT_THICKNESS, &baseline);
     baseline += m_FONT_THICKNESS;

@@ -1,10 +1,11 @@
 /**
  * @file PerformanceTests.hpp
  * @author Junaid Afzal
- * @brief Performs the performance tests. First the source code is
- * ran without an object detector as a control. Then the following
- * three variables will be tested: YOLOv4 vs YOLOv4-tiny, blob
- * sizes, and CUDA vs CPU
+ * @brief This class performs the performance tests by calling
+ * the VideoManager class with different optional parameters.
+ * The first test acts as a control by running it without an
+ * object detector. Then the following three variables are tested:
+ * YOLOv4 vs YOLOv4-tiny, blob  sizes, and CUDA vs CPU
  * @version 1.0
  * @date 14-04-2022
  *
@@ -14,12 +15,12 @@
 
 #pragma once
 #include "pch.hpp"
-#include "helpers/Enumerations.hpp"
+#include "detectors/ObjectDetector.hpp"
 
 class PerformanceTests
 {
 public:
-    explicit PerformanceTests(std::string FilePath);
+    PerformanceTests(std::string InputVideoFilePath, std::string YoloResourcesFolderPath);
 
     ~PerformanceTests() = default;
 
@@ -28,80 +29,80 @@ public:
 private:
     std::vector<std::optional<std::vector<int>>> m_FrameTimes;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTime;
-    std::string m_FilePath;
+    std::string m_InputVideoFilePath, m_YoloResourcesFolderPath;
 
     const int m_NUMBER_OF_TESTS = 21, m_NUMBER_OF_REPETITIONS = 5;
 
-    const std::vector<Enumerations::Detector> m_YOLO_TYPES = {
-            Enumerations::Detector::NONE,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::TINY,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD,
-            Enumerations::Detector::STANDARD
+    const std::vector<Detector> m_YOLO_TYPES = {
+            Detector::NONE,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::TINY,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD,
+            Detector::STANDARD
     };
 
-    const std::vector<Enumerations::BackEnd> m_BACK_END_TYPES = {
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CUDA,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
-            Enumerations::BackEnd::CPU,
+    const std::vector<BackEnd> m_BACK_END_TYPES = {
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CUDA,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
+            BackEnd::CPU,
     };
 
-    const std::vector<Enumerations::BlobSize> m_BLOB_SIZES = {
-            Enumerations::BlobSize::ONE,
-            Enumerations::BlobSize::ONE,
-            Enumerations::BlobSize::TWO,
-            Enumerations::BlobSize::THREE,
-            Enumerations::BlobSize::FOUR,
-            Enumerations::BlobSize::FIVE,
-            Enumerations::BlobSize::ONE,
-            Enumerations::BlobSize::TWO,
-            Enumerations::BlobSize::THREE,
-            Enumerations::BlobSize::FOUR,
-            Enumerations::BlobSize::FIVE,
-            Enumerations::BlobSize::ONE,
-            Enumerations::BlobSize::TWO,
-            Enumerations::BlobSize::THREE,
-            Enumerations::BlobSize::FOUR,
-            Enumerations::BlobSize::FIVE,
-            Enumerations::BlobSize::ONE,
-            Enumerations::BlobSize::TWO,
-            Enumerations::BlobSize::THREE,
-            Enumerations::BlobSize::FOUR,
-            Enumerations::BlobSize::FIVE,
+    const std::vector<BlobSize> m_BLOB_SIZES = {
+            BlobSize::ONE,
+            BlobSize::ONE,
+            BlobSize::TWO,
+            BlobSize::THREE,
+            BlobSize::FOUR,
+            BlobSize::FIVE,
+            BlobSize::ONE,
+            BlobSize::TWO,
+            BlobSize::THREE,
+            BlobSize::FOUR,
+            BlobSize::FIVE,
+            BlobSize::ONE,
+            BlobSize::TWO,
+            BlobSize::THREE,
+            BlobSize::FOUR,
+            BlobSize::FIVE,
+            BlobSize::ONE,
+            BlobSize::TWO,
+            BlobSize::THREE,
+            BlobSize::FOUR,
+            BlobSize::FIVE,
     };
 
     const std::vector<std::string> m_OUTPUT_FILE_NAMES = {

@@ -1,7 +1,8 @@
 /**
  * @file Performance.hpp
  * @author Junaid Afzal
- * @brief Calculates frame times and FPS
+ * @brief This class calculates the current FPS, average FPS,
+ * and time to compute each frame (frame time)
  * @version 1.0
  * @date 14-04-2022
  *
@@ -19,8 +20,6 @@ public:
 
     ~Performance() = default;
 
-    void Setup(const bool &RecordFrameTimes);
-
     void Start_Timer();
 
     void Stop_Timer();
@@ -34,7 +33,6 @@ private:
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTime;
     unsigned long long m_FrameCount = 0;
     double m_CurrentFPS = 0, m_AverageFPS = 0;
-    bool m_RecordFrameTimes{};
 
     const int m_FONT_FACE = cv::FONT_HERSHEY_DUPLEX, m_FONT_THICKNESS = 1, m_FONT_SCALE = 1;
     const cv::Rect m_FPS_RECT = cv::Rect(25, 25, 350, 100);

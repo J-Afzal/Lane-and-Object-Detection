@@ -56,7 +56,7 @@ def generic(platform, platform_file_name, platform_directory, bar_width, title_f
         line.set_linewidth(2)
     ax1.grid()
     pyplot.tight_layout()
-    pyplot.savefig('graphs/frame_time_' + platform_file_name + '.png')
+    pyplot.savefig('graphs/frame_times_' + platform_file_name + '.png')
 
     # FPS
     fig2, ax2 = pyplot.subplots(1, 1)
@@ -83,7 +83,7 @@ def generic(platform, platform_file_name, platform_directory, bar_width, title_f
                 ax2.text(index + pad, value, str(f'{value:.1f}'), ha='center', va='bottom', fontsize=bar_font_size)
 
     ax2.set_title(platform + ' FPS', fontdict=title_font)
-    ax2.set_xlabel('YOLOv4 Type', fontdict=label_font)
+    ax2.set_xlabel('YOLOv4 Type and Blob Size', fontdict=label_font)
     ax2.set_ylabel('Frames Per Second (FPS)', fontdict=label_font)
     ax2.set_xlim(-0.5, 10.5)
     if jetson_nano:
@@ -190,7 +190,7 @@ def all_platforms(bar_width, title_font, label_font, tick_font_size, legend_font
         line.set_linewidth(2)
     ax1.grid()
     pyplot.tight_layout()
-    pyplot.savefig('graphs/frame_time_all.png')
+    pyplot.savefig('graphs/frame_times_all.png')
 
     # FPS
     fig2, ax2 = pyplot.subplots(1, 1)
@@ -210,7 +210,7 @@ def all_platforms(bar_width, title_font, label_font, tick_font_size, legend_font
         ax2.text(index + bar_width, value, str(f'{value:.1f}'), ha='center', va='bottom', fontsize=bar_font_size)
 
     ax2.set_title('All Platforms FPS', fontdict=title_font)
-    ax2.set_xlabel('YOLOv4 Type', fontdict=label_font)
+    ax2.set_xlabel('YOLOv4 Type and Blob Size', fontdict=label_font)
     ax2.set_ylabel('Frames Per Second (FPS)', fontdict=label_font)
     ax2.set_xlim(-0.5, 10.5)
     ax2.set_ylim(0, 100)

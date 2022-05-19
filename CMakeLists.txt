@@ -15,16 +15,15 @@ add_executable(Main
         include/pch.hpp
         include/helpers/VideoManager.hpp
         source/helpers/VideoManager.cpp
-        include/helpers/Performance.hpp
-        source/helpers/Performance.cpp
         include/detectors/ObjectDetector.hpp
         source/detectors/ObjectDetector.cpp
         include/detectors/LaneDetector.hpp
         source/detectors/LaneDetector.cpp
+        include/helpers/Performance.hpp
+        source/helpers/Performance.cpp
         include/helpers/RollingAverage.hpp
         source/helpers/RollingAverage.cpp
-        include/helpers/Exceptions.hpp
-        include/helpers/Enumerations.hpp)
+        )
 
 target_link_libraries(Main ${OpenCV_LIBS})
 
@@ -35,15 +34,14 @@ add_executable(Performance_Tests
         source/helpers/PerformanceTests.cpp
         include/helpers/VideoManager.hpp
         source/helpers/VideoManager.cpp
-        include/helpers/Performance.hpp
-        source/helpers/Performance.cpp
         include/detectors/ObjectDetector.hpp
         source/detectors/ObjectDetector.cpp
         include/detectors/LaneDetector.hpp
         source/detectors/LaneDetector.cpp
+        include/helpers/Performance.hpp
+        source/helpers/Performance.cpp
         include/helpers/RollingAverage.hpp
         source/helpers/RollingAverage.cpp
-        include/helpers/Exceptions.hpp
-        include/helpers/Enumerations.hpp)
+        )
 
 target_link_libraries(Performance_Tests ${OpenCV_LIBS})

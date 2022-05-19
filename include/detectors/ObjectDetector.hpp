@@ -1,7 +1,8 @@
 /**
  * @file ObjectDetector.hpp
  * @author Junaid Afzal
- * @brief Performs the object detection
+ * @brief This class performs object detection
+ * using YOLOv4 through OpenCV
  * @version 1.0
  * @date 14-04-2022
  *
@@ -11,16 +12,19 @@
 
 #pragma once
 #include "pch.hpp"
-#include "helpers/Enumerations.hpp"
+
+enum class Detector { NONE=0, STANDARD=1, TINY=2 };
+
+enum class BackEnd { CPU=0, CUDA=1 };
+
+enum class BlobSize { ONE=288, TWO=320, THREE=416, FOUR=512, FIVE=608 };
 
 class ObjectDetector
 {
 public:
-    ObjectDetector() = default;
+    ObjectDetector(const std::string &YoloResourcesFolderPath, const Detector &YoloType, const BackEnd &BackEndType, const BlobSize &BlobSize);
 
     ~ObjectDetector() = default;
-
-    void Setup(const Enumerations::Detector &YoloType, const Enumerations::BackEnd &BackEndType, const Enumerations::BlobSize &BlobSize);
 
     void Run_Detector(const cv::Mat &Frame);
 
@@ -42,7 +46,7 @@ private:
     cv::Mat m_BlobFromImage, m_CroppedImage, m_CroppedImageInHSV;
     double m_Confidence{}, m_CenterX{}, m_CenterY{}, m_Width{}, m_Height{};
     int m_NonZeroPixelsInGreen{}, m_NonZeroPixelsInRed{}, m_BlobSize{};
-    bool m_Skip_Detection{};
+    bool m_SkipDetection{};
 
     const double m_YOLO_CONFIDENCE_THRESHOLD = 0.4;
     const float m_YOLO_NMS_THRESHOLD = 0.4;

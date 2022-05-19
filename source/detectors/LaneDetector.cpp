@@ -36,19 +36,31 @@ void LaneDetector::Setup()
 
 void LaneDetector::Get_Hough_Lines(const cv::Mat &Frame)
 {
+    // Get region of interest (ROI) frame by applying a mask on to the frame
     m_BlankFrame = cv::Mat::zeros(m_VIDEO_HEIGHT, m_VIDEO_WIDTH, Frame.type());
     cv::fillConvexPoly(m_BlankFrame, m_MASK_DIMENSIONS, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
     cv::bitwise_and(m_BlankFrame, Frame, m_ROIFrame);
-
+    // Convert ROI frame to B&W
     cv::cvtColor(m_ROIFrame, m_ROIFrame, cv::COLOR_BGR2GRAY);
-
+    // Get edges using Canny Algorithm on the ROI Frame
     cv::Canny(m_ROIFrame, m_CannyFrame, m_CANNY_LOWER_THRESHOLD, m_CANNY_UPPER_THRESHOLD, 3, true);
-
+    // Get straight lines using the Probabilistic Hough Transform (PHT) on the output of Canny Algorithm
     cv::HoughLinesP(m_CannyFrame, m_HoughLines, 1, CV_PI / 180.0, m_HOUGH_THRESHOLD, m_HOUGH_MIN_LINE_LENGTH, m_HOUGH_MAX_LINE_GAP);
 }
 
 void LaneDetector::Analyse_Hough_Lines(const std::vector<cv::Rect> &BoundingBoxes)
 {
+    /**
+     * The straight lines received from the PHT contain lines that are not a part of any
+     * road markings (i.e. noise) and so this for loop tries to remove as much as them whilst
+     * preserving the useful lines.
+     *
+     * For example, the ROI frame is the same size as the original frame (1920x1080) but is blank
+     * expect for the locations within the area defined by m_MASK_DIMENSIONS (region of interest/ROI).
+     * This means an edge between the black pixels and the contents within the ROI will be
+     * picked up by the Canny Algorithm on the ROI Frame, which will be picked up by the
+     * Probabilistic Hough Transform (PHT). Thus these lines (mask edge lines) must be removed.
+     */
     double dx, dy, Gradient, LeftY1, LeftY2, RightY1, RightY2;
     int LowerX, UpperX, LowerY, UpperY, HorizontalCount = 0;
     bool LineIsInBoundingBox;
@@ -71,6 +83,11 @@ void LaneDetector::Analyse_Hough_Lines(const std::vector<cv::Rect> &BoundingBoxe
             }
         }
 
+        /**
+         * The bounding boxes are created by the object detector, which
+         * cannot detect road markings, thus if the line is in a bounding
+         * box, it cannot be a road marking and must be ignored.
+         */
         if (LineIsInBoundingBox)
             continue;
 
@@ -80,7 +97,12 @@ void LaneDetector::Analyse_Hough_Lines(const std::vector<cv::Rect> &BoundingBoxe
             continue;
         Gradient = dy / dx;
 
-        // Horizontal Lines
+        /**
+         * Lines are considered horizontal lines if they have:
+         *    an absolute gradient below a certain gradient threshold
+         *    a length above a threshold
+         *    are not the top or bottom edge of the ROI frame
+         */
         if (std::fabs(Gradient) < m_HORIZONTAL_GRADIENT_THRESHOLD)
         {
             if ((std::sqrt(dy * dy + dx * dx) > m_HORIZONTAL_LENGTH_THRESHOLD) &&
@@ -88,19 +110,46 @@ void LaneDetector::Analyse_Hough_Lines(const std::vector<cv::Rect> &BoundingBoxe
                 HorizontalCount++;
         }
 
-        // Vertical Lines
+        /**
+         * All lines with an absolute gradient above the gradient
+         * threshold are considered for vertical lines
+         */
         else
         {
-            // Remove left edge of mask
+            /**
+             *    Top edge of mask -->   ____________________
+             *                          /         / \        \
+             * Left edge of mask -->   /         /   \        \
+             *                        /         /     \        \
+             *                       /    #    /   @   \    &   \
+             *                      /         /         \        \   <-- Right edge of mask
+             *                     /         /           \        \
+             *                     ---------- ----------- ----------   <-- Bottom edge of mask
+             *                               ^           ^
+             *                            Left line    Right line
+             *                            threshold    threshold
+             *
+             * Any lines within:
+             *      '#' region will be considered left lines
+             *      '@' region will be considered middle lines
+             *      '&' region will be considered right lines
+             *
+             * Please note that, for OpenCV, the origin is located at the top left of the frame.
+             *
+             * Thus, left lines should have negative gradients and right positive gradients.
+             *
+             * Equations are used to determine the locations of two lines with respect to each other
+             */
+
+            // Remove the left edge of the ROI frame
             LeftY1 = m_LEFT_EDGE_OF_MASK_M * HoughLine[0] + m_LEFT_EDGE_OF_MASK_C;
             LeftY2 = m_LEFT_EDGE_OF_MASK_M * HoughLine[2] + m_LEFT_EDGE_OF_MASK_C;
             if ((HoughLine[1] <= LeftY1 + 1) && (HoughLine[3] <= LeftY2 + 1))
                 continue;
 
-            // left threshold
+            // If within left threshold and has a negative gradient, then it is a left line
             LeftY1 = m_LEFT_EDGE_THRESHOLD_M * HoughLine[0] + m_LEFT_EDGE_THRESHOLD_C;
             LeftY2 = m_LEFT_EDGE_THRESHOLD_M * HoughLine[2] + m_LEFT_EDGE_THRESHOLD_C;
-
             if ((HoughLine[1] < LeftY1) && (HoughLine[3] < LeftY2) && Gradient < 0)
             {
                 m_LeftLines.push_back(HoughLine);
@@ -108,16 +157,15 @@ void LaneDetector::Analyse_Hough_Lines(const std::vector<cv::Rect> &BoundingBoxe
                 continue;
             }
 
-            // Remove right edge of mask
+            // Remove the right edge of the ROI frame
             RightY1 = m_RIGHT_EDGE_OF_MASK_M * HoughLine[0] + m_RIGHT_EDGE_OF_MASK_C;
             RightY2 = m_RIGHT_EDGE_OF_MASK_M * HoughLine[2] + m_RIGHT_EDGE_OF_MASK_C;
             if ((HoughLine[1] <= RightY1 + 1) && (HoughLine[3] <= RightY2 + 1))
                 continue;
 
-            // right threshold
+            // If within right threshold and has a positive gradient, then it is a right line
             RightY1 = m_RIGHT_EDGE_THRESHOLD_M * HoughLine[0] + m_RIGHT_EDGE_THRESHOLD_C;
             RightY2 = m_RIGHT_EDGE_THRESHOLD_M * HoughLine[2] + m_RIGHT_EDGE_THRESHOLD_C;
-
             if ((HoughLine[1] < RightY1) && (HoughLine[3] < RightY2) && Gradient > 0)
             {
                 m_RightLines.push_back(HoughLine);
@@ -125,7 +173,7 @@ void LaneDetector::Analyse_Hough_Lines(const std::vector<cv::Rect> &BoundingBoxe
                 continue;
             }
 
-            // else must be in middle
+            // Thus, the line must be a middle line
             m_MiddleLines.push_back(HoughLine);
             m_MiddleLineAverageSize += std::sqrt((HoughLine[0] - HoughLine[2]) * (HoughLine[0] - HoughLine[2]) + (HoughLine[1] - HoughLine[3]) * (HoughLine[1] - HoughLine[3]));
         }
@@ -174,6 +222,20 @@ void LaneDetector::Get_Driving_State()
 
     m_RightLineTypesForDisplay.push_front(RightLineType);
     m_RightLineTypesForDisplay.pop_back();
+
+    /**
+     *
+     * table
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
 
     // Within Lanes
     if ((!m_LeftLines.empty() && !m_MiddleLines.empty() && !m_RightLines.empty()) ||
@@ -437,7 +499,8 @@ void LaneDetector::Execute_Driving_State()
 
 void LaneDetector::Print_To_Frame(cv::Mat &Frame)
 {
-    // title
+    // Center Title
+    // The next four lines are used to center the text horizontally and vertically
     int Baseline = 0;
     cv::Size TextSize = cv::getTextSize(m_TitleText, FONT_FACE, FONT_SCALE, FONT_THICKNESS, &Baseline);
     Baseline += FONT_THICKNESS;
@@ -445,23 +508,22 @@ void LaneDetector::Print_To_Frame(cv::Mat &Frame)
     cv::rectangle(Frame, TextOrg + cv::Point(0, Baseline), TextOrg + cv::Point(TextSize.width, -TextSize.height - Baseline), cv::Scalar(0), cv::FILLED);
     cv::putText(Frame, m_TitleText, TextOrg, FONT_FACE, FONT_SCALE, cv::Scalar::all(255), FONT_THICKNESS, cv::LINE_AA);
 
-    // Give way warning
+    // Giveway warning
     if (m_Give_Way_Warning)
     {
         std::string giveWayWarningText = "WARNING: Giveway ahead";
+        // The next four lines are used to center the text horizontally and vertically
         Baseline = 0;
         TextSize = cv::getTextSize(giveWayWarningText, FONT_FACE, FONT_SCALE, FONT_THICKNESS, &Baseline);
         Baseline += FONT_THICKNESS;
-
         TextOrg = cv::Point((m_VIDEO_WIDTH - TextSize.width) / 2.0, 225 + Baseline + TextSize.height);
         cv::rectangle(Frame, TextOrg + cv::Point(0, Baseline), TextOrg + cv::Point(TextSize.width, -TextSize.height - Baseline), cv::Scalar(0), cv::FILLED);
         cv::putText(Frame, giveWayWarningText, TextOrg, FONT_FACE, FONT_SCALE, cv::Scalar::all(255), FONT_THICKNESS, cv::LINE_AA);
     }
 
-    // Right info box
+    // Right-hand side info box and title
     cv::rectangle(Frame, m_RIGHT_INFO_RECT, cv::Scalar(0), cv::FILLED, cv::LINE_AA, 0);
-
-    // Right info box title
+    // The next four lines are used to center the text horizontally and vertically
     Baseline = 0;
     TextSize = cv::getTextSize(m_RightInfoTitleText, FONT_FACE, FONT_SCALE, FONT_THICKNESS, &Baseline);
     Baseline += FONT_THICKNESS;
@@ -483,12 +545,11 @@ void LaneDetector::Print_To_Frame(cv::Mat &Frame)
         cv::add(Frame, m_BlankFrame, Frame);
 
         // Write the turning needed to the screen
+        // The next four lines are used to center the text horizontally and vertically
         Baseline = 0;
         TextSize = cv::getTextSize(m_TurningRequiredToReturnToCenter, FONT_FACE, FONT_SCALE, FONT_THICKNESS, &Baseline);
         Baseline += FONT_THICKNESS;
-        // center the text
         TextOrg = cv::Point(m_RIGHT_INFO_RECT.x + m_RIGHT_INFO_RECT.width / 2.0 - TextSize.width / 2.0, m_RIGHT_INFO_RECT.y + m_RIGHT_INFO_RECT.height + Baseline - TextSize.height);
-        // then put the text itself
         cv::putText(Frame, m_TurningRequiredToReturnToCenter, TextOrg, FONT_FACE, FONT_SCALE, cv::Scalar::all(255), FONT_THICKNESS, cv::LINE_AA);
 
         if (m_PrintLaneOverlay)
@@ -514,14 +575,12 @@ void LaneDetector::Print_To_Frame(cv::Mat &Frame)
         if (!m_CurrentTurningState.empty())
         {
             // Write the current turning state to screen
+            // The next four lines are used to center the text horizontally and vertically
             Baseline = 0;
             TextSize = cv::getTextSize(m_CurrentTurningState, FONT_FACE, FONT_SCALE, FONT_THICKNESS, &Baseline);
             Baseline += FONT_THICKNESS;
-            // center the text
             TextOrg = cv::Point((m_VIDEO_WIDTH - TextSize.width) / 2.0, 125 + Baseline + TextSize.height);
-            // draw the box
             cv::rectangle(Frame, TextOrg + cv::Point(0, Baseline), TextOrg + cv::Point(TextSize.width, -TextSize.height - Baseline), cv::Scalar(0), cv::FILLED);
-            // then put the text itself
             cv::putText(Frame, m_CurrentTurningState, TextOrg, FONT_FACE, FONT_SCALE, cv::Scalar::all(255), FONT_THICKNESS, cv::LINE_AA);
         }
     }

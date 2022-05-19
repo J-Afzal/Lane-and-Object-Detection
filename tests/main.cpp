@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  * @author Junaid Afzal
- * @brief Executes performance tests
+ * @brief This executes the performance tests.
  * @version 1.0
  * @date 14-04-2022
  *
@@ -13,6 +13,6 @@
 
 int main()
 {
-    PerformanceTests PerformanceTests("../../resources/benchmark.mp4");
+    PerformanceTests PerformanceTests("../../resources/benchmark.mp4", "../../resources/yolo/");
     PerformanceTests.Run();
 }

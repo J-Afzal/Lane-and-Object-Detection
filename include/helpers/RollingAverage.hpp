@@ -1,7 +1,7 @@
 /**
  * @file RollingAverage.hpp
  * @author Junaid Afzal
- * @brief Represents a rolling average
+ * @brief This class represents a rolling average
  * @version 1.0
  * @date 14-04-2022
  *

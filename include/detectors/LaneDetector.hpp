@@ -1,7 +1,8 @@
 /**
  * @file LaneDetector.hpp
  * @author Junaid Afzal
- * @brief Performs lane detections
+ * @brief This class performs lane detection using OpenCV,
+ * Canny Algorithm and the Probabilistic Hough Transform (PHT).
  * @version 1.0
  * @date 14-04-2022
  *

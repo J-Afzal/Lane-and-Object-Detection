@@ -44,8 +44,8 @@
 0. Setup Jetson Nano (Skip for Ubuntu)
     * Download NVIDIA Jetpack SDK 4.5.1 from https://developer.nvidia.com/embedded/jetpack
     * Format and flash SD card with the downloaded file
-        * `Formatter` = https://www.sdcard.org/downloads/formatter/sd-memory-card-formatter-for-windows-download/
-        * `Flasher` = https://www.balena.io/etcher/
+        * Formatter = https://www.sdcard.org/downloads/formatter/sd-memory-card-formatter-for-windows-download/
+        * Flasher = https://www.balena.io/etcher/
     * Boot up Jetson Nano and follow the Welcome prompts (make sure to choose MAXN mode)
 
 ### Open up the terminal and execute the following:

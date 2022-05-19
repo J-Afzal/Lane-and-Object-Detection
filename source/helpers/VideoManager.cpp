@@ -9,28 +9,31 @@
  *
  */
 #include "helpers/VideoManager.hpp"
-#include "helpers/Exceptions.hpp"
 
-VideoManager::VideoManager(const std::string &InputVideoPath,
-                           const Enumerations::Detector &ObjectDetectorType,
-                           const Enumerations::BackEnd &BackEndType,
-                           const Enumerations::BlobSize &BlobSize,
-                           const bool &RecordFrameTimes)
+VideoManager::VideoManager(const std::string &InputVideoFilePath,
+                           const std::string &YoloResourcesFolderPath,
+                           const Detector &ObjectDetectorType,
+                           const BackEnd &BackEndType,
+                           const BlobSize &BlobSize)
 {
-    if (String_Is_Integer(InputVideoPath))
-        m_InputVideo.open(std::stoi(InputVideoPath, nullptr, 10));
+    // If InputVideoPath is an integer, convert it to one so that OpenCV will use a camera as the input
+    if (std::all_of(InputVideoFilePath.begin(), InputVideoFilePath.end(), [](const char& i) { return isdigit(i); }))
+        m_InputVideo.open(std::stoi(InputVideoFilePath, nullptr, 10));
     else
-        m_InputVideo.open(InputVideoPath);
+        m_InputVideo.open(InputVideoFilePath);
+    // Set size to avoid errors in hard coded values
     m_InputVideo.set(cv::CAP_PROP_FRAME_WIDTH, 1920);
     m_InputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, 1080);
 
     if (!m_InputVideo.isOpened())
-        throw Exceptions::InputVideoFileNotFound();
+    {
+        std::cout << "\nInput video file: " + InputVideoFilePath + " cannot be found\n";
+        exit(1);
+    }
 
-    m_Obj.Setup(ObjectDetectorType, BackEndType, BlobSize);
-
-    m_RecordFrameTimes = RecordFrameTimes;
-    m_Perf.Setup(m_RecordFrameTimes);
+    m_ObjectDetector = std::make_unique<ObjectDetector>(YoloResourcesFolderPath, ObjectDetectorType, BackEndType, BlobSize);
+    m_LaneDetector = std::make_unique<LaneDetector>();
+    m_Performance = std::make_unique<Performance>();
 }
 
 VideoManager::~VideoManager()
@@ -44,24 +47,26 @@ std::optional<std::vector<int>> VideoManager::Run()
 {
     while (true)
     {
-        m_Perf.Start_Timer();
+        m_Performance->Start_Timer();
 
-        try { Generate_Next_Frame(); }
-        catch (Exceptions::OutOfFrames &e) { break; }
+        // Generate the next frame
+        m_InputVideo >> m_Frame;
+        if (m_Frame.empty())
+            break;
 
-        m_Obj.Run_Detector(m_UneditedFrame);
+        // Run the detectors
+        m_ObjectDetector->Run_Detector(m_Frame);
+        m_LaneDetector->Run_Detector(m_Frame, m_ObjectDetector->Get_Bounding_Boxes());
 
-        m_Lane.Run_Detector(m_UneditedFrame, m_Obj.Get_Bounding_Boxes());
-
-        m_Obj.Print_To_Frame(m_Frame);
-
-        m_Lane.Print_To_Frame(m_Frame);
-
-        m_Perf.Print_FPS_To_Frame(m_Frame);
-
+        // Print all info to the frame
+        m_ObjectDetector->Print_To_Frame(m_Frame);
+        m_LaneDetector->Print_To_Frame(m_Frame);
+        m_Performance->Print_FPS_To_Frame(m_Frame);
         Print_Recording_Status_To_Frame();
 
-        Process_Current_Frame();
+        // If recording, add frame to output file
+        if (m_RecordOutput)
+            m_OutputVideo << m_Frame;
 
         cv::imshow("frame", m_Frame);
 
@@ -71,31 +76,12 @@ std::optional<std::vector<int>> VideoManager::Run()
         else if (Key == 'q')
             break;
 
-        m_Perf.Stop_Timer();
+        m_Performance->Stop_Timer();
     }
 
     cv::destroyAllWindows();
-    if (m_RecordFrameTimes)
-        return m_Perf.Get_Frame_Times();
-    else
-        return {};
-}
 
-bool VideoManager::String_Is_Integer(const std::string &Input)
-{
-    for (const char &i : Input)
-        if (!isdigit(i))
-            return false;
-    return true;
-}
-
-void VideoManager::Generate_Next_Frame()
-{
-    m_InputVideo >> m_Frame;
-    m_UneditedFrame = m_Frame.clone();
-
-    if (m_Frame.empty())
-        throw Exceptions::OutOfFrames();
+    return m_Performance->Get_Frame_Times();
 }
 
 void VideoManager::Print_Recording_Status_To_Frame()
@@ -105,6 +91,7 @@ void VideoManager::Print_Recording_Status_To_Frame()
     if (m_RecordOutput)
     {
         std::string recordingOutputText = "Recording Output";
+        // The next four lines are used to center the text horizontally and vertically
         int baseline = 0;
         cv::Size textSize = cv::getTextSize(recordingOutputText, m_FONT_FACE, m_FONT_SCALE, m_FONT_THICKNESS, &baseline);
         baseline += m_FONT_THICKNESS;
@@ -115,6 +102,7 @@ void VideoManager::Print_Recording_Status_To_Frame()
     else
     {
         std::string recordingOutputText = "Press 'r' to start recording";
+        // The next four lines are used to center the text horizontally and vertically
         int baseline = 0;
         cv::Size textSize = cv::getTextSize(recordingOutputText, m_FONT_FACE, m_FONT_SCALE - 0.2, m_FONT_THICKNESS, &baseline);
         baseline += m_FONT_THICKNESS;
@@ -123,18 +111,13 @@ void VideoManager::Print_Recording_Status_To_Frame()
     }
 }
 
-void VideoManager::Process_Current_Frame()
-{
-    if (m_RecordOutput)
-        m_OutputVideo << m_Frame;
-}
-
 void VideoManager::Toggle_Recording()
 {
     m_RecordOutput = !m_RecordOutput;
 
     if (m_RecordOutput)
     {
+        // Create a unique file name based on the current date and time
         time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         std::stringstream ss;
         ss << std::put_time(localtime(&now), "%Y-%m-%d %H-%M-%S");
@@ -143,6 +126,6 @@ void VideoManager::Toggle_Recording()
         m_OutputVideo.open(currentTime + " Frame.mp4", cv::VideoWriter::fourcc('m', 'p', '4', 'v'), 30, cv::Size(m_VIDEO_WIDTH, m_VIDEO_HEIGHT), true);
 
         if (!m_OutputVideo.isOpened())
-            throw Exceptions::OutputVideoFileNotCreated();
+            std::cout << "\nERROR: Output video file could not be opened! Recording stopped!\n";
     }
 }

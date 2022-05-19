@@ -12,7 +12,7 @@
 #include "helpers/PerformanceTests.hpp"
 #include "helpers/VideoManager.hpp"
 
-PerformanceTests::PerformanceTests(std::string FilePath) : m_FilePath(std::move(FilePath)) {}
+PerformanceTests::PerformanceTests(std::string InputVideoFilePath, std::string YoloResourcesFolderPath) : m_InputVideoFilePath(std::move(InputVideoFilePath)), m_YoloResourcesFolderPath(std::move(YoloResourcesFolderPath)) { }
 
 void PerformanceTests::Run()
 {
@@ -26,7 +26,7 @@ void PerformanceTests::Run()
 
         for (int j = 0; j < m_NUMBER_OF_REPETITIONS; j++)
         {
-            VideoManager Vid(m_FilePath, m_YOLO_TYPES[i], m_BACK_END_TYPES[i], m_BLOB_SIZES[i], true);
+            VideoManager Vid(m_InputVideoFilePath, m_YoloResourcesFolderPath, m_YOLO_TYPES[i], m_BACK_END_TYPES[i], m_BLOB_SIZES[i]);
             m_FrameTimes.push_back(Vid.Run());
 
             std::cout << m_OUTPUT_FILE_NAMES[i] << ": Finished iteration " << j + 1 << "/" << m_NUMBER_OF_REPETITIONS << " for test " << i + 1 << "/" << m_NUMBER_OF_TESTS << '\n';
@@ -49,6 +49,7 @@ void PerformanceTests::Run()
         }
     }
 
+    // Calculate total time taken in hrs mins secs
     int total = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - m_StartTime).count();
     double hours = total / 3600.0;
     double minutes = (hours - floor(hours)) * 60;

@@ -10,13 +10,15 @@
  */
 
 #include "detectors/ObjectDetector.hpp"
-#include "helpers/Exceptions.hpp"
 
-void ObjectDetector::Setup(const Enumerations::Detector &YoloType, const Enumerations::BackEnd &BackEndType, const Enumerations::BlobSize &BlobSize)
+ObjectDetector::ObjectDetector(const std::string &YoloResourcesFolderPath, const Detector &YoloType, const BackEnd &BackEndType, const BlobSize &BlobSize)
 {
-    std::ifstream ModelNamesFile("../../resources/yolo/coco.names");
+    std::ifstream ModelNamesFile(YoloResourcesFolderPath + "coco.names");
     if (!ModelNamesFile.is_open())
-        throw Exceptions::CocoNamesFileNotFound();
+    {
+        std::cout << "\ncoco.names file cannot be found\n";
+        exit(1);
+    }
 
     for (std::string line; std::getline(ModelNamesFile, line);)
     {
@@ -35,14 +37,14 @@ void ObjectDetector::Setup(const Enumerations::Detector &YoloType, const Enumera
     // Setup up the Detector CUDA OpenCV DNN
     m_BlobSize = (int)BlobSize;
 
-    if (YoloType == Enumerations::Detector::STANDARD)
-        m_Net = cv::dnn::readNetFromDarknet("../../resources/yolo/yolov4.cfg", "../../resources/yolo/yolov4.weights");
-    else if (YoloType == Enumerations::Detector::TINY)
-        m_Net = cv::dnn::readNetFromDarknet("../../resources/yolo/yolov4-tiny.cfg", "../../resources/yolo/yolov4-tiny.weights");
+    if (YoloType == Detector::STANDARD)
+        m_Net = cv::dnn::readNetFromDarknet(YoloResourcesFolderPath + "yolov4.cfg", YoloResourcesFolderPath + "yolov4.weights");
+    else if (YoloType == Detector::TINY)
+        m_Net = cv::dnn::readNetFromDarknet(YoloResourcesFolderPath + "yolov4-tiny.cfg", YoloResourcesFolderPath + "yolov4-tiny.weights");
     else
-        m_Skip_Detection = true;
+        m_SkipDetection = true;
 
-    if (BackEndType == Enumerations::BackEnd::CUDA)
+    if (BackEndType == BackEnd::CUDA)
     {
         m_Net.setPreferableBackend(cv::dnn::DNN_BACKEND_CUDA);
         m_Net.setPreferableTarget(cv::dnn::DNN_TARGET_CUDA);
@@ -58,7 +60,7 @@ void ObjectDetector::Setup(const Enumerations::Detector &YoloType, const Enumera
 
 void ObjectDetector::Run_Detector(const cv::Mat &Frame)
 {
-    if (m_Skip_Detection)
+    if (m_SkipDetection)
         return;
 
     m_BoundingBoxes.clear();
@@ -69,6 +71,7 @@ void ObjectDetector::Run_Detector(const cv::Mat &Frame)
     m_PreNMSObjectConfidences.clear();
     m_TrafficLightStates.clear();
 
+    // Get output blobs from the frame
     cv::dnn::blobFromImage(Frame, m_BlobFromImage, 1 / 255.0, cv::Size(m_BlobSize, m_BlobSize), cv::Scalar(0), true, false, CV_32F);
     m_Net.setInput(m_BlobFromImage);
     m_Net.forward(m_OutputBlobs, m_UnconnectedOutputLayerNames);
@@ -157,7 +160,7 @@ std::vector<cv::Rect> ObjectDetector::Get_Bounding_Boxes() { return m_BoundingBo
 
 void ObjectDetector::Print_To_Frame(cv::Mat &Frame)
 {
-    if (m_Skip_Detection)
+    if (m_SkipDetection)
         return;
 
     for (int i = 0; i < m_Names.size(); i++)
