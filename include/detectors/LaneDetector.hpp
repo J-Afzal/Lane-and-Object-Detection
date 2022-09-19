@@ -78,7 +78,7 @@ private:
     // Execute_Driving_State()
     std::vector<cv::Point> m_LanePoints = std::vector<cv::Point>(4);
     std::string m_TitleText, m_RightInfoTitleText, m_CurrentTurningState, m_TurningRequiredToReturnToCenter;
-    double m_ChangingLanesPreviousDifference{} ;
+    double m_ChangingLanesPreviousDifference = 0;
     int m_ChangingLanesFrameCount = 0, m_TurningRequired{};
     bool m_PrintLaneOverlay{};
 

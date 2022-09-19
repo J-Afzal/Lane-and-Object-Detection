@@ -30,7 +30,7 @@ void LaneDetector::Setup()
     m_LeftLines.clear();
     m_MiddleLines.clear();
     m_RightLines.clear();
-    m_LeftLineAverageSize = m_MiddleLineAverageSize = m_RightLineAverageSize = m_ChangingLanesPreviousDifference;
+    m_LeftLineAverageSize = m_MiddleLineAverageSize = m_RightLineAverageSize = 0;
     m_PrintLaneOverlay = false;
 }
 
@@ -224,17 +224,31 @@ void LaneDetector::Get_Driving_State()
     m_RightLineTypesForDisplay.pop_back();
 
     /**
+     * For left lanes lines, middle lane lines, and right lane lines '1' represents that
+     * one or more of those lines has been detected and a '0' means no of those lines has
+     * been detected. The driving state is used in the Execute_Driving_State() switch
+     * statement.
      *
-     * table
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
+     * |----------------------------------------------------------------------------------------|
+     * |  Left Lane  | Middle Lane | Right Lane | Driving State |      Driving State Name       |
+     * |     Lines   |    Lines    |    Lines   |     Value     |                               |
+     * |-------------|-------------|------------|---------------|-------------------------------|
+     * |      1      |      1      |     1      |       0       |     Within Detected Lanes     |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
+     * |      1      |      0      |     1      |       0       |     Within Detected Lanes     |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
+     * |      0      |      1      |     0      |       1       |        Changing Lanes         |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
+     * |      1      |      1      |     0      |       1       |        Changing Lanes         |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
+     * |      0      |      1      |     1      |       1       |        Changing Lanes         |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
+     * |      1      |      0      |     0      |       2       | Only left lane line detected  |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
+     * |      0      |      0      |     1      |       3       | Only right lane line detected |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
+     * |      0      |      0      |     0      |       4       |    No lane lines detected     |
+     * |-------------|---------- --|------------|---------------|-------------------------------|
      */
 
     // Within Lanes
