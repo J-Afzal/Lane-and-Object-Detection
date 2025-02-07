@@ -1,0 +1,42 @@
+name: Build
+
+on: workflow_call
+
+jobs:
+    build:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [macos-latest, ubuntu-latest, windows-latest]
+
+        defaults:
+            run:
+                shell: pwsh
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - uses: ilammy/msvc-dev-cmd@v1
+              if: ${{ matrix.os }} == 'windows-latest'
+
+            - name: Configure CMake
+              run: |
+                  if ("${{ matrix.os }}" -eq "windows-latest") {
+                      cmake -S . -B ./build -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=Release" -D "CI_CD=TRUE"
+                  }
+                  else {
+                      cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release" -D "CI_CD=TRUE"
+                  }
+
+            - name: Build Project
+              run: cmake --build ./build --config Release
+
+            - name: Upload executable as artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: terminal-games-${{ matrix.os }}
+                  path: ./build/terminal-games-${{ matrix.os }}*
+                  if-no-files-found: error
