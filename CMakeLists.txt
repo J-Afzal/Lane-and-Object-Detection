@@ -29,6 +29,8 @@ ELSE()
     SET(executable_name_performance_tests "lane-and-object-detection-performance-tests")
 ENDIF()
 
+Set(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/)
+
 FIND_PACKAGE(OpenCV REQUIRED)
 
 ADD_EXECUTABLE(
