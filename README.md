@@ -59,6 +59,28 @@ The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit
 <!--
 TODO
 
+1. Add CI and CD workflows (with debug output)
+    Add linters to dependency
+    Clean up all linting issues
+    Remove pch.h
+
+x. Create build script to build opencv on any platform and then build my code
+
+x. Clean up C++ lane detection code
+
+x. Clean up C++ object detection code
+
+x. Upgrade to newer YOLO
+
+x. Clean up performance test code
+
+x. Implement C GUI window to encapsulate main code and perofrmance test code?
+
+x. Test with CUDA
+
+x. add icon to cmakelists exes
+
+
 0. Re-do installation from start but releaseWithDebugInfo:
    1. download opencv and opencv-contrib
    2. configure cmake
@@ -69,22 +91,6 @@ TODO
    5. open vs project
    6. build build_ALL and install
    7. add install directory to path as OpenCV_DIR var
-
-2. Add CI and CD workflows (with debug output)
-    Add linters to dependency
-    Clean up all linting issues
-    Remove pch.h
-
-x. Upgrade to newer YOLO
-
-x. Clean up C++ code
-
-x. Clean up performance test code
-
-x. Implement C GUI window to encapsulate main code and perofrmance test code?
-
-x. Test with CUDA
-
-x. add icon to cmakelists exes
-
+   8. Note on opening vs code through x64 dev cmd
+   9.
  -->
