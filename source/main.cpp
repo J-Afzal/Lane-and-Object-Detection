@@ -15,6 +15,10 @@
 
 #include "helpers/VideoManager.hpp"
 
+
+    /**
+     * @brief TODO
+     */
 int main()
 {
     VideoManager VideoManager("../resources/motorway.mp4", "../resources/yolo/");

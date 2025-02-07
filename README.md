@@ -78,9 +78,6 @@ x. Implement C GUI window to encapsulate main code and perofrmance test code?
 
 x. Test with CUDA
 
-x. add icon to cmakelists exes
-
-
 0. Re-do installation from start but releaseWithDebugInfo:
    1. download opencv and opencv-contrib
    2. configure cmake

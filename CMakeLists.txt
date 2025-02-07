@@ -41,6 +41,7 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/RollingAverage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 
 ADD_EXECUTABLE(
@@ -52,6 +53,7 @@ ADD_EXECUTABLE(
     source/detectors/ObjectDetector.cpp
     source/helpers/Performance.cpp
     source/helpers/RollingAverage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 
 TARGET_LINK_LIBRARIES(${executable_name} ${OpenCV_LIBS})

@@ -14,19 +14,43 @@
 #include "pch.hpp"
 #include "helpers/RollingAverage.hpp"
 
+/**
+ * @class LaneDetector
+ * @brief TODO
+ */
 class LaneDetector
 {
 public:
+    /**
+     * @brief TODO
+     *
+     */
     LaneDetector() = default;
 
+    /**
+     * @brief TODO
+     *
+     */
     ~LaneDetector() = default;
 
+    /**
+     * @brief TODO
+     *
+     */
     void Run_Detector(const cv::Mat &Frame, const std::vector<cv::Rect> &BoundingBoxes);
 
+    /**
+     * @brief TODO
+     *
+     */
     void Print_To_Frame(cv::Mat &Frame);
 
 private:
-    // Get_Hough_Lines()
+
+    /**
+     * @brief TODO
+     */
+    ///@{ Get_Hough_Lines()
     cv::Mat m_BlankFrame, m_ROIFrame, m_CannyFrame;
     std::vector<cv::Vec4i> m_HoughLines;
 
@@ -87,14 +111,30 @@ private:
     // Print_To_Frame()
     const cv::Rect m_RIGHT_INFO_RECT = cv::Rect(1495, 25, 400, 360);
     const int FONT_FACE = cv::FONT_HERSHEY_DUPLEX, FONT_SCALE = 1, FONT_THICKNESS = 1;
+    ///@}
 
+    /**
+     * @brief TODO
+     */
     void Setup();
 
+    /**
+     * @brief TODO
+     */
     void Get_Hough_Lines(const cv::Mat &Frame);
 
+    /**
+     * @brief TODO
+     */
     void Analyse_Hough_Lines(const std::vector<cv::Rect> &BoundingBoxes);
 
+    /**
+     * @brief TODO
+     */
     void Get_Driving_State();
 
+    /**
+     * @brief TODO
+     */
     void Execute_Driving_State();
 };

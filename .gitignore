@@ -1,3 +1,4 @@
 .vs/
 .vscode/
 build/
+yolov4.weights

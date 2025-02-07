@@ -4,13 +4,13 @@
 
 DOXYFILE_ENCODING      = UTF-8
 
-PROJECT_NAME           = Terminal Games
+PROJECT_NAME           = Lane and Object Detection
 
-PROJECT_BRIEF          =  Simple games that run in the terminal.
+PROJECT_BRIEF          = Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.
 
-PROJECT_LOGO           = ./resources/icons/TerminalGames.ico
+PROJECT_LOGO           = ./resources/icons/LaneAndObjectDetection.ico
 
-PROJECT_ICON           = ./resources/icons/TerminalGames.ico
+PROJECT_ICON           = ./resources/icons/LaneAndObjectDetection.ico
 
 OUTPUT_DIRECTORY       = ./docs/
 

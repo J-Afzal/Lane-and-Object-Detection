@@ -12,16 +12,37 @@
 #pragma once
 #include "pch.hpp"
 
+/**
+ * @class RollingAverage
+ * @brief TODO
+ */
 class RollingAverage
 {
 public:
+    /**
+     * @brief TODO
+     */
     RollingAverage(const int &SizeOfRollingAverage, const int &NumberOfStates);
 
+    /**
+     * @brief TODO
+     */
     ~RollingAverage() = default;
 
+    /**
+     * @brief TODO
+     */
     int calculateRollingAverage(const int &NextInput);
 
 private:
+
+    /**
+     * @brief TODO
+     */
     std::deque<int> RollingAverageArray;
+
+    /**
+     * @brief TODO
+     */
     std::vector<int> OccurrenceOfEachState;
 };

@@ -17,16 +17,34 @@
 #include "pch.hpp"
 #include "detectors/ObjectDetector.hpp"
 
+
+/**
+ * @class PerformanceTests
+ * @brief TODO
+ */
 class PerformanceTests
 {
 public:
+    /**
+     * @brief TODO
+     */
     PerformanceTests(std::string InputVideoFilePath, std::string YoloResourcesFolderPath);
 
+    /**
+     * @brief TODO
+     */
     ~PerformanceTests() = default;
 
+    /**
+     * @brief TODO
+     */
     void Run();
 
 private:
+    /**
+     * @brief TODO
+     */
+    ///@{
     std::vector<std::optional<std::vector<int>>> m_FrameTimes;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTime;
     std::string m_InputVideoFilePath, m_YoloResourcesFolderPath;
@@ -128,4 +146,5 @@ private:
         "yolov4_512.txt",
         "yolov4_608.txt",
     };
+    ///@}
 };
