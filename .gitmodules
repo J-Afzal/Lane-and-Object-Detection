@@ -1,0 +1,15 @@
+[submodule "submodules/doxygen-awesome-css"]
+	path = submodules/doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git
+
+[submodule "submodules/Linters"]
+	path = submodules/Linters
+	url = https://github.com/J-Afzal/Linters.git
+
+[submodule "submodules/opencv"]
+	path = submodules/opencv
+	url = https://github.com/opencv/opencv.git
+
+[submodule "submodules/opencv_contrib"]
+	path = submodules/opencv_contrib
+	url = https://github.com/opencv/opencv_contrib.git
