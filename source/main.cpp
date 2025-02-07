@@ -17,6 +17,6 @@
 
 int main()
 {
-    VideoManager VideoManager("../../resources/motorway.mp4", "../../resources/yolo/");
+    VideoManager VideoManager("../resources/motorway.mp4", "../resources/yolo/");
     VideoManager.Run();
 }

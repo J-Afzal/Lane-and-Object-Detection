@@ -1,5 +1,5 @@
 # Projects
-.idea/
+.vscode/
 build/
 
 # Exceeds 100 MB

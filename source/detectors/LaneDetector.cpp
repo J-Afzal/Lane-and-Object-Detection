@@ -285,10 +285,11 @@ void LaneDetector::Execute_Driving_State()
         // and average LeftLaneEdgeM and LeftLaneEdgeC
         double LeftLaneEdgeM = 0, LeftLaneEdgeC = 0, RightLaneEdgeM = 0, RightLaneEdgeC = 0;
         double AverageDistanceFromLeft = 0, AverageDistanceFromRight = 0;
-        double LeftMinY = m_LeftLines[0][1], RightMinY = m_ROI_BOTTOM_HEIGHT, MinY;
+        double LeftMinY, RightMinY = m_ROI_BOTTOM_HEIGHT, MinY;
 
         if (!m_LeftLines.empty())
         {
+            LeftMinY = m_LeftLines[0][1]; // Bug - Initially was before if. IDK why.
             double LeftX1, LeftX2;
             for (const auto &LeftLine : m_LeftLines)
             {

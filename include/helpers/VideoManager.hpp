@@ -41,7 +41,7 @@ public:
     explicit VideoManager(const std::string &InputVideoFilePath,
                           const std::string &YoloResourcesFolderPath,
                           const Detector &ObjectDetectorType = Detector::STANDARD,
-                          const BackEnd &BackEndType = BackEnd::CUDA,
+                          const BackEnd &BackEndType = BackEnd::CPU,
                           const BlobSize &BlobSize = BlobSize::FIVE);
 
     ~VideoManager();
