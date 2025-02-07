@@ -55,3 +55,36 @@ cmake -S . -B build
 ## Warning
 
 The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded from [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to the `resources/yolo` folder.
+
+<!--
+TODO
+
+0. Re-do installation from start but releaseWithDebugInfo:
+   1. download opencv and opencv-contrib
+   2. configure cmake
+      1. BUILD_opencv_world=ON
+      2. OPENCV_EXTRA_MODULES_PATH to the modules folder in the unzipped OpenCV-contrib 4.5.1
+   3. configure again
+   4. generate
+   5. open vs project
+   6. build build_ALL and install
+   7. add install directory to path as OpenCV_DIR var
+
+2. Add CI and CD workflows (with debug output)
+    Add linters to dependency
+    Clean up all linting issues
+    Remove pch.h
+
+x. Upgrade to newer YOLO
+
+x. Clean up C++ code
+
+x. Clean up performance test code
+
+x. Implement C GUI window to encapsulate main code and perofrmance test code?
+
+x. Test with CUDA
+
+x. add icon to cmakelists exes
+
+ -->
