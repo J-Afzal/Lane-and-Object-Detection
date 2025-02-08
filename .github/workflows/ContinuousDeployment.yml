@@ -29,12 +29,12 @@ jobs:
             - name: Download built executable artifacts
               uses: actions/download-artifact@v4
               with:
-                  pattern: terminal-games-*
+                  pattern: lane-and-object-detection-*
 
             - name: Create new release
               run: |
                   $currentDate = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-                  gh release create "terminal-games-$currentDate" ./terminal-games-macos-latest/terminal-games-macos-latest ./terminal-games-ubuntu-latest/terminal-games-ubuntu-latest ./terminal-games-windows-latest/terminal-games-windows-latest.exe --generate-notes --latest --title "Terminal Games $currentDate"
+                  gh release create "lane-and-object-detection-$currentDate" ./lane-and-object-detection-macos-latest/lane-and-object-detection-macos-latest ./lane-and-object-detection-ubuntu-latest/lane-and-object-detection-ubuntu-latest ./lane-and-object-detection-windows-latest/lane-and-object-detection-windows-latest.exe --generate-notes --latest --title "Terminal Games $currentDate"
               env:
                   GH_TOKEN: ${{ github.token }}
 
