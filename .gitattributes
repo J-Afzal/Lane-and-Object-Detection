@@ -37,6 +37,6 @@ LICENSE         text
 *.yml           text
 
 # Web
-*.css             text      diff=css
-*.html            text      diff=html
-*.js              text
+*.css           text      diff=css
+*.html          text      diff=html
+*.js            text

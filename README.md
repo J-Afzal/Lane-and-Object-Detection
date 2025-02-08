@@ -64,6 +64,8 @@ TODO
     Clean up all linting issues
     Remove pch.h
     add try catch in linter funcs to return to root repo if failure
+    Fix clang tools locally
+    Update terminal games linters with any changes from the above
 
 x. Create build script to build opencv on any platform and then build my code
 
