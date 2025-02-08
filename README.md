@@ -60,12 +60,17 @@ The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit
 TODO
 
 1. Add CI and CD workflows (with debug output)
-    Add linters to dependency
     Clean up all linting issues
     Remove pch.h
+
+    True True in cspell config linter
     add try catch in linter funcs to return to root repo if failure
     Fix clang tools locally
+    exclude binaries by getting them from gitattributes
+
     Update terminal games linters with any changes from the above
+    Update README and check terminal games for any changes needed
+    Clean up folder organisation
 
 x. Create build script to build opencv on any platform and then build my code
 
