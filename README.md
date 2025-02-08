@@ -63,6 +63,7 @@ TODO
     Add linters to dependency
     Clean up all linting issues
     Remove pch.h
+    add try catch in linter funcs to return to root repo if failure
 
 x. Create build script to build opencv on any platform and then build my code
 
@@ -74,7 +75,7 @@ x. Upgrade to newer YOLO
 
 x. Clean up performance test code
 
-x. Implement C GUI window to encapsulate main code and perofrmance test code?
+x. Implement C GUI window to encapsulate main code and performance test code?
 
 x. Test with CUDA
 

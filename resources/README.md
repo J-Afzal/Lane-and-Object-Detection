@@ -40,7 +40,7 @@
     * Linker
         * Additional Dependencies
             * add opencv_world451.lib
-            * add cudart.lib
+            * add cudart.lib <!-- cspell:disable-line -->
 
 ## Ubuntu / Jetson Nano
 
@@ -49,20 +49,20 @@ Setup Jetson Nano (Skip for Ubuntu)
   * Format and flash SD card with the downloaded file
     * Formatter = https://www.sdcard.org/downloads/formatter/sd-memory-card-formatter-for-windows-download/
     * Flasher = https://www.balena.io/etcher/
-  * Boot up Jetson Nano and follow the Welcome prompts (make sure to choose MAXN mode)
+  * Boot up Jetson Nano and follow the Welcome prompts (make sure to choose MAXN mode) <!-- cspell:disable-line -->
 
 Open up the terminal and execute the following:
 1. Download all pre-requisites and press enter whenever asked to continue: (OK if python wheels fails)
-
+<!-- cspell:disable -->
        sudo apt upgrade && sudo apt update && sudo apt install build-essential cmake pkg-config unzip yasm git checkinstall && sudo apt install libjpeg-dev libpng-dev libtiff-dev && sudo apt install libavcodec-dev libavformat-dev libswscale-dev libavresample-dev && sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev && sudo apt install libxvidcore-dev x264 libx264-dev libfaac-dev libmp3lame-dev libtheora-dev && sudo apt install libfaac-dev libmp3lame-dev libvorbis-dev && sudo apt install libopencore-amrnb-dev libopencore-amrwb-dev && sudo apt-get install libdc1394-22 libdc1394-22-dev libxine2-dev libv4l-dev v4l-utils && cd /usr/include/linux && sudo ln -s -f ../libv4l1-videodev.h videodev.h && cd ~ && sudo apt-get install libgtk-3-dev && sudo apt-get install libtbb-dev && sudo apt-get install libatlas-base-dev gfortran && sudo apt-get install libprotobuf-dev protobuf-compiler && sudo apt-get install libgoogle-glog-dev libgflags-dev && sudo apt-get install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen && sudo apt-get install python3-dev python3-pip && sudo -H pip3 install -U pip numpy && sudo apt install python3-testresources
-
+<!-- cspell:enable -->
 
 1. Add CUDA to the path (Ubuntu desktop will need to install CUDA and add it to the PATH)
 
        echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc && \
        echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
 
-
+<!-- cspell:disable-next-line -->
 1. Download jtop to enable jetson_clocks, adjust fan speed, and much more (Skip for Ubuntu Desktop)
 
        sudo -H pip install -U jetson-stats && \
@@ -78,8 +78,8 @@ Open up the terminal and execute the following:
        unzip opencv_contrib.zip && \
        mkdir build && cd build
 
+<!-- cspell:disable -->
 1. Build OpenCV with CUDA (For the Jetson Nano make sure there is an extra 4 GB (so total 6 GB) of swap memory using jtop and then remove after compilation)
-
        cmake \
        -D CMAKE_BUILD_TYPE=RELEASE \
        -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -102,3 +102,4 @@ Open up the terminal and execute the following:
        sudo make install -j4 && \
        sudo sh -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf' && \
        sudo ldconfig
+<!-- cspell:enable -->

@@ -11,22 +11,48 @@ ignorePaths:
     - package-lock.json
 words:
     - afzal
-    - bugprone
-    - doxyfile
-    - linters
-ignoreWords:
-    - choco
-    - colorstyle
+    - cuda
     - darkmode
+    - doxyfile
+    - giveway
+    - junaid
+    - linters
+    - opencv
+    - ryzen
+    - sigmas
+ignoreWords:
+    - axisbelow
+    - ciou
+    - colorstyle
+    - contrib
+    - cutmix
     - defenses
+    - diningtable
+    - donut
     - doxygenversion
+    - figheight
+    - figwidth
+    - fontdict
+    - fontsize
+    - fourcc
+    - greedynms
     - ilammy
+    - imshow
+    - labelsize
     - logosize
     - mathjax
     - mdfile
     - memb
-    - nolint
+    - mish
     - noncommercially
+    - pottedplant
     - projectbrief
-    - tictactoe
-    - wasd
+    - tvmonitor
+    - xaxis
+    - xlabel
+    - xlim
+    - xticks
+    - yaxis
+    - ylabel
+    - ylim
+    - yolov

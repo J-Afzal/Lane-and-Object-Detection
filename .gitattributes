@@ -5,12 +5,20 @@
 *.cpp           text        diff=cpp
 *.hpp           text        diff=cpp
 
+# Python
+*.py            text        diff=python
+
 # Config
 .editorconfig   text
 .gitattributes  text
 .gitignore      text
 .gitmodules     text
 Doxyfile        text
+
+# YOLO
+*.cfg           text
+*.names         text
+*.weights       binary
 
 # Documents
 *.md            text        diff=markdown
@@ -20,6 +28,8 @@ LICENSE         text
 
 # Graphics
 *.ico           binary
+*.gif           binary
+*.mp4           binary
 *.png           binary
 *.svg           text
 
@@ -27,6 +37,6 @@ LICENSE         text
 *.yml           text
 
 # Web
-*.css             text diff=css
-*.html            text diff=html
+*.css             text      diff=css
+*.html            text      diff=html
 *.js              text
