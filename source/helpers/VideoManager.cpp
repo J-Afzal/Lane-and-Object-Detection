@@ -1,26 +1,24 @@
-/**
- * @file VideoManager.cpp
- * @author Junaid Afzal
- * @brief Implementation of VideoManager.hpp
- * @version 1.0
- * @date 14-04-2022
- *
- * @copyright Copyright (c) 2022
- *
- */
+#include <string>
+
 #include "helpers/VideoManager.hpp"
 
-VideoManager::VideoManager(const std::string &InputVideoFilePath,
-                           const std::string &YoloResourcesFolderPath,
-                           const Detector &ObjectDetectorType,
-                           const BackEnd &BackEndType,
-                           const BlobSize &BlobSize)
+VideoManager::VideoManager(const std::string& InputVideoFilePath,
+                           const std::string& YoloResourcesFolderPath,
+                           const Detector& ObjectDetectorType,
+                           const BackEnd& BackEndType,
+                           const BlobSize& BlobSize)
 {
     // If InputVideoPath is an integer, convert it to one so that OpenCV will use a camera as the input
     if (std::all_of(InputVideoFilePath.begin(), InputVideoFilePath.end(), [](const char& i) { return isdigit(i); }))
+    {
         m_InputVideo.open(std::stoi(InputVideoFilePath, nullptr, 10));
+    }
+
     else
+    {
         m_InputVideo.open(InputVideoFilePath);
+    }
+
     // Set size to avoid errors in hard coded values
     m_InputVideo.set(cv::CAP_PROP_FRAME_WIDTH, 1920);
     m_InputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, 1080);
@@ -52,7 +50,9 @@ std::optional<std::vector<int>> VideoManager::Run()
         // Generate the next frame
         m_InputVideo >> m_Frame;
         if (m_Frame.empty())
+        {
             break;
+        }
 
         // Run the detectors
         m_ObjectDetector->Run_Detector(m_Frame);
@@ -71,10 +71,16 @@ std::optional<std::vector<int>> VideoManager::Run()
         cv::imshow("frame", m_Frame);
 
         int Key = cv::waitKey(1);
+
         if (Key == 'r')
+        {
             Toggle_Recording();
+        }
+
         else if (Key == 'q')
+        {
             break;
+        }
 
         m_Performance->Stop_Timer();
     }
@@ -121,11 +127,13 @@ void VideoManager::Toggle_Recording()
         time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         std::stringstream ss;
         ss << std::put_time(localtime(&now), "%Y-%m-%d %H-%M-%S");
-        std::string currentTime = ss.str();
+        const std::string CURRENT_TIME = ss.str();
 
-        m_OutputVideo.open(currentTime + " Frame.mp4", cv::VideoWriter::fourcc('m', 'p', '4', 'v'), 30, cv::Size(m_VIDEO_WIDTH, m_VIDEO_HEIGHT), true);
+        m_OutputVideo.open(CURRENT_TIME + " Frame.mp4", cv::VideoWriter::fourcc('m', 'p', '4', 'v'), 30, cv::Size(m_VIDEO_WIDTH, m_VIDEO_HEIGHT), true);
 
         if (!m_OutputVideo.isOpened())
+        {
             std::cout << "\nERROR: Output video file could not be opened! Recording stopped!\n";
+        }
     }
 }

@@ -63,10 +63,12 @@ TODO
     Clean up all linting issues
     Remove pch.h
 
+    Get-AllFilePathsToTest doesn't work
+    Add exclude binaries (by getting them from gitattributes) from Get-AllFilePathsToTest and Get-FilteredFilePathsToTest
     True True in cspell config linter
-    add try catch in linter funcs to return to root repo if failure
+    prettier step is broken
     Fix clang tools locally
-    exclude binaries by getting them from gitattributes
+    add try catch in linter funcs to return to root repo if failure
 
     Update terminal games linters with any changes from the above
     Update README and check terminal games for any changes needed
@@ -86,7 +88,7 @@ x. Implement C GUI window to encapsulate main code and performance test code?
 
 x. Test with CUDA
 
-0. Re-do installation from start but releaseWithDebugInfo:
+1. Re-do installation from start but releaseWithDebugInfo:
    1. download opencv and opencv-contrib
    2. configure cmake
       1. BUILD_opencv_world=ON

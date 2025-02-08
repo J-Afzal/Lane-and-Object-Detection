@@ -9,6 +9,7 @@ ignorePaths:
     - build/
     - docs/html/
     - package-lock.json
+    - resources/yolo/yolov4.weights
 words:
     - afzal
     - cuda
