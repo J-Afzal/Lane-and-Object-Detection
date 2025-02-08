@@ -57,28 +57,29 @@ cmake -S . -B build
 The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded from [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to the `resources/yolo` folder.
 
 <!--
+
 TODO
 
 1. Add CI and CD workflows (with debug output)
 
-    Fix build step
-
-    cmake -S . -B ./build -D CMAKE_BUILD_TYPE=Release -DBUILD_opencv_world=ON
-
-    cmake --build ./build --config Release
-
-    Put above in linters? to build in release and option to be in parallel for local dev
     remove opencv contrib as dep
-    for both this and terminal games create a template release
 
+    Linters changes:
+        - Get-AllFilePathsToTest doesn't work
+        - Add exclude binaries option (by getting them from gitattributes) from Get-AllFilePathsToTest and Get-FilteredFilePathsToTest
+        - True True in cspell config linter - why?
+        - prettier step is broken?
+        - Fix clang tools locally
+        - add try catch in linter funcs which change location with Set-location to return to repo root if failure
+        - General linter function called build code or Build-TerminalGames and Build-LaneAndObjectDetection? which does everything?
+                cmake -S . -B ./build -D CMAKE_BUILD_TYPE=Release -DBUILD_opencv_world=ON
+                cmake --build ./build --config Release
+            Options: -BuildType [Debug,Release] -Parallel [number] -CleanBuild (both local and opencv for lane and object detection)
+            (x. Create build script to build opencv on any platform and then build my code (same for terminal games?))
 
+    For both lane and object detection and terminal games create a template release workflow (and compare workflows and CMakelists differences)
 
-    Get-AllFilePathsToTest doesn't work
-    Add exclude binaries (by getting them from gitattributes) from Get-AllFilePathsToTest and Get-FilteredFilePathsToTest
-    True True in cspell config linter
-    prettier step is broken
-    Fix clang tools locally
-    add try catch in linter funcs to return to root repo if failure
+    Update README with installation instructions (with reference to function that does it all)
 
 2. Fix clang linting issues
     cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
@@ -86,16 +87,6 @@ TODO
 3. Clean up C++ lane detection code and supplementary code (ignore object detection)
    clean up comments
    Add doxygen docs page to readme
-
-
-
-
-Update terminal games linters with any changes from the above
-Update README and check terminal games for any changes needed
-
-
-
-x. Create build script to build opencv on any platform and then build my code (same for terminal games?)
 
 x. Clean up C++ object detection code
 
@@ -107,18 +98,4 @@ x. Implement C GUI window to encapsulate main code and performance test code?
 
 x. Test with CUDA
 
-
-
-
-1. Re-do installation steps from start but releaseWithDebugInfo:
-   1. download opencv and opencv-contrib
-   2. configure cmake
-      1. BUILD_opencv_world=ON
-      2. OPENCV_EXTRA_MODULES_PATH to the modules folder in the unzipped OpenCV-contrib 4.5.1
-   3. configure again
-   4. generate
-   5. open vs project
-   6. build build_ALL and install
-   7. add install directory to path as OpenCV_DIR var
-   8. Note on opening vs code through x64 dev cmd
- -->
+-->
