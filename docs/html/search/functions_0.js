@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['analyse_5fhough_5flines_0',['Analyse_Hough_Lines',['../class_lane_detector.html#a88e72498453eda7b85d1163ff91e6f67',1,'LaneDetector']]]
+  ['analysehoughlines_0',['AnalyseHoughLines',['../class_lane_and_object_detection_1_1_lane_detector.html#a44fd67cd93d318a272bbb01ec8be3967',1,'LaneAndObjectDetection::LaneDetector']]]
 ];

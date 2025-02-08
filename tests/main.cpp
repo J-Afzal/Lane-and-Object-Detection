@@ -1,7 +1,11 @@
+// NOLINTBEGIN
+
 #include "helpers/PerformanceTests.hpp"
 
 int main()
 {
-    PerformanceTests performanceTests("../../resources/benchmark.mp4", "../../resources/yolo/");
+    LaneAndObjectDetection::PerformanceTests performanceTests("../../resources/benchmark.mp4", "../../resources/yolo/");
     performanceTests.Run();
 }
+
+// NOLINTEND

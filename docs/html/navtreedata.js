@@ -32,6 +32,13 @@ var NAVTREE =
     [ "Performance", "index.html#autotoc_md5", null ],
     [ "Building", "index.html#autotoc_md6", null ],
     [ "Warning", "index.html#autotoc_md7", null ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Enumerations", "namespacemembers_enum.html", null ]
+      ] ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -42,19 +49,15 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Enumerations", "globals_enum.html", null ]
-      ] ]
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"_lane_detector_8cpp.html"
+"_globals_8hpp_source.html",
+"class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

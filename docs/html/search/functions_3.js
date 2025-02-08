@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['get_5fbounding_5fboxes_0',['Get_Bounding_Boxes',['../class_object_detector.html#a0186d3b9b6c65bd86ff83056ca7199a6',1,'ObjectDetector']]],
-  ['get_5fdriving_5fstate_1',['Get_Driving_State',['../class_lane_detector.html#a6e5eaece667d58d06293a6ebbe31aa2d',1,'LaneDetector']]],
-  ['get_5fframe_5ftimes_2',['Get_Frame_Times',['../class_performance.html#aba6233e2ca6f4fd13b7c6e7c9520e2bb',1,'Performance']]],
-  ['get_5fhough_5flines_3',['Get_Hough_Lines',['../class_lane_detector.html#a0d885c5717946ea478454de3f0bba9aa',1,'LaneDetector']]]
+  ['getboundingboxes_0',['GetBoundingBoxes',['../class_lane_and_object_detection_1_1_object_detector.html#a9fc636fd7ffeb8ed80c0e423352be495',1,'LaneAndObjectDetection::ObjectDetector']]],
+  ['getdrivingstate_1',['GetDrivingState',['../class_lane_and_object_detection_1_1_lane_detector.html#a5512bf83e303767a79e4776230a8aa81',1,'LaneAndObjectDetection::LaneDetector']]],
+  ['getframetimes_2',['GetFrameTimes',['../class_lane_and_object_detection_1_1_performance.html#a419ff42d7848d98329e88301fff24d19',1,'LaneAndObjectDetection::Performance']]],
+  ['gethoughlines_3',['GetHoughLines',['../class_lane_and_object_detection_1_1_lane_detector.html#a89c0ee4e20c0771416a32d0a9bebccc1',1,'LaneAndObjectDetection::LaneDetector']]]
 ];

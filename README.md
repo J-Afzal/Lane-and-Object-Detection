@@ -60,8 +60,8 @@ The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit
 TODO
 
 1. Add CI and CD workflows (with debug output)
-    Clean up all linting issues
-    Remove pch.h
+
+    Fix 
 
     Get-AllFilePathsToTest doesn't work
     Add exclude binaries (by getting them from gitattributes) from Get-AllFilePathsToTest and Get-FilteredFilePathsToTest
@@ -69,6 +69,14 @@ TODO
     prettier step is broken
     Fix clang tools locally
     add try catch in linter funcs to return to root repo if failure
+
+2. Fix clang linting issues
+    cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
+    clean up comments
+
+
+
+
 
     Update terminal games linters with any changes from the above
     Update README and check terminal games for any changes needed

@@ -1,87 +1,110 @@
-/**
- * @file ObjectDetector.hpp
- * @author Junaid Afzal
- * @brief This class performs object detection
- * using YOLOv4 through OpenCV
- * @version 1.0
- * @date 14-04-2022
- *
- * @copyright Copyright (c) 2022
- *
- */
+// NOLINTBEGIN
 
 #pragma once
-#include "pch.hpp"
+
+#include <cstdint>
+#include <map>
+#include <string>
+#include <vector>
+
+#include <opencv2/core/mat.hpp>
+#include <opencv2/core/types.hpp>
+#include <opencv2/dnn/dnn.hpp>
 
 /**
+ * @namespace LaneAndObjectDetection
  * @brief TODO
  */
-enum class Detector { NONE=0, STANDARD=1, TINY=2 };
-
-/**
- * @brief TODO
- */
-enum class BackEnd { CPU=0, CUDA=1 };
-
-/**
- * @brief TODO
- */
-enum class BlobSize { ONE=288, TWO=320, THREE=416, FOUR=512, FIVE=608 };
-
-/**
- * @class ObjectDetector
- * @brief TODO
- */
-class ObjectDetector
+namespace LaneAndObjectDetection
 {
-public:
     /**
      * @brief TODO
      */
-    ObjectDetector(const std::string &YoloResourcesFolderPath, const Detector &YoloType, const BackEnd &BackEndType, const BlobSize &BlobSize);
-
-    /**
-     * @brief TODO
-     */
-    ~ObjectDetector() = default;
-
-    /**
-     * @brief TODO
-     */
-    void Run_Detector(const cv::Mat &Frame);
+    enum class Detector
+    {
+        NONE = 0,
+        STANDARD = 1,
+        TINY = 2
+    };
 
     /**
      * @brief TODO
      */
-    std::vector<cv::Rect> Get_Bounding_Boxes();
+    enum class BackEnd
+    {
+        CPU = 0,
+        CUDA = 1
+    };
 
     /**
      * @brief TODO
      */
-    void Print_To_Frame(cv::Mat &Frame);
+    enum class BlobSize
+    {
+        ONE = 288,
+        TWO = 320,
+        THREE = 416,
+        FOUR = 512,
+        FIVE = 608
+    };
 
-private:
     /**
-    * @brief TODO
-    */
-    ///@{
-    std::map<std::string, cv::Scalar> m_ModelNamesAndColourList;
-    std::vector<cv::Mat> m_OutputBlobs;
-    std::vector<cv::Rect> m_BoundingBoxes, m_PreNMSObjectBoundingBoxes;
-    std::vector<std::string> m_UnconnectedOutputLayerNames, m_ModelNames, m_Names, m_PreNMSObjectNames, m_TrafficLightStates;
-    std::vector<cv::Point2f> m_SrcTrafficLight, m_DstTrafficLight;
-    std::vector<float> m_Confidences;
-    std::vector<float> m_PreNMSObjectConfidences;
-    std::vector<int> m_IndicesAfterNMS;
-    cv::dnn::Net m_Net;
-    cv::Point m_ClassID;
-    cv::Mat m_BlobFromImage, m_CroppedImage, m_CroppedImageInHSV;
-    double m_Confidence{}, m_CenterX{}, m_CenterY{}, m_Width{}, m_Height{};
-    int m_NonZeroPixelsInGreen{}, m_NonZeroPixelsInRed{}, m_BlobSize{};
-    bool m_SkipDetection{};
+     * @class ObjectDetector
+     * @brief TODO
+     */
+    class ObjectDetector
+    {
+    public:
+        /**
+         * @brief TODO
+         */
+        ObjectDetector(const std::string& p_yoloResourcesFolderPath, const Detector& p_yoloType, const BackEnd& p_backEndType, const BlobSize& p_blobSize);
 
-    const double m_YOLO_CONFIDENCE_THRESHOLD = 0.4;
-    const float m_YOLO_NMS_THRESHOLD = 0.4;
-    const int m_BOUNDING_BOX_BUFFER = 5, m_VIDEO_WIDTH = 1920, m_VIDEO_HEIGHT = 1080, m_ROI_BOTTOM_HEIGHT = 840;
-    ///@}
-};
+        /**
+         * @brief TODO
+         */
+        ~ObjectDetector() = default;
+
+        /**
+         * @brief TODO
+         */
+        void RunDetector(const cv::Mat& p_frame);
+
+        /**
+         * @brief TODO
+         */
+        std::vector<cv::Rect> GetBoundingBoxes();
+
+        /**
+         * @brief TODO
+         */
+        void PrintToFrame(cv::Mat& p_frame);
+
+    private:
+        /**
+         * @brief TODO
+         */
+        ///@{
+        std::map<std::string, cv::Scalar> m_modelNamesAndColourList;
+        std::vector<cv::Mat> m_outputBlobs;
+        std::vector<cv::Rect> m_boundingBoxes, m_preNmsObjectBoundingBoxes;
+        std::vector<std::string> m_unconnectedOutputLayerNames, m_modelNames, m_names, m_preNmsObjectNames, m_trafficLightStates;
+        std::vector<cv::Point2f> m_srcTrafficLight, m_dstTrafficLight;
+        std::vector<float> m_confidences;
+        std::vector<float> m_preNmsObjectConfidences;
+        std::vector<int> m_indicesAfterNms;
+        cv::dnn::Net m_net;
+        cv::Point m_classId;
+        cv::Mat m_blobFromImage, m_croppedImage, m_croppedImageInHsv;
+        double m_confidence {}, m_centerX {}, m_centerY {}, m_width {}, m_height {};
+        uint32_t m_nonZeroPixelsInGreen {}, m_nonZeroPixelsInRed {}, m_blobSize {};
+        bool m_skipDetection {};
+
+        const double m_YOLO_CONFIDENCE_THRESHOLD = 0.4;
+        const float m_YOLO_NMS_THRESHOLD = 0.4;
+        const uint32_t m_BOUNDING_BOX_BUFFER = 5, m_VIDEO_WIDTH = 1920, m_VIDEO_HEIGHT = 1080, m_ROI_BOTTOM_HEIGHT = 840;
+        ///@}
+    };
+}
+
+// NOLINTEND

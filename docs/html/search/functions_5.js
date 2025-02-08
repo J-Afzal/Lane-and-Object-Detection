@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main.cpp']]]
+  ['objectdetector_0',['ObjectDetector',['../class_lane_and_object_detection_1_1_object_detector.html#a1b5e9478b7940a20a2bf795d52c9b488',1,'LaneAndObjectDetection::ObjectDetector']]]
 ];

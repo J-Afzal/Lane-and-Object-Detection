@@ -40,8 +40,7 @@
     * Linker
         * Additional Dependencies
             * add opencv_world451.lib
-            <!-- cspell:disable-line -->
-            * add cudart.lib
+            * add cud art.lib
 
 ## Ubuntu / Jetson Nano
 
@@ -50,8 +49,7 @@ Setup Jetson Nano (Skip for Ubuntu)
   * Format and flash SD card with the downloaded file
     * Formatter = https://www.sdcard.org/downloads/formatter/sd-memory-card-formatter-for-windows-download/
     * Flasher = https://www.balena.io/etcher/
-  <!-- cspell:disable-line -->
-  * Boot up Jetson Nano and follow the Welcome prompts (make sure to choose MAXN mode)
+  * Boot up Jetson Nano and follow the Welcome prompts (make sure to choose MAX N mode)
 
 Open up the terminal and execute the following:
 1. Download all pre-requisites and press enter whenever asked to continue: (OK if python wheels fails)

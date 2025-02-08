@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['toggle_5frecording_0',['Toggle_Recording',['../class_video_manager.html#a6d36a3ce0b705b5c1bbde9a02ee245df',1,'VideoManager']]]
+  ['videomanager_0',['VideoManager',['../class_lane_and_object_detection_1_1_video_manager.html#a7b17d9ed2432ad94470326c9889a8e98',1,'LaneAndObjectDetection::VideoManager']]]
 ];

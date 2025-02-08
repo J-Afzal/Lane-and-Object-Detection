@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['videomanager_0',['VideoManager',['../class_video_manager.html',1,'VideoManager'],['../class_video_manager.html#afccb902000c299f7741e7d11cc0e1e62',1,'VideoManager::VideoManager()']]],
-  ['videomanager_2ecpp_1',['VideoManager.cpp',['../_video_manager_8cpp.html',1,'']]],
-  ['videomanager_2ehpp_2',['VideoManager.hpp',['../_video_manager_8hpp.html',1,'']]],
-  ['videos_3',['Output Videos',['../index.html#autotoc_md2',1,'']]]
+  ['warning_0',['Warning',['../index.html#autotoc_md7',1,'']]],
+  ['workflows_20cmake_20badge_20svg_20alt_20cmake_20a_1',['Building &lt;a href=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml&quot; &gt;&lt;img src=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg&quot; alt=&quot;CMake&quot;/&gt;&lt;/a&gt;',['../index.html#autotoc_md6',1,'']]],
+  ['workflows_20cmake_20yml_20img_20src_20https_3a_20github_20com_20j_20afzal_20lane_20and_20object_20detection_20workflows_20cmake_20badge_20svg_20alt_20cmake_20a_2',['Building &lt;a href=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml&quot; &gt;&lt;img src=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg&quot; alt=&quot;CMake&quot;/&gt;&lt;/a&gt;',['../index.html#autotoc_md6',1,'']]]
 ];

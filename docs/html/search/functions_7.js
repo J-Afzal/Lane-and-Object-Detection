@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['performance_0',['Performance',['../class_performance.html#adc9cdb7dcde560a094bab7276ccde2be',1,'Performance']]],
-  ['performancetests_1',['PerformanceTests',['../class_performance_tests.html#aed65e2a9a88fac4e2d6f4d885c1c13e7',1,'PerformanceTests']]],
-  ['print_5ffps_5fto_5fframe_2',['Print_FPS_To_Frame',['../class_performance.html#a67f2dedd20f03818a8551b0bbd319bd0',1,'Performance']]],
-  ['print_5frecording_5fstatus_5fto_5fframe_3',['Print_Recording_Status_To_Frame',['../class_video_manager.html#ace872227a18c8881e94c297af9d75b8a',1,'VideoManager']]],
-  ['print_5fto_5fframe_4',['Print_To_Frame',['../class_lane_detector.html#ad8807bfe8de3238f9c7e2098c1691b76',1,'LaneDetector::Print_To_Frame()'],['../class_object_detector.html#aca41a25c84ab97a872217632b5809a35',1,'ObjectDetector::Print_To_Frame()']]]
+  ['rollingaverage_0',['RollingAverage',['../class_lane_and_object_detection_1_1_rolling_average.html#a111dbcd51567f3360d883eb953e18b6a',1,'LaneAndObjectDetection::RollingAverage']]],
+  ['run_1',['Run',['../class_lane_and_object_detection_1_1_performance_tests.html#a000285ce489cb65445b5c6cabf6d4d07',1,'LaneAndObjectDetection::PerformanceTests::Run()'],['../class_lane_and_object_detection_1_1_video_manager.html#abe2719fe8bca8d4e01ac3f7dad6de15e',1,'LaneAndObjectDetection::VideoManager::Run()']]],
+  ['rundetector_2',['RunDetector',['../class_lane_and_object_detection_1_1_lane_detector.html#ae4053ad6a19e5d3cdff637748aa70841',1,'LaneAndObjectDetection::LaneDetector::RunDetector()'],['../class_lane_and_object_detection_1_1_object_detector.html#afd42026fd074b9b1ed739674a90f5139',1,'LaneAndObjectDetection::ObjectDetector::RunDetector()']]]
 ];
