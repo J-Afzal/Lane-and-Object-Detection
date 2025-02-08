@@ -61,7 +61,17 @@ TODO
 
 1. Add CI and CD workflows (with debug output)
 
-    Fix 
+    Fix build step
+
+    cmake -S . -B ./build -D CMAKE_BUILD_TYPE=Release -DBUILD_opencv_world=ON
+
+    cmake --build ./build --config Release
+
+    Put above in linters? to build in release and option to be in parallel for local dev
+    remove opencv contrib as dep
+    for both this and terminal games create a template release
+
+
 
     Get-AllFilePathsToTest doesn't work
     Add exclude binaries (by getting them from gitattributes) from Get-AllFilePathsToTest and Get-FilteredFilePathsToTest
@@ -72,31 +82,35 @@ TODO
 
 2. Fix clang linting issues
     cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
-    clean up comments
+
+3. Clean up C++ lane detection code and supplementary code (ignore object detection)
+   clean up comments
+   Add doxygen docs page to readme
 
 
 
 
+Update terminal games linters with any changes from the above
+Update README and check terminal games for any changes needed
 
-    Update terminal games linters with any changes from the above
-    Update README and check terminal games for any changes needed
-    Clean up folder organisation
 
-x. Create build script to build opencv on any platform and then build my code
 
-x. Clean up C++ lane detection code
+x. Create build script to build opencv on any platform and then build my code (same for terminal games?)
 
 x. Clean up C++ object detection code
 
 x. Upgrade to newer YOLO
 
-x. Clean up performance test code
+x. Clean up performance test code (replace with C++) or delete
 
 x. Implement C GUI window to encapsulate main code and performance test code?
 
 x. Test with CUDA
 
-1. Re-do installation from start but releaseWithDebugInfo:
+
+
+
+1. Re-do installation steps from start but releaseWithDebugInfo:
    1. download opencv and opencv-contrib
    2. configure cmake
       1. BUILD_opencv_world=ON
@@ -107,5 +121,4 @@ x. Test with CUDA
    6. build build_ALL and install
    7. add install directory to path as OpenCV_DIR var
    8. Note on opening vs code through x64 dev cmd
-   9.
  -->
