@@ -1,0 +1,44 @@
+name: Release
+
+on: workflow_call
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pages: write
+            id-token: write
+        defaults:
+            run:
+                shell: pwsh
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Download built executable artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: lane-and-object-detection-*
+
+            - name: Create new release
+              run: |
+                  $releaseTitle = "Lane and Object Detection"
+                  $executableSharedName = "lane-and-object-detection"
+                  $currentDate = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+                  gh release create "$executableSharedName-$currentDate" ./$executableSharedName-macos-latest/$executableSharedName-macos-latest ./$executableSharedName-ubuntu-latest/$executableSharedName-ubuntu-latest ./$executableSharedName-windows-latest/$executableSharedName-windows-latest.exe --generate-notes --latest --title "$releaseTitle $currentDate"
+              env:
+                  GH_TOKEN: ${{ github.token }}
+
+            - name: Upload doxygen documentation artifacts
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  name: doxygen-docs
+                  path: ./docs/html/
+
+            - name: Release GitHub pages
+              uses: actions/deploy-pages@v4
+              with:
+                  artifact_name: doxygen-docs
+                  token: ${{ github.token }}

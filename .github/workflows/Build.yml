@@ -21,28 +21,13 @@ jobs:
               with:
                 submodules: true
 
-            - name: Build OpenCV
-              run: |
-                  cd ./submodules/opencv
-                  mkdir build
-                  cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -DBUILD_opencv_world=ON
-                  cmake --build ./build --config Release
-                  cd ../..
-
-            - uses: ilammy/msvc-dev-cmd@v1
+            - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed?
               if: ${{ matrix.os }} == 'windows-latest'
 
-            - name: Configure CMake
+            - name: Build Lane and Object Detection
               run: |
-                  if ("${{ matrix.os }}" -eq "windows-latest") {
-                      cmake -S . -B ./build -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=Release" -D "CI_CD=TRUE"
-                  }
-                  else {
-                      cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release" -D "CI_CD=TRUE"
-                  }
-
-            - name: Build Project
-              run: cmake --build ./build --config Release
+                  Import-Module ./submodules/Linters/linters-powershell/Linters.psd1
+                  Build-LaneAndObjectDetection -BuildType Release -Parallel 8
 
             - name: Upload executable as artifact
               uses: actions/upload-artifact@v4

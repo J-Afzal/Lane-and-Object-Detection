@@ -12,40 +12,5 @@ jobs:
         uses: ./.github/workflows/Build.yml
 
     release:
+        uses: ./.github/workflows/Release.yml
         needs: build
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            pages: write
-            id-token: write
-        defaults:
-            run:
-                shell: pwsh
-
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-
-            - name: Download built executable artifacts
-              uses: actions/download-artifact@v4
-              with:
-                  pattern: lane-and-object-detection-*
-
-            - name: Create new release
-              run: |
-                  $currentDate = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-                  gh release create "lane-and-object-detection-$currentDate" ./lane-and-object-detection-macos-latest/lane-and-object-detection-macos-latest ./lane-and-object-detection-ubuntu-latest/lane-and-object-detection-ubuntu-latest ./lane-and-object-detection-windows-latest/lane-and-object-detection-windows-latest.exe --generate-notes --latest --title "Terminal Games $currentDate"
-              env:
-                  GH_TOKEN: ${{ github.token }}
-
-            - name: Upload doxygen documentation artifacts
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  name: doxygen-docs
-                  path: ./docs/html/
-
-            - name: Release GitHub pages
-              uses: actions/deploy-pages@v4
-              with:
-                  artifact_name: doxygen-docs
-                  token: ${{ github.token }}
