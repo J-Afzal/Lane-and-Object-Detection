@@ -62,16 +62,13 @@ TODO
 
 1. Add CI and CD workflows (with debug output)
 
-    remove opencv contrib as dep
-
     Linters changes:
-        - Get-AllFilePathsToTest doesn't work
         - Add exclude binaries option (by getting them from gitattributes) from Get-AllFilePathsToTest and Get-FilteredFilePathsToTest
         - True True in cspell config linter - why?
         - prettier step is broken?
         - Fix clang tools locally
         - add try catch in linter funcs which change location with Set-location to return to repo root if failure
-        - General linter function called build code or Build-TerminalGames and Build-LaneAndObjectDetection? which does everything?
+        - General linter function called build code or Build-TerminalGames and Build-LaneAndObjectDetection? which does everything? (maybe a configure step for configuring code?)
                 cmake -S . -B ./build -D CMAKE_BUILD_TYPE=Release -DBUILD_opencv_world=ON
                 cmake --build ./build --config Release
             Options: -BuildType [Debug,Release] -Parallel [number] -CleanBuild (both local and opencv for lane and object detection)
@@ -81,10 +78,13 @@ TODO
 
     Update README with installation instructions (with reference to function that does it all)
 
+    Update, commit and merge terminal games code as well
+
 2. Fix clang linting issues
     cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
 
 3. Clean up C++ lane detection code and supplementary code (ignore object detection)
+   Add default CLI support to pass required paths
    clean up comments
    Add doxygen docs page to readme
 
