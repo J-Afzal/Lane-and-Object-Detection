@@ -1,8 +1,41 @@
 # Lane and Object Detection
 
-## About
+Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.
 
-Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4. The software is run by instantiating the `VideoManger` class with a string to the input video file and yolo resources folder and then calling it's `Run()` method. If a camera input is desired, then pass the appropriate integer, as required by OpenCV, as a string.
+## Getting Started
+
+Binaries can be found in [Releases](https://github.com/J-Afzal/Lane-and-Object-Detection/releases) or, if preferred, CMake can
+be used to build the project either through the PowerShell helper function:
+
+```text
+Import-Module ./modules/Build.psd1
+
+Build-LaneAndObjectDetection -Platform windows-latest -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
+
+./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
+```
+
+or manually:
+
+```text
+git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git
+cd Lane-and-Object-Detection
+
+# Build OpenCV
+cd ./submodules/opencv/
+cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release" -D "BUILD_opencv_world=ON"
+cmake --build ./build --config Release --parallel 8
+cd ../..
+
+# Build Lane and Object Detection
+cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release"
+cmake --build ./build --config Release
+
+./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
+```
+
+> [!WARNING]
+> If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.
 
 ## Output Videos
 
@@ -62,31 +95,21 @@ TODO
 
 1. Add CI and CD workflows (with debug output)
 
-    Linters changes:
-        - Add exclude binaries option (by getting them from gitattributes) from Get-AllFilePathsToTest and Get-FilteredFilePathsToTest
-        - True True in cspell config linter - why?
-        - prettier step is broken?
-        - Fix clang tools locally
-        - add try catch in linter funcs which change location with Set-location to return to repo root if failure
-        - General linter function called build code or Build-TerminalGames and Build-LaneAndObjectDetection? which does everything? (maybe a configure step for configuring code?)
-                cmake -S . -B ./build -D CMAKE_BUILD_TYPE=Release -DBUILD_opencv_world=ON
-                cmake --build ./build --config Release
-            Options: -BuildType [Debug,Release] -Parallel [number] -CleanBuild (both local and opencv for lane and object detection)
-            (x. Create build script to build opencv on any platform and then build my code (same for terminal games?))
+    default values for non mandatory params
+    change path to literalPath
+    add cpp linter deps to install linting deps and make bash stuff in to dependency scripts that can be called
+    update linters and merge to main and pull down in other projects and push up and test prs
 
-    For both lane and object detection and terminal games create a template release workflow (and compare workflows and CMakelists differences)
-
-    Update README with installation instructions (with reference to function that does it all)
-
-    Update, commit and merge terminal games code as well
+    - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed? Linked to the NMake Makefiles if
 
 2. Fix clang linting issues
     cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
 
 3. Clean up C++ lane detection code and supplementary code (ignore object detection)
-   Add default CLI support to pass required paths
+   Add default CLI support to pass required paths (and add to readme)
    clean up comments
    Add doxygen docs page to readme
+   clean up rest of readme
 
 x. Clean up C++ object detection code
 

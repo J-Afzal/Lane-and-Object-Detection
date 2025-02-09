@@ -92,7 +92,7 @@ function Build-LaneAndObjectDetection {
     [CmdletBinding()]
     param(
         [Parameter(Position = 0, Mandatory = $true)]
-        [ValidateSet("local", "macos-latest", "ubuntu-latest", "windows-latest")]
+        [ValidateSet("macos-latest", "ubuntu-latest", "windows-latest")]
         [string]
         $Platform,
 
