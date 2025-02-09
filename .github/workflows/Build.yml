@@ -21,17 +21,17 @@ jobs:
               with:
                 submodules: true
 
-            - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed?
+            - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed? Linked to the NMake Makefiles if
               if: ${{ matrix.os }} == 'windows-latest'
 
             - name: Build Lane and Object Detection
               run: |
-                  Import-Module ./submodules/Linters/linters-powershell/Linters.psd1
-                  Build-LaneAndObjectDetection -BuildType Release -Parallel 8
+                  Import-Module ./modules/Build.psd1
+                  Build-LaneAndObjectDetection -Platform ${{ matrix.os }} -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
             - name: Upload executable as artifact
               uses: actions/upload-artifact@v4
               with:
                   name: lane-and-object-detection-${{ matrix.os }}
-                  path: ./build/lane-and-object-detection-${{ matrix.os }}*
+                  path: ./build/lane-and-object-detection/
                   if-no-files-found: error
