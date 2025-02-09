@@ -4,7 +4,7 @@
 
 int main()
 {
-    LaneAndObjectDetection::VideoManager videoManager("../resources/motorway.mp4", "../resources/yolo/");
+    LaneAndObjectDetection::VideoManager videoManager("../../resources/motorway.mp4", "../../resources/yolo/");
     videoManager.Run();
 }
 
