@@ -24,7 +24,7 @@ Doxyfile        text
 *.md            text        diff=markdown
 *.rc            text
 *.txt           text
-LICENSE         binary
+LICENSE         text
 
 # Graphics
 *.ico           binary
