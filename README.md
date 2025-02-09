@@ -97,7 +97,7 @@ TODO
 
     default values for non mandatory params
     change path to literalPath
-    add cpp linter deps to install linting deps and make bash stuff in to dependency scripts that can be called
+    add cpp linter deps to install linting deps and make bash stuff in to dependency scripts that can be called (or shared function name?)
     update linters and merge to main and pull down in other projects and push up and test prs
 
     - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed? Linked to the NMake Makefiles if
