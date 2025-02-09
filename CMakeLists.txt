@@ -6,8 +6,11 @@ SET(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS}) # TODO: is this needed?
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+Set(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/)
+FIND_PACKAGE(OpenCV REQUIRED)
 
 # Executable names used by the CI/CD workflows
 IF(CI_CD)
@@ -28,10 +31,6 @@ ELSE()
     SET(executable_name "lane-and-object-detection")
     SET(executable_name_performance_tests "lane-and-object-detection-performance-tests")
 ENDIF()
-
-Set(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/)
-
-FIND_PACKAGE(OpenCV REQUIRED)
 
 ADD_EXECUTABLE(
     ${executable_name}
@@ -59,4 +58,4 @@ ADD_EXECUTABLE(
 TARGET_LINK_LIBRARIES(${executable_name} ${OpenCV_LIBS})
 TARGET_LINK_LIBRARIES(${executable_name_performance_tests} ${OpenCV_LIBS})
 
-# TODO: add cop task to copy dlls and videos and yolo files
+# TODO: how to add required dll/libs to exe so it can be single file dep?
