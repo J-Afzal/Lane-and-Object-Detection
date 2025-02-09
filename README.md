@@ -5,7 +5,7 @@ Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4
 ## Getting Started
 
 Binaries can be found in [Releases](https://github.com/J-Afzal/Lane-and-Object-Detection/releases) or, if preferred, CMake can
-be used to build the project either through the PowerShell helper function:
+be used to build the project from source either through the PowerShell helper function:
 
 ```text
 Import-Module ./modules/Build.psd1

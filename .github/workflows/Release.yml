@@ -17,7 +17,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Download built executable artifacts
+            - name: Download built artifacts
               uses: actions/download-artifact@v4
               with:
                   pattern: lane-and-object-detection-*
@@ -25,9 +25,9 @@ jobs:
             - name: Create new release
               run: |
                   $releaseTitle = "Lane and Object Detection"
-                  $executableSharedName = "lane-and-object-detection"
-                  $currentDate = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-                  gh release create "$executableSharedName-$currentDate" ./$executableSharedName-macos-latest/$executableSharedName-macos-latest ./$executableSharedName-ubuntu-latest/$executableSharedName-ubuntu-latest ./$executableSharedName-windows-latest/$executableSharedName-windows-latest.exe --generate-notes --latest --title "$releaseTitle $currentDate"
+                  $sharedName = "lane-and-object-detection"
+                  $currentDateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+                  gh release create "$sharedName-$currentDateTime" ./$sharedName-macos-latest/ ./$sharedName-ubuntu-latest/ ./$sharedName-windows-latest/ --generate-notes --latest --title "$releaseTitle $currentDateTime"
               env:
                   GH_TOKEN: ${{ github.token }}
 

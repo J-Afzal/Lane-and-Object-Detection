@@ -18,8 +18,8 @@ $InformationPreference = "Continue"
     None.
 
     .EXAMPLE
-    Import-Module ./submodules/Linters/linters-powershell/Linters.psd1
-    npm install
+    Import-Module ./modules/Build.psd1
+    cmake ..
     Assert-ExternalCommandError -ThrowError -Verbose
 #>
 
@@ -62,7 +62,8 @@ function Assert-ExternalCommandError {
     Also builds the OpenCV dependency.
 
     .PARAMETER Platform
-    The platform being run on. A value other than "local" is only useful within CI/CD workflows to cover an edge case.
+    The platform being run on. Used to cover the edge case of forcing windows to generate for NMake Makefile instead of Visual
+    Studio.
 
     .PARAMETER BuildType
     Whether to build in Debug or Release.
@@ -84,7 +85,7 @@ function Assert-ExternalCommandError {
 
     .EXAMPLE
     Import-Module ./modules/Build.psd1
-    Build-LaneAndObjectDetection -Platform local -BuildType Release -BuildDirectory build -CleanBuild -Parallel 8 -Verbose
+    Build-LaneAndObjectDetection -Platform macos-latest -BuildType Release -BuildDirectory build -CleanBuild -Parallel 8 -Verbose
 #>
 
 function Build-LaneAndObjectDetection {
@@ -175,6 +176,8 @@ function Build-LaneAndObjectDetection {
         Set-Location -LiteralPath ../..
     }
 
+    Write-Information "##[section]Building Lane and Object Detection..."
+
     Write-Information "##[command]Configuring Lane and Object Detection..."
 
     if ($Platform -eq "windows-latest") {
@@ -188,6 +191,7 @@ function Build-LaneAndObjectDetection {
     Assert-ExternalCommandError -ThrowError
 
     Write-Information "##[command]Building Lane and Object Detection..."
+
     & cmake --build ./$BuildDirectory --config $BuildType --parallel $Parallel
     Assert-ExternalCommandError -ThrowError
 
