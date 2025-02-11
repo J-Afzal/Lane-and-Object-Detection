@@ -33,9 +33,8 @@ jobs:
               shell: bash
               if: (success() || failure())
               run: |
-                  find . -name "*.psm1"
-                  find . -name "*.dll"
-                  find . -name "*.lib"
+                  find /usr/local/ -name "*.dll"
+                  find /usr/local/ -name "*.lib"
 
             - name: Upload executable as artifact
               uses: actions/upload-artifact@v4
