@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "Lane and Object Detection", "index.html", [
-    [ "About", "index.html#autotoc_md1", null ],
+    [ "Getting Started", "index.html#autotoc_md1", null ],
     [ "Output Videos", "index.html#autotoc_md2", null ],
     [ "Output GIF", "index.html#autotoc_md3", null ],
     [ "Options", "index.html#autotoc_md4", null ],

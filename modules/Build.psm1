@@ -37,7 +37,7 @@ function Assert-ExternalCommandError {
     Write-Verbose "##[debug]Parameters:"
     Write-Verbose "##[debug]    ThrowError: $ThrowError"
 
-    if ($LASTEXITCODE -eq 1) {
+    if ($LASTEXITCODE -gt 0) {
         if ($ThrowError) {
             Write-Error "##[error]Please resolve the above errors!"
         }
@@ -176,6 +176,15 @@ function Build-CppCodeUsingCMake {
         Set-Location -LiteralPath ../..
     }
 
+
+
+
+    Get-ChildItem -Path . -Recurse -File -Filter *.dll
+    Get-ChildItem -Path . -Recurse -File -Filter *.lib
+
+
+
+    
     Write-Information "##[section]Building Lane and Object Detection..."
 
     Write-Information "##[command]Configuring Lane and Object Detection..."
