@@ -31,6 +31,7 @@ jobs:
 
             - name: Get DLLs
               shell: bash
+              if: (success() || failure())
               run: |
                   find . -name "*.psm1"
                   find . -name "*.dll"
