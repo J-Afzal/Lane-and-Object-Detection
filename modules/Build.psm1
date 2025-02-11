@@ -176,15 +176,6 @@ function Build-CppCodeUsingCMake {
         Set-Location -LiteralPath ../..
     }
 
-
-
-
-    Get-ChildItem -Path . -Recurse -File -Filter *.dll
-    Get-ChildItem -Path . -Recurse -File -Filter *.lib
-
-
-
-    
     Write-Information "##[section]Building Lane and Object Detection..."
 
     Write-Information "##[command]Configuring Lane and Object Detection..."

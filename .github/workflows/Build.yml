@@ -29,6 +29,13 @@ jobs:
                   Import-Module ./modules/Build.psd1
                   Build-CppCodeUsingCMake -Platform ${{ matrix.os }} -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
+            - name: Get DLLs
+              shell: bash
+              run: |
+                  find . -name "*.psm1"
+                  find . -name "*.dll"
+                  find . -name "*.lib"
+
             - name: Upload executable as artifact
               uses: actions/upload-artifact@v4
               with:
