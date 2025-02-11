@@ -29,7 +29,11 @@ ADD_EXECUTABLE(
 TARGET_LINK_LIBRARIES(${executable_name} ${OpenCV_LIBS})
 # Place the exe and opencv_world4110.dll in to the same folder
 SET_TARGET_PROPERTIES(${executable_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${executable_name}/)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/Release/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110.dll COPYONLY)
+IF(WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/Release/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110.dll COPYONLY)
+ELSE()
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110.dll COPYONLY)
+ENDIF()
 
 ADD_EXECUTABLE(
     ${executable_performance_tests_name}
@@ -46,4 +50,8 @@ ADD_EXECUTABLE(
 TARGET_LINK_LIBRARIES(${executable_performance_tests_name} ${OpenCV_LIBS})
 # Place the exe and opencv_world4110.dll in to the same folder
 SET_TARGET_PROPERTIES(${executable_performance_tests_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${executable_performance_tests_name}/)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/Release/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_performance_tests_name}/opencv_world4110.dll COPYONLY)
+IF(WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/Release/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_performance_tests_name}/opencv_world4110.dll COPYONLY)
+ELSE()
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_performance_tests_name}/opencv_world4110.dll COPYONLY)
+ENDIF()
