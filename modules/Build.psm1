@@ -62,20 +62,20 @@ function Assert-ExternalCommandError {
     Also builds the OpenCV dependency.
 
     .PARAMETER Platform
-    The platform being run on. Used to cover the edge case of forcing windows to generate for NMake Makefile instead of Visual
-    Studio.
+    Specifies the platform being run on. Used to cover the edge case of forcing windows to generate for NMake Makefile instead
+    of Visual Studio.
 
     .PARAMETER BuildType
-    Whether to build in Debug or Release.
+    Specifies whether to build in Debug or Release.
 
     .PARAMETER BuildDirectory
-    The directory to build in to relative to the repository root.
+    Specifies the directory to build in to relative to the repository root.
 
     .PARAMETER CleanBuild
-    Whether to delete the build folders (including OpenCV build folder) before building.
+    Specifies whether to delete the build folders (including OpenCV build folder) before building.
 
     .PARAMETER Parallel
-    Option to specify a parallel build level. They map to corresponding options of the native build tool.
+    Specifies the option to specify a parallel build level. They map to corresponding options of the native build tool.
 
     .INPUTS
     None.
@@ -85,10 +85,10 @@ function Assert-ExternalCommandError {
 
     .EXAMPLE
     Import-Module ./modules/Build.psd1
-    Build-LaneAndObjectDetection -Platform macos-latest -BuildType Release -BuildDirectory build -CleanBuild -Parallel 8 -Verbose
+    Build-CppCodeUsingCMake -Platform macos-latest -BuildType Release -BuildDirectory build -CleanBuild -Parallel 8 -Verbose
 #>
 
-function Build-LaneAndObjectDetection {
+function Build-CppCodeUsingCMake {
 
     [CmdletBinding()]
     param(
@@ -115,7 +115,7 @@ function Build-LaneAndObjectDetection {
         $Parallel = 1
     )
 
-    Write-Verbose "##[debug]Running Build-LaneAndObjectDetection..."
+    Write-Verbose "##[debug]Running Build-CppCodeUsingCMake..."
     Write-Verbose "##[debug]Parameters:"
     Write-Verbose "##[debug]    Platform: $Platform"
     Write-Verbose "##[debug]    BuildType: $BuildType"

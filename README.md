@@ -10,7 +10,7 @@ be used to build the project from source either through the PowerShell helper fu
 ```text
 Import-Module ./modules/Build.psd1
 
-Build-LaneAndObjectDetection -Platform windows-latest -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
+Build-CppCodeUsingCMake -Platform windows-latest -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
 ./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
 ```
@@ -95,11 +95,10 @@ TODO
 
 1. Add CI and CD workflows (with debug output)
 
-    default values for non mandatory params
-    change path to literalPath
-    add cpp linter deps to install linting deps and make bash stuff in to dependency scripts that can be called (or shared function name?)
-    update linters and merge to main and pull down in other projects and push up and test prs
 
+    check all param exists and start all params with Specifies...
+
+    update linters and merge to main and pull down in other projects and push up and test prs
     - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed? Linked to the NMake Makefiles if
 
 2. Fix clang linting issues

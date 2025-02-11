@@ -19,7 +19,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
-                submodules: true
+                  submodules: true
 
             - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed? Linked to the NMake Makefiles if
               if: ${{ matrix.os }} == 'windows-latest'
@@ -27,7 +27,7 @@ jobs:
             - name: Build Lane and Object Detection
               run: |
                   Import-Module ./modules/Build.psd1
-                  Build-LaneAndObjectDetection -Platform ${{ matrix.os }} -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
+                  Build-CppCodeUsingCMake -Platform ${{ matrix.os }} -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
             - name: Upload executable as artifact
               uses: actions/upload-artifact@v4
