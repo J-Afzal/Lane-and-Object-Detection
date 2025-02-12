@@ -26,12 +26,12 @@ var NAVTREE =
 [
   [ "Lane and Object Detection", "index.html", [
     [ "Getting Started", "index.html#autotoc_md1", null ],
-    [ "Output Videos", "index.html#autotoc_md2", null ],
-    [ "Output GIF", "index.html#autotoc_md3", null ],
-    [ "Options", "index.html#autotoc_md4", null ],
-    [ "Performance", "index.html#autotoc_md5", null ],
-    [ "Building", "index.html#autotoc_md6", null ],
-    [ "Warning", "index.html#autotoc_md7", null ],
+    [ "Documentation", "index.html#autotoc_md2", null ],
+    [ "General Information", "index.html#autotoc_md3", null ],
+    [ "CI / CD", "index.html#autotoc_md4", null ],
+    [ "Development Setup", "index.html#autotoc_md5", [
+      [ "Notes", "index.html#autotoc_md6", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [

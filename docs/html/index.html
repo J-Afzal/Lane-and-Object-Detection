@@ -40,7 +40,7 @@
   <td id="projectalign">
    <div id="projectname">Lane and Object Detection
    </div>
-   <div id="projectbrief">Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.</div>
+   <div id="projectbrief">Using OpenCV and YOLOv4</div>
   </td>
  </tr>
  </tbody>
@@ -138,50 +138,40 @@ Getting Started</h1>
 <div class="line">./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe</div>
 </div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.</dd></dl>
 <h1><a class="anchor" id="autotoc_md2"></a>
-Output Videos</h1>
-<p>The <code>results</code> folder contains the following videos:</p>
-<ul>
-<li><code>Pre-recorded Video Test</code> shows an example of lane detection on roads that the software was developed on and was for (motorways)</li>
-<li><code>Real World Test (Roof FOV)</code> and <code>Real World Test (Bonnet FOV)</code> The bonnet camera location was able to detect the fainter/less defined road markings than the roof camera location, due to its closer proximity to the road, while the roof camera location gave less false lanes detections/less noisy</li>
-<li><code>Software Analysis for No YOLOv4</code> shows the frame times for the software side by side with the output and that peaks occur during lane detection when many road markings picked up in the ROI frame</li>
-<li><code>A Potential Curved Road Solution</code> shows a potential solution to detecting heavily curved roads. Compare this video with 'Software Analysis for No YOLOv4' in terms of lane detection and pay attention to how the ROI frame moves at the top left</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md3"></a>
-Output GIF</h1>
-<p><img src="screenshots/output.gif" alt="" width="1000" class="inline"/> </p>
+Documentation</h1>
+<p>Checkout the GitHub pages-hosted <a href="https://J-Afzal.github.io/Lane-and-Object-Detection">documentation page</a> built using doxygen.</p>
+<div class="image">
+<img src="DocumentationHomepage.png" alt=""/>
+<div class="caption">
+Documentation Homepage</div></div>
+    <h1><a class="anchor" id="autotoc_md3"></a>
+General Information</h1>
+<p>TODO</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
-Options</h1>
-<p>The following optional parameters can be passed at instantiation:</p>
-<p><code>ObjectDetectorType</code></p><ul>
-<li>Detector::NONE = No object detection</li>
-<li>Detector::STANDARD = Standard object detection (default)</li>
-<li>Detector::TINY = Lower accuracy but higher FPS object detection</li>
-</ul>
-<p><code>BackEndType</code></p><ul>
-<li>BackEnd::CPU = CPU</li>
-<li>BackEnd::CUDA = NVIDIA CUDA (default)</li>
-</ul>
-<p><code>BlobSize</code></p><ul>
-<li>BlobSize::ONE = 288</li>
-<li>BlobSize::TWO = 320</li>
-<li>BlobSize::THREE = 416</li>
-<li>BlobSize::FOUR = 512</li>
-<li>BlobSize::FIVE = 608 (default)</li>
-</ul>
+CI / CD</h1>
+<p><a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg" alt="Continuous Integration" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg" alt="Continuous Deployment" style="pointer-events: none;" class="inline"/></a></p>
+<p>The continuous integration workflow runs against all commits on pull requests, builds the code, runs unit tests and performs linting checks.</p>
+<p>The continuous deployment workflow runs against all commits to main, builds the code and deploys the executables as a release.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
-Performance</h1>
-<p><img src="tests/graphs/fps_all.png" alt="" class="inline"/> </p>
-<h4 align="center">Desktop = Ryzen 5800x, GTX 960 4 GB, and 32 GB RAM </h4>
-<h4 align="center">Jetson Nano = Jetson Nano 4 GB (B01 Model) </h4>
-<h4 align="center">(For all performance graphs see the tests folder) </h4>
-<h1><a class="anchor" id="autotoc_md6"></a>
-Building <a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg" alt="CMake" style="pointer-events: none;" class="inline"/></a></h1>
-<p>For instructions on how to build the OpenCV and CUDA (optional) development environment, please refer to the <code>resources/README.md</code> file. To build the project, use the following CMake command in the project root directory:</p>
-<div class="fragment"><div class="line"> cmd</div>
-<div class="line">cmake -S . -B build</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
-Warning</h1>
-<p>The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded from <a href="https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights">here</a> and should be copied to the <code>resources/yolo</code> folder.</p>
+Development Setup</h1>
+<p>For development a few extra tools are needed to check for linting issues locally. For this clone the repo with the <a href="https://github.com/J-Afzal/Linters"><code>Linters</code></a> and <a href="https://github.com/opencv/opencv"><code>OpenCV</code></a> submodules:</p>
+<div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git</div>
+</div><!-- fragment --><p>The development dependencies are:</p>
+<ul>
+<li>Git</li>
+<li>PowerShell version &gt;= 5</li>
+<li>npm dependencies via <code>npm install</code></li>
+<li>clang-tidy &gt;= 19 and clang-format &gt;= 19</li>
+<li>CMake &gt;= 3.20</li>
+<li>Ninja &gt;= 1.12.1</li>
+</ul>
+<p>All linting helper functions can be found in the <a href="https://github.com/J-Afzal/Linters"><code>Linters</code></a> submodule.</p>
+<dl class="section important"><dt>Important</dt><dd>The <code>yolo4.weights</code> file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded <a href="https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights">here</a> and should be copied to the <code>resources/yolo</code> folder.</dd></dl>
+<h2><a class="anchor" id="autotoc_md6"></a>
+Notes</h2>
+<p>Any generator can be used to build the project but to run <code>clang-tidy</code>/<code>clang-format</code> CMake must be configured using a generator that creates a <code>compile_commands.json</code> file in the build directory before running <code>clang-tidy</code>/<code>clang-format</code> (e.g. <code>-G "Ninja"</code>, <code>-G "NMake Makefiles"</code>, etc)</p>
+<p>On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by opening the folder through the <code>Developer PowerShell for VS</code> (otherwise you may see errors around cl.exe not being found).</p>
+<p>On windows, clang-tidy and clang-format can be installed using the <code>LLVM-x.x.x-win64.exe</code> binary from the <a href="https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6">LLVM release page</a> or from <a href="https://community.chocolatey.org/packages/llvm">chocolatey</a> using <code>choco install llvm -y</code>.</p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->

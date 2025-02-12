@@ -6,7 +6,7 @@ DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = Lane and Object Detection
 
-PROJECT_BRIEF          = Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.
+PROJECT_BRIEF          = Using OpenCV and YOLOv4
 
 PROJECT_LOGO           = ./resources/icons/LaneAndObjectDetection.ico
 

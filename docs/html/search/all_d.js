@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['rollingaverage_0',['RollingAverage',['../class_lane_and_object_detection_1_1_rolling_average.html',1,'LaneAndObjectDetection::RollingAverage'],['../class_lane_and_object_detection_1_1_rolling_average.html#a111dbcd51567f3360d883eb953e18b6a',1,'LaneAndObjectDetection::RollingAverage::RollingAverage()']]],
-  ['run_1',['Run',['../class_lane_and_object_detection_1_1_performance_tests.html#a000285ce489cb65445b5c6cabf6d4d07',1,'LaneAndObjectDetection::PerformanceTests::Run()'],['../class_lane_and_object_detection_1_1_video_manager.html#a288c3f968f7a1377e6a38fe4ebe081ec',1,'LaneAndObjectDetection::VideoManager::Run()']]],
-  ['rundetector_2',['RunDetector',['../class_lane_and_object_detection_1_1_lane_detector.html#ae4053ad6a19e5d3cdff637748aa70841',1,'LaneAndObjectDetection::LaneDetector::RunDetector()'],['../class_lane_and_object_detection_1_1_object_detector.html#afd42026fd074b9b1ed739674a90f5139',1,'LaneAndObjectDetection::ObjectDetector::RunDetector()']]]
+  ['setup_0',['Setup',['../index.html#autotoc_md5',1,'Development Setup'],['../class_lane_and_object_detection_1_1_lane_detector.html#a84be2b6e2622cd85fe81414b791d681d',1,'LaneAndObjectDetection::LaneDetector::Setup()']]],
+  ['started_1',['Getting Started',['../index.html#autotoc_md1',1,'']]],
+  ['starttimer_2',['StartTimer',['../class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb',1,'LaneAndObjectDetection::Performance']]],
+  ['stoptimer_3',['StopTimer',['../class_lane_and_object_detection_1_1_performance.html#acc70db8e745ca255ba9ba1d6576e4bfa',1,'LaneAndObjectDetection::Performance']]]
 ];

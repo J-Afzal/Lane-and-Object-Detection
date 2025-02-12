@@ -3,9 +3,6 @@ name: Continuous Deployment
 run-name: CD - ${{ github.run_number }} - ${{ github.ref }}
 
 on:
-    pull_request:
-        branches:
-            - main
     push:
         branches:
             - main

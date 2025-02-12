@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['object_20detection_0',['Lane and Object Detection',['../index.html',1,'']]],
-  ['object_20detection_20actions_20workflows_20cmake_20yml_20img_20src_20https_3a_20github_20com_20j_20afzal_20lane_20and_20object_20detection_20workflows_20cmake_20badge_20svg_20alt_20cmake_20a_1',['Building &lt;a href=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml&quot; &gt;&lt;img src=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg&quot; alt=&quot;CMake&quot;/&gt;&lt;/a&gt;',['../index.html#autotoc_md6',1,'']]],
-  ['object_20detection_20workflows_20cmake_20badge_20svg_20alt_20cmake_20a_2',['Building &lt;a href=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml&quot; &gt;&lt;img src=&quot;https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg&quot; alt=&quot;CMake&quot;/&gt;&lt;/a&gt;',['../index.html#autotoc_md6',1,'']]],
-  ['objectdetector_3',['ObjectDetector',['../class_lane_and_object_detection_1_1_object_detector.html',1,'LaneAndObjectDetection::ObjectDetector'],['../class_lane_and_object_detection_1_1_object_detector.html#a1b5e9478b7940a20a2bf795d52c9b488',1,'LaneAndObjectDetection::ObjectDetector::ObjectDetector()']]],
-  ['options_4',['Options',['../index.html#autotoc_md4',1,'']]],
-  ['output_20gif_5',['Output GIF',['../index.html#autotoc_md3',1,'']]],
-  ['output_20videos_6',['Output Videos',['../index.html#autotoc_md2',1,'']]]
+  ['performance_0',['Performance',['../class_lane_and_object_detection_1_1_performance.html',1,'LaneAndObjectDetection::Performance'],['../class_lane_and_object_detection_1_1_performance.html#aceb07ada444fdfd703b13d2f2a439d33',1,'LaneAndObjectDetection::Performance::Performance()']]],
+  ['performancetests_1',['PerformanceTests',['../class_lane_and_object_detection_1_1_performance_tests.html',1,'LaneAndObjectDetection::PerformanceTests'],['../class_lane_and_object_detection_1_1_performance_tests.html#ae68ef4552460b4919dd6ae99778134ee',1,'LaneAndObjectDetection::PerformanceTests::PerformanceTests()']]],
+  ['printfpstoframe_2',['PrintFpsToFrame',['../class_lane_and_object_detection_1_1_performance.html#af64f35cdd7f682e70cf8d108e87eb0cf',1,'LaneAndObjectDetection::Performance']]],
+  ['printrecordingstatustoframe_3',['PrintRecordingStatusToFrame',['../class_lane_and_object_detection_1_1_video_manager.html#aa01cf210838941c13f7e4f5a13f2e81c',1,'LaneAndObjectDetection::VideoManager']]],
+  ['printtoframe_4',['PrintToFrame',['../class_lane_and_object_detection_1_1_lane_detector.html#a097a4cc09bb85685998ab4eff5c34537',1,'LaneAndObjectDetection::LaneDetector::PrintToFrame()'],['../class_lane_and_object_detection_1_1_object_detector.html#ab8dcf509f05a847b9987dd807a63a295',1,'LaneAndObjectDetection::ObjectDetector::PrintToFrame()']]]
 ];

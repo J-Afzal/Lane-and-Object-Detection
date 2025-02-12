@@ -37,70 +37,72 @@ cmake --build ./build --config Release
 > [!WARNING]
 > If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.
 
-## Output Videos
+## Documentation
 
-The `results` folder contains the following videos:
+Checkout the GitHub pages-hosted [documentation page](https://J-Afzal.github.io/Lane-and-Object-Detection) built using doxygen.
 
-* `Pre-recorded Video Test` shows an example of lane detection on roads that the software was developed on and was for (motorways)
-* `Real World Test (Roof FOV)` and `Real World Test (Bonnet FOV)` The bonnet camera location was able to detect the fainter/less defined road markings than the roof camera location, due to its closer proximity to the road, while the roof camera location gave less false lanes detections/less noisy
-* `Software Analysis for No YOLOv4` shows the frame times for the software side by side with the output and that peaks occur during lane detection when many road markings picked up in the ROI frame
-* `A Potential Curved Road Solution` shows a potential solution to detecting heavily curved roads. Compare this video with 'Software Analysis for No YOLOv4' in terms of lane detection and pay attention to how the ROI frame moves at the top left
+![Documentation Homepage](./resources/screenshots/DocumentationHomepage.png)
 
-## Output GIF
+## General Information
 
-<p align="center"> <img src="screenshots/output.gif" width=1000> </p>
+TODO
 
-## Options
+## CI / CD
 
-The following optional parameters can be passed at instantiation:
+[![Continuous Integration](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml)
+[![Continuous Deployment](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml)
 
-`ObjectDetectorType`
-* Detector::NONE = No object detection
-* Detector::STANDARD = Standard object detection (default)
-* Detector::TINY = Lower accuracy but higher FPS object detection
+The continuous integration workflow runs against all commits on pull requests, builds the code, runs unit tests and performs
+linting checks.
 
-`BackEndType`
-* BackEnd::CPU = CPU
-* BackEnd::CUDA = NVIDIA CUDA (default)
+The continuous deployment workflow runs against all commits to main, builds the code and deploys the executables as a release.
 
-`BlobSize`
-* BlobSize::ONE = 288
-* BlobSize::TWO = 320
-* BlobSize::THREE = 416
-* BlobSize::FOUR = 512
-* BlobSize::FIVE = 608 (default)
+## Development Setup
 
-## Performance
+For development a few extra tools are needed to check for linting issues locally. For this clone the repo with the
+[`Linters`](https://github.com/J-Afzal/Linters) and [`OpenCV`](https://github.com/opencv/opencv) submodules:
 
-<p align="center"> <img src="tests/graphs/fps_all.png"> </p>
-<h4 align="center"> Desktop = Ryzen 5800x, GTX 960 4 GB, and 32 GB RAM </h4>
-<h4 align="center"> Jetson Nano = Jetson Nano 4 GB (B01 Model) </h4>
-<h4 align="center"> (For all performance graphs see the tests folder) </h4>
-
-## Building [![CMake](https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml)
-
-For instructions on how to build the OpenCV and CUDA (optional) development environment, please refer to the `resources/README.md` file. To build the project, use the following CMake command in the project root directory:
-
-``` cmd
-cmake -S . -B build
+```text
+git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git
 ```
 
-## Warning
+The development dependencies are:
 
-The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded from [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to the `resources/yolo` folder.
+- Git
+- PowerShell version >= 5
+- npm dependencies via `npm install`
+- clang-tidy >= 19 and clang-format >= 19
+- CMake >= 3.20
+- Ninja >= 1.12.1
+
+All linting helper functions can be found in the [`Linters`](https://github.com/J-Afzal/Linters) submodule.
+
+> [!IMPORTANT]
+> The `yolo4.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded
+> [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to
+> the `resources/yolo` folder.
+
+### Notes
+
+Any generator can be used to build the project but to run `clang-tidy`/`clang-format` CMake must be configured using a generator
+that creates a `compile_commands.json` file in the build directory before running `clang-tidy`/`clang-format` (e.g.
+`-G "Ninja"`, `-G "NMake Makefiles"`, etc)
+
+On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by
+opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
+
+On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-win64.exe` binary from the
+[LLVM release page](https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6) or from
+[chocolatey](https://community.chocolatey.org/packages/llvm) using `choco install llvm -y`.
 
 <!--
 
 TODO
 
-1. Add CI and CD workflows (with debug output)
-
-    maybe make linting dependent upon build which uploads compile commands .json as artifact that is downloaded in linting
-
-2. Fix clang linting issues
+1. Fix clang linting issues
     cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
 
-3. Clean up C++ lane detection code and supplementary code (ignore object detection)
+2. Clean up C++ lane detection code and supplementary code (ignore object detection)
    Add default CLI support to pass required paths (and add to readme)
    clean up comments
    Add doxygen docs page to readme
