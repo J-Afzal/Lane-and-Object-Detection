@@ -43,12 +43,12 @@ namespace LaneAndObjectDetection
                 exit(1);
             }
 
-            for (uint32_t j = 0; j < m_frameTimes[0]->size(); j++)
+            for (uint32_t j = 0; j < m_frameTimes[0].size(); j++)
             {
                 uint32_t frameTimeSum = 0;
                 for (const auto& frameTime : m_frameTimes)
                 {
-                    frameTimeSum += frameTime->at(j);
+                    frameTimeSum += frameTime.at(j);
                 }
 
                 outputFile << std::to_string(frameTimeSum / static_cast<double>(m_NUMBER_OF_REPETITIONS)) << '\n';

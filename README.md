@@ -95,11 +95,7 @@ TODO
 
 1. Add CI and CD workflows (with debug output)
 
-
-    check all param exists and start all params with Specifies...
-
-    update linters and merge to main and pull down in other projects and push up and test prs
-    - uses: ilammy/msvc-dev-cmd@v1 # TODO: is this needed? Linked to the NMake Makefiles if
+    maybe make linting dependent upon build which uploads compile commands .json as artifact that is downloaded in linting
 
 2. Fix clang linting issues
     cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
