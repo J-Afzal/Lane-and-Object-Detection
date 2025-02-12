@@ -13,7 +13,6 @@ jobs:
 
     lint:
         uses: J-Afzal/Linters/.github/workflows/Linting-PowerShell.yml@main
-        needs: build
         with:
             path_to_linters_submodule_root: "./submodules/Linters"
             path_back_to_repository_root: "../.."

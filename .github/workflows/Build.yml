@@ -29,13 +29,6 @@ jobs:
                   Import-Module ./modules/Build.psd1
                   Build-CppCodeUsingCMake -Platform ${{ matrix.os }} -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
-            - name: Upload compile_commands.json
-              uses: actions/upload-artifact@v4
-              with:
-                  name: compile_commands-${{ matrix.os }}
-                  path: ./build/compile_commands.json
-                  if-no-files-found: error
-
             - name: Upload executable as artifact
               uses: actions/upload-artifact@v4
               with:
