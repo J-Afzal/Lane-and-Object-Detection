@@ -195,9 +195,7 @@ function Build-CppCodeUsingCMake {
     & cmake --build ./$BuildDirectory --config $BuildType --parallel $Parallel
     Assert-ExternalCommandError -ThrowError
 
-    if ($Platform -ne "windows-latest") {
-        & cmake --install ./$BuildDirectory --config Release
-    }
+    & cmake --install ./$BuildDirectory --config Release
 
     Write-Information "##[section]Lane and Object Detection has been successfully built!"
 }

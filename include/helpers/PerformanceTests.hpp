@@ -4,7 +4,6 @@
 
 #include <chrono>
 #include <cstdint>
-#include <optional>
 #include <string>
 #include <vector>
 
@@ -43,7 +42,7 @@ namespace LaneAndObjectDetection
          * @brief TODO
          */
         ///@{
-        std::vector<std::optional<std::vector<uint32_t>>> m_frameTimes;
+        std::vector<std::vector<uint32_t>> m_frameTimes;
         std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;
         std::string m_inputVideoFilePath, m_yoloResourcesFolderPath;
 

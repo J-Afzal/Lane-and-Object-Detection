@@ -33,8 +33,26 @@ jobs:
               shell: bash
               if: (success() || failure())
               run: |
-                  find /usr/local/ -name "*.dll"
-                  find /usr/local/ -name "*.lib"
+                  echo "-----------REPO DLL"-----------"
+                  find . -name "*.dll"
+                  echo "-----------REPO LIB"-----------"
+                  find . -name "*.lib"
+                  echo "-----------USER DLL"-----------"
+                  find /usr/ -name "*.dll"
+                  echo "-----------USER LIB"-----------"
+                  find /usr/ -name "*.lib"
+                  echo "-----------BIN DLL"-----------"
+                  find /bin/ -name "*.dll"
+                  echo "-----------BIN LIB"-----------"
+                  find /bin/ -name "*.lib"
+                  echo "-----------HOME DLL"-----------"
+                  find /home/ -name "*.dll"
+                  echo "-----------HOME LIB"-----------"
+                  find /home/ -name "*.lib"
+                  echo "-----------OPT DLL"-----------"
+                  find /opt/ -name "*.dll"
+                  echo "-----------OPT LIB"-----------"
+                  find /opt/ -name "*.lib"
 
             - name: Upload executable as artifact
               uses: actions/upload-artifact@v4

@@ -9,7 +9,6 @@
 #include <iomanip>
 #include <iostream>
 #include <memory>
-#include <optional>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -65,7 +64,7 @@ namespace LaneAndObjectDetection
         cv::destroyAllWindows();
     }
 
-    std::optional<std::vector<uint32_t>> VideoManager::Run()
+    std::vector<uint32_t> VideoManager::Run()
     {
         while (true)
         {

@@ -4,7 +4,6 @@
 
 #include <cstdint>
 #include <memory>
-#include <optional>
 #include <string>
 #include <vector>
 
@@ -45,11 +44,11 @@ namespace LaneAndObjectDetection
         ~VideoManager();
 
         /**
-         * @brief An std::optional is used so that the PerformanceTests class can extract frame times from
+         * @brief An std::optional (WRONG) is used so that the PerformanceTests class can extract frame times from
          * the VideoManager class, when needed, while not effecting the usage of VideoManager
          * outside of performance testing
          */
-        std::optional<std::vector<uint32_t>> Run();
+        std::vector<uint32_t> Run();
 
     private:
         /**
