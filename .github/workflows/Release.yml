@@ -26,8 +26,22 @@ jobs:
               run: |
                   $releaseTitle = "Lane and Object Detection"
                   $sharedName = "lane-and-object-detection"
+                  $openCvDllName = "opencv_world4110.dll"
                   $currentDateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-                  gh release create "$sharedName-$currentDateTime" ./$sharedName-macos-latest/ ./$sharedName-ubuntu-latest/ ./$sharedName-windows-latest/ --generate-notes --latest --title "$releaseTitle $currentDateTime"
+
+                  Rename-Item -LiteralPath ./$sharedName-macos-latest/$sharedName -NewName $sharedName-macos-latest
+                  Rename-Item -LiteralPath ./$sharedName-ubuntu-latest/$sharedName -NewName $sharedName-ubuntu-latest
+                  Rename-Item -LiteralPath ./$sharedName-windows-latest/$sharedName.exe -NewName $sharedName-windows-latest.exe
+
+
+
+
+                  # TODO: test and remove draft
+
+
+
+
+                  gh release create "$sharedName-$currentDateTime" ./$sharedName-macos-latest/$sharedName-macos-latest ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest ./$sharedName-windows-latest/$sharedName-windows-latest.exe ./$sharedName-windows-latest/$openCvDllName --generate-notes --latest --title "$releaseTitle $currentDateTime" --draft
               env:
                   GH_TOKEN: ${{ github.token }}
 
