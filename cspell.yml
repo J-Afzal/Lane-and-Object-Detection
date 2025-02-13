@@ -18,7 +18,6 @@ words:
     - giveway
     - linters
     - opencv
-    - ryzen
     - sigmas
 ignoreWords:
     - axisbelow
