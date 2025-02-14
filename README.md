@@ -1,90 +1,121 @@
 # Lane and Object Detection
 
-## About
+Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.
 
-Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4. The software is run by instantiating the `VideoManger` class with a string to the input video file and yolo resources folder and then calling it's `Run()` method. If a camera input is desired, then pass the appropriate integer, as required by OpenCV, as a string.
+## Getting Started
 
-## Output Videos
+Binaries can be found in [Releases](https://github.com/J-Afzal/Lane-and-Object-Detection/releases) or, if preferred, CMake can
+be used to build the project from source either through the PowerShell helper function:
 
-The `results` folder contains the following videos:
+```text
+Import-Module ./modules/Build.psd1
 
-* `Pre-recorded Video Test` shows an example of lane detection on roads that the software was developed on and was for (motorways)
-* `Real World Test (Roof FOV)` and `Real World Test (Bonnet FOV)` The bonnet camera location was able to detect the fainter/less defined road markings than the roof camera location, due to its closer proximity to the road, while the roof camera location gave less false lanes detections/less noisy
-* `Software Analysis for No YOLOv4` shows the frame times for the software side by side with the output and that peaks occur during lane detection when many road markings picked up in the ROI frame
-* `A Potential Curved Road Solution` shows a potential solution to detecting heavily curved roads. Compare this video with 'Software Analysis for No YOLOv4' in terms of lane detection and pay attention to how the ROI frame moves at the top left
+Build-CppCodeUsingCMake -Platform windows-latest -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
-## Output GIF
-
-<p align="center"> <img src="screenshots/output.gif" width=1000> </p>
-
-## Options
-
-The following optional parameters can be passed at instantiation:
-
-`ObjectDetectorType`
-* Detector::NONE = No object detection
-* Detector::STANDARD = Standard object detection (default)
-* Detector::TINY = Lower accuracy but higher FPS object detection
-
-`BackEndType`
-* BackEnd::CPU = CPU
-* BackEnd::CUDA = NVIDIA CUDA (default)
-
-`BlobSize`
-* BlobSize::ONE = 288
-* BlobSize::TWO = 320
-* BlobSize::THREE = 416
-* BlobSize::FOUR = 512
-* BlobSize::FIVE = 608 (default)
-
-## Performance
-
-<p align="center"> <img src="tests/graphs/fps_all.png"> </p>
-<h4 align="center"> Desktop = Ryzen 5800x, GTX 960 4 GB, and 32 GB RAM </h4>
-<h4 align="center"> Jetson Nano = Jetson Nano 4 GB (B01 Model) </h4>
-<h4 align="center"> (For all performance graphs see the tests folder) </h4>
-
-## Building [![CMake](https://github.com/J-Afzal/Lane-and-Object-Detection/workflows/CMake/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/cmake.yml)
-
-For instructions on how to build the OpenCV and CUDA (optional) development environment, please refer to the `resources/README.md` file. To build the project, use the following CMake command in the project root directory:
-
-``` cmd
-cmake -S . -B build
+./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
 ```
 
-## Warning
+or manually:
 
-The yolo4.weights file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded from [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to the `resources/yolo` folder.
+```text
+git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git
+cd Lane-and-Object-Detection
 
-<!--
+# Build OpenCV
+cd ./submodules/opencv/
+cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release" -D "BUILD_opencv_world=ON"
+cmake --build ./build --config Release --parallel 8
+cd ../..
+
+# Build Lane and Object Detection
+cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release"
+cmake --build ./build --config Release
+
+./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
+```
+
+> [!WARNING]
+> If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.
+
+## Documentation
+
+Checkout the GitHub pages-hosted [documentation page](https://J-Afzal.github.io/Lane-and-Object-Detection) built using doxygen.
+
+![Documentation Homepage](./resources/screenshots/DocumentationHomepage.png)
+
+## General Information
+
 TODO
 
-0. Re-do installation from start but releaseWithDebugInfo:
-   1. download opencv and opencv-contrib
-   2. configure cmake
-      1. BUILD_opencv_world=ON
-      2. OPENCV_EXTRA_MODULES_PATH to the modules folder in the unzipped OpenCV-contrib 4.5.1
-   3. configure again
-   4. generate
-   5. open vs project
-   6. build build_ALL and install
-   7. add install directory to path as OpenCV_DIR var
+## CI / CD
 
-2. Add CI and CD workflows (with debug output)
-    Add linters to dependency
-    Clean up all linting issues
-    Remove pch.h
+[![Continuous Integration](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml)
+[![Continuous Deployment](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml)
+
+The continuous integration workflow runs against all commits on pull requests, builds the code, runs unit tests and performs
+linting checks.
+
+The continuous deployment workflow runs against all commits to main, builds the code and deploys the executables as a release.
+
+## Development Setup
+
+For development a few extra tools are needed to check for linting issues locally. For this clone the repo with the
+[`Linters`](https://github.com/J-Afzal/Linters) and [`OpenCV`](https://github.com/opencv/opencv) submodules:
+
+```text
+git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git
+```
+
+The development dependencies are:
+
+- Git
+- PowerShell version >= 5
+- npm dependencies via `npm install`
+- clang-tidy >= 19 and clang-format >= 19
+- CMake >= 3.20
+- Ninja >= 1.12.1
+
+All linting helper functions can be found in the [`Linters`](https://github.com/J-Afzal/Linters) submodule.
+
+> [!IMPORTANT]
+> The `yolo4.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded
+> [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to
+> the `resources/yolo` folder.
+
+### Notes
+
+Any generator can be used to build the project but to run `clang-tidy`/`clang-format` CMake must be configured using a generator
+that creates a `compile_commands.json` file in the build directory before running `clang-tidy`/`clang-format` (e.g.
+`-G "Ninja"`, `-G "NMake Makefiles"`, etc)
+
+On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by
+opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
+
+On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-win64.exe` binary from the
+[LLVM release page](https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6) or from
+[chocolatey](https://community.chocolatey.org/packages/llvm) using `choco install llvm -y`.
+
+<!--
+
+TODO
+
+1. Fix clang linting issues
+    cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
+
+2. Clean up C++ lane detection code and supplementary code (ignore object detection)
+   Add default CLI support to pass required paths (and add to readme)
+   clean up comments
+   Add doxygen docs page to readme
+   clean up rest of readme
+
+x. Clean up C++ object detection code
 
 x. Upgrade to newer YOLO
 
-x. Clean up C++ code
+x. Clean up performance test code (replace with C++) or delete
 
-x. Clean up performance test code
-
-x. Implement C GUI window to encapsulate main code and perofrmance test code?
+x. Implement C GUI window to encapsulate main code and performance test code?
 
 x. Test with CUDA
 
-x. add icon to cmakelists exes
-
- -->
+-->

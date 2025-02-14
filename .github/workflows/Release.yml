@@ -1,0 +1,50 @@
+name: Release
+
+on: workflow_call
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pages: write
+            id-token: write
+        defaults:
+            run:
+                shell: pwsh
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Download built artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: lane-and-object-detection-*
+
+            - name: Create new release
+              run: |
+                  $releaseTitle = "Lane and Object Detection"
+                  $sharedName = "lane-and-object-detection"
+                  $openCvDllName = "opencv_world4110.dll"
+                  $currentDateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+
+                  Rename-Item -LiteralPath ./$sharedName-macos-latest/$sharedName -NewName $sharedName-macos-latest
+                  Rename-Item -LiteralPath ./$sharedName-ubuntu-latest/$sharedName -NewName $sharedName-ubuntu-latest
+                  Rename-Item -LiteralPath ./$sharedName-windows-latest/$sharedName.exe -NewName $sharedName-windows-latest.exe
+
+                  gh release create "$sharedName-$currentDateTime" ./$sharedName-macos-latest/$sharedName-macos-latest ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest ./$sharedName-windows-latest/$sharedName-windows-latest.exe ./$sharedName-windows-latest/$openCvDllName --generate-notes --latest --title "$releaseTitle $currentDateTime"
+              env:
+                  GH_TOKEN: ${{ github.token }}
+
+            - name: Upload doxygen documentation artifacts
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  name: doxygen-docs
+                  path: ./docs/html/
+
+            - name: Release GitHub pages
+              uses: actions/deploy-pages@v4
+              with:
+                  artifact_name: doxygen-docs
+                  token: ${{ github.token }}

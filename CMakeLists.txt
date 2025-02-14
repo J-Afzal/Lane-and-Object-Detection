@@ -3,33 +3,17 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
 PROJECT(Lane-and-Object-Detection)
 
 SET(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# Executable names used by the CI/CD workflows
-IF(CI_CD)
-    IF(APPLE)
-        SET(executable_name "lane-and-object-detection-macos-latest")
-        SET(executable_name_performance_tests "lane-and-object-detection-macos-latest-performance-tests")
-    ELSEIF(UNIX AND NOT APPLE)
-        SET(executable_name "lane-and-object-detection-ubuntu-latest")
-        SET(executable_name_performance_tests "lane-and-object-detection-ubuntu-latest-performance-tests")
-    ELSEIF(WIN32)
-        SET(executable_name "lane-and-object-detection-windows-latest")
-        SET(executable_name_performance_tests "lane-and-object-detection-windows-latest-performance-tests")
-    ELSE()
-        SET(executable_name "lane-and-object-detection")
-        SET(executable_name_performance_tests "lane-and-object-detection-performance-tests")
-    ENDIF()
-ELSE()
-    SET(executable_name "lane-and-object-detection")
-    SET(executable_name_performance_tests "lane-and-object-detection-performance-tests")
-ENDIF()
-
+SET(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/)
 FIND_PACKAGE(OpenCV REQUIRED)
+
+# Executable names used by the CI/CD workflows
+SET(executable_name "lane-and-object-detection")
+SET(executable_performance_tests_name ${executable_name}-performance-tests)
 
 ADD_EXECUTABLE(
     ${executable_name}
@@ -39,20 +23,31 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/RollingAverage.cpp
-)
-
-ADD_EXECUTABLE(
-    ${executable_name_performance_tests}
-    ${CMAKE_CURRENT_SOURCE_DIR}/tests/main.cpp
-    source/helpers/PerformanceTests.cpp
-    source/helpers/VideoManager.cpp
-    source/detectors/LaneDetector.cpp
-    source/detectors/ObjectDetector.cpp
-    source/helpers/Performance.cpp
-    source/helpers/RollingAverage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 
 TARGET_LINK_LIBRARIES(${executable_name} ${OpenCV_LIBS})
-TARGET_LINK_LIBRARIES(${executable_name_performance_tests} ${OpenCV_LIBS})
+# Place the exe and opencv_world4110.dll in to the same folder
+SET_TARGET_PROPERTIES(${executable_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${executable_name}/)
+IF (NOT CONFIGURE_ONLY AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/${CMAKE_BUILD_TYPE}/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110.dll COPYONLY)
+ENDIF()
 
-# TODO: add cop task to copy dlls and videos and yolo files
+ADD_EXECUTABLE(
+    ${executable_performance_tests_name}
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/PerformanceTests.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/VideoManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/RollingAverage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
+)
+
+TARGET_LINK_LIBRARIES(${executable_performance_tests_name} ${OpenCV_LIBS})
+# Place the exe and opencv_world4110.dll in to the same folder
+SET_TARGET_PROPERTIES(${executable_performance_tests_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${executable_performance_tests_name}/)
+IF (NOT CONFIGURE_ONLY AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/${CMAKE_BUILD_TYPE}/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_performance_tests_name}/opencv_world4110.dll COPYONLY)
+ENDIF()

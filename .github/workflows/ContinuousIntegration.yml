@@ -1,0 +1,20 @@
+name: Continuous Integration
+
+run-name: CI - ${{ github.run_number }} - ${{ github.head_ref }}
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        uses: ./.github/workflows/Build.yml
+
+    lint:
+        uses: J-Afzal/Linters/.github/workflows/Linting-PowerShell.yml@main
+        with:
+            path_to_linters_submodule_root: "./submodules/Linters"
+            path_back_to_repository_root: "../.."
+            run_powershell_linters: true
+            run_cpp_linters: true

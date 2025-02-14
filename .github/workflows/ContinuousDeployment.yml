@@ -1,0 +1,16 @@
+name: Continuous Deployment
+
+run-name: CD - ${{ github.run_number }} - ${{ github.ref }}
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        uses: ./.github/workflows/Build.yml
+
+    release:
+        uses: ./.github/workflows/Release.yml
+        needs: build

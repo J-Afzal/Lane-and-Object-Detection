@@ -1,0 +1,46 @@
+# Auto detect text files and perform LF normalization
+*               text=auto   eol=lf
+
+# C++
+*.cpp           text        diff=cpp
+*.hpp           text        diff=cpp
+
+# Config
+.editorconfig   text
+.gitattributes  text
+.gitignore      text
+.gitmodules     text
+Doxyfile        text
+
+# Documents
+*.md            text        diff=markdown
+*.rc            text
+*.txt           text
+LICENSE         text
+
+# Graphics
+*.ico           binary
+*.gif           binary
+*.mp4           binary
+*.png           binary
+*.svg           text
+
+# Python
+*.py            text        diff=python
+
+# Scripts
+*.psd1          text
+*.psm1          text
+
+# Serialisation
+*.yml           text
+
+# Web
+*.css           text      diff=css
+*.html          text      diff=html
+*.js            text
+
+# YOLO
+*.cfg           text
+*.names         text
+*.weights       binary

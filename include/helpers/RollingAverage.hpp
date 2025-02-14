@@ -1,27 +1,50 @@
-/**
- * @file RollingAverage.hpp
- * @author Junaid Afzal
- * @brief This class represents a rolling average
- * @version 1.0
- * @date 14-04-2022
- *
- * @copyright Copyright (c) 2022
- *
- */
+// NOLINTBEGIN
 
 #pragma once
-#include "pch.hpp"
 
-class RollingAverage
+#include <cstdint>
+#include <deque>
+#include <vector>
+
+/**
+ * @namespace LaneAndObjectDetection
+ * @brief TODO
+ */
+namespace LaneAndObjectDetection
 {
-public:
-    RollingAverage(const int &SizeOfRollingAverage, const int &NumberOfStates);
+    /**
+     * @class RollingAverage
+     * @brief TODO
+     */
+    class RollingAverage
+    {
+    public:
+        /**
+         * @brief TODO
+         */
+        RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates);
 
-    ~RollingAverage() = default;
+        /**
+         * @brief TODO
+         */
+        ~RollingAverage() = default;
 
-    int calculateRollingAverage(const int &NextInput);
+        /**
+         * @brief TODO
+         */
+        uint32_t CalculateRollingAverage(const uint32_t& p_nextInput);
 
-private:
-    std::deque<int> RollingAverageArray;
-    std::vector<int> OccurrenceOfEachState;
-};
+    private:
+        /**
+         * @brief TODO
+         */
+        std::deque<uint32_t> m_rollingAverageArray;
+
+        /**
+         * @brief TODO
+         */
+        std::vector<uint32_t> m_occurrenceOfEachState;
+    };
+}
+
+// NOLINTEND

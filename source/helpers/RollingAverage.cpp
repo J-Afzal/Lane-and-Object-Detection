@@ -1,38 +1,43 @@
-/**
- * @file RollingAverage.cpp
- * @author Junaid Afzal
- * @brief Implementation of RollingAverage.hpp
- * @version 1.0
- * @date 14-04-2022
- *
- * @copyright Copyright (c) 2022
- *
- */
+// NOLINTBEGIN
 
 #include "helpers/RollingAverage.hpp"
+#include <cstdint>
 
-RollingAverage::RollingAverage(const int &SizeOfRollingAverage, const int &NumberOfStates)
+namespace LaneAndObjectDetection
 {
-    for (unsigned int i = 0; i < SizeOfRollingAverage; i++)
-        RollingAverageArray.push_back(0);
+    RollingAverage::RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates)
+    {
+        for (uint32_t i = 0; i < p_sizeOfRollingAverage; i++)
+        {
+            m_rollingAverageArray.push_back(0);
+        }
 
-    for (unsigned int i = 0; i < NumberOfStates; i++)
-        OccurrenceOfEachState.push_back(0);
+        for (uint32_t i = 0; i < p_numberOfStates; i++)
+        {
+            m_occurrenceOfEachState.push_back(0);
+        }
 
-    OccurrenceOfEachState[0] = SizeOfRollingAverage;
+        m_occurrenceOfEachState[0] = p_sizeOfRollingAverage;
+    }
+
+    uint32_t RollingAverage::CalculateRollingAverage(const uint32_t& p_nextInput)
+    {
+        m_occurrenceOfEachState[m_rollingAverageArray.back()]--;
+        m_rollingAverageArray.pop_back();
+        m_rollingAverageArray.push_front(p_nextInput);
+        m_occurrenceOfEachState[p_nextInput]++;
+
+        uint32_t mostFrequentState = 0;
+        for (uint32_t i = 1; i < m_occurrenceOfEachState.size(); i++)
+        {
+            if (m_occurrenceOfEachState[i] > m_occurrenceOfEachState[mostFrequentState])
+            {
+                mostFrequentState = i;
+            }
+        }
+
+        return mostFrequentState;
+    }
 }
 
-int RollingAverage::calculateRollingAverage(const int &nextInput)
-{
-    OccurrenceOfEachState[RollingAverageArray.back()]--;
-    RollingAverageArray.pop_back();
-    RollingAverageArray.push_front(nextInput);
-    OccurrenceOfEachState[nextInput]++;
-
-    int mostFrequentState = 0;
-    for (int i = 1; i < OccurrenceOfEachState.size(); i++)
-        if (OccurrenceOfEachState[i] > OccurrenceOfEachState[mostFrequentState])
-            mostFrequentState = i;
-
-    return mostFrequentState;
-}
+// NOLINTEND
