@@ -2,14 +2,14 @@
 
 ## All Platforms
 
-<p align="center"> 
+<p align="center">
   <img src="graphs/fps_all.png" width=500>
   <img src="graphs/frame_times_all.png" width=500>
 </p>
 
 ## Ubuntu Desktop
 
-<p align="center"> 
+<p align="center">
   <img src="graphs/fps_ubuntu_desktop.png" width=500>
   <img src="graphs/frame_times_ubuntu_desktop.png" width=500>
 </p>
