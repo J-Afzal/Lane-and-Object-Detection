@@ -36,7 +36,6 @@ ENDIF()
 ADD_EXECUTABLE(
     ${executable_performance_tests_name}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/PerformanceTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/VideoManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp

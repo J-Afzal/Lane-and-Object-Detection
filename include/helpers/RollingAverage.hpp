@@ -1,5 +1,3 @@
-// NOLINTBEGIN
-
 #pragma once
 
 #include <cstdint>
@@ -22,12 +20,12 @@ namespace LaneAndObjectDetection
         /**
          * @brief TODO
          */
-        RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates);
+        explicit RollingAverage() = default;
 
         /**
          * @brief TODO
          */
-        ~RollingAverage() = default;
+        explicit RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates);
 
         /**
          * @brief TODO
@@ -46,5 +44,3 @@ namespace LaneAndObjectDetection
         std::vector<uint32_t> m_occurrenceOfEachState;
     };
 }
-
-// NOLINTEND

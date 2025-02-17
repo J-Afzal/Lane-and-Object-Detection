@@ -122,14 +122,14 @@ $(function(){initNavTree('class_lane_and_object_detection_1_1_object_detector.ht
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1b5e9478b7940a20a2bf795d52c9b488" id="r_a1b5e9478b7940a20a2bf795d52c9b488"><td class="memItemLeft" align="right" valign="top"><a id="a1b5e9478b7940a20a2bf795d52c9b488" name="a1b5e9478b7940a20a2bf795d52c9b488"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ObjectDetector</b> (const std::string &amp;p_yoloResourcesFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#adbfd75ed08c72a22396d89db6e627607">Detector</a> &amp;p_yoloType, const <a class="el" href="namespace_lane_and_object_detection.html#a6107a9088919aba087132d831af6d959">BackEnd</a> &amp;p_backEndType, const <a class="el" href="namespace_lane_and_object_detection.html#a50ab189d842cd1ba42e2b48174ddc32c">BlobSize</a> &amp;p_blobSize)</td></tr>
-<tr class="memdesc:a1b5e9478b7940a20a2bf795d52c9b488"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a1b5e9478b7940a20a2bf795d52c9b488"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe3fbe9de7cdd0fb944092303996a39d" id="r_afe3fbe9de7cdd0fb944092303996a39d"><td class="memItemLeft" align="right" valign="top"><a id="afe3fbe9de7cdd0fb944092303996a39d" name="afe3fbe9de7cdd0fb944092303996a39d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>~ObjectDetector</b> ()=default</td></tr>
-<tr class="memdesc:afe3fbe9de7cdd0fb944092303996a39d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:afe3fbe9de7cdd0fb944092303996a39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b4509db942718492f383152bb271451" id="r_a7b4509db942718492f383152bb271451"><td class="memItemLeft" align="right" valign="top"><a id="a7b4509db942718492f383152bb271451" name="a7b4509db942718492f383152bb271451"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ObjectDetector</b> ()</td></tr>
+<tr class="memdesc:a7b4509db942718492f383152bb271451"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="separator:a7b4509db942718492f383152bb271451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1628cc503e8908c9868d9bb1c49761" id="r_a3e1628cc503e8908c9868d9bb1c49761"><td class="memItemLeft" align="right" valign="top"><a id="a3e1628cc503e8908c9868d9bb1c49761" name="a3e1628cc503e8908c9868d9bb1c49761"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetProperties</b> (const std::string &amp;p_yoloResourcesFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#a1d221d0dd4e19a46298454c19d1b4aa7">Detectors</a> &amp;p_yoloType, const <a class="el" href="namespace_lane_and_object_detection.html#aaac25c1fbcc5b05e60b8babbb072d5b6">BackEnds</a> &amp;p_backEndType, const <a class="el" href="namespace_lane_and_object_detection.html#a781379d7c9aea622fa924fa56ca278b0">BlobSizes</a> &amp;p_blobSize)</td></tr>
+<tr class="memdesc:a3e1628cc503e8908c9868d9bb1c49761"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="separator:a3e1628cc503e8908c9868d9bb1c49761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd42026fd074b9b1ed739674a90f5139" id="r_afd42026fd074b9b1ed739674a90f5139"><td class="memItemLeft" align="right" valign="top"><a id="afd42026fd074b9b1ed739674a90f5139" name="afd42026fd074b9b1ed739674a90f5139"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>RunDetector</b> (const cv::Mat &amp;p_frame)</td></tr>
 <tr class="memdesc:afd42026fd074b9b1ed739674a90f5139"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
@@ -222,66 +222,42 @@ cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>m_croppedImage</b>
 cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>m_croppedImageInHsv</b></td></tr>
 <tr class="memdesc:ac9ddab9d07f55c51400fb93f717c4496"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
 <tr class="separator:ac9ddab9d07f55c51400fb93f717c4496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ea51a23f34d45778aedb472ed26aaea" id="r_a7ea51a23f34d45778aedb472ed26aaea"><td class="memItemLeft" align="right" valign="top"><a id="a7ea51a23f34d45778aedb472ed26aaea" name="a7ea51a23f34d45778aedb472ed26aaea"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_confidence</b> {}</td></tr>
-<tr class="memdesc:a7ea51a23f34d45778aedb472ed26aaea"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a7ea51a23f34d45778aedb472ed26aaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53d9e846c801a23f4519d25649d2cffc" id="r_a53d9e846c801a23f4519d25649d2cffc"><td class="memItemLeft" align="right" valign="top"><a id="a53d9e846c801a23f4519d25649d2cffc" name="a53d9e846c801a23f4519d25649d2cffc"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_centerX</b> {}</td></tr>
-<tr class="memdesc:a53d9e846c801a23f4519d25649d2cffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a53d9e846c801a23f4519d25649d2cffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af146a9f705ff8b56496e0a4f31dadafe" id="r_af146a9f705ff8b56496e0a4f31dadafe"><td class="memItemLeft" align="right" valign="top"><a id="af146a9f705ff8b56496e0a4f31dadafe" name="af146a9f705ff8b56496e0a4f31dadafe"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_centerY</b> {}</td></tr>
-<tr class="memdesc:af146a9f705ff8b56496e0a4f31dadafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:af146a9f705ff8b56496e0a4f31dadafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad668b547a23eb5d0c520b6aa5efdb82a" id="r_ad668b547a23eb5d0c520b6aa5efdb82a"><td class="memItemLeft" align="right" valign="top"><a id="ad668b547a23eb5d0c520b6aa5efdb82a" name="ad668b547a23eb5d0c520b6aa5efdb82a"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_width</b> {}</td></tr>
-<tr class="memdesc:ad668b547a23eb5d0c520b6aa5efdb82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ad668b547a23eb5d0c520b6aa5efdb82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04b9baef1a7cdb9b4781a653979b1fd5" id="r_a04b9baef1a7cdb9b4781a653979b1fd5"><td class="memItemLeft" align="right" valign="top"><a id="a04b9baef1a7cdb9b4781a653979b1fd5" name="a04b9baef1a7cdb9b4781a653979b1fd5"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_height</b> {}</td></tr>
-<tr class="memdesc:a04b9baef1a7cdb9b4781a653979b1fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a04b9baef1a7cdb9b4781a653979b1fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e06c32ea12a21c3cc0c43f82b173e61" id="r_a3e06c32ea12a21c3cc0c43f82b173e61"><td class="memItemLeft" align="right" valign="top"><a id="a3e06c32ea12a21c3cc0c43f82b173e61" name="a3e06c32ea12a21c3cc0c43f82b173e61"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nonZeroPixelsInGreen</b> {}</td></tr>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nonZeroPixelsInGreen</b></td></tr>
 <tr class="memdesc:a3e06c32ea12a21c3cc0c43f82b173e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
 <tr class="separator:a3e06c32ea12a21c3cc0c43f82b173e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d1d433f5ab6747881b337b526fd5b6c" id="r_a4d1d433f5ab6747881b337b526fd5b6c"><td class="memItemLeft" align="right" valign="top"><a id="a4d1d433f5ab6747881b337b526fd5b6c" name="a4d1d433f5ab6747881b337b526fd5b6c"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nonZeroPixelsInRed</b> {}</td></tr>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nonZeroPixelsInRed</b></td></tr>
 <tr class="memdesc:a4d1d433f5ab6747881b337b526fd5b6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
 <tr class="separator:a4d1d433f5ab6747881b337b526fd5b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b6100f881cd0309803446c1e264157" id="r_a85b6100f881cd0309803446c1e264157"><td class="memItemLeft" align="right" valign="top"><a id="a85b6100f881cd0309803446c1e264157" name="a85b6100f881cd0309803446c1e264157"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_blobSize</b> {}</td></tr>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_blobSize</b></td></tr>
 <tr class="memdesc:a85b6100f881cd0309803446c1e264157"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
 <tr class="separator:a85b6100f881cd0309803446c1e264157"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ea51a23f34d45778aedb472ed26aaea" id="r_a7ea51a23f34d45778aedb472ed26aaea"><td class="memItemLeft" align="right" valign="top"><a id="a7ea51a23f34d45778aedb472ed26aaea" name="a7ea51a23f34d45778aedb472ed26aaea"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_confidence</b></td></tr>
+<tr class="memdesc:a7ea51a23f34d45778aedb472ed26aaea"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="separator:a7ea51a23f34d45778aedb472ed26aaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d9e846c801a23f4519d25649d2cffc" id="r_a53d9e846c801a23f4519d25649d2cffc"><td class="memItemLeft" align="right" valign="top"><a id="a53d9e846c801a23f4519d25649d2cffc" name="a53d9e846c801a23f4519d25649d2cffc"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_centerX</b></td></tr>
+<tr class="memdesc:a53d9e846c801a23f4519d25649d2cffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="separator:a53d9e846c801a23f4519d25649d2cffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af146a9f705ff8b56496e0a4f31dadafe" id="r_af146a9f705ff8b56496e0a4f31dadafe"><td class="memItemLeft" align="right" valign="top"><a id="af146a9f705ff8b56496e0a4f31dadafe" name="af146a9f705ff8b56496e0a4f31dadafe"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_centerY</b></td></tr>
+<tr class="memdesc:af146a9f705ff8b56496e0a4f31dadafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="separator:af146a9f705ff8b56496e0a4f31dadafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad668b547a23eb5d0c520b6aa5efdb82a" id="r_ad668b547a23eb5d0c520b6aa5efdb82a"><td class="memItemLeft" align="right" valign="top"><a id="ad668b547a23eb5d0c520b6aa5efdb82a" name="ad668b547a23eb5d0c520b6aa5efdb82a"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_width</b></td></tr>
+<tr class="memdesc:ad668b547a23eb5d0c520b6aa5efdb82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="separator:ad668b547a23eb5d0c520b6aa5efdb82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04b9baef1a7cdb9b4781a653979b1fd5" id="r_a04b9baef1a7cdb9b4781a653979b1fd5"><td class="memItemLeft" align="right" valign="top"><a id="a04b9baef1a7cdb9b4781a653979b1fd5" name="a04b9baef1a7cdb9b4781a653979b1fd5"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_height</b></td></tr>
+<tr class="memdesc:a04b9baef1a7cdb9b4781a653979b1fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="separator:a04b9baef1a7cdb9b4781a653979b1fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bf9d9e29b15feabf45b234053b0486b" id="r_a0bf9d9e29b15feabf45b234053b0486b"><td class="memItemLeft" align="right" valign="top"><a id="a0bf9d9e29b15feabf45b234053b0486b" name="a0bf9d9e29b15feabf45b234053b0486b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipDetection</b> {}</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipDetection</b></td></tr>
 <tr class="memdesc:a0bf9d9e29b15feabf45b234053b0486b"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
 <tr class="separator:a0bf9d9e29b15feabf45b234053b0486b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a220f64ee6b4a4d4f9077e46a267c5ead" id="r_a220f64ee6b4a4d4f9077e46a267c5ead"><td class="memItemLeft" align="right" valign="top"><a id="a220f64ee6b4a4d4f9077e46a267c5ead" name="a220f64ee6b4a4d4f9077e46a267c5ead"></a>
-const double&#160;</td><td class="memItemRight" valign="bottom"><b>m_YOLO_CONFIDENCE_THRESHOLD</b> = 0.4</td></tr>
-<tr class="memdesc:a220f64ee6b4a4d4f9077e46a267c5ead"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a220f64ee6b4a4d4f9077e46a267c5ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa4f8741803a624d35bac31fe35a0f24" id="r_afa4f8741803a624d35bac31fe35a0f24"><td class="memItemLeft" align="right" valign="top"><a id="afa4f8741803a624d35bac31fe35a0f24" name="afa4f8741803a624d35bac31fe35a0f24"></a>
-const float&#160;</td><td class="memItemRight" valign="bottom"><b>m_YOLO_NMS_THRESHOLD</b> = 0.4</td></tr>
-<tr class="memdesc:afa4f8741803a624d35bac31fe35a0f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:afa4f8741803a624d35bac31fe35a0f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b167c0a9d7a2ed34d3ca279328a80c2" id="r_a4b167c0a9d7a2ed34d3ca279328a80c2"><td class="memItemLeft" align="right" valign="top"><a id="a4b167c0a9d7a2ed34d3ca279328a80c2" name="a4b167c0a9d7a2ed34d3ca279328a80c2"></a>
-const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_BOUNDING_BOX_BUFFER</b> = 5</td></tr>
-<tr class="memdesc:a4b167c0a9d7a2ed34d3ca279328a80c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a4b167c0a9d7a2ed34d3ca279328a80c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3a0b99248f54ae6908ec2ceb2ca1789" id="r_ac3a0b99248f54ae6908ec2ceb2ca1789"><td class="memItemLeft" align="right" valign="top"><a id="ac3a0b99248f54ae6908ec2ceb2ca1789" name="ac3a0b99248f54ae6908ec2ceb2ca1789"></a>
-const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_VIDEO_WIDTH</b> = 1920</td></tr>
-<tr class="memdesc:ac3a0b99248f54ae6908ec2ceb2ca1789"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ac3a0b99248f54ae6908ec2ceb2ca1789"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a516a7072864759eac4fd9318c7325598" id="r_a516a7072864759eac4fd9318c7325598"><td class="memItemLeft" align="right" valign="top"><a id="a516a7072864759eac4fd9318c7325598" name="a516a7072864759eac4fd9318c7325598"></a>
-const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_VIDEO_HEIGHT</b> = 1080</td></tr>
-<tr class="memdesc:a516a7072864759eac4fd9318c7325598"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a516a7072864759eac4fd9318c7325598"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cc35e09f4b434a4fec27619b7c1649d" id="r_a7cc35e09f4b434a4fec27619b7c1649d"><td class="memItemLeft" align="right" valign="top"><a id="a7cc35e09f4b434a4fec27619b7c1649d" name="a7cc35e09f4b434a4fec27619b7c1649d"></a>
-const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_ROI_BOTTOM_HEIGHT</b> = 840</td></tr>
-<tr class="memdesc:a7cc35e09f4b434a4fec27619b7c1649d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a7cc35e09f4b434a4fec27619b7c1649d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>TODO. </p>
@@ -295,7 +271,7 @@ const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_ROI_BOTTO
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_object_detector.html">ObjectDetector</a></li>
-    <li class="footer">Generated on Thu Feb 13 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Mon Feb 17 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

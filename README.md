@@ -99,22 +99,35 @@ On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-w
 
 TODO
 
-1. Fix clang linting issues
-    cpp core guidelines-special-member-functions for Terminal Games (mainmenu and game)
+1. Clean up C++ lane detection code and supplementary code (ignore object detection)
+    Add default CLI support to pass required paths (and add to readme)
+    Move RollingAverage to within lane detection somehow?
+    PrintToFrame should be video manager responsibility not other classes
+    upgrade video manager to not have to create a new object to adjust settings (set properties?) (for performance tests)
+    standardise error messages
 
-2. Clean up C++ lane detection code and supplementary code (ignore object detection)
-   Add default CLI support to pass required paths (and add to readme)
-   clean up comments
-   Add doxygen docs page to readme
-   clean up rest of readme
+    Why is NAN being used everywhere?
+    param/var could be better G_VIDEO_WIDTH -> G_INPUT_VIDEO_WIDTH
+    magic numbers everywhere
+    clean up comments
+    clean up rest of readme
+    remove cv::scalar
+    NO LINTs
 
 x. Clean up C++ object detection code
+   replace backend enum with // cv::dnn::Backend // cv::dnn::Target#
+   param names don't match enum names
+   magic numbers everywhere
+   clean up comments
+   clean up rest of readme
+   remove cv::scalar
 
 x. Upgrade to newer YOLO
+    Any perf or accuracy increases?
 
-x. Clean up performance test code (replace with C++) or delete
+x. Clean up performance test code (replace with C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
 
-x. Implement C GUI window to encapsulate main code and performance test code?
+x. Implement C GUI window to encapsulate main code and performance test code with debug mode to show all stats (and roi/canny/hough line debug views) and option to adjust ROI?
 
 x. Test with CUDA
 

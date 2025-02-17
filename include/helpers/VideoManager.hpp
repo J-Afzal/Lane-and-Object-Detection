@@ -1,15 +1,10 @@
-// NOLINTBEGIN
-
 #pragma once
 
 #include <cstdint>
-#include <memory>
 #include <string>
 #include <vector>
 
 #include <opencv2/core/mat.hpp>
-#include <opencv2/core/types.hpp>
-#include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
 
 #include "detectors/LaneDetector.hpp"
@@ -34,9 +29,9 @@ namespace LaneAndObjectDetection
          */
         explicit VideoManager(const std::string& p_inputVideoFilePath,
                               const std::string& p_yoloResourcesFolderPath,
-                              const Detector& p_objectDetectorType = Detector::STANDARD,
-                              const BackEnd& p_backEndType = BackEnd::CPU,
-                              const BlobSize& p_blobSize = BlobSize::FIVE);
+                              const Detectors& p_objectDetectorType = Detectors::STANDARD,
+                              const BackEnds& p_backEndType = BackEnds::CPU,
+                              const BlobSizes& p_blobSize = BlobSizes::FIVE);
 
         /**
          * @brief TODO
@@ -44,11 +39,39 @@ namespace LaneAndObjectDetection
         ~VideoManager();
 
         /**
-         * @brief An std::optional (WRONG) is used so that the PerformanceTests class can extract frame times from
+         * @brief An std::optional (TODO: WRONG) is used so that the PerformanceTests class can extract frame times from
          * the VideoManager class, when needed, while not effecting the usage of VideoManager
          * outside of performance testing
          */
         std::vector<uint32_t> Run();
+
+        /**
+         * @brief Disable constructing a new VideoManager object using copy constructor.
+         *
+         * @param p_videoManager The video manager to copy.
+         */
+        VideoManager(const VideoManager& p_videoManager) = delete;
+
+        /**
+         * @brief Disable constructing a new VideoManager object using move constructor.
+         *
+         * @param p_videoManager The video manager to copy.
+         */
+        VideoManager(const VideoManager&& p_videoManager) = delete;
+
+        /**
+         * @brief Disable constructing a new VideoManager object using copy assignment operator.
+         *
+         * @param p_videoManager The video manager to copy.
+         */
+        VideoManager& operator=(const VideoManager& p_videoManager) = delete;
+
+        /**
+         * @brief Disable constructing a new VideoManager object using move assignment operator.
+         *
+         * @param p_videoManager The video manager to copy.
+         */
+        VideoManager& operator=(const VideoManager&& p_videoManager) = delete;
 
     private:
         /**
@@ -58,13 +81,10 @@ namespace LaneAndObjectDetection
         cv::VideoCapture m_inputVideo;
         cv::VideoWriter m_outputVideo;
         cv::Mat m_frame;
-        bool m_recordOutput = false;
-        std::unique_ptr<ObjectDetector> m_objectDetector; // Why pointer???
-        std::unique_ptr<LaneDetector> m_laneDetector;
-        std::unique_ptr<Performance> m_performance;
-
-        const uint32_t m_VIDEO_WIDTH = 1920, m_VIDEO_HEIGHT = 1080, m_FONT_FACE = cv::FONT_HERSHEY_DUPLEX, m_FONT_THICKNESS = 1, m_FONT_SCALE = 1;
-        const cv::Rect m_RECORDING_STATUS_RECT = cv::Rect(1495, 410, 400, 50);
+        LaneDetector m_laneDetector;
+        ObjectDetector m_objectDetector;
+        Performance m_performance;
+        bool m_recordOutput;
         ///@}
 
         /**
@@ -78,5 +98,3 @@ namespace LaneAndObjectDetection
         void ToggleRecording();
     };
 }
-
-// NOLINTEND

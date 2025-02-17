@@ -111,40 +111,35 @@ $(function(){initNavTree('_rolling_average_8hpp_source.html',''); initResizable(
   <div class="headertitle"><div class="title">RollingAverage.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// NOLINTBEGIN</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;deque&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html">   19</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#a111dbcd51567f3360d883eb953e18b6a">RollingAverage</a></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#a111dbcd51567f3360d883eb953e18b6a">RollingAverage</a>(<span class="keyword">const</span> uint32_t&amp; p_sizeOfRollingAverage, <span class="keyword">const</span> uint32_t&amp; p_numberOfStates);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html#a1d472c2450a9f833f0b012c420382164">   30</a></span>        <a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#a1d472c2450a9f833f0b012c420382164">~RollingAverage</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        uint32_t <a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#ae9dfe9b46f73d1959d7928b0610d2556">CalculateRollingAverage</a>(<span class="keyword">const</span> uint32_t&amp; p_nextInput);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html#abbfb74b3a99c7164834fdf1974cdb772">   41</a></span>        std::deque&lt;uint32_t&gt; <a class="code hl_variable" href="class_lane_and_object_detection_1_1_rolling_average.html#abbfb74b3a99c7164834fdf1974cdb772">m_rollingAverageArray</a>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html#a1720e85bdb99aef37b841ee0df8f7465">   46</a></span>        std::vector&lt;uint32_t&gt; <a class="code hl_variable" href="class_lane_and_object_detection_1_1_rolling_average.html#a1720e85bdb99aef37b841ee0df8f7465">m_occurrenceOfEachState</a>;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    };</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;deque&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html">   17</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#a64bd54a6f92112eefae4177651fb7d83">RollingAverage</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html#a64bd54a6f92112eefae4177651fb7d83">   23</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#a64bd54a6f92112eefae4177651fb7d83">RollingAverage</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keyword">explicit</span> <a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#a64bd54a6f92112eefae4177651fb7d83">RollingAverage</a>(<span class="keyword">const</span> uint32_t&amp; p_sizeOfRollingAverage, <span class="keyword">const</span> uint32_t&amp; p_numberOfStates);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        uint32_t <a class="code hl_function" href="class_lane_and_object_detection_1_1_rolling_average.html#ae9dfe9b46f73d1959d7928b0610d2556">CalculateRollingAverage</a>(<span class="keyword">const</span> uint32_t&amp; p_nextInput);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html#abbfb74b3a99c7164834fdf1974cdb772">   39</a></span>        std::deque&lt;uint32_t&gt; <a class="code hl_variable" href="class_lane_and_object_detection_1_1_rolling_average.html#abbfb74b3a99c7164834fdf1974cdb772">m_rollingAverageArray</a>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_lane_and_object_detection_1_1_rolling_average.html#a1720e85bdb99aef37b841ee0df8f7465">   44</a></span>        std::vector&lt;uint32_t&gt; <a class="code hl_variable" href="class_lane_and_object_detection_1_1_rolling_average.html#a1720e85bdb99aef37b841ee0df8f7465">m_occurrenceOfEachState</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    };</div>
 </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">// NOLINTEND</span></div>
-<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_a111dbcd51567f3360d883eb953e18b6a"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#a111dbcd51567f3360d883eb953e18b6a">LaneAndObjectDetection::RollingAverage::RollingAverage</a></div><div class="ttdeci">RollingAverage(const uint32_t &amp;p_sizeOfRollingAverage, const uint32_t &amp;p_numberOfStates)</div><div class="ttdoc">TODO.</div><div class="ttdef"><b>Definition</b> RollingAverage.cpp:8</div></div>
-<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_a1720e85bdb99aef37b841ee0df8f7465"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#a1720e85bdb99aef37b841ee0df8f7465">LaneAndObjectDetection::RollingAverage::m_occurrenceOfEachState</a></div><div class="ttdeci">std::vector&lt; uint32_t &gt; m_occurrenceOfEachState</div><div class="ttdoc">TODO.</div><div class="ttdef"><b>Definition</b> RollingAverage.hpp:46</div></div>
-<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_a1d472c2450a9f833f0b012c420382164"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#a1d472c2450a9f833f0b012c420382164">LaneAndObjectDetection::RollingAverage::~RollingAverage</a></div><div class="ttdeci">~RollingAverage()=default</div><div class="ttdoc">TODO.</div></div>
-<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_abbfb74b3a99c7164834fdf1974cdb772"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#abbfb74b3a99c7164834fdf1974cdb772">LaneAndObjectDetection::RollingAverage::m_rollingAverageArray</a></div><div class="ttdeci">std::deque&lt; uint32_t &gt; m_rollingAverageArray</div><div class="ttdoc">TODO.</div><div class="ttdef"><b>Definition</b> RollingAverage.hpp:41</div></div>
-<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_ae9dfe9b46f73d1959d7928b0610d2556"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#ae9dfe9b46f73d1959d7928b0610d2556">LaneAndObjectDetection::RollingAverage::CalculateRollingAverage</a></div><div class="ttdeci">uint32_t CalculateRollingAverage(const uint32_t &amp;p_nextInput)</div><div class="ttdoc">TODO.</div><div class="ttdef"><b>Definition</b> RollingAverage.cpp:23</div></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}</div>
+<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_a1720e85bdb99aef37b841ee0df8f7465"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#a1720e85bdb99aef37b841ee0df8f7465">LaneAndObjectDetection::RollingAverage::m_occurrenceOfEachState</a></div><div class="ttdeci">std::vector&lt; uint32_t &gt; m_occurrenceOfEachState</div><div class="ttdoc">TODO.</div><div class="ttdef"><b>Definition</b> RollingAverage.hpp:44</div></div>
+<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_a64bd54a6f92112eefae4177651fb7d83"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#a64bd54a6f92112eefae4177651fb7d83">LaneAndObjectDetection::RollingAverage::RollingAverage</a></div><div class="ttdeci">RollingAverage()=default</div><div class="ttdoc">TODO.</div></div>
+<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_abbfb74b3a99c7164834fdf1974cdb772"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#abbfb74b3a99c7164834fdf1974cdb772">LaneAndObjectDetection::RollingAverage::m_rollingAverageArray</a></div><div class="ttdeci">std::deque&lt; uint32_t &gt; m_rollingAverageArray</div><div class="ttdoc">TODO.</div><div class="ttdef"><b>Definition</b> RollingAverage.hpp:39</div></div>
+<div class="ttc" id="aclass_lane_and_object_detection_1_1_rolling_average_html_ae9dfe9b46f73d1959d7928b0610d2556"><div class="ttname"><a href="class_lane_and_object_detection_1_1_rolling_average.html#ae9dfe9b46f73d1959d7928b0610d2556">LaneAndObjectDetection::RollingAverage::CalculateRollingAverage</a></div><div class="ttdeci">uint32_t CalculateRollingAverage(const uint32_t &amp;p_nextInput)</div><div class="ttdoc">TODO.</div><div class="ttdef"><b>Definition</b> RollingAverage.cpp:22</div></div>
 <div class="ttc" id="anamespace_lane_and_object_detection_html"><div class="ttname"><a href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></div><div class="ttdoc">TODO.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -152,7 +147,7 @@ $(function(){initNavTree('_rolling_average_8hpp_source.html',''); initResizable(
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_9a465796e2609dc8c07bb30bab53fed6.html">helpers</a></li><li class="navelem"><b>RollingAverage.hpp</b></li>
-    <li class="footer">Generated on Thu Feb 13 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Mon Feb 17 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>
