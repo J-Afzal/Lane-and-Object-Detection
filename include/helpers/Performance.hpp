@@ -23,7 +23,7 @@ namespace LaneAndObjectDetection
          * @brief TODO
          *
          */
-        Performance();
+        explicit Performance();
 
         /**
          * @brief TODO

@@ -99,23 +99,20 @@ On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-w
 
 TODO
 
-1. Fix clang linting issues
-    add explicit to all constructors
+1. Clean up C++ lane detection code and supplementary code (ignore object detection)
+    Add default CLI support to pass required paths (and add to readme)
+    Move RollingAverage to within lane detection somehow?
+    PrintToFrame should be video manager responsibility not other classes
+    upgrade video manager to not have to create a new object to adjust settings (set properties?) (for performance tests)
+    standardise error messages
 
-2. Clean up C++ lane detection code and supplementary code (ignore object detection)
-   Add default CLI support to pass required paths (and add to readme)
-   Move RollingAverage to within lane detection somehow?
-   Why is NAN being used everywhere?
-   NO LINTs
-   param/var names
-   magic numbers everywhere
-   clean up comments
-   clean up rest of readme
-   upgrade video manager to not have to create a new object to adjust settings (for performance tests)
-   G_VIDEO_WIDTH -> G_INPUT_VIDEO_WIDTH
-   PrintToFrame should be video manager responsibility not other classes
-   standardise error messages
-   remove cv::scalar
+    Why is NAN being used everywhere?
+    param/var could be better G_VIDEO_WIDTH -> G_INPUT_VIDEO_WIDTH
+    magic numbers everywhere
+    clean up comments
+    clean up rest of readme
+    remove cv::scalar
+    NO LINTs
 
 x. Clean up C++ object detection code
    replace backend enum with // cv::dnn::Backend // cv::dnn::Target#

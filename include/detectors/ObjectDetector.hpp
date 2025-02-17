@@ -56,7 +56,7 @@ namespace LaneAndObjectDetection
         /**
          * @brief TODO
          */
-        ObjectDetector();
+        explicit ObjectDetector();
 
         /**
          * @brief TODO
