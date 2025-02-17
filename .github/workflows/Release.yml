@@ -24,16 +24,16 @@ jobs:
 
             - name: Create new release
               run: |
-                  $releaseTitle = "Lane and Object Detection"
+                  $releaseTitle = "Lane and Object Detection $(Get-Date -Format 'yyyy-MM-dd HH-mm-ss')"
+                  $tagName = "lane-and-object-detection-$(Get-Date -Format 'yyyy-MM-dd-HH-mm-ss')"
                   $sharedName = "lane-and-object-detection"
                   $openCvDllName = "opencv_world4110.dll"
-                  $currentDateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 
                   Rename-Item -LiteralPath ./$sharedName-macos-latest/$sharedName -NewName $sharedName-macos-latest
                   Rename-Item -LiteralPath ./$sharedName-ubuntu-latest/$sharedName -NewName $sharedName-ubuntu-latest
                   Rename-Item -LiteralPath ./$sharedName-windows-latest/$sharedName.exe -NewName $sharedName-windows-latest.exe
 
-                  gh release create "$sharedName-$currentDateTime" ./$sharedName-macos-latest/$sharedName-macos-latest ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest ./$sharedName-windows-latest/$sharedName-windows-latest.exe ./$sharedName-windows-latest/$openCvDllName --generate-notes --latest --title "$releaseTitle $currentDateTime"
+                  gh release create $tagName ./$sharedName-macos-latest/$sharedName-macos-latest ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest ./$sharedName-windows-latest/$sharedName-windows-latest.exe ./$sharedName-windows-latest/$openCvDllName --generate-notes --latest --title $releaseTitle
               env:
                   GH_TOKEN: ${{ github.token }}
 
