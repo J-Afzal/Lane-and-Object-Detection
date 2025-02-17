@@ -186,8 +186,6 @@ function Build-CppCodeUsingCMake {
         Set-Location -LiteralPath ../..
     }
 
-    Write-Information "##[section]Building Lane and Object Detection..."
-
     Write-Information "##[command]Configuring Lane and Object Detection..."
 
     if ($Platform -eq "windows-latest") {
