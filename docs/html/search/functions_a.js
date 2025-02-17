@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['videomanager_0',['VideoManager',['../class_lane_and_object_detection_1_1_video_manager.html#a7b17d9ed2432ad94470326c9889a8e98',1,'LaneAndObjectDetection::VideoManager']]]
+  ['videomanager_0',['VideoManager',['../class_lane_and_object_detection_1_1_video_manager.html#a875d682234fc005a865ca1b11188fba8',1,'LaneAndObjectDetection::VideoManager::VideoManager(const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloResourcesFolderPath, const Detectors &amp;p_objectDetectorType=Detectors::STANDARD, const BackEnds &amp;p_backEndType=BackEnds::CPU, const BlobSizes &amp;p_blobSize=BlobSizes::FIVE)'],['../class_lane_and_object_detection_1_1_video_manager.html#a6fa9483adb219fb3b7a12985bb5dc9dc',1,'LaneAndObjectDetection::VideoManager::VideoManager(const VideoManager &amp;p_videoManager)=delete'],['../class_lane_and_object_detection_1_1_video_manager.html#ab60f9ac9e1525a2e20f73cff9a9d3c8a',1,'LaneAndObjectDetection::VideoManager::VideoManager(const VideoManager &amp;&amp;p_videoManager)=delete']]]
 ];

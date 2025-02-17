@@ -1,7 +1,7 @@
 var class_lane_and_object_detection_1_1_object_detector =
 [
-    [ "ObjectDetector", "class_lane_and_object_detection_1_1_object_detector.html#a1b5e9478b7940a20a2bf795d52c9b488", null ],
-    [ "~ObjectDetector", "class_lane_and_object_detection_1_1_object_detector.html#afe3fbe9de7cdd0fb944092303996a39d", null ],
+    [ "ObjectDetector", "class_lane_and_object_detection_1_1_object_detector.html#a7b4509db942718492f383152bb271451", null ],
+    [ "SetProperties", "class_lane_and_object_detection_1_1_object_detector.html#a3e1628cc503e8908c9868d9bb1c49761", null ],
     [ "RunDetector", "class_lane_and_object_detection_1_1_object_detector.html#afd42026fd074b9b1ed739674a90f5139", null ],
     [ "GetBoundingBoxes", "class_lane_and_object_detection_1_1_object_detector.html#a9fc636fd7ffeb8ed80c0e423352be495", null ],
     [ "PrintToFrame", "class_lane_and_object_detection_1_1_object_detector.html#ab8dcf509f05a847b9987dd807a63a295", null ],
@@ -24,19 +24,13 @@ var class_lane_and_object_detection_1_1_object_detector =
     [ "m_blobFromImage", "class_lane_and_object_detection_1_1_object_detector.html#aae174b650a090e347db1e507bfdbe7f0", null ],
     [ "m_croppedImage", "class_lane_and_object_detection_1_1_object_detector.html#a8eba50b23333d6012e1e38378d9b5636", null ],
     [ "m_croppedImageInHsv", "class_lane_and_object_detection_1_1_object_detector.html#ac9ddab9d07f55c51400fb93f717c4496", null ],
+    [ "m_nonZeroPixelsInGreen", "class_lane_and_object_detection_1_1_object_detector.html#a3e06c32ea12a21c3cc0c43f82b173e61", null ],
+    [ "m_nonZeroPixelsInRed", "class_lane_and_object_detection_1_1_object_detector.html#a4d1d433f5ab6747881b337b526fd5b6c", null ],
+    [ "m_blobSize", "class_lane_and_object_detection_1_1_object_detector.html#a85b6100f881cd0309803446c1e264157", null ],
     [ "m_confidence", "class_lane_and_object_detection_1_1_object_detector.html#a7ea51a23f34d45778aedb472ed26aaea", null ],
     [ "m_centerX", "class_lane_and_object_detection_1_1_object_detector.html#a53d9e846c801a23f4519d25649d2cffc", null ],
     [ "m_centerY", "class_lane_and_object_detection_1_1_object_detector.html#af146a9f705ff8b56496e0a4f31dadafe", null ],
     [ "m_width", "class_lane_and_object_detection_1_1_object_detector.html#ad668b547a23eb5d0c520b6aa5efdb82a", null ],
     [ "m_height", "class_lane_and_object_detection_1_1_object_detector.html#a04b9baef1a7cdb9b4781a653979b1fd5", null ],
-    [ "m_nonZeroPixelsInGreen", "class_lane_and_object_detection_1_1_object_detector.html#a3e06c32ea12a21c3cc0c43f82b173e61", null ],
-    [ "m_nonZeroPixelsInRed", "class_lane_and_object_detection_1_1_object_detector.html#a4d1d433f5ab6747881b337b526fd5b6c", null ],
-    [ "m_blobSize", "class_lane_and_object_detection_1_1_object_detector.html#a85b6100f881cd0309803446c1e264157", null ],
-    [ "m_skipDetection", "class_lane_and_object_detection_1_1_object_detector.html#a0bf9d9e29b15feabf45b234053b0486b", null ],
-    [ "m_YOLO_CONFIDENCE_THRESHOLD", "class_lane_and_object_detection_1_1_object_detector.html#a220f64ee6b4a4d4f9077e46a267c5ead", null ],
-    [ "m_YOLO_NMS_THRESHOLD", "class_lane_and_object_detection_1_1_object_detector.html#afa4f8741803a624d35bac31fe35a0f24", null ],
-    [ "m_BOUNDING_BOX_BUFFER", "class_lane_and_object_detection_1_1_object_detector.html#a4b167c0a9d7a2ed34d3ca279328a80c2", null ],
-    [ "m_VIDEO_WIDTH", "class_lane_and_object_detection_1_1_object_detector.html#ac3a0b99248f54ae6908ec2ceb2ca1789", null ],
-    [ "m_VIDEO_HEIGHT", "class_lane_and_object_detection_1_1_object_detector.html#a516a7072864759eac4fd9318c7325598", null ],
-    [ "m_ROI_BOTTOM_HEIGHT", "class_lane_and_object_detection_1_1_object_detector.html#a7cc35e09f4b434a4fec27619b7c1649d", null ]
+    [ "m_skipDetection", "class_lane_and_object_detection_1_1_object_detector.html#a0bf9d9e29b15feabf45b234053b0486b", null ]
 ];

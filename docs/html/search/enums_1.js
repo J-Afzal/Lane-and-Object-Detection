@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['detector_0',['Detector',['../namespace_lane_and_object_detection.html#adbfd75ed08c72a22396d89db6e627607',1,'LaneAndObjectDetection']]]
+  ['detectors_0',['Detectors',['../namespace_lane_and_object_detection.html#a1d221d0dd4e19a46298454c19d1b4aa7',1,'LaneAndObjectDetection']]]
 ];
