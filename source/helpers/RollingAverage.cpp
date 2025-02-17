@@ -1,7 +1,6 @@
-// NOLINTBEGIN
+#include <cstdint>
 
 #include "helpers/RollingAverage.hpp"
-#include <cstdint>
 
 namespace LaneAndObjectDetection
 {
@@ -39,5 +38,3 @@ namespace LaneAndObjectDetection
         return mostFrequentState;
     }
 }
-
-// NOLINTEND

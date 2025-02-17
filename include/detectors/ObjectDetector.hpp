@@ -1,5 +1,3 @@
-// NOLINTBEGIN
-
 #pragma once
 
 #include <cstdint>
@@ -20,26 +18,26 @@ namespace LaneAndObjectDetection
     /**
      * @brief TODO
      */
-    enum class Detector
+    enum class Detectors : std::uint8_t
     {
         NONE = 0,
-        STANDARD = 1,
-        TINY = 2
+        STANDARD,
+        TINY
     };
 
     /**
      * @brief TODO
      */
-    enum class BackEnd
+    enum class BackEnds : std::uint8_t
     {
         CPU = 0,
-        CUDA = 1
+        CUDA
     };
 
     /**
      * @brief TODO
      */
-    enum class BlobSize
+    enum class BlobSizes : std::uint16_t
     {
         ONE = 288,
         TWO = 320,
@@ -58,12 +56,16 @@ namespace LaneAndObjectDetection
         /**
          * @brief TODO
          */
-        ObjectDetector(const std::string& p_yoloResourcesFolderPath, const Detector& p_yoloType, const BackEnd& p_backEndType, const BlobSize& p_blobSize);
+        ObjectDetector();
 
         /**
          * @brief TODO
          */
-        ~ObjectDetector() = default;
+        void SetProperties(
+            const std::string& p_yoloResourcesFolderPath,
+            const Detectors& p_yoloType,
+            const BackEnds& p_backEndType,
+            const BlobSizes& p_blobSize);
 
         /**
          * @brief TODO
@@ -87,24 +89,32 @@ namespace LaneAndObjectDetection
         ///@{
         std::map<std::string, cv::Scalar> m_modelNamesAndColourList;
         std::vector<cv::Mat> m_outputBlobs;
-        std::vector<cv::Rect> m_boundingBoxes, m_preNmsObjectBoundingBoxes;
-        std::vector<std::string> m_unconnectedOutputLayerNames, m_modelNames, m_names, m_preNmsObjectNames, m_trafficLightStates;
-        std::vector<cv::Point2f> m_srcTrafficLight, m_dstTrafficLight;
+        std::vector<cv::Rect> m_boundingBoxes;
+        std::vector<cv::Rect> m_preNmsObjectBoundingBoxes;
+        std::vector<std::string> m_unconnectedOutputLayerNames;
+        std::vector<std::string> m_modelNames;
+        std::vector<std::string> m_names;
+        std::vector<std::string> m_preNmsObjectNames;
+        std::vector<std::string> m_trafficLightStates;
+        std::vector<cv::Point2f> m_srcTrafficLight;
+        std::vector<cv::Point2f> m_dstTrafficLight;
         std::vector<float> m_confidences;
         std::vector<float> m_preNmsObjectConfidences;
         std::vector<int> m_indicesAfterNms;
         cv::dnn::Net m_net;
         cv::Point m_classId;
-        cv::Mat m_blobFromImage, m_croppedImage, m_croppedImageInHsv;
-        double m_confidence {}, m_centerX {}, m_centerY {}, m_width {}, m_height {};
-        uint32_t m_nonZeroPixelsInGreen {}, m_nonZeroPixelsInRed {}, m_blobSize {};
-        bool m_skipDetection {};
-
-        const double m_YOLO_CONFIDENCE_THRESHOLD = 0.4;
-        const float m_YOLO_NMS_THRESHOLD = 0.4;
-        const uint32_t m_BOUNDING_BOX_BUFFER = 5, m_VIDEO_WIDTH = 1920, m_VIDEO_HEIGHT = 1080, m_ROI_BOTTOM_HEIGHT = 840;
+        cv::Mat m_blobFromImage;
+        cv::Mat m_croppedImage;
+        cv::Mat m_croppedImageInHsv;
+        uint32_t m_nonZeroPixelsInGreen;
+        uint32_t m_nonZeroPixelsInRed;
+        uint32_t m_blobSize;
+        double m_confidence;
+        double m_centerX;
+        double m_centerY;
+        double m_width;
+        double m_height;
+        bool m_skipDetection;
         ///@}
     };
 }
-
-// NOLINTEND
