@@ -6,7 +6,7 @@
 
 /**
  * @namespace LaneAndObjectDetection
- * @brief TODO
+ * @brief Contains all Lane-and-Object-Detection objects.
  */
 namespace LaneAndObjectDetection
 {
@@ -14,7 +14,7 @@ namespace LaneAndObjectDetection
      * @class RollingAverage
      * @brief TODO
      */
-    class RollingAverage
+    class RollingAverage // TODO: Move to be within lane detection somehow?
     {
     public:
         /**

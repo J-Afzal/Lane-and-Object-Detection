@@ -8,7 +8,7 @@
 
 /**
  * @namespace LaneAndObjectDetection
- * @brief TODO
+ * @brief Contains all Lane-and-Object-Detection objects.
  */
 namespace LaneAndObjectDetection
 {

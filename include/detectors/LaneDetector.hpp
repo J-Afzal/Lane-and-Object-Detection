@@ -13,7 +13,7 @@
 
 /**
  * @namespace LaneAndObjectDetection
- * @brief TODO
+ * @brief Contains all Lane-and-Object-Detection objects.
  */
 namespace LaneAndObjectDetection
 {
@@ -72,7 +72,7 @@ namespace LaneAndObjectDetection
          * @brief TODO
          */
         ///@{
-        RollingAverage m_horizontalLineStateRollingAverage;
+        RollingAverage m_horizontalLineStateRollingAverage; // TODO: better var names?
         RollingAverage m_leftLineTypeRollingAverage;
         RollingAverage m_middleLineTypeRollingAverage;
         RollingAverage m_rightLineTypeRollingAverage;

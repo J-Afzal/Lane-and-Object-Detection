@@ -12,25 +12,24 @@
 
 /**
  * @namespace LaneAndObjectDetection::Globals
- * @brief TODO
+ * @brief Contains all global and constant objects.
  */
 namespace LaneAndObjectDetection::Globals
 {
     /**
-     * @brief UI component locations
-     */
-    ///@{
-    static inline const cv::Rect G_FPS_RECT = cv::Rect(25, 25, 350, 100);
-    static inline const cv::Rect G_RECORDING_STATUS_RECT = cv::Rect(1495, 410, 400, 50);
-    static inline const cv::Rect G_RIGHT_INFO_RECT = cv::Rect(1495, 25, 400, 360);
-    ///@}
-
-    /**
      * @brief Input video dimensions.
      */
     ///@{
-    static inline const uint32_t G_VIDEO_HEIGHT = 1080;
-    static inline const uint32_t G_VIDEO_WIDTH = 1920;
+    static inline const uint32_t G_INPUT_VIDEO_HEIGHT = 1080;
+    static inline const uint32_t G_INPUT_VIDEO_WIDTH = 1920;
+    ///@}
+
+    /**
+     * @brief Output video dimensions.
+     */
+    ///@{
+    static inline const uint32_t G_OUTPUT_VIDEO_HEIGHT = 1080;
+    static inline const uint32_t G_OUTPUT_VIDEO_WIDTH = 1920;
     ///@}
 
     /**
@@ -39,10 +38,19 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_OUTPUT_VIDEO_FPS = 30;
 
     /**
+     * @brief UI component locations
+     */
+    ///@{
+    static inline const cv::Rect G_FPS_RECT = cv::Rect(25, 25, 350, 100); // TODO: combine these in to bottom bar?
+    static inline const cv::Rect G_RECORDING_STATUS_RECT = cv::Rect(1495, 410, 400, 50);
+    static inline const cv::Rect G_RIGHT_INFO_RECT = cv::Rect(1495, 25, 400, 360); // Except this?
+    ///@}
+
+    /**
      * @brief Font settings.
      */
     ///@{
-    static inline const uint32_t G_DEFAULT_FONT_FACE = cv::FONT_HERSHEY_DUPLEX;
+    static inline const uint32_t G_DEFAULT_FONT_FACE = cv::FONT_HERSHEY_DUPLEX; // TODO: better font settings?
     static inline const uint32_t G_DEFAULT_FONT_THICKNESS = 1;
     static inline const double G_DEFAULT_FONT_SCALE = 1;
     static inline const double G_SMALL_FONT_SCALE = 0.8;
@@ -53,7 +61,7 @@ namespace LaneAndObjectDetection::Globals
      * @brief OpenCV Colours.
      */
     ///@{
-    static inline const cv::Scalar G_OPENCV_BLACK = cv::Scalar(0, 0, 0);
+    static inline const cv::Scalar G_OPENCV_BLACK = cv::Scalar(0, 0, 0); // TODO: standardise colours
     static inline const cv::Scalar G_OPENCV_WHITE = cv::Scalar(255, 255, 255);
     static inline const cv::Scalar G_OPENCV_BLUE = cv::Scalar(255, 64, 64);
     static inline const cv::Scalar G_OPENCV_PURPLE = cv::Scalar(255, 64, 255);
@@ -67,7 +75,7 @@ namespace LaneAndObjectDetection::Globals
      * @brief Region of interest dimensions.
      */
     ///@{
-    static inline const uint32_t G_ROI_TOP_HEIGHT = 660;
+    static inline const uint32_t G_ROI_TOP_HEIGHT = 660; // TODO: this might need to be dynamic so move out of globals
     static inline const uint32_t G_ROI_BOTTOM_HEIGHT = 840;
     static inline const uint32_t G_ROI_TOP_WIDTH = 200;
     static inline const uint32_t G_ROI_BOTTOM_WIDTH = 900;
@@ -84,7 +92,7 @@ namespace LaneAndObjectDetection::Globals
      * @brief Region of interest sub-division line equations.
      */
     ///@{
-    static inline const double G_LEFT_EDGE_OF_MASK_M = (static_cast<double>(G_MASK_DIMENSIONS[0].y) - static_cast<double>(G_MASK_DIMENSIONS[3].y)) / (static_cast<double>(G_MASK_DIMENSIONS[0].x) - static_cast<double>(G_MASK_DIMENSIONS[3].x));
+    static inline const double G_LEFT_EDGE_OF_MASK_M = (static_cast<double>(G_MASK_DIMENSIONS[0].y) - static_cast<double>(G_MASK_DIMENSIONS[3].y)) / (static_cast<double>(G_MASK_DIMENSIONS[0].x) - static_cast<double>(G_MASK_DIMENSIONS[3].x)); // TODO: this might need to be dynamic so move out of globals
     static inline const double G_LEFT_EDGE_OF_MASK_C = G_MASK_DIMENSIONS[0].y - (G_LEFT_EDGE_OF_MASK_M * G_MASK_DIMENSIONS[0].x);
     static inline const double G_RIGHT_EDGE_OF_MASK_M = (static_cast<double>(G_MASK_DIMENSIONS[1].y) - static_cast<double>(G_MASK_DIMENSIONS[2].y)) / (static_cast<double>(G_MASK_DIMENSIONS[1].x) - static_cast<double>(G_MASK_DIMENSIONS[2].x));
     static inline const double G_RIGHT_EDGE_OF_MASK_C = G_MASK_DIMENSIONS[1].y - (G_RIGHT_EDGE_OF_MASK_M * G_MASK_DIMENSIONS[1].x);
@@ -103,7 +111,7 @@ namespace LaneAndObjectDetection::Globals
      * @brief Canny algorithm thresholds.
      */
     ///@{
-    static inline const uint32_t G_CANNY_LOWER_THRESHOLD = 128;
+    static inline const uint32_t G_CANNY_LOWER_THRESHOLD = 128; // TODO: this might need to be dynamic so move out of globals
     static inline const uint32_t G_CANNY_UPPER_THRESHOLD = 255;
     ///@}
 
@@ -111,7 +119,7 @@ namespace LaneAndObjectDetection::Globals
      * @brief Hough transform threshold and properties.
      */
     ///@{
-    static inline const double G_HOUGH_RHO = 1;
+    static inline const double G_HOUGH_RHO = 1; // TODO: this might need to be dynamic so move out of globals
     static inline const double G_HOUGH_THETA = CV_PI / 180.0;
     static inline const uint32_t G_HOUGH_THRESHOLD = 32;
     static inline const uint32_t G_HOUGH_MIN_LINE_LENGTH = 16;
@@ -121,33 +129,33 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief Threshold length to decide whether a line is to be considered solid line road marking.
      */
-    static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75;
+    static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75; // TODO: this might need to be dynamic so move out of globals
 
     /**
      * @brief Threshold gradient to decide whether a line is to be considered horizontal.
      */
-    static inline const double G_HORIZONTAL_GRADIENT_THRESHOLD = 0.15;
+    static inline const double G_HORIZONTAL_GRADIENT_THRESHOLD = 0.15; // TODO: this might need to be dynamic so move out of globals
 
     /**
      * @brief Threshold length to decide whether a line is to be added to the count of horizontal lines.
      */
-    static inline const uint32_t G_HORIZONTAL_LENGTH_THRESHOLD = 50;
+    static inline const uint32_t G_HORIZONTAL_LENGTH_THRESHOLD = 50; // TODO: this might need to be dynamic so move out of globals
 
     /**
      * @brief Threshold count to decide whether enough horizontal lines have been detected to prompt a giveway warning.
      */
-    static inline const uint32_t G_HORIZONTAL_COUNT_THRESHOLD = 10;
+    static inline const uint32_t G_HORIZONTAL_COUNT_THRESHOLD = 10; // TODO: this might need to be dynamic so move out of globals
 
     /**
      * @brief Smoothing threshold to determine when to flag the vehicle as changing lanes.
      */
-    static inline const uint32_t G_FRAME_COUNT_THRESHOLD = 10;
+    static inline const uint32_t G_FRAME_COUNT_THRESHOLD = 10; // TODO: this might need to be dynamic so move out of globals
 
     /**
      * @brief Rolling average properties.
      */
     ///@{
-    static inline const uint32_t G_DEFAULT_ROLLING_AVERAGE_SIZE = 10;
+    static inline const uint32_t G_DEFAULT_ROLLING_AVERAGE_SIZE = 10; // TODO: this might need to be dynamic so move out of globals
     static inline const uint32_t G_NUMBER_OF_HORIZONTAL_LINE_STATES = 2;
     static inline const uint32_t G_NUMBER_OF_VERTICAL_LINE_STATES = 3;
     static inline const uint32_t G_NUMBER_OF_DRIVING_STATES = 5;
@@ -157,7 +165,7 @@ namespace LaneAndObjectDetection::Globals
      * @brief YOLO threshold and properties.
      */
     ///@{
-    static inline const uint32_t G_BOUNDING_BOX_BUFFER = 5;
+    static inline const uint32_t G_BOUNDING_BOX_BUFFER = 5; // TODO: this might need to be dynamic so move out of globals
     static inline const double G_YOLO_CONFIDENCE_THRESHOLD = 0.4;
     static inline const float G_YOLO_NMS_THRESHOLD = 0.4;
     ///@}
