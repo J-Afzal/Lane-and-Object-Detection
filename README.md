@@ -37,6 +37,8 @@ cmake --build ./build --config Release
 > [!WARNING]
 > If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.
 
+<!-- TODO: add CLI output helper here -->
+
 ## Documentation
 
 Checkout the GitHub pages-hosted [documentation page](https://J-Afzal.github.io/Lane-and-Object-Detection) built using doxygen.
@@ -100,19 +102,8 @@ On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-w
 TODO
 
 1. Clean up C++ lane detection code and supplementary code (ignore object detection)
-    Add default CLI support to pass required paths (and add to readme)
-    Move RollingAverage to within lane detection somehow?
-    PrintToFrame should be video manager responsibility not other classes
-    upgrade video manager to not have to create a new object to adjust settings (set properties?) (for performance tests)
-    standardise error messages
-
-    Why is NAN being used everywhere?
-    param/var could be better G_VIDEO_WIDTH -> G_INPUT_VIDEO_WIDTH
-    magic numbers everywhere
-    clean up comments
-    clean up rest of readme
-    remove cv::scalar
-    NO LINTs
+    TODO comments
+    Debug lane detection code to make sure it is correct.
 
 x. Clean up C++ object detection code
    replace backend enum with // cv::dnn::Backend // cv::dnn::Target#
@@ -126,6 +117,8 @@ x. Upgrade to newer YOLO
     Any perf or accuracy increases?
 
 x. Clean up performance test code (replace with C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
+
+x. clean up folder org
 
 x. Implement C GUI window to encapsulate main code and performance test code with debug mode to show all stats (and roi/canny/hough line debug views) and option to adjust ROI?
 

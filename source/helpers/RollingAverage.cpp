@@ -6,17 +6,17 @@ namespace LaneAndObjectDetection
 {
     RollingAverage::RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates)
     {
-        for (uint32_t i = 0; i < p_sizeOfRollingAverage; i++)
+        for (uint32_t i = 0; i < p_sizeOfRollingAverage; i++) // TODO: use insert?
         {
             m_rollingAverageArray.push_back(0);
         }
 
-        for (uint32_t i = 0; i < p_numberOfStates; i++)
+        for (uint32_t i = 0; i < p_numberOfStates; i++) // TODO: use insert?
         {
             m_occurrenceOfEachState.push_back(0);
         }
 
-        m_occurrenceOfEachState[0] = p_sizeOfRollingAverage;
+        m_occurrenceOfEachState[0] = p_sizeOfRollingAverage; // TODO: Eh?
     }
 
     uint32_t RollingAverage::CalculateRollingAverage(const uint32_t& p_nextInput)

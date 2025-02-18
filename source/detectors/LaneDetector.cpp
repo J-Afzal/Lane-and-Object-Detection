@@ -82,7 +82,7 @@ namespace LaneAndObjectDetection
         cv::HoughLinesP(m_cannyFrame, m_houghLines, Globals::G_HOUGH_RHO, Globals::G_HOUGH_THETA, Globals::G_HOUGH_THRESHOLD, Globals::G_HOUGH_MIN_LINE_LENGTH, Globals::G_HOUGH_MAX_LINE_GAP);
     }
 
-    void LaneDetector::AnalyseHoughLines(const std::vector<cv::Rect>& p_boundingBoxes) // NOLINT(readability-function-cognitive-complexity)
+    void LaneDetector::AnalyseHoughLines(const std::vector<cv::Rect>& p_boundingBoxes) // NOLINT(readability-function-cognitive-complexity) // TODO: remove
     {
         /**
          * The straight lines received from the PHT contain lines that are not a part of any
@@ -100,7 +100,7 @@ namespace LaneAndObjectDetection
         uint32_t lowerY = 0;
         uint32_t upperX = 0;
         uint32_t upperY = 0;
-        double changeInX = NAN;
+        double changeInX = NAN; // TODO: Why is NAN being used everywhere?
         double changeInY = NAN;
         double gradient = NAN;
         double leftY1 = NAN;
@@ -364,7 +364,7 @@ namespace LaneAndObjectDetection
         }
     }
 
-    void LaneDetector::ExecuteDrivingState() // NOLINT(readability-function-cognitive-complexity)
+    void LaneDetector::ExecuteDrivingState() // NOLINT(readability-function-cognitive-complexity) // TODO: remove
     {
         switch (m_drivingState)
         {

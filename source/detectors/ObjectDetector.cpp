@@ -36,10 +36,10 @@ namespace LaneAndObjectDetection
         const BackEnds& p_backEndType,
         const BlobSizes& p_blobSize)
     {
-        std::ifstream modelNamesFile(p_yoloResourcesFolderPath + "coco.names");
+        std::ifstream modelNamesFile(p_yoloResourcesFolderPath + "/coco.names");
         if (!modelNamesFile.is_open())
         {
-            std::cout << "\ncoco.names file cannot be found\n";
+            std::cout << "\nERROR: '" + p_yoloResourcesFolderPath + "/coco.names' file cannot be found!\n";
             exit(1);
         }
 

@@ -9,17 +9,18 @@
 #include "helpers/Globals.hpp"
 #include "helpers/VideoManager.hpp"
 
-int main()
+int main() // TODO: CLI args to parse input file paths and number of repetitions and then clean up rest of function.
 {
     try
     {
         const std::string INPUT_VIDEO_FILE_PATH = "../../resources/benchmark.mp4";
         const std::string YOLO_RESOURCES_FOLDER_PATH = "../../resources/yolo/";
 
-        std::vector<std::vector<uint32_t>> frameTimes;
-
         std::cout << "\n\nNumber of tests: " << LaneAndObjectDetection::Globals::G_NUMBER_OF_TESTS
                   << "\nNumber of repetitions: " << LaneAndObjectDetection::Globals::G_NUMBER_OF_REPETITIONS << '\n';
+
+        LaneAndObjectDetection::VideoManager videoManager;
+        std::vector<std::vector<uint32_t>> frameTimes;
 
         const std::chrono::time_point<std::chrono::high_resolution_clock> START_TIME = std::chrono::high_resolution_clock::now();
 
@@ -29,14 +30,15 @@ int main()
 
             for (uint32_t j = 0; j < LaneAndObjectDetection::Globals::G_NUMBER_OF_REPETITIONS; j++)
             {
-                LaneAndObjectDetection::VideoManager currentVideoManager(
-                    INPUT_VIDEO_FILE_PATH,
-                    YOLO_RESOURCES_FOLDER_PATH,
-                    LaneAndObjectDetection::Globals::G_YOLO_TYPES.at(i),
-                    LaneAndObjectDetection::Globals::G_BACK_END_TYPES.at(i),
-                    LaneAndObjectDetection::Globals::G_BLOB_SIZES.at(i));
+                videoManager.SetProperties(INPUT_VIDEO_FILE_PATH,
+                                           YOLO_RESOURCES_FOLDER_PATH,
+                                           LaneAndObjectDetection::Globals::G_YOLO_TYPES.at(i),
+                                           LaneAndObjectDetection::Globals::G_BACK_END_TYPES.at(i),
+                                           LaneAndObjectDetection::Globals::G_BLOB_SIZES.at(i));
 
-                frameTimes.push_back(currentVideoManager.Run());
+                videoManager.Run();
+
+                frameTimes.push_back(videoManager.GetFrameTimes());
 
                 std::cout << LaneAndObjectDetection::Globals::G_OUTPUT_FILE_NAMES.at(i)
                           << ": Finished iteration " << j + 1 << "/" << LaneAndObjectDetection::Globals::G_NUMBER_OF_REPETITIONS
@@ -47,8 +49,8 @@ int main()
 
             if (!outputFile.is_open())
             {
-                std::cout << "\nError opening output file: " + LaneAndObjectDetection::Globals::G_OUTPUT_FILE_NAMES.at(i) + '\n';
-                return 1;
+                std::cout << "\nERROR: Output file '" + LaneAndObjectDetection::Globals::G_OUTPUT_FILE_NAMES.at(i) + "' failed to open!\n";
+                exit(1);
             }
 
             for (uint32_t j = 0; j < frameTimes[0].size(); j++)
@@ -80,6 +82,6 @@ int main()
 
     catch (...)
     {
-        return 1;
+        exit(1);
     }
 }

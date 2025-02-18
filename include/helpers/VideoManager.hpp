@@ -13,7 +13,7 @@
 
 /**
  * @namespace LaneAndObjectDetection
- * @brief TODO
+ * @brief Contains all Lane-and-Object-Detection objects.
  */
 namespace LaneAndObjectDetection
 {
@@ -24,14 +24,44 @@ namespace LaneAndObjectDetection
     class VideoManager
     {
     public:
+        explicit VideoManager() = default;
+
         /**
          * @brief TODO
+         *
+         * @param p_inputVideoCamera TODO
+         * @param p_yoloResourcesFolderPath TODO
+         * @param p_objectDetectorType TODO
+         * @param p_backEndType TODO
+         * @param p_blobSize TODO
+         */
+        explicit VideoManager(const uint32_t& p_inputVideoCamera,
+                              const std::string& p_yoloResourcesFolderPath,
+                              const Detectors& p_objectDetectorType,
+                              const BackEnds& p_backEndType,
+                              const BlobSizes& p_blobSize);
+
+        /**
+         * @brief TODO
+         *
+         * @param p_inputVideoFilePath TODO
+         * @param p_yoloResourcesFolderPath TODO
+         * @param p_objectDetectorType TODO
+         * @param p_backEndType TODO
+         * @param p_blobSize TODO
          */
         explicit VideoManager(const std::string& p_inputVideoFilePath,
                               const std::string& p_yoloResourcesFolderPath,
-                              const Detectors& p_objectDetectorType = Detectors::STANDARD,
-                              const BackEnds& p_backEndType = BackEnds::CPU,
-                              const BlobSizes& p_blobSize = BlobSizes::FIVE);
+                              const Detectors& p_objectDetectorType,
+                              const BackEnds& p_backEndType,
+                              const BlobSizes& p_blobSize);
+
+        /**
+         * @brief TODO
+         *
+         * @param p_commandLineArguments TODO
+         */
+        explicit VideoManager(const std::vector<std::string>& p_commandLineArguments);
 
         /**
          * @brief TODO
@@ -39,11 +69,47 @@ namespace LaneAndObjectDetection
         ~VideoManager();
 
         /**
-         * @brief An std::optional (TODO: WRONG) is used so that the PerformanceTests class can extract frame times from
-         * the VideoManager class, when needed, while not effecting the usage of VideoManager
-         * outside of performance testing
+         * @brief TODO
+         *
+         * @param p_inputVideoCamera TODO
+         * @param p_yoloResourcesFolderPath TODO
+         * @param p_objectDetectorType TODO
+         * @param p_backEndType TODO
+         * @param p_blobSize TODO
          */
-        std::vector<uint32_t> Run();
+        void SetProperties(const uint32_t& p_inputVideoCamera,
+                           const std::string& p_yoloResourcesFolderPath,
+                           const Detectors& p_objectDetectorType,
+                           const BackEnds& p_backEndType,
+                           const BlobSizes& p_blobSize);
+
+        /**
+         * @brief TODO
+         *
+         * @param p_inputVideoFilePath TODO
+         * @param p_yoloResourcesFolderPath TODO
+         * @param p_objectDetectorType TODO
+         * @param p_backEndType TODO
+         * @param p_blobSize TODO
+         */
+        void SetProperties(const std::string& p_inputVideoFilePath,
+                           const std::string& p_yoloResourcesFolderPath,
+                           const Detectors& p_objectDetectorType,
+                           const BackEnds& p_backEndType,
+                           const BlobSizes& p_blobSize);
+
+        /**
+         * @brief TODO
+         *
+         */
+        void Run();
+
+        /**
+         * @brief TODO
+         *
+         * @return std::vector<uint32_t> TODO
+         */
+        std::vector<uint32_t> GetFrameTimes();
 
         /**
          * @brief Disable constructing a new VideoManager object using copy constructor.
@@ -76,25 +142,49 @@ namespace LaneAndObjectDetection
     private:
         /**
          * @brief TODO
+         *
          */
-        ///@{
-        cv::VideoCapture m_inputVideo;
-        cv::VideoWriter m_outputVideo;
-        cv::Mat m_frame;
-        LaneDetector m_laneDetector;
-        ObjectDetector m_objectDetector;
-        Performance m_performance;
-        bool m_recordOutput;
-        ///@}
+        void UpdateCurrentFrame();
 
         /**
          * @brief TODO
-         */
-        void PrintRecordingStatusToFrame();
-
-        /**
-         * @brief TODO
+         *
          */
         void ToggleRecording();
+
+        /**
+         * @brief TODO
+         */
+        cv::VideoCapture m_inputVideo;
+
+        /**
+         * @brief TODO
+         */
+        cv::VideoWriter m_outputVideo;
+
+        /**
+         * @brief TODO
+         */
+        cv::Mat m_currentFrame;
+
+        /**
+         * @brief TODO
+         */
+        LaneDetector m_laneDetector;
+
+        /**
+         * @brief TODO
+         */
+        ObjectDetector m_objectDetector;
+
+        /**
+         * @brief TODO
+         */
+        Performance m_performance;
+
+        /**
+         * @brief TODO
+         */
+        bool m_recordOutput;
     };
 }
