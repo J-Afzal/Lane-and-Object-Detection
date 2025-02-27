@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['togglerecording_0',['ToggleRecording',['../class_lane_and_object_detection_1_1_video_manager.html#a2b10aa49576a4c0e3de4c26b29168790',1,'LaneAndObjectDetection::VideoManager']]]
+  ['setproperties_0',['SetProperties',['../class_lane_and_object_detection_1_1_object_detector.html#a458f9992e25026bda8b8cc0131d079b4',1,'LaneAndObjectDetection::ObjectDetector::SetProperties()'],['../class_lane_and_object_detection_1_1_video_manager.html#a9dedcaa0069d00fb4d0366b12057181c',1,'LaneAndObjectDetection::VideoManager::SetProperties(const int32_t &amp;p_inputVideoCamera, const std::string &amp;p_yoloFolderPath, const ObjectDetectorTypes &amp;p_objectDetectorTypes, const ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)'],['../class_lane_and_object_detection_1_1_video_manager.html#accc97853b93326bc219c963fd7955cda',1,'LaneAndObjectDetection::VideoManager::SetProperties(const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloFolderPath, const ObjectDetectorTypes &amp;p_objectDetectorTypes, const ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)']]],
+  ['setup_1',['Setup',['../class_lane_and_object_detection_1_1_lane_detector.html#a84be2b6e2622cd85fe81414b791d681d',1,'LaneAndObjectDetection::LaneDetector']]],
+  ['starttimer_2',['StartTimer',['../class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb',1,'LaneAndObjectDetection::Performance']]]
 ];

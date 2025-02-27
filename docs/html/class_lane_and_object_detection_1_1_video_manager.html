@@ -111,91 +111,285 @@ $(function(){initNavTree('class_lane_and_object_detection_1_1_video_manager.html
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_lane_and_object_detection_1_1_video_manager-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">LaneAndObjectDetection::VideoManager Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>TODO.  
+<p>Orchestration class which reads the input, runs the lane and object detectors, displays the detected output and saves output video stream locally.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a875d682234fc005a865ca1b11188fba8" id="r_a875d682234fc005a865ca1b11188fba8"><td class="memItemLeft" align="right" valign="top"><a id="a875d682234fc005a865ca1b11188fba8" name="a875d682234fc005a865ca1b11188fba8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>VideoManager</b> (const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloResourcesFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#a1d221d0dd4e19a46298454c19d1b4aa7">Detectors</a> &amp;p_objectDetectorType=Detectors::STANDARD, const <a class="el" href="namespace_lane_and_object_detection.html#aaac25c1fbcc5b05e60b8babbb072d5b6">BackEnds</a> &amp;p_backEndType=BackEnds::CPU, const <a class="el" href="namespace_lane_and_object_detection.html#a781379d7c9aea622fa924fa56ca278b0">BlobSizes</a> &amp;p_blobSize=BlobSizes::FIVE)</td></tr>
-<tr class="memdesc:a875d682234fc005a865ca1b11188fba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a875d682234fc005a865ca1b11188fba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2db959bb55b4be5ab2c492fbccf2cb55" id="r_a2db959bb55b4be5ab2c492fbccf2cb55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2db959bb55b4be5ab2c492fbccf2cb55">VideoManager</a> ()</td></tr>
+<tr class="memdesc:a2db959bb55b4be5ab2c492fbccf2cb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new VideoManager object.  <br /></td></tr>
+<tr class="separator:a2db959bb55b4be5ab2c492fbccf2cb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d462a1e2c175dedcdc1611fe58a7317" id="r_a4d462a1e2c175dedcdc1611fe58a7317"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d462a1e2c175dedcdc1611fe58a7317">VideoManager</a> (const int32_t &amp;p_inputVideoCamera, const std::string &amp;p_yoloFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;p_objectDetectorTypes, const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;p_objectDetectorBackEnds=ObjectDetectorBackEnds::CPU, const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;p_objectDetectorBlobSizes=ObjectDetectorBlobSizes::ONE)</td></tr>
+<tr class="memdesc:a4d462a1e2c175dedcdc1611fe58a7317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new VideoManager object for use with an OpenCV camera input (for API use).  <br /></td></tr>
+<tr class="separator:a4d462a1e2c175dedcdc1611fe58a7317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a867628692f7f8b143df2ac7744004b66" id="r_a867628692f7f8b143df2ac7744004b66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a867628692f7f8b143df2ac7744004b66">VideoManager</a> (const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;p_objectDetectorTypes, const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;p_objectDetectorBackEnds=ObjectDetectorBackEnds::CPU, const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;p_objectDetectorBlobSizes=ObjectDetectorBlobSizes::ONE)</td></tr>
+<tr class="memdesc:a867628692f7f8b143df2ac7744004b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new VideoManager object for use with a video file input (for API use).  <br /></td></tr>
+<tr class="separator:a867628692f7f8b143df2ac7744004b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ae540ed06f49408cd85e4858374a790" id="r_a2ae540ed06f49408cd85e4858374a790"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ae540ed06f49408cd85e4858374a790">VideoManager</a> (const std::vector&lt; std::string &gt; &amp;p_commandLineArguments)</td></tr>
+<tr class="memdesc:a2ae540ed06f49408cd85e4858374a790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new VideoManager object (for CLI use).  <br /></td></tr>
+<tr class="separator:a2ae540ed06f49408cd85e4858374a790"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a069a611a08ab6ee2e7227763ffcfb74e" id="r_a069a611a08ab6ee2e7227763ffcfb74e"><td class="memItemLeft" align="right" valign="top"><a id="a069a611a08ab6ee2e7227763ffcfb74e" name="a069a611a08ab6ee2e7227763ffcfb74e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~VideoManager</b> ()</td></tr>
-<tr class="memdesc:a069a611a08ab6ee2e7227763ffcfb74e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memdesc:a069a611a08ab6ee2e7227763ffcfb74e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs a VideoManager object. <br /></td></tr>
 <tr class="separator:a069a611a08ab6ee2e7227763ffcfb74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a288c3f968f7a1377e6a38fe4ebe081ec" id="r_a288c3f968f7a1377e6a38fe4ebe081ec"><td class="memItemLeft" align="right" valign="top"><a id="a288c3f968f7a1377e6a38fe4ebe081ec" name="a288c3f968f7a1377e6a38fe4ebe081ec"></a>
-std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Run</b> ()</td></tr>
-<tr class="memdesc:a288c3f968f7a1377e6a38fe4ebe081ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">An std::optional (TODO: WRONG) is used so that the PerformanceTests class can extract frame times from the <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> class, when needed, while not effecting the usage of <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> outside of performance testing. <br /></td></tr>
-<tr class="separator:a288c3f968f7a1377e6a38fe4ebe081ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dedcaa0069d00fb4d0366b12057181c" id="r_a9dedcaa0069d00fb4d0366b12057181c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9dedcaa0069d00fb4d0366b12057181c">SetProperties</a> (const int32_t &amp;p_inputVideoCamera, const std::string &amp;p_yoloFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;p_objectDetectorTypes, const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;p_objectDetectorBackEnds, const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;p_objectDetectorBlobSizes)</td></tr>
+<tr class="memdesc:a9dedcaa0069d00fb4d0366b12057181c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the properties of the VideoManager object.  <br /></td></tr>
+<tr class="separator:a9dedcaa0069d00fb4d0366b12057181c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accc97853b93326bc219c963fd7955cda" id="r_accc97853b93326bc219c963fd7955cda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#accc97853b93326bc219c963fd7955cda">SetProperties</a> (const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;p_objectDetectorTypes, const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;p_objectDetectorBackEnds, const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;p_objectDetectorBlobSizes)</td></tr>
+<tr class="memdesc:accc97853b93326bc219c963fd7955cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the properties of the VideoManager object.  <br /></td></tr>
+<tr class="separator:accc97853b93326bc219c963fd7955cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67659f19470cd0f8358c31dc1388de4b" id="r_a67659f19470cd0f8358c31dc1388de4b"><td class="memItemLeft" align="right" valign="top"><a id="a67659f19470cd0f8358c31dc1388de4b" name="a67659f19470cd0f8358c31dc1388de4b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Run</b> ()</td></tr>
+<tr class="memdesc:a67659f19470cd0f8358c31dc1388de4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orchestration function which contains the main program loop. <br /></td></tr>
+<tr class="separator:a67659f19470cd0f8358c31dc1388de4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22a557b1ce1f43e46cc32e411b937ff4" id="r_a22a557b1ce1f43e46cc32e411b937ff4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html">PerformanceInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22a557b1ce1f43e46cc32e411b937ff4">GetPerformanceInformation</a> ()</td></tr>
+<tr class="memdesc:a22a557b1ce1f43e46cc32e411b937ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the performance information. Useful for performance benchmarking.  <br /></td></tr>
+<tr class="separator:a22a557b1ce1f43e46cc32e411b937ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fa9483adb219fb3b7a12985bb5dc9dc" id="r_a6fa9483adb219fb3b7a12985bb5dc9dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fa9483adb219fb3b7a12985bb5dc9dc">VideoManager</a> (const <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a> &amp;p_videoManager)=delete</td></tr>
-<tr class="memdesc:a6fa9483adb219fb3b7a12985bb5dc9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using copy constructor.  <br /></td></tr>
+<tr class="memdesc:a6fa9483adb219fb3b7a12985bb5dc9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new VideoManager object using copy constructor.  <br /></td></tr>
 <tr class="separator:a6fa9483adb219fb3b7a12985bb5dc9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab60f9ac9e1525a2e20f73cff9a9d3c8a" id="r_ab60f9ac9e1525a2e20f73cff9a9d3c8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab60f9ac9e1525a2e20f73cff9a9d3c8a">VideoManager</a> (const <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a> &amp;&amp;p_videoManager)=delete</td></tr>
-<tr class="memdesc:ab60f9ac9e1525a2e20f73cff9a9d3c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using move constructor.  <br /></td></tr>
+<tr class="memdesc:ab60f9ac9e1525a2e20f73cff9a9d3c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new VideoManager object using move constructor.  <br /></td></tr>
 <tr class="separator:ab60f9ac9e1525a2e20f73cff9a9d3c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab799c79cf1d8ba6953ef78b2cb72750f" id="r_ab799c79cf1d8ba6953ef78b2cb72750f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab799c79cf1d8ba6953ef78b2cb72750f">operator=</a> (const <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a> &amp;p_videoManager)=delete</td></tr>
-<tr class="memdesc:ab799c79cf1d8ba6953ef78b2cb72750f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using copy assignment operator.  <br /></td></tr>
+<tr class="memdesc:ab799c79cf1d8ba6953ef78b2cb72750f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new VideoManager object using copy assignment operator.  <br /></td></tr>
 <tr class="separator:ab799c79cf1d8ba6953ef78b2cb72750f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ff59acd7dbec04b823f30f4e7e04a8e" id="r_a3ff59acd7dbec04b823f30f4e7e04a8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ff59acd7dbec04b823f30f4e7e04a8e">operator=</a> (const <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a> &amp;&amp;p_videoManager)=delete</td></tr>
-<tr class="memdesc:a3ff59acd7dbec04b823f30f4e7e04a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using move assignment operator.  <br /></td></tr>
+<tr class="memdesc:a3ff59acd7dbec04b823f30f4e7e04a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new VideoManager object using move assignment operator.  <br /></td></tr>
 <tr class="separator:a3ff59acd7dbec04b823f30f4e7e04a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:aa01cf210838941c13f7e4f5a13f2e81c" id="r_aa01cf210838941c13f7e4f5a13f2e81c"><td class="memItemLeft" align="right" valign="top"><a id="aa01cf210838941c13f7e4f5a13f2e81c" name="aa01cf210838941c13f7e4f5a13f2e81c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>PrintRecordingStatusToFrame</b> ()</td></tr>
-<tr class="memdesc:aa01cf210838941c13f7e4f5a13f2e81c"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:aa01cf210838941c13f7e4f5a13f2e81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b10aa49576a4c0e3de4c26b29168790" id="r_a2b10aa49576a4c0e3de4c26b29168790"><td class="memItemLeft" align="right" valign="top"><a id="a2b10aa49576a4c0e3de4c26b29168790" name="a2b10aa49576a4c0e3de4c26b29168790"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ToggleRecording</b> ()</td></tr>
-<tr class="memdesc:a2b10aa49576a4c0e3de4c26b29168790"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a2b10aa49576a4c0e3de4c26b29168790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cfb42a2cfc2bf8b8c5a002887424864" id="r_a6cfb42a2cfc2bf8b8c5a002887424864"><td class="memItemLeft" align="right" valign="top"><a id="a6cfb42a2cfc2bf8b8c5a002887424864" name="a6cfb42a2cfc2bf8b8c5a002887424864"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ToggleSaveOutput</b> ()</td></tr>
+<tr class="memdesc:a6cfb42a2cfc2bf8b8c5a002887424864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles whether the output video stream should be recorded locally. If toggled on, it creates a new file in the format "YYYY-MM-DD-HH:mm:ss-output.mp4". <br /></td></tr>
+<tr class="separator:a6cfb42a2cfc2bf8b8c5a002887424864"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:a2c9b8bd13574510b9fa3c43c1878be5d" id="r_a2c9b8bd13574510b9fa3c43c1878be5d"><td class="memItemLeft" align="right" valign="top"><a id="a2c9b8bd13574510b9fa3c43c1878be5d" name="a2c9b8bd13574510b9fa3c43c1878be5d"></a>
 cv::VideoCapture&#160;</td><td class="memItemRight" valign="bottom"><b>m_inputVideo</b></td></tr>
-<tr class="memdesc:a2c9b8bd13574510b9fa3c43c1878be5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memdesc:a2c9b8bd13574510b9fa3c43c1878be5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the input video stream. <br /></td></tr>
 <tr class="separator:a2c9b8bd13574510b9fa3c43c1878be5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57b4018e8cf63f5205e6d1c441aa466e" id="r_a57b4018e8cf63f5205e6d1c441aa466e"><td class="memItemLeft" align="right" valign="top"><a id="a57b4018e8cf63f5205e6d1c441aa466e" name="a57b4018e8cf63f5205e6d1c441aa466e"></a>
 cv::VideoWriter&#160;</td><td class="memItemRight" valign="bottom"><b>m_outputVideo</b></td></tr>
-<tr class="memdesc:a57b4018e8cf63f5205e6d1c441aa466e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memdesc:a57b4018e8cf63f5205e6d1c441aa466e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the output video stream. <br /></td></tr>
 <tr class="separator:a57b4018e8cf63f5205e6d1c441aa466e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5f7f1dcd01a2c5286b19bc92aeb0f5e" id="r_ab5f7f1dcd01a2c5286b19bc92aeb0f5e"><td class="memItemLeft" align="right" valign="top"><a id="ab5f7f1dcd01a2c5286b19bc92aeb0f5e" name="ab5f7f1dcd01a2c5286b19bc92aeb0f5e"></a>
-cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>m_frame</b></td></tr>
-<tr class="memdesc:ab5f7f1dcd01a2c5286b19bc92aeb0f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ab5f7f1dcd01a2c5286b19bc92aeb0f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb1fd264077ea8fb8042690f594b4d05" id="r_afb1fd264077ea8fb8042690f594b4d05"><td class="memItemLeft" align="right" valign="top"><a id="afb1fd264077ea8fb8042690f594b4d05" name="afb1fd264077ea8fb8042690f594b4d05"></a>
+cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>m_currentFrame</b></td></tr>
+<tr class="memdesc:afb1fd264077ea8fb8042690f594b4d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the current frame being processed. <br /></td></tr>
+<tr class="separator:afb1fd264077ea8fb8042690f594b4d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a582dec48d1084d169cd646533caab8cc" id="r_a582dec48d1084d169cd646533caab8cc"><td class="memItemLeft" align="right" valign="top"><a id="a582dec48d1084d169cd646533caab8cc" name="a582dec48d1084d169cd646533caab8cc"></a>
 <a class="el" href="class_lane_and_object_detection_1_1_lane_detector.html">LaneDetector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_laneDetector</b></td></tr>
-<tr class="memdesc:a582dec48d1084d169cd646533caab8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memdesc:a582dec48d1084d169cd646533caab8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The lane detector. <br /></td></tr>
 <tr class="separator:a582dec48d1084d169cd646533caab8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25efe0efa5f71bc76da134d4ee7ae2ee" id="r_a25efe0efa5f71bc76da134d4ee7ae2ee"><td class="memItemLeft" align="right" valign="top"><a id="a25efe0efa5f71bc76da134d4ee7ae2ee" name="a25efe0efa5f71bc76da134d4ee7ae2ee"></a>
 <a class="el" href="class_lane_and_object_detection_1_1_object_detector.html">ObjectDetector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_objectDetector</b></td></tr>
-<tr class="memdesc:a25efe0efa5f71bc76da134d4ee7ae2ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memdesc:a25efe0efa5f71bc76da134d4ee7ae2ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">The object detector. <br /></td></tr>
 <tr class="separator:a25efe0efa5f71bc76da134d4ee7ae2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed5706f59172303e44a89a0f95c7eb3d" id="r_aed5706f59172303e44a89a0f95c7eb3d"><td class="memItemLeft" align="right" valign="top"><a id="aed5706f59172303e44a89a0f95c7eb3d" name="aed5706f59172303e44a89a0f95c7eb3d"></a>
 <a class="el" href="class_lane_and_object_detection_1_1_performance.html">Performance</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_performance</b></td></tr>
-<tr class="memdesc:aed5706f59172303e44a89a0f95c7eb3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memdesc:aed5706f59172303e44a89a0f95c7eb3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame time and current/average frames per second performance calculator. <br /></td></tr>
 <tr class="separator:aed5706f59172303e44a89a0f95c7eb3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaceb8c3dbfb61988db1d2515ca533a33" id="r_aaceb8c3dbfb61988db1d2515ca533a33"><td class="memItemLeft" align="right" valign="top"><a id="aaceb8c3dbfb61988db1d2515ca533a33" name="aaceb8c3dbfb61988db1d2515ca533a33"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></td></tr>
-<tr class="memdesc:aaceb8c3dbfb61988db1d2515ca533a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:aaceb8c3dbfb61988db1d2515ca533a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab35fb2310d6d6164ad6c7bfd3866884c" id="r_ab35fb2310d6d6164ad6c7bfd3866884c"><td class="memItemLeft" align="right" valign="top"><a id="ab35fb2310d6d6164ad6c7bfd3866884c" name="ab35fb2310d6d6164ad6c7bfd3866884c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_saveOutput</b></td></tr>
+<tr class="memdesc:ab35fb2310d6d6164ad6c7bfd3866884c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the output video stream should be saved locally. <br /></td></tr>
+<tr class="separator:ab35fb2310d6d6164ad6c7bfd3866884c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODO. </p>
+<div class="textblock"><p>Orchestration class which reads the input, runs the lane and object detectors, displays the detected output and saves output video stream locally. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2db959bb55b4be5ab2c492fbccf2cb55" name="a2db959bb55b4be5ab2c492fbccf2cb55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2db959bb55b4be5ab2c492fbccf2cb55">&#9670;&#160;</a></span>VideoManager() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LaneAndObjectDetection::VideoManager::VideoManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new VideoManager object. </p>
+<dl class="section warning"><dt>Warning</dt><dd><code><a class="el" href="#a9dedcaa0069d00fb4d0366b12057181c" title="Set the properties of the VideoManager object.">SetProperties()</a></code> should be used to initialise the necessary member variables before calling <code><a class="el" href="#a67659f19470cd0f8358c31dc1388de4b" title="Orchestration function which contains the main program loop.">Run()</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="a4d462a1e2c175dedcdc1611fe58a7317" name="a4d462a1e2c175dedcdc1611fe58a7317"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d462a1e2c175dedcdc1611fe58a7317">&#9670;&#160;</a></span>VideoManager() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LaneAndObjectDetection::VideoManager::VideoManager </td>
+          <td>(</td>
+          <td class="paramtype">const int32_t &amp;</td>          <td class="paramname"><span class="paramname"><em>p_inputVideoCamera</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>p_yoloFolderPath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorTypes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBackEnds</em></span><span class="paramdefsep"> = </span><span class="paramdefval">ObjectDetectorBackEnds::CPU</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBlobSizes</em></span><span class="paramdefsep"> = </span><span class="paramdefval">ObjectDetectorBlobSizes::ONE</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new VideoManager object for use with an OpenCV camera input (for API use). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_inputVideoCamera</td><td>Camera ID of the video capturing device to open using the OpenCV VideoCapture class. </td></tr>
+    <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
+    <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a867628692f7f8b143df2ac7744004b66" name="a867628692f7f8b143df2ac7744004b66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a867628692f7f8b143df2ac7744004b66">&#9670;&#160;</a></span>VideoManager() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LaneAndObjectDetection::VideoManager::VideoManager </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>p_inputVideoFilePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>p_yoloFolderPath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorTypes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBackEnds</em></span><span class="paramdefsep"> = </span><span class="paramdefval">ObjectDetectorBackEnds::CPU</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBlobSizes</em></span><span class="paramdefsep"> = </span><span class="paramdefval">ObjectDetectorBlobSizes::ONE</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new VideoManager object for use with a video file input (for API use). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_inputVideoFilePath</td><td>The file path of the video file to open using the OpenCV VideoCapture class. </td></tr>
+    <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
+    <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2ae540ed06f49408cd85e4858374a790" name="a2ae540ed06f49408cd85e4858374a790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ae540ed06f49408cd85e4858374a790">&#9670;&#160;</a></span>VideoManager() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LaneAndObjectDetection::VideoManager::VideoManager </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>p_commandLineArguments</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new VideoManager object (for CLI use). </p>
+<p>Usage: lane-and-object-detection &ndash;input ... &ndash;yolo-folder-path ... &ndash;object-detector-type ... [optional]</p>
+<p>OPTIONS:</p>
+<p>Generic Options:</p>
+<p>-h &ndash;help Display available options.</p>
+<p>Required Options:</p>
+<p>-i &ndash;input File path or camera ID -y &ndash;yolo-folder-path Path to the yolo folder -o &ndash;object-detector-type One of: none, standard or tiny.</p>
+<p>Optional options:</p>
+<p>-b &ndash;object-detector-backend One of: cpu or cuda (default = cpu) -s &ndash;object-detector-blob-size One of: 208, 320, 416, 512 or 608 (default = 208)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_commandLineArguments</td><td>List of all command line arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6fa9483adb219fb3b7a12985bb5dc9dc" name="a6fa9483adb219fb3b7a12985bb5dc9dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fa9483adb219fb3b7a12985bb5dc9dc">&#9670;&#160;</a></span>VideoManager() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fa9483adb219fb3b7a12985bb5dc9dc">&#9670;&#160;</a></span>VideoManager() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,10 +411,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></t
 </table>
 </div><div class="memdoc">
 
-<p>Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using copy constructor. </p>
+<p>Disable constructing a new VideoManager object using copy constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p_videoManager</td><td>The video manager to copy. </td></tr>
+    <tr><td class="paramname">p_videoManager</td><td>The VideoManager to copy. </td></tr>
   </table>
   </dd>
 </dl>
@@ -228,7 +422,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></t
 </div>
 </div>
 <a id="ab60f9ac9e1525a2e20f73cff9a9d3c8a" name="ab60f9ac9e1525a2e20f73cff9a9d3c8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab60f9ac9e1525a2e20f73cff9a9d3c8a">&#9670;&#160;</a></span>VideoManager() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab60f9ac9e1525a2e20f73cff9a9d3c8a">&#9670;&#160;</a></span>VideoManager() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -250,10 +444,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></t
 </table>
 </div><div class="memdoc">
 
-<p>Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using move constructor. </p>
+<p>Disable constructing a new VideoManager object using move constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p_videoManager</td><td>The video manager to copy. </td></tr>
+    <tr><td class="paramname">p_videoManager</td><td>The VideoManager to copy. </td></tr>
   </table>
   </dd>
 </dl>
@@ -261,6 +455,122 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></t
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9dedcaa0069d00fb4d0366b12057181c" name="a9dedcaa0069d00fb4d0366b12057181c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dedcaa0069d00fb4d0366b12057181c">&#9670;&#160;</a></span>SetProperties() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::VideoManager::SetProperties </td>
+          <td>(</td>
+          <td class="paramtype">const int32_t &amp;</td>          <td class="paramname"><span class="paramname"><em>p_inputVideoCamera</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>p_yoloFolderPath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorTypes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBackEnds</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBlobSizes</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the properties of the VideoManager object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_inputVideoCamera</td><td>Camera ID of the video capturing device to open using the OpenCV VideoCapture class. </td></tr>
+    <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
+    <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="accc97853b93326bc219c963fd7955cda" name="accc97853b93326bc219c963fd7955cda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accc97853b93326bc219c963fd7955cda">&#9670;&#160;</a></span>SetProperties() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::VideoManager::SetProperties </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>p_inputVideoFilePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>p_yoloFolderPath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorTypes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBackEnds</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBlobSizes</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the properties of the VideoManager object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_inputVideoFilePath</td><td>The file path of the video file to open using the OpenCV VideoCapture class. </td></tr>
+    <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
+    <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a22a557b1ce1f43e46cc32e411b937ff4" name="a22a557b1ce1f43e46cc32e411b937ff4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22a557b1ce1f43e46cc32e411b937ff4">&#9670;&#160;</a></span>GetPerformanceInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html">PerformanceInformation</a> LaneAndObjectDetection::VideoManager::GetPerformanceInformation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the performance information. Useful for performance benchmarking. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="TODO.">PerformanceInformation</a> The <a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="TODO.">PerformanceInformation</a> struct. </dd></dl>
+
+</div>
+</div>
 <a id="ab799c79cf1d8ba6953ef78b2cb72750f" name="ab799c79cf1d8ba6953ef78b2cb72750f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab799c79cf1d8ba6953ef78b2cb72750f">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
@@ -284,10 +594,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></t
 </table>
 </div><div class="memdoc">
 
-<p>Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using copy assignment operator. </p>
+<p>Disable constructing a new VideoManager object using copy assignment operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p_videoManager</td><td>The video manager to copy. </td></tr>
+    <tr><td class="paramname">p_videoManager</td><td>The VideoManager to copy. </td></tr>
   </table>
   </dd>
 </dl>
@@ -317,10 +627,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></t
 </table>
 </div><div class="memdoc">
 
-<p>Disable constructing a new <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html" title="TODO.">VideoManager</a> object using move assignment operator. </p>
+<p>Disable constructing a new VideoManager object using move assignment operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p_videoManager</td><td>The video manager to copy. </td></tr>
+    <tr><td class="paramname">p_videoManager</td><td>The VideoManager to copy. </td></tr>
   </table>
   </dd>
 </dl>
@@ -337,7 +647,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_recordOutput</b></t
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a></li>
-    <li class="footer">Generated on Mon Feb 17 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Thu Feb 27 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

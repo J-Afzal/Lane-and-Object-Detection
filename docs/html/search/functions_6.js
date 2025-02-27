@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['performance_0',['Performance',['../class_lane_and_object_detection_1_1_performance.html#a3bc9e108e69ca90718a19779ad1e87e4',1,'LaneAndObjectDetection::Performance']]],
-  ['printfpstoframe_1',['PrintFpsToFrame',['../class_lane_and_object_detection_1_1_performance.html#ad2d601d60817d58cf7fb28a654e7fa56',1,'LaneAndObjectDetection::Performance']]],
-  ['printrecordingstatustoframe_2',['PrintRecordingStatusToFrame',['../class_lane_and_object_detection_1_1_video_manager.html#aa01cf210838941c13f7e4f5a13f2e81c',1,'LaneAndObjectDetection::VideoManager']]],
-  ['printtoframe_3',['PrintToFrame',['../class_lane_and_object_detection_1_1_lane_detector.html#a097a4cc09bb85685998ab4eff5c34537',1,'LaneAndObjectDetection::LaneDetector::PrintToFrame()'],['../class_lane_and_object_detection_1_1_object_detector.html#ab8dcf509f05a847b9987dd807a63a295',1,'LaneAndObjectDetection::ObjectDetector::PrintToFrame()']]]
+  ['objectdetector_0',['ObjectDetector',['../class_lane_and_object_detection_1_1_object_detector.html#a7b4509db942718492f383152bb271451',1,'LaneAndObjectDetection::ObjectDetector']]],
+  ['operator_3d_1',['operator=',['../class_lane_and_object_detection_1_1_video_manager.html#ab799c79cf1d8ba6953ef78b2cb72750f',1,'LaneAndObjectDetection::VideoManager::operator=(const VideoManager &amp;p_videoManager)=delete'],['../class_lane_and_object_detection_1_1_video_manager.html#a3ff59acd7dbec04b823f30f4e7e04a8e',1,'LaneAndObjectDetection::VideoManager::operator=(const VideoManager &amp;&amp;p_videoManager)=delete']]]
 ];

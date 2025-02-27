@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['setproperties_0',['SetProperties',['../class_lane_and_object_detection_1_1_object_detector.html#a3e1628cc503e8908c9868d9bb1c49761',1,'LaneAndObjectDetection::ObjectDetector']]],
+  ['setproperties_0',['SetProperties',['../class_lane_and_object_detection_1_1_object_detector.html#a458f9992e25026bda8b8cc0131d079b4',1,'LaneAndObjectDetection::ObjectDetector::SetProperties()'],['../class_lane_and_object_detection_1_1_video_manager.html#a9dedcaa0069d00fb4d0366b12057181c',1,'LaneAndObjectDetection::VideoManager::SetProperties(const int32_t &amp;p_inputVideoCamera, const std::string &amp;p_yoloFolderPath, const ObjectDetectorTypes &amp;p_objectDetectorTypes, const ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)'],['../class_lane_and_object_detection_1_1_video_manager.html#accc97853b93326bc219c963fd7955cda',1,'LaneAndObjectDetection::VideoManager::SetProperties(const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloFolderPath, const ObjectDetectorTypes &amp;p_objectDetectorTypes, const ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)']]],
   ['setup_1',['Setup',['../index.html#autotoc_md5',1,'Development Setup'],['../class_lane_and_object_detection_1_1_lane_detector.html#a84be2b6e2622cd85fe81414b791d681d',1,'LaneAndObjectDetection::LaneDetector::Setup()']]],
   ['started_2',['Getting Started',['../index.html#autotoc_md1',1,'']]],
-  ['starttimer_3',['StartTimer',['../class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb',1,'LaneAndObjectDetection::Performance']]],
-  ['stoptimer_4',['StopTimer',['../class_lane_and_object_detection_1_1_performance.html#acc70db8e745ca255ba9ba1d6576e4bfa',1,'LaneAndObjectDetection::Performance']]]
+  ['starttimer_3',['StartTimer',['../class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb',1,'LaneAndObjectDetection::Performance']]]
 ];

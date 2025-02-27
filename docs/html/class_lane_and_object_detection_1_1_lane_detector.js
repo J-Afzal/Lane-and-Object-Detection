@@ -1,13 +1,14 @@
 var class_lane_and_object_detection_1_1_lane_detector =
 [
     [ "LaneDetector", "class_lane_and_object_detection_1_1_lane_detector.html#a9990553b658820f3b6bbbf019407d055", null ],
-    [ "RunDetector", "class_lane_and_object_detection_1_1_lane_detector.html#ae4053ad6a19e5d3cdff637748aa70841", null ],
-    [ "PrintToFrame", "class_lane_and_object_detection_1_1_lane_detector.html#a097a4cc09bb85685998ab4eff5c34537", null ],
+    [ "RunLaneDetector", "class_lane_and_object_detection_1_1_lane_detector.html#a6e77decdad63551b310f8f015562329b", null ],
+    [ "GetInformation", "class_lane_and_object_detection_1_1_lane_detector.html#a0c03efbee133a7d23c1d28f8588ac007", null ],
     [ "Setup", "class_lane_and_object_detection_1_1_lane_detector.html#a84be2b6e2622cd85fe81414b791d681d", null ],
     [ "GetHoughLines", "class_lane_and_object_detection_1_1_lane_detector.html#a89c0ee4e20c0771416a32d0a9bebccc1", null ],
-    [ "AnalyseHoughLines", "class_lane_and_object_detection_1_1_lane_detector.html#a44fd67cd93d318a272bbb01ec8be3967", null ],
+    [ "AnalyseHoughLines", "class_lane_and_object_detection_1_1_lane_detector.html#aa519dc0ed98be275358921b3c378dac1", null ],
     [ "GetDrivingState", "class_lane_and_object_detection_1_1_lane_detector.html#a5512bf83e303767a79e4776230a8aa81", null ],
     [ "ExecuteDrivingState", "class_lane_and_object_detection_1_1_lane_detector.html#a8d81743d39d1d4f660fdb45debd2058a", null ],
+    [ "m_laneDetectionInformation", "class_lane_and_object_detection_1_1_lane_detector.html#ace164805ccd8743f1a9f787fb08dfe45", null ],
     [ "m_horizontalLineStateRollingAverage", "class_lane_and_object_detection_1_1_lane_detector.html#a74407ad734dc28af1628721f4dd3584d", null ],
     [ "m_leftLineTypeRollingAverage", "class_lane_and_object_detection_1_1_lane_detector.html#ab1222ad611a8fa268215ebc3102985bf", null ],
     [ "m_middleLineTypeRollingAverage", "class_lane_and_object_detection_1_1_lane_detector.html#a8361424d3f97d515089eb6e174e76849", null ],
