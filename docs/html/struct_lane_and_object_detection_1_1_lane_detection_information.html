@@ -108,18 +108,65 @@ $(function(){initNavTree('struct_lane_and_object_detection_1_1_lane_detection_in
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="struct_lane_and_object_detection_1_1_lane_detection_information-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">LaneAndObjectDetection::LaneDetectionInformation Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>TODO.  
+<p>The information needed by FrameBuilder to update frame with lane detection information.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="_frame_builder_8hpp_source.html">FrameBuilder.hpp</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="_information_8hpp_source.html">Information.hpp</a>&quot;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ac77e2891bff8bf3df2d857e961530b0f" id="r_ac77e2891bff8bf3df2d857e961530b0f"><td class="memItemLeft" align="right" valign="top"><a id="ac77e2891bff8bf3df2d857e961530b0f" name="ac77e2891bff8bf3df2d857e961530b0f"></a>
+std::vector&lt; cv::Point &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_lanePoints</b></td></tr>
+<tr class="memdesc:ac77e2891bff8bf3df2d857e961530b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The co-ordinate points that outline the current lane. <br /></td></tr>
+<tr class="separator:ac77e2891bff8bf3df2d857e961530b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d59b3cd28b327b0686c2e3d84fe6c1" id="r_a75d59b3cd28b327b0686c2e3d84fe6c1"><td class="memItemLeft" align="right" valign="top"><a id="a75d59b3cd28b327b0686c2e3d84fe6c1" name="a75d59b3cd28b327b0686c2e3d84fe6c1"></a>
+std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_leftLineTypesForDisplay</b></td></tr>
+<tr class="memdesc:a75d59b3cd28b327b0686c2e3d84fe6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The left-hand side road marking types to display. <br /></td></tr>
+<tr class="separator:a75d59b3cd28b327b0686c2e3d84fe6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0bead15b51cfa6c20faebffa9558d0d" id="r_ad0bead15b51cfa6c20faebffa9558d0d"><td class="memItemLeft" align="right" valign="top"><a id="ad0bead15b51cfa6c20faebffa9558d0d" name="ad0bead15b51cfa6c20faebffa9558d0d"></a>
+std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_middleLineTypesForDisplay</b></td></tr>
+<tr class="memdesc:ad0bead15b51cfa6c20faebffa9558d0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The middle road marking types to display. <br /></td></tr>
+<tr class="separator:ad0bead15b51cfa6c20faebffa9558d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2121cdc2195f9636dd703e2a41addf4d" id="r_a2121cdc2195f9636dd703e2a41addf4d"><td class="memItemLeft" align="right" valign="top"><a id="a2121cdc2195f9636dd703e2a41addf4d" name="a2121cdc2195f9636dd703e2a41addf4d"></a>
+std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_rightLineTypesForDisplay</b></td></tr>
+<tr class="memdesc:a2121cdc2195f9636dd703e2a41addf4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The right-hand side road marking types to display. <br /></td></tr>
+<tr class="separator:a2121cdc2195f9636dd703e2a41addf4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d2d8bc27dc187b71cd6f7a448069ab7" id="r_a2d2d8bc27dc187b71cd6f7a448069ab7"><td class="memItemLeft" align="right" valign="top"><a id="a2d2d8bc27dc187b71cd6f7a448069ab7" name="a2d2d8bc27dc187b71cd6f7a448069ab7"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_currentTurningState</b></td></tr>
+<tr class="memdesc:a2d2d8bc27dc187b71cd6f7a448069ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current turning state title. <br /></td></tr>
+<tr class="separator:a2d2d8bc27dc187b71cd6f7a448069ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a552d5d86496a1b15f6bac45d6d146ccf" id="r_a552d5d86496a1b15f6bac45d6d146ccf"><td class="memItemLeft" align="right" valign="top"><a id="a552d5d86496a1b15f6bac45d6d146ccf" name="a552d5d86496a1b15f6bac45d6d146ccf"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_drivingStateTitle</b></td></tr>
+<tr class="memdesc:a552d5d86496a1b15f6bac45d6d146ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current driving state title. <br /></td></tr>
+<tr class="separator:a552d5d86496a1b15f6bac45d6d146ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae63cdb38503f70eda9c7a5ac3d59327" id="r_aae63cdb38503f70eda9c7a5ac3d59327"><td class="memItemLeft" align="right" valign="top"><a id="aae63cdb38503f70eda9c7a5ac3d59327" name="aae63cdb38503f70eda9c7a5ac3d59327"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_laneInformationTitle</b></td></tr>
+<tr class="memdesc:aae63cdb38503f70eda9c7a5ac3d59327"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current lane information title. <br /></td></tr>
+<tr class="separator:aae63cdb38503f70eda9c7a5ac3d59327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceb9a12ae4b3d7ea2171932506b157ec" id="r_aceb9a12ae4b3d7ea2171932506b157ec"><td class="memItemLeft" align="right" valign="top"><a id="aceb9a12ae4b3d7ea2171932506b157ec" name="aceb9a12ae4b3d7ea2171932506b157ec"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_turningRequiredToReturnToCenter</b></td></tr>
+<tr class="memdesc:aceb9a12ae4b3d7ea2171932506b157ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text for the current turning required to return the vehicle to the center of the current lane. <br /></td></tr>
+<tr class="separator:aceb9a12ae4b3d7ea2171932506b157ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64aa21518a312747f3da47da9ace01cb" id="r_a64aa21518a312747f3da47da9ace01cb"><td class="memItemLeft" align="right" valign="top"><a id="a64aa21518a312747f3da47da9ace01cb" name="a64aa21518a312747f3da47da9ace01cb"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_drivingState</b></td></tr>
+<tr class="memdesc:a64aa21518a312747f3da47da9ace01cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current driving state. <br /></td></tr>
+<tr class="separator:a64aa21518a312747f3da47da9ace01cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a362bf577888d818fd0201b0bb304a286" id="r_a362bf577888d818fd0201b0bb304a286"><td class="memItemLeft" align="right" valign="top"><a id="a362bf577888d818fd0201b0bb304a286" name="a362bf577888d818fd0201b0bb304a286"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_turningRequired</b></td></tr>
+<tr class="memdesc:a362bf577888d818fd0201b0bb304a286"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number for the current turning required to return the vehicle to the center of the current lane. <br /></td></tr>
+<tr class="separator:a362bf577888d818fd0201b0bb304a286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODO. </p>
+<div class="textblock"><p>The information needed by FrameBuilder to update frame with lane detection information. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/helpers/<a class="el" href="_frame_builder_8hpp_source.html">FrameBuilder.hpp</a></li>
+<li>include/helpers/<a class="el" href="_information_8hpp_source.html">Information.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -127,7 +174,7 @@ $(function(){initNavTree('struct_lane_and_object_detection_1_1_lane_detection_in
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a></li>
-    <li class="footer">Generated on Thu Feb 27 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun Mar 16 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

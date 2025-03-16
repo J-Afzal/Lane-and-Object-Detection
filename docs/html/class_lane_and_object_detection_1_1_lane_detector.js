@@ -26,8 +26,8 @@ var class_lane_and_object_detection_1_1_lane_detector =
     [ "m_cannyFrame", "class_lane_and_object_detection_1_1_lane_detector.html#a7db2dfbe3c5ebe01d4e74ba3f3961c6f", null ],
     [ "m_roiFrame", "class_lane_and_object_detection_1_1_lane_detector.html#a51fc8665fa013b5e9ef29bdb69d6f853", null ],
     [ "m_currentTurningState", "class_lane_and_object_detection_1_1_lane_detector.html#a956477cdbe8b9ff26b9ea0e8a148c50c", null ],
-    [ "m_rightInfoTitleText", "class_lane_and_object_detection_1_1_lane_detector.html#a08606ba03ee8c63988d1f8b693669c17", null ],
-    [ "m_titleText", "class_lane_and_object_detection_1_1_lane_detector.html#a6d00e9bdef4b8334d0be230eab5ef60b", null ],
+    [ "m_laneInformationTitle", "class_lane_and_object_detection_1_1_lane_detector.html#a255e311570a0103671c73b71d601cb28", null ],
+    [ "m_drivingStateTitle", "class_lane_and_object_detection_1_1_lane_detector.html#ac8da5d42619c4728cd5834f6836b74dc", null ],
     [ "m_turningRequiredToReturnToCenter", "class_lane_and_object_detection_1_1_lane_detector.html#a9099d7da2167f8a12763ae77b87cf9b4", null ],
     [ "m_changingLanesFrameCount", "class_lane_and_object_detection_1_1_lane_detector.html#a8efcf183948f056c9d3b6f6ac5ee0e04", null ],
     [ "m_drivingState", "class_lane_and_object_detection_1_1_lane_detector.html#ab4208dfb016afb246243a1ec6b7061d8", null ],
@@ -36,6 +36,5 @@ var class_lane_and_object_detection_1_1_lane_detector =
     [ "m_leftLineAverageSize", "class_lane_and_object_detection_1_1_lane_detector.html#a587d051769a423ab4ced652b6055e65e", null ],
     [ "m_middleLineAverageSize", "class_lane_and_object_detection_1_1_lane_detector.html#a58c0623a4219b6cc413b0daafa699397", null ],
     [ "m_rightLineAverageSize", "class_lane_and_object_detection_1_1_lane_detector.html#ac85a98c18bbe188d9b7b83c5dae159f7", null ],
-    [ "m_giveWayWarning", "class_lane_and_object_detection_1_1_lane_detector.html#a2744c719ca1fa259a498d8a475f73600", null ],
-    [ "m_printLaneOverlay", "class_lane_and_object_detection_1_1_lane_detector.html#ac6883c4100c1276772b698bc37458ee7", null ]
+    [ "m_giveWayWarning", "class_lane_and_object_detection_1_1_lane_detector.html#a2744c719ca1fa259a498d8a475f73600", null ]
 ];

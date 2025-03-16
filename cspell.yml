@@ -1,4 +1,4 @@
-version: "0.2"
+version: 0.2
 language: en-gb
 dictionaries:
     - cpp
@@ -8,6 +8,7 @@ ignorePaths:
     - .vscode/
     - build/
     - docs/html/
+    - node_modules/
     - package-lock.json
     - resources/yolo/yolov4.weights
 words:

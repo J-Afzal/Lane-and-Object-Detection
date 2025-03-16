@@ -15,6 +15,10 @@ Build-CppCodeUsingCMake -Platform windows-latest -BuildType Release -BuildDirect
 ./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
 ```
 
+> [!WARNING]
+> If on Windows make sure to run the above within a Visual Studio Developer Command Prompt otherwise you may see errors around
+> `cl.exe` not being found.
+
 or manually:
 
 ```text
@@ -37,17 +41,37 @@ cmake --build ./build --config Release
 > [!WARNING]
 > If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.
 
-<!-- TODO: add CLI output helper here -->
+Here are the full list of options for Lane and Object Detection:
+
+```text
+Usage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]
+
+OPTIONS:
+
+Generic Options:
+
+  -h --help                       Display available options.
+
+Required Options:
+
+  -i --input                      File path or camera ID
+  -y --yolo-folder-path           Path to the yolo folder
+  -o --object-detector-type       One of: none, standard or tiny.
+
+Optional options:
+
+  -b --object-detector-backend    One of: cpu or cuda (default = cpu)
+  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)
+```
 
 ## Documentation
 
-Checkout the GitHub pages-hosted [documentation page](https://J-Afzal.github.io/Lane-and-Object-Detection) built using doxygen.
+Checkout the [documentation page](https://J-Afzal.github.io/Lane-and-Object-Detection) built using Doxygen and hosted using
+Github pages.
 
 ![Documentation Homepage](./resources/screenshots/DocumentationHomepage.png)
 
 ## General Information
-
-TODO
 
 ## CI / CD
 
@@ -61,7 +85,7 @@ The continuous deployment workflow runs against all commits to main, builds the 
 
 ## Development Setup
 
-For development a few extra tools are needed to check for linting issues locally. For this clone the repo with the
+For development a few extra tools are needed to check for linting issues locally which include the
 [`Linters`](https://github.com/J-Afzal/Linters) and [`OpenCV`](https://github.com/opencv/opencv) submodules:
 
 ```text
@@ -79,49 +103,66 @@ The development dependencies are:
 
 All linting helper functions can be found in the [`Linters`](https://github.com/J-Afzal/Linters) submodule.
 
-> [!IMPORTANT]
-> The `yolo4.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded
-> [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to
-> the `resources/yolo` folder.
-
-### Notes
-
-Any generator can be used to build the project but to run `clang-tidy`/`clang-format` CMake must be configured using a generator
-that creates a `compile_commands.json` file in the build directory before running `clang-tidy`/`clang-format` (e.g.
-`-G "Ninja"`, `-G "NMake Makefiles"`, etc)
-
-On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by
-opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
+Any generator can be used to build the project but to prior to running `clang-tidy`/`clang-format` CMake must be configured
+using a generator that creates a `compile_commands.json` file in the build directory (e.g. `-G "Ninja"`, `-G "NMake Makefiles"`,
+etc)
 
 On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-win64.exe` binary from the
 [LLVM release page](https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6) or from
 [chocolatey](https://community.chocolatey.org/packages/llvm) using `choco install llvm -y`.
 
+> [!IMPORTANT]
+> The `yolo4.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded
+> [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to
+> the `resources/yolo` folder.
+
+### IDE
+
+On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by
+opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
+
 <!--
+x. Clean up C++ lane and object detection code.
 
-TODO
-
-1. Clean up C++ lane detection code and supplementary code (ignore object detection)
-    TODO comments
+    Move rolling average class in to lane detector
+    Make driving state an enum?
     Debug lane detection code to make sure it is correct.
+    Rename all vars and functions and delete some member vars
+    redo get information functions
+    Why is NAN being used?
 
-x. Clean up C++ object detection code
-   replace backend enum with // cv::dnn::Backend // cv::dnn::Target#
-   param names don't match enum names
-   magic numbers everywhere
-   clean up comments
-   clean up rest of readme
-   remove cv::scalar
+    Make sure all global vars are used and all information vars
+    Make sure all consts in globals
+    Make global consts shorter? re-org?
+    Update General Information in readme
+    add backticks to docs
+    remove use at []
+    Finish all todos
+    Linters check
 
-x. Upgrade to newer YOLO
-    Any perf or accuracy increases?
+x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
 
-x. Clean up performance test code (replace with C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
+x. clean up folder org (resources and tests)
 
-x. clean up folder org
+x. Enhancements
+    Upgrade to newer YOLO (and better performance?)
+        Any perf or accuracy increases?
+    Add info more discretely at the bottom of the frame?
+    Press D for debug mode to display lane lines and driving state
+        Also add the different frames at the top
+        Also allow for ROI to be adjusted? And other variables?
+            ROI dimensions need to be dynamic
+            ROI line equations
+            Canny algorithm thresholds
+            Hough transform thresholds and properties
+            All other lane detection thresholds
+    Allow UI to be scaled up and down?
+
+x. Test with CUDA? (regardless do performance heat map and optimisation)
 
 x. Implement C GUI window to encapsulate main code and performance test code with debug mode to show all stats (and roi/canny/hough line debug views) and option to adjust ROI?
-
-x. Test with CUDA
-
+    Use Clay?
+    where are std::cout displayed?
+    run performance tests?
+    display and export performance graphs?
 -->

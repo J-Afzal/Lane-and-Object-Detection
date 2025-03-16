@@ -1,6 +1,8 @@
 #include <chrono>
 #include <cmath>
 #include <cstdint>
+#include <cstdlib>
+#include <format>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -9,73 +11,122 @@
 #include "helpers/Globals.hpp"
 #include "helpers/VideoManager.hpp"
 
-int main() // TODO: CLI args to parse input file paths and number of repetitions and then clean up rest of function.
+static void ParseCommandLineArguments(const std::vector<std::string>& p_commandLineArguments, std::string& p_inputVideoFilePath, std::string& p_yoloFolderPath, uint32_t& p_numberOfRepetitions)
+{
+    uint32_t index = 0;
+
+    bool numberOfRepetitionsGiven = false;
+
+    for (const std::string& argument : p_commandLineArguments)
+    {
+        if (argument == "-h" || argument == "--help")
+        {
+            std::cout << LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE;
+            exit(1);
+        }
+
+        try
+        {
+            if (argument == "-i" || argument == "--input")
+            {
+                p_inputVideoFilePath = p_commandLineArguments.at(index + 1);
+            }
+
+            if (argument == "-y" || argument == "--yolo-folder-path")
+            {
+                p_yoloFolderPath = p_commandLineArguments.at(index + 1);
+            }
+
+            if (argument == "-r" || argument == "--repetitions")
+            {
+                p_numberOfRepetitions = std::stoi(p_commandLineArguments.at(index + 1));
+                numberOfRepetitionsGiven = true;
+            }
+        }
+
+        catch (...)
+        {
+            std::cout << LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE;
+            exit(1);
+        }
+
+        index++;
+    }
+
+    // Check that the required arguments have been provided
+    if (p_inputVideoFilePath.empty() || p_yoloFolderPath.empty() || !numberOfRepetitionsGiven)
+    {
+        std::cout << LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE;
+        exit(1);
+    }
+}
+
+int main(int argc, char* argv[])
 {
     try
     {
-        const std::string INPUT_VIDEO_FILE_PATH = "../../resources/benchmark.mp4";
-        const std::string YOLO_RESOURCES_FOLDER_PATH = "../../resources/yolo/";
-
-        std::cout << "\n\nNumber of tests: " << LaneAndObjectDetection::Globals::G_NUMBER_OF_TESTS
-                  << "\nNumber of repetitions: " << LaneAndObjectDetection::Globals::G_NUMBER_OF_REPETITIONS << '\n';
-
         LaneAndObjectDetection::VideoManager videoManager;
-        std::vector<std::vector<uint32_t>> frameTimes;
+        std::string inputVideoFilePath;
+        std::string yoloFolderPath;
+        uint32_t numberOfRepetitions = 0;
+
+        ParseCommandLineArguments(std::vector<std::string>(argv, argv + argc), inputVideoFilePath, yoloFolderPath, numberOfRepetitions);
+
+        std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n\n";
+        std::cout << "\n\nSettings:";
+        std::cout << "\n    Number of tests: " << LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS;
+        std::cout << "\n    Number of repetitions: " << numberOfRepetitions;
 
         const std::chrono::time_point<std::chrono::high_resolution_clock> START_TIME = std::chrono::high_resolution_clock::now();
 
-        for (uint32_t i = 0; i < LaneAndObjectDetection::Globals::G_NUMBER_OF_TESTS; i++)
+        for (uint32_t currentTestNumber = 0; currentTestNumber < LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS; currentTestNumber++)
         {
-            frameTimes.clear();
+            std::cout << std::format("\n\n######## {} ({}/{}) ########",
+                                     LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES.at(currentTestNumber),
+                                     currentTestNumber,
+                                     LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS);
 
-            for (uint32_t j = 0; j < LaneAndObjectDetection::Globals::G_NUMBER_OF_REPETITIONS; j++)
+            for (uint32_t currentRepetition = 0; currentRepetition < numberOfRepetitions; currentRepetition++)
             {
-                videoManager.SetProperties(INPUT_VIDEO_FILE_PATH,
-                                           YOLO_RESOURCES_FOLDER_PATH,
-                                           LaneAndObjectDetection::Globals::G_YOLO_TYPES.at(i),
-                                           LaneAndObjectDetection::Globals::G_BACK_END_TYPES.at(i),
-                                           LaneAndObjectDetection::Globals::G_BLOB_SIZES.at(i));
+                videoManager.SetProperties(inputVideoFilePath,
+                                           yoloFolderPath,
+                                           LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
+                                           LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
+                                           LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber));
 
                 videoManager.Run();
 
-                frameTimes.push_back(videoManager.GetFrameTimes());
+                std::cout << std::format("\n    Finished repetition {}/{}!", currentRepetition + 1, numberOfRepetitions);
 
-                std::cout << LaneAndObjectDetection::Globals::G_OUTPUT_FILE_NAMES.at(i)
-                          << ": Finished iteration " << j + 1 << "/" << LaneAndObjectDetection::Globals::G_NUMBER_OF_REPETITIONS
-                          << " for test " << i + 1 << "/" << LaneAndObjectDetection::Globals::G_NUMBER_OF_TESTS << '\n';
-            }
+                const std::string OUTPUT_FILE_NAME = LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES.at(currentTestNumber) + "-" + std::to_string(currentRepetition) + ".txt";
+                std::ofstream outputFile(OUTPUT_FILE_NAME);
 
-            std::ofstream outputFile(LaneAndObjectDetection::Globals::G_OUTPUT_FILE_NAMES.at(i));
-
-            if (!outputFile.is_open())
-            {
-                std::cout << "\nERROR: Output file '" + LaneAndObjectDetection::Globals::G_OUTPUT_FILE_NAMES.at(i) + "' failed to open!\n";
-                exit(1);
-            }
-
-            for (uint32_t j = 0; j < frameTimes[0].size(); j++)
-            {
-                uint32_t frameTimeSum = 0;
-                for (const auto& frameTime : frameTimes)
+                if (!outputFile.is_open())
                 {
-                    frameTimeSum += frameTime.at(j);
+                    std::cout << "\nERROR: Output file '" + OUTPUT_FILE_NAME + "' failed to open!\n";
+                    exit(1);
                 }
 
-                outputFile << std::to_string(frameTimeSum / static_cast<double>(LaneAndObjectDetection::Globals::G_NUMBER_OF_REPETITIONS)) << '\n';
+                for (const uint32_t& frameTime : videoManager.GetPerformanceInformation().m_frameTimes)
+                {
+                    outputFile << frameTime << '\n';
+                }
             }
         }
 
         // Calculate total time taken in hrs mins secs
+        const uint32_t TOTAL_TIME_IN_SECONDS = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - START_TIME).count();
+
         const double SECONDS_IN_HOUR = 3600;
         const double MINUTES_IN_HOUR = 60;
         const double SECONDS_IN_MINUTES = 60;
 
-        const uint32_t TOTAL = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - START_TIME).count();
-        const double HOURS = TOTAL / SECONDS_IN_HOUR;
+        const double HOURS = TOTAL_TIME_IN_SECONDS / SECONDS_IN_HOUR;
         const double MINUTES = (HOURS - floor(HOURS)) * MINUTES_IN_HOUR;
         const double SECONDS = (MINUTES - floor(MINUTES)) * SECONDS_IN_MINUTES;
 
-        std::cout << "\n\nAll test complete!\nTotal time taken = " << floor(HOURS) << "hrs " << floor(MINUTES) << "mins " << floor(SECONDS) << "secs\n\n";
+        std::cout << std::format("\n\nTotal elapsed time = {} hrs {} mins {} secs", floor(HOURS), floor(MINUTES), floor(SECONDS));
+        std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n\n";
 
         return 0;
     }

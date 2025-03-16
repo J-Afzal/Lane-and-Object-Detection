@@ -1,4 +1,5 @@
 .vs/
 .vscode/
 build/
+node_modules/
 resources/yolo/yolov4.weights

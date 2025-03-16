@@ -128,16 +128,16 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lane_and_object_detection_1_1_frame_builder.html">FrameBuilder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <a href="class_lane_and_object_detection_1_1_frame_builder.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds OpenCV frames to be displayed to the user.  <a href="class_lane_and_object_detection_1_1_frame_builder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <a href="struct_lane_and_object_detection_1_1_lane_detection_information.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The information needed by FrameBuilder to update frame with lane detection information.  <a href="struct_lane_and_object_detection_1_1_lane_detection_information.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector.html">LaneDetector</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <a href="class_lane_and_object_detection_1_1_lane_detector.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <a href="struct_lane_and_object_detection_1_1_object_detection_information.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The information needed by FrameBuilder to update frame with object detection information.  <a href="struct_lane_and_object_detection_1_1_object_detection_information.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lane_and_object_detection_1_1_object_detector.html">ObjectDetector</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The object detector built on YOLOv4.  <a href="class_lane_and_object_detection_1_1_object_detector.html#details">More...</a><br /></td></tr>
@@ -146,13 +146,16 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the frame times and current/average frames per second for real-time performance tracking.  <a href="class_lane_and_object_detection_1_1_performance.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html">PerformanceInformation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <a href="struct_lane_and_object_detection_1_1_performance_information.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The information needed by FrameBuilder to update frame with performance information.  <a href="struct_lane_and_object_detection_1_1_performance_information.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lane_and_object_detection_1_1_rolling_average.html">RollingAverage</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <a href="class_lane_and_object_detection_1_1_rolling_average.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orchestration class which reads the input, runs the lane and object detectors, displays the detected output and saves output video stream locally.  <a href="class_lane_and_object_detection_1_1_video_manager.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html">VideoManagerInformation</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The information needed by FrameBuilder to update frame with video manager information.  <a href="struct_lane_and_object_detection_1_1_video_manager_information.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
@@ -186,7 +189,7 @@ Enumerations</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li>
-    <li class="footer">Generated on Thu Feb 27 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun Mar 16 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

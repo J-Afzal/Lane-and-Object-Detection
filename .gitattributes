@@ -42,5 +42,4 @@ LICENSE         text
 
 # YOLO
 *.cfg           text
-*.names         text
 *.weights       binary

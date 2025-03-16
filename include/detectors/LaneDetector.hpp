@@ -9,6 +9,7 @@
 #include <opencv2/core/matx.hpp>
 #include <opencv2/core/types.hpp>
 
+#include "helpers/Information.hpp"
 #include "helpers/RollingAverage.hpp"
 
 /**
@@ -34,13 +35,12 @@ namespace LaneAndObjectDetection
          * @brief TODO
          *
          */
-        void RunDetector(const cv::Mat& p_frame, const std::vector<cv::Rect>& p_boundingBoxes);
+        void RunLaneDetector(const cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation);
 
         /**
          * @brief TODO
-         *
          */
-        void PrintToFrame(cv::Mat& p_frame);
+        LaneDetectionInformation GetInformation();
 
     private:
         /**
@@ -56,7 +56,7 @@ namespace LaneAndObjectDetection
         /**
          * @brief TODO
          */
-        void AnalyseHoughLines(const std::vector<cv::Rect>& p_boundingBoxes);
+        void AnalyseHoughLines(const ObjectDetectionInformation& p_objectDetectionInformation);
 
         /**
          * @brief TODO
@@ -72,6 +72,7 @@ namespace LaneAndObjectDetection
          * @brief TODO
          */
         ///@{
+        LaneDetectionInformation m_laneDetectionInformation;
         RollingAverage m_horizontalLineStateRollingAverage; // TODO: better var names?
         RollingAverage m_leftLineTypeRollingAverage;
         RollingAverage m_middleLineTypeRollingAverage;
@@ -89,8 +90,8 @@ namespace LaneAndObjectDetection
         cv::Mat m_cannyFrame;
         cv::Mat m_roiFrame;
         std::string m_currentTurningState;
-        std::string m_rightInfoTitleText;
-        std::string m_titleText;
+        std::string m_laneInformationTitle;
+        std::string m_drivingStateTitle;
         std::string m_turningRequiredToReturnToCenter;
         uint32_t m_changingLanesFrameCount;
         uint32_t m_drivingState;
@@ -100,7 +101,6 @@ namespace LaneAndObjectDetection
         double m_middleLineAverageSize;
         double m_rightLineAverageSize;
         bool m_giveWayWarning;
-        bool m_printLaneOverlay;
         ///@}
     };
 }

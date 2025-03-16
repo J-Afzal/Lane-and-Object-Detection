@@ -13,6 +13,7 @@
 
 #include "detectors/LaneDetector.hpp"
 #include "helpers/Globals.hpp"
+#include "helpers/Information.hpp"
 
 namespace LaneAndObjectDetection
 {
@@ -24,8 +25,7 @@ namespace LaneAndObjectDetection
         m_leftLineAverageSize(0),
         m_middleLineAverageSize(0),
         m_rightLineAverageSize(0),
-        m_giveWayWarning(false),
-        m_printLaneOverlay(false)
+        m_giveWayWarning(false)
     {
         m_horizontalLineStateRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_HORIZONTAL_LINE_STATES);
         m_leftLineTypeRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_VERTICAL_LINE_STATES);
@@ -33,7 +33,7 @@ namespace LaneAndObjectDetection
         m_rightLineTypeRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_VERTICAL_LINE_STATES);
         m_drivingStateRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_DRIVING_STATES);
 
-        m_leftLineTypesForDisplay = {0, 0, 0, 0, 0};
+        m_leftLineTypesForDisplay = {0, 0, 0, 0, 0}; // TODO: better names and improve other names
         m_middleLineTypesForDisplay = {0, 0, 0, 0, 0};
         m_rightLineTypesForDisplay = {0, 0, 0, 0, 0};
 
@@ -45,17 +45,34 @@ namespace LaneAndObjectDetection
         };
     }
 
-    void LaneDetector::RunDetector(const cv::Mat& p_frame, const std::vector<cv::Rect>& p_boundingBoxes)
+    void LaneDetector::RunLaneDetector(const cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation)
     {
         Setup();
 
         GetHoughLines(p_frame);
 
-        AnalyseHoughLines(p_boundingBoxes);
+        AnalyseHoughLines(p_objectDetectionInformation);
 
         GetDrivingState();
 
         ExecuteDrivingState();
+    }
+
+    LaneDetectionInformation LaneDetector::GetInformation()
+    {
+        return {
+            // TODO: update this.
+            .m_lanePoints = m_lanePoints,
+            .m_leftLineTypesForDisplay = m_leftLineTypesForDisplay,
+            .m_middleLineTypesForDisplay = m_middleLineTypesForDisplay,
+            .m_rightLineTypesForDisplay = m_rightLineTypesForDisplay,
+            .m_currentTurningState = m_currentTurningState,
+            .m_drivingStateTitle = m_drivingStateTitle,
+            .m_laneInformationTitle = m_laneInformationTitle,
+            .m_turningRequiredToReturnToCenter = m_turningRequiredToReturnToCenter,
+            .m_drivingState = m_drivingState,
+            .m_turningRequired = m_turningRequired,
+        };
     }
 
     void LaneDetector::Setup()
@@ -65,13 +82,18 @@ namespace LaneAndObjectDetection
         m_middleLines.clear();
         m_rightLines.clear();
         m_leftLineAverageSize = m_middleLineAverageSize = m_rightLineAverageSize = 0;
-        m_printLaneOverlay = false;
+        m_lanePoints = {
+            {0, 0},
+            {0, 0},
+            {0, 0},
+            {0, 0}
+        };
     }
 
     void LaneDetector::GetHoughLines(const cv::Mat& p_frame)
     {
         // Get region of interest (ROI) frame by applying a mask on to the frame
-        m_blankFrame = cv::Mat::zeros(Globals::G_VIDEO_HEIGHT, Globals::G_VIDEO_WIDTH, p_frame.type());
+        m_blankFrame = cv::Mat::zeros(Globals::G_VIDEO_MANAGER_INPUT_VIDEO_HEIGHT, Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH, p_frame.type());
         cv::fillConvexPoly(m_blankFrame, Globals::G_MASK_DIMENSIONS, Globals::G_OPENCV_WHITE);
         cv::bitwise_and(m_blankFrame, p_frame, m_roiFrame);
         // Convert ROI frame to B&W
@@ -82,7 +104,7 @@ namespace LaneAndObjectDetection
         cv::HoughLinesP(m_cannyFrame, m_houghLines, Globals::G_HOUGH_RHO, Globals::G_HOUGH_THETA, Globals::G_HOUGH_THRESHOLD, Globals::G_HOUGH_MIN_LINE_LENGTH, Globals::G_HOUGH_MAX_LINE_GAP);
     }
 
-    void LaneDetector::AnalyseHoughLines(const std::vector<cv::Rect>& p_boundingBoxes) // NOLINT(readability-function-cognitive-complexity) // TODO: remove
+    void LaneDetector::AnalyseHoughLines(const ObjectDetectionInformation& p_objectDetectionInformation) // NOLINT(readability-function-cognitive-complexity) // TODO: remove
     {
         /**
          * The straight lines received from the PHT contain lines that are not a part of any
@@ -100,7 +122,7 @@ namespace LaneAndObjectDetection
         uint32_t lowerY = 0;
         uint32_t upperX = 0;
         uint32_t upperY = 0;
-        double changeInX = NAN; // TODO: Why is NAN being used everywhere?
+        double changeInX = NAN;
         double changeInY = NAN;
         double gradient = NAN;
         double leftY1 = NAN;
@@ -113,12 +135,12 @@ namespace LaneAndObjectDetection
         {
             lineIsInBoundingBox = false;
 
-            for (const auto& boundingBox : p_boundingBoxes)
+            for (const auto& objectInformation : p_objectDetectionInformation.m_objectInformation)
             {
-                lowerX = boundingBox.x;
-                upperX = boundingBox.x + boundingBox.width;
-                lowerY = boundingBox.y;
-                upperY = boundingBox.y + boundingBox.height;
+                lowerX = objectInformation.m_boundingBox.x;
+                upperX = objectInformation.m_boundingBox.x + objectInformation.m_boundingBox.width;
+                lowerY = objectInformation.m_boundingBox.y;
+                upperY = objectInformation.m_boundingBox.y + objectInformation.m_boundingBox.height;
 
                 if ((houghLine[0] >= lowerX && houghLine[0] <= upperX && houghLine[1] >= lowerY && houghLine[1] <= upperY) ||
                     (houghLine[2] >= lowerX && houghLine[2] <= upperX && houghLine[3] >= lowerY && houghLine[3] <= upperY))
@@ -454,10 +476,10 @@ namespace LaneAndObjectDetection
                 withinLaneCurrentDifference = (averageDistanceFromLeft - averageDistanceFromRight) / MAXIMUM_DIFFERENCE;
             }
 
-            // Calculate the turning needed to return to centre to the nearest 10%
+            // Calculate the turning needed to return to centre to the nearest 10% // TODO: fix this as currently always small number
             const int32_t CONVERT_TO_PERCENTAGE = 100;
             const int32_t ROUNDING = 10;
-            m_turningRequired = static_cast<int>((withinLaneCurrentDifference * CONVERT_TO_PERCENTAGE) - (floor(withinLaneCurrentDifference) * CONVERT_TO_PERCENTAGE)) % ROUNDING;
+            m_turningRequired = static_cast<int32_t>((withinLaneCurrentDifference * CONVERT_TO_PERCENTAGE) - (floor(withinLaneCurrentDifference) * CONVERT_TO_PERCENTAGE)) % ROUNDING;
 
             // Calculate the direction of turning needed
             if (m_turningRequired == 0)
@@ -492,29 +514,38 @@ namespace LaneAndObjectDetection
                 // y = (m2*c1 - m1*c2) / (m2-m1)
                 //
                 // where m1 and c1 are left lane edge and m2 and c2 are right lane edge
-                const int INTERSECTION_Y = static_cast<int>((rightLaneEdgeM * leftLaneEdgeC - leftLaneEdgeM * rightLaneEdgeC) / (rightLaneEdgeM - leftLaneEdgeM));
+                const int INTERSECTION_Y = static_cast<int32_t>((rightLaneEdgeM * leftLaneEdgeC - leftLaneEdgeM * rightLaneEdgeC) / (rightLaneEdgeM - leftLaneEdgeM));
 
                 if (INTERSECTION_Y < minY)
                 {
                     // Add the four points of the quadrangle
-                    m_lanePoints[0] = cv::Point(static_cast<int>((minY - leftLaneEdgeC) / leftLaneEdgeM), static_cast<int>(minY));
-                    m_lanePoints[1] = cv::Point(static_cast<int>((minY - rightLaneEdgeC) / rightLaneEdgeM), static_cast<int>(minY));
-                    m_lanePoints[2] = cv::Point(static_cast<int>((Globals::G_ROI_BOTTOM_HEIGHT - rightLaneEdgeC) / rightLaneEdgeM), Globals::G_ROI_BOTTOM_HEIGHT);
-                    m_lanePoints[3] = cv::Point(static_cast<int>((Globals::G_ROI_BOTTOM_HEIGHT - leftLaneEdgeC) / leftLaneEdgeM), Globals::G_ROI_BOTTOM_HEIGHT);
-                    m_printLaneOverlay = true;
+                    m_lanePoints[0] = cv::Point(static_cast<int32_t>((minY - leftLaneEdgeC) / leftLaneEdgeM), static_cast<int32_t>(minY));
+                    m_lanePoints[1] = cv::Point(static_cast<int32_t>((minY - rightLaneEdgeC) / rightLaneEdgeM), static_cast<int32_t>(minY));
+                    m_lanePoints[2] = cv::Point(static_cast<int32_t>((Globals::G_ROI_BOTTOM_HEIGHT - rightLaneEdgeC) / rightLaneEdgeM), Globals::G_ROI_BOTTOM_HEIGHT);
+                    m_lanePoints[3] = cv::Point(static_cast<int32_t>((Globals::G_ROI_BOTTOM_HEIGHT - leftLaneEdgeC) / leftLaneEdgeM), Globals::G_ROI_BOTTOM_HEIGHT);
                 }
                 else
                 {
-                    m_printLaneOverlay = false;
+                    m_lanePoints = {
+                        {0, 0},
+                        {0, 0},
+                        {0, 0},
+                        {0, 0}
+                    };
                 }
             }
             else
             {
-                m_printLaneOverlay = false;
+                m_lanePoints = {
+                    {0, 0},
+                    {0, 0},
+                    {0, 0},
+                    {0, 0}
+                };
             }
 
-            m_titleText = "Within Detected Lanes";
-            m_rightInfoTitleText = "Detected Lanes";
+            m_drivingStateTitle = "Within Detected Lanes";
+            m_laneInformationTitle = "Detected Lanes";
             // Reset these to prevent errors
             m_changingLanesPreviousDifference = 0;
             m_changingLanesFrameCount = 0;
@@ -600,16 +631,28 @@ namespace LaneAndObjectDetection
                 }
             }
 
-            m_titleText = "WARNING: Changing lanes";
-            m_rightInfoTitleText = "Detected Lanes";
+            m_drivingStateTitle = "WARNING: Changing lanes";
+            m_laneInformationTitle = "Detected Lanes";
+            m_lanePoints = {
+                {0, 0},
+                {0, 0},
+                {0, 0},
+                {0, 0}
+            };
             break;
         }
 
         case 2: // Only left road marking detected
         {
-            m_titleText = "WARNING: Only left road marking detected";
-            m_rightInfoTitleText = "Detected Lanes";
+            m_drivingStateTitle = "WARNING: Only left road marking detected";
+            m_laneInformationTitle = "Detected Lanes";
             // Reset these to prevent errors
+            m_lanePoints = {
+                {0, 0},
+                {0, 0},
+                {0, 0},
+                {0, 0}
+            };
             m_changingLanesPreviousDifference = 0;
             m_changingLanesFrameCount = 0;
             m_currentTurningState.clear();
@@ -618,9 +661,15 @@ namespace LaneAndObjectDetection
 
         case 3: // Only right road marking detected
         {
-            m_titleText = "WARNING: Only right road marking detected";
-            m_rightInfoTitleText = "Detected Lanes";
+            m_drivingStateTitle = "WARNING: Only right road marking detected";
+            m_laneInformationTitle = "Detected Lanes";
             // Reset these to prevent errors
+            m_lanePoints = {
+                {0, 0},
+                {0, 0},
+                {0, 0},
+                {0, 0}
+            };
             m_changingLanesPreviousDifference = 0;
             m_changingLanesFrameCount = 0;
             m_currentTurningState.clear();
@@ -629,9 +678,15 @@ namespace LaneAndObjectDetection
 
         case 4: // No road markings detected
         {
-            m_titleText = "WARNING: No road markings detected";
-            m_rightInfoTitleText = "No Lanes Detected";
+            m_drivingStateTitle = "WARNING: No road markings detected";
+            m_laneInformationTitle = "No Lanes Detected";
             // Reset these to prevent errors
+            m_lanePoints = {
+                {0, 0},
+                {0, 0},
+                {0, 0},
+                {0, 0}
+            };
             m_changingLanesPreviousDifference = 0;
             m_changingLanesFrameCount = 0;
             m_currentTurningState.clear();
@@ -641,120 +696,6 @@ namespace LaneAndObjectDetection
         default:
             std::cout << "\ncurrentDrivingState switch statement error: " << m_drivingState;
             break;
-        }
-    }
-
-    void LaneDetector::PrintToFrame(cv::Mat& p_frame)
-    {
-        const double DIVISOR = 2;
-
-        const int32_t LEFT_X_POSITION = 1595;
-        const int32_t MIDDLE_X_POSITION = 1695;
-        const int32_t RIGHT_X_POSITION = 1795;
-        const int32_t MINIMUM_Y_POSITION = 80;
-        const int32_t Y_POSITION_INCREMENT = 50;
-        const int32_t WIDTH = 4;
-        const int32_t HEIGHT_UNIT = 25;
-
-        const int32_t TITLE_Y_POSITION = 25;
-        const int32_t GIVEWAY_WARNING_Y_POSITION = 225;
-
-        // Center Title
-        // The next four lines are used to center the text horizontally and vertically
-        int baseline = 0;
-        cv::Size textSize = cv::getTextSize(m_titleText, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_DEFAULT_FONT_THICKNESS, &baseline);
-        baseline += Globals::G_DEFAULT_FONT_THICKNESS;
-        cv::Point textOrg = cv::Point(static_cast<int>((Globals::G_VIDEO_WIDTH - textSize.width) / DIVISOR), TITLE_Y_POSITION + baseline + textSize.height);
-        cv::rectangle(p_frame, textOrg + cv::Point(0, baseline), textOrg + cv::Point(textSize.width, -textSize.height - baseline), Globals::G_OPENCV_BLACK, cv::FILLED);
-        cv::putText(p_frame, m_titleText, textOrg, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_OPENCV_WHITE, Globals::G_DEFAULT_FONT_THICKNESS, cv::LINE_AA);
-
-        // Giveway warning
-        if (m_giveWayWarning)
-        {
-            const std::string GIVE_WAY_WARNING_TEXT = "WARNING: Giveway ahead";
-            // The next four lines are used to center the text horizontally and vertically
-            baseline = 0;
-            textSize = cv::getTextSize(GIVE_WAY_WARNING_TEXT, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_DEFAULT_FONT_THICKNESS, &baseline);
-            baseline += Globals::G_DEFAULT_FONT_THICKNESS;
-            textOrg = cv::Point(static_cast<int>((Globals::G_VIDEO_WIDTH - textSize.width) / DIVISOR), GIVEWAY_WARNING_Y_POSITION + baseline + textSize.height);
-            cv::rectangle(p_frame, textOrg + cv::Point(0, baseline), textOrg + cv::Point(textSize.width, -textSize.height - baseline), Globals::G_OPENCV_BLACK, cv::FILLED);
-            cv::putText(p_frame, GIVE_WAY_WARNING_TEXT, textOrg, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_OPENCV_WHITE, Globals::G_DEFAULT_FONT_THICKNESS, cv::LINE_AA);
-        }
-
-        // Right-hand side info box and title
-        cv::rectangle(p_frame, Globals::G_RIGHT_INFO_RECT, Globals::G_OPENCV_BLACK, cv::FILLED, cv::LINE_AA, 0);
-        // The next four lines are used to center the text horizontally and vertically
-        baseline = 0;
-        textSize = cv::getTextSize(m_rightInfoTitleText, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_DEFAULT_FONT_THICKNESS, &baseline);
-        baseline += Globals::G_DEFAULT_FONT_THICKNESS;
-        textOrg = cv::Point(static_cast<int>(Globals::G_RIGHT_INFO_RECT.x + (Globals::G_RIGHT_INFO_RECT.width / DIVISOR)) - static_cast<int>(textSize.width / DIVISOR), Globals::G_RIGHT_INFO_RECT.y + baseline + textSize.height);
-        cv::putText(p_frame, m_rightInfoTitleText, textOrg, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_OPENCV_WHITE, Globals::G_DEFAULT_FONT_THICKNESS, cv::LINE_AA);
-
-        // Left line states
-        for (int32_t i = 0; i < m_leftLineTypesForDisplay.size(); i++)
-        {
-            cv::rectangle(p_frame, cv::Rect(LEFT_X_POSITION, MINIMUM_Y_POSITION + (i * Y_POSITION_INCREMENT), WIDTH, static_cast<int>(HEIGHT_UNIT * m_leftLineTypesForDisplay[i])), Globals::G_OPENCV_WHITE, cv::FILLED, cv::LINE_AA);
-        }
-        // Right line states
-        for (int32_t i = 0; i < m_rightLineTypesForDisplay.size(); i++)
-        {
-            cv::rectangle(p_frame, cv::Rect(RIGHT_X_POSITION, MINIMUM_Y_POSITION + (i * Y_POSITION_INCREMENT), WIDTH, static_cast<int>(HEIGHT_UNIT * m_rightLineTypesForDisplay[i])), Globals::G_OPENCV_WHITE, cv::FILLED, cv::LINE_AA);
-        }
-
-        if (m_drivingState == 0)
-        {
-            const int32_t BOX_X_POSITION = static_cast<int>(1695 - m_turningRequired - 75);
-            const int32_t BOX_Y_POSITION = 205 - 100;
-            const int32_t BOX_WIDTH = 150;
-            const int32_t BOX_HEIGHT = 200;
-
-            // Draw the yellow box that signifies the position of car with respect to the lanes detected
-            m_blankFrame = cv::Mat::zeros(Globals::G_VIDEO_HEIGHT, Globals::G_VIDEO_WIDTH, p_frame.type());
-            cv::rectangle(m_blankFrame, cv::Rect(BOX_X_POSITION, BOX_Y_POSITION, BOX_WIDTH, BOX_HEIGHT), Globals::G_OPENCV_BRIGHTER_YELLOW, cv::FILLED, cv::LINE_AA);
-            cv::add(p_frame, m_blankFrame, p_frame);
-
-            // Write the turning needed to the screen
-            // The next four lines are used to center the text horizontally and vertically
-            baseline = 0;
-            textSize = cv::getTextSize(m_turningRequiredToReturnToCenter, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_DEFAULT_FONT_THICKNESS, &baseline);
-            baseline += Globals::G_DEFAULT_FONT_THICKNESS;
-            textOrg = cv::Point(Globals::G_RIGHT_INFO_RECT.x + static_cast<int>(Globals::G_RIGHT_INFO_RECT.width / DIVISOR) - static_cast<int>(textSize.width / DIVISOR), Globals::G_RIGHT_INFO_RECT.y + Globals::G_RIGHT_INFO_RECT.height + baseline - textSize.height);
-            cv::putText(p_frame, m_turningRequiredToReturnToCenter, textOrg, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_OPENCV_WHITE, Globals::G_DEFAULT_FONT_THICKNESS, cv::LINE_AA);
-
-            if (m_printLaneOverlay)
-            {
-                // Make blank frame a blank black frame
-                m_blankFrame = cv::Mat::zeros(Globals::G_VIDEO_HEIGHT, Globals::G_VIDEO_WIDTH, p_frame.type());
-
-                cv::fillConvexPoly(m_blankFrame, m_lanePoints, Globals::G_OPENCV_GREEN, cv::LINE_AA, 0);
-
-                // Can simply add the two images as the background in m_blankFrame
-                // is black (0,0,0) and so will not affect the frame image
-                // while still being able to see tarmac
-                cv::add(p_frame, m_blankFrame, p_frame);
-            }
-        }
-
-        else if (m_drivingState == 1)
-        {
-            // Middle line type on RHS information box
-            for (uint32_t i = 0; i < m_middleLineTypesForDisplay.size(); i++)
-            {
-                cv::rectangle(p_frame, cv::Rect(MIDDLE_X_POSITION, MINIMUM_Y_POSITION + static_cast<int>(i * Y_POSITION_INCREMENT), WIDTH, static_cast<int>(HEIGHT_UNIT * m_middleLineTypesForDisplay[i])), Globals::G_OPENCV_WHITE, cv::FILLED, cv::LINE_AA);
-            }
-
-            if (!m_currentTurningState.empty())
-            {
-                // Write the current turning state to screen
-                // The next four lines are used to center the text horizontally and vertically
-                const int32_t MINIMUM_HEIGHT = 125;
-                baseline = 0;
-                textSize = cv::getTextSize(m_currentTurningState, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_DEFAULT_FONT_THICKNESS, &baseline);
-                baseline += Globals::G_DEFAULT_FONT_THICKNESS;
-                textOrg = cv::Point(static_cast<int>((Globals::G_VIDEO_WIDTH - textSize.width) / DIVISOR), MINIMUM_HEIGHT + baseline + textSize.height);
-                cv::rectangle(p_frame, textOrg + cv::Point(0, baseline), textOrg + cv::Point(textSize.width, -textSize.height - baseline), Globals::G_OPENCV_BLACK, cv::FILLED);
-                cv::putText(p_frame, m_currentTurningState, textOrg, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_OPENCV_WHITE, Globals::G_DEFAULT_FONT_THICKNESS, cv::LINE_AA);
-            }
         }
     }
 }

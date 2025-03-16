@@ -130,10 +130,18 @@ Variables</h2></td></tr>
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_CLI_HELP_MESSAGE</b> = &quot;\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n -h --help Display available options\n\nRequired Options:\n\n -i --input File path or camera ID\n -y --yolo-folder-path Path to the yolo folder\n -o --object-detector-type One of: none, standard or tiny\n\nOptional options:\n\n -b --object-detector-backend One of: cpu or cuda (default = cpu)\n -s --object-detector-blob-size One of: 208, 320, 416, 512 or 608 (default = 208)\n\n&quot;</td></tr>
 <tr class="memdesc:aa52c4f837cde844f589c3efba5720fbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLI help message for the video manager. <br /></td></tr>
 <tr class="separator:aa52c4f837cde844f589c3efba5720fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb28bf02d3dd5c464672c9b98168267e" id="r_adb28bf02d3dd5c464672c9b98168267e"><td class="memItemLeft" align="right" valign="top"><a id="adb28bf02d3dd5c464672c9b98168267e" name="adb28bf02d3dd5c464672c9b98168267e"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OUTPUT_VIDEO_FPS</b> = 30</td></tr>
-<tr class="memdesc:adb28bf02d3dd5c464672c9b98168267e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output video FPS. <br /></td></tr>
-<tr class="separator:adb28bf02d3dd5c464672c9b98168267e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51845a699c2eef4e2d2e5c0b690ac570" id="r_a51845a699c2eef4e2d2e5c0b690ac570"><td class="memItemLeft" align="right" valign="top"><a id="a51845a699c2eef4e2d2e5c0b690ac570" name="a51845a699c2eef4e2d2e5c0b690ac570"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_OUTPUT_VIDEO_FPS</b> = 30</td></tr>
+<tr class="memdesc:a51845a699c2eef4e2d2e5c0b690ac570"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output video FPS. <br /></td></tr>
+<tr class="separator:a51845a699c2eef4e2d2e5c0b690ac570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e42a99cc359f4375ad7b88066348aa4" id="r_a2e42a99cc359f4375ad7b88066348aa4"><td class="memItemLeft" align="right" valign="top"><a id="a2e42a99cc359f4375ad7b88066348aa4" name="a2e42a99cc359f4375ad7b88066348aa4"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_RECORDING_STATUS_RECT</b> = cv::Rect(<a class="el" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> - <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a> - <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>, G_LANE_DETECTOR_LANE_INFORMATION_TURING_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_TURING_RECT.height + <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>, <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a>, <a class="el" href="#ae66e515299cdf7d0e2b0915661c0c22a">G_SUBTITLE_ELEMENT_HEIGHT</a>)</td></tr>
+<tr class="memdesc:a2e42a99cc359f4375ad7b88066348aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Video-manager related information UI locations. <br /></td></tr>
+<tr class="separator:a2e42a99cc359f4375ad7b88066348aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeee495dd920666d1bf1294fc6dcd10ab" id="r_aeee495dd920666d1bf1294fc6dcd10ab"><td class="memItemLeft" align="right" valign="top"><a id="aeee495dd920666d1bf1294fc6dcd10ab" name="aeee495dd920666d1bf1294fc6dcd10ab"></a>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_OVERLAY_COLOUR</b> = cv::Scalar(0, 64, 0)</td></tr>
+<tr class="memdesc:aeee495dd920666d1bf1294fc6dcd10ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translucent colour of the lane detection lane overlay. <br /></td></tr>
+<tr class="separator:aeee495dd920666d1bf1294fc6dcd10ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0237f868039b6350cb33d2d082b99fd1" id="r_a0237f868039b6350cb33d2d082b99fd1"><td class="memItemLeft" align="right" valign="top"><a id="a0237f868039b6350cb33d2d082b99fd1" name="a0237f868039b6350cb33d2d082b99fd1"></a>
 static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_SOLID_LINE_LENGTH_THRESHOLD</b> = 75</td></tr>
 <tr class="memdesc:a0237f868039b6350cb33d2d082b99fd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Threshold length to decide whether a line is to be considered solid line road marking. <br /></td></tr>
@@ -154,107 +162,193 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_HO
 static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_FRAME_COUNT_THRESHOLD</b> = 10</td></tr>
 <tr class="memdesc:a9d19e875286eb3fb96230a22bf97456b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smoothing threshold to determine when to flag the vehicle as changing lanes. <br /></td></tr>
 <tr class="separator:a9d19e875286eb3fb96230a22bf97456b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3315c9731ff3a6f415ec105ec84a2640" id="r_a3315c9731ff3a6f415ec105ec84a2640"><td class="memItemLeft" align="right" valign="top"><a id="a3315c9731ff3a6f415ec105ec84a2640" name="a3315c9731ff3a6f415ec105ec84a2640"></a>
-static const std::map&lt; std::string, cv::Scalar &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_OBJECT_NAMES_AND_COLOURS</b></td></tr>
-<tr class="memdesc:a3315c9731ff3a6f415ec105ec84a2640"><td class="mdescLeft">&#160;</td><td class="mdescRight">YOLO object names and bounding box colours. G_OPENCV_WHITE is used as the default colour while custom colours are given to object more commonly found while driving. <br /></td></tr>
-<tr class="separator:a3315c9731ff3a6f415ec105ec84a2640"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f2e1f0e417a29b9eb6cd2cac15a2693" id="r_a1f2e1f0e417a29b9eb6cd2cac15a2693"><td class="memItemLeft" align="right" valign="top"><a id="a1f2e1f0e417a29b9eb6cd2cac15a2693" name="a1f2e1f0e417a29b9eb6cd2cac15a2693"></a>
-static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_BACKGROUND_RECT</b> = cv::Rect(25, 25, 350, 100)</td></tr>
-<tr class="memdesc:a1f2e1f0e417a29b9eb6cd2cac15a2693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performance-related information UI location. <br /></td></tr>
-<tr class="separator:a1f2e1f0e417a29b9eb6cd2cac15a2693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8009522fa9479cb0d4499659aa7406b0" id="r_a8009522fa9479cb0d4499659aa7406b0"><td class="memItemLeft" align="right" valign="top"><a id="a8009522fa9479cb0d4499659aa7406b0" name="a8009522fa9479cb0d4499659aa7406b0"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_TEXT_HORIZONTAL_LOCATION</b> = 30</td></tr>
-<tr class="memdesc:a8009522fa9479cb0d4499659aa7406b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal location of the performance-related information. <br /></td></tr>
-<tr class="separator:a8009522fa9479cb0d4499659aa7406b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd82fe8785ff670e2a0ed90df1198da" id="r_aafd82fe8785ff670e2a0ed90df1198da"><td class="memItemLeft" align="right" valign="top"><a id="aafd82fe8785ff670e2a0ed90df1198da" name="aafd82fe8785ff670e2a0ed90df1198da"></a>
+static const std::map&lt; std::string, cv::Scalar &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_OBJECT_NAMES_AND_COLOURS</b></td></tr>
+<tr class="memdesc:aafd82fe8785ff670e2a0ed90df1198da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object names and bounding box colours. G_OPENCV_WHITE is used as the default colour while custom colours are given to object more commonly found while driving. <br /></td></tr>
+<tr class="separator:aafd82fe8785ff670e2a0ed90df1198da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51ffe6f3282f924fd7ba500d7aacf449" id="r_a51ffe6f3282f924fd7ba500d7aacf449"><td class="memItemLeft" align="right" valign="top"><a id="a51ffe6f3282f924fd7ba500d7aacf449" name="a51ffe6f3282f924fd7ba500d7aacf449"></a>
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE</b> = &quot;Usage: lane-and-object-detection-performance-tests --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help Display available options\n\nRequired Options:\n\n-i --input Benchmark video file path\n-y --yolo-folder-path Path to the yolo folder\n-r --repetitions Number of repetitions for each test&quot;</td></tr>
 <tr class="memdesc:a51ffe6f3282f924fd7ba500d7aacf449"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLI help message for the performance tests. <br /></td></tr>
 <tr class="separator:a51ffe6f3282f924fd7ba500d7aacf449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a561f10b4dd95764837537bdf9447f068" id="r_a561f10b4dd95764837537bdf9447f068"><td class="memItemLeft" align="right" valign="top"><a id="a561f10b4dd95764837537bdf9447f068" name="a561f10b4dd95764837537bdf9447f068"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_INPUT_VIDEO_HEIGHT</b> = 1080</td></tr>
-<tr class="memdesc:a561f10b4dd95764837537bdf9447f068"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input video dimensions. <br /></td></tr>
-<tr class="separator:a561f10b4dd95764837537bdf9447f068"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad02bb525b56cf63b2221b94ce47a5d6f" id="r_ad02bb525b56cf63b2221b94ce47a5d6f"><td class="memItemLeft" align="right" valign="top"><a id="ad02bb525b56cf63b2221b94ce47a5d6f" name="ad02bb525b56cf63b2221b94ce47a5d6f"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_INPUT_VIDEO_WIDTH</b> = 1920</td></tr>
-<tr class="memdesc:ad02bb525b56cf63b2221b94ce47a5d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input video dimensions. <br /></td></tr>
-<tr class="separator:ad02bb525b56cf63b2221b94ce47a5d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:aa5f455eb8698579859b8fc0a4cc14160" id="r_aa5f455eb8698579859b8fc0a4cc14160"><td class="memItemLeft" align="right" valign="top"><a id="aa5f455eb8698579859b8fc0a4cc14160" name="aa5f455eb8698579859b8fc0a4cc14160"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OUTPUT_VIDEO_HEIGHT</b> = 1080</td></tr>
-<tr class="memdesc:aa5f455eb8698579859b8fc0a4cc14160"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output video dimensions. <br /></td></tr>
-<tr class="separator:aa5f455eb8698579859b8fc0a4cc14160"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafdd9296b9b8970e74d086702ef0569c" id="r_aafdd9296b9b8970e74d086702ef0569c"><td class="memItemLeft" align="right" valign="top"><a id="aafdd9296b9b8970e74d086702ef0569c" name="aafdd9296b9b8970e74d086702ef0569c"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OUTPUT_VIDEO_WIDTH</b> = 1920</td></tr>
-<tr class="memdesc:aafdd9296b9b8970e74d086702ef0569c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output video dimensions. <br /></td></tr>
-<tr class="separator:aafdd9296b9b8970e74d086702ef0569c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:af0218bd434ef9a716f52bbd5cd533b8b" id="r_af0218bd434ef9a716f52bbd5cd533b8b"><td class="memItemLeft" align="right" valign="top"><a id="af0218bd434ef9a716f52bbd5cd533b8b" name="af0218bd434ef9a716f52bbd5cd533b8b"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_TOGGLE_RECORDING_KEY</b> = 'r'</td></tr>
-<tr class="memdesc:af0218bd434ef9a716f52bbd5cd533b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyboard values when getting user input. <br /></td></tr>
-<tr class="separator:af0218bd434ef9a716f52bbd5cd533b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a327bf2e2ab50da7da0f492f07af85eb2" id="r_a327bf2e2ab50da7da0f492f07af85eb2"><td class="memItemLeft" align="right" valign="top"><a id="a327bf2e2ab50da7da0f492f07af85eb2" name="a327bf2e2ab50da7da0f492f07af85eb2"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_QUIT_KEY</b> = 'q'</td></tr>
-<tr class="memdesc:a327bf2e2ab50da7da0f492f07af85eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyboard values when getting user input. <br /></td></tr>
-<tr class="separator:a327bf2e2ab50da7da0f492f07af85eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae156d3d0e5ce48235a9542b146f7a298" id="r_ae156d3d0e5ce48235a9542b146f7a298"><td class="memItemLeft" align="right" valign="top"><a id="ae156d3d0e5ce48235a9542b146f7a298" name="ae156d3d0e5ce48235a9542b146f7a298"></a>
 static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_DEFAULT_FONT_FACE</b> = cv::FONT_HERSHEY_DUPLEX</td></tr>
 <tr class="memdesc:ae156d3d0e5ce48235a9542b146f7a298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Font settings. <br /></td></tr>
 <tr class="separator:ae156d3d0e5ce48235a9542b146f7a298"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2599f7130cee2c69299439ab74a8f93" id="r_ad2599f7130cee2c69299439ab74a8f93"><td class="memItemLeft" align="right" valign="top"><a id="ad2599f7130cee2c69299439ab74a8f93" name="ad2599f7130cee2c69299439ab74a8f93"></a>
 static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_DEFAULT_FONT_THICKNESS</b> = 1</td></tr>
-<tr class="memdesc:ad2599f7130cee2c69299439ab74a8f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyboard values when getting user input. <br /></td></tr>
+<tr class="memdesc:ad2599f7130cee2c69299439ab74a8f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Font settings. <br /></td></tr>
 <tr class="separator:ad2599f7130cee2c69299439ab74a8f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63cc8b40663610339aa1ead33c0481ff" id="r_a63cc8b40663610339aa1ead33c0481ff"><td class="memItemLeft" align="right" valign="top"><a id="a63cc8b40663610339aa1ead33c0481ff" name="a63cc8b40663610339aa1ead33c0481ff"></a>
 static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_DEFAULT_FONT_SCALE</b> = 1</td></tr>
-<tr class="memdesc:a63cc8b40663610339aa1ead33c0481ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyboard values when getting user input. <br /></td></tr>
+<tr class="memdesc:a63cc8b40663610339aa1ead33c0481ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Font settings. <br /></td></tr>
 <tr class="separator:a63cc8b40663610339aa1ead33c0481ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:a3ebea235217ed9b80f3d87072364a1e0" id="r_a3ebea235217ed9b80f3d87072364a1e0"><td class="memItemLeft" align="right" valign="top"><a id="a3ebea235217ed9b80f3d87072364a1e0" name="a3ebea235217ed9b80f3d87072364a1e0"></a>
 static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_BLACK</b> = cv::Scalar(0, 0, 0)</td></tr>
-<tr class="memdesc:a3ebea235217ed9b80f3d87072364a1e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
+<tr class="memdesc:a3ebea235217ed9b80f3d87072364a1e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
 <tr class="separator:a3ebea235217ed9b80f3d87072364a1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10fe922956f9b388b8dee26fa62035be" id="r_a10fe922956f9b388b8dee26fa62035be"><td class="memItemLeft" align="right" valign="top"><a id="a10fe922956f9b388b8dee26fa62035be" name="a10fe922956f9b388b8dee26fa62035be"></a>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_GREY</b> = cv::Scalar(128, 128, 128)</td></tr>
+<tr class="memdesc:a10fe922956f9b388b8dee26fa62035be"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
+<tr class="separator:a10fe922956f9b388b8dee26fa62035be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a303db765df899d7b98dbd8efda4538f9" id="r_a303db765df899d7b98dbd8efda4538f9"><td class="memItemLeft" align="right" valign="top"><a id="a303db765df899d7b98dbd8efda4538f9" name="a303db765df899d7b98dbd8efda4538f9"></a>
 static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_WHITE</b> = cv::Scalar(255, 255, 255)</td></tr>
-<tr class="memdesc:a303db765df899d7b98dbd8efda4538f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
+<tr class="memdesc:a303db765df899d7b98dbd8efda4538f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
 <tr class="separator:a303db765df899d7b98dbd8efda4538f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a858508363a0d0cb1e9882872eb3b710d" id="r_a858508363a0d0cb1e9882872eb3b710d"><td class="memItemLeft" align="right" valign="top"><a id="a858508363a0d0cb1e9882872eb3b710d" name="a858508363a0d0cb1e9882872eb3b710d"></a>
-static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_DARK_GREY</b> = cv::Scalar(128, 128, 128)</td></tr>
-<tr class="memdesc:a858508363a0d0cb1e9882872eb3b710d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
-<tr class="separator:a858508363a0d0cb1e9882872eb3b710d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a146b1931fe6a8183db97a57a86c42667" id="r_a146b1931fe6a8183db97a57a86c42667"><td class="memItemLeft" align="right" valign="top"><a id="a146b1931fe6a8183db97a57a86c42667" name="a146b1931fe6a8183db97a57a86c42667"></a>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_RED</b> = cv::Scalar(0, 0, 192)</td></tr>
+<tr class="memdesc:a146b1931fe6a8183db97a57a86c42667"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
+<tr class="separator:a146b1931fe6a8183db97a57a86c42667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af799a0173d61fcea8a7f34f3c3d6197d" id="r_af799a0173d61fcea8a7f34f3c3d6197d"><td class="memItemLeft" align="right" valign="top"><a id="af799a0173d61fcea8a7f34f3c3d6197d" name="af799a0173d61fcea8a7f34f3c3d6197d"></a>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_ORANGE</b> = cv::Scalar(0, 128, 192)</td></tr>
+<tr class="memdesc:af799a0173d61fcea8a7f34f3c3d6197d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
+<tr class="separator:af799a0173d61fcea8a7f34f3c3d6197d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfcbbaab63c10aba21d715ec8063d2bf" id="r_adfcbbaab63c10aba21d715ec8063d2bf"><td class="memItemLeft" align="right" valign="top"><a id="adfcbbaab63c10aba21d715ec8063d2bf" name="adfcbbaab63c10aba21d715ec8063d2bf"></a>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_YELLOW</b> = cv::Scalar(0, 192, 192)</td></tr>
+<tr class="memdesc:adfcbbaab63c10aba21d715ec8063d2bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
+<tr class="separator:adfcbbaab63c10aba21d715ec8063d2bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dfe31f79d74a1b6a11129c7c7716f9a" id="r_a6dfe31f79d74a1b6a11129c7c7716f9a"><td class="memItemLeft" align="right" valign="top"><a id="a6dfe31f79d74a1b6a11129c7c7716f9a" name="a6dfe31f79d74a1b6a11129c7c7716f9a"></a>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_GREEN</b> = cv::Scalar(0, 192, 0)</td></tr>
+<tr class="memdesc:a6dfe31f79d74a1b6a11129c7c7716f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
+<tr class="separator:a6dfe31f79d74a1b6a11129c7c7716f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bc27ab3bd6423abc857fe02c69ae5d0" id="r_a9bc27ab3bd6423abc857fe02c69ae5d0"><td class="memItemLeft" align="right" valign="top"><a id="a9bc27ab3bd6423abc857fe02c69ae5d0" name="a9bc27ab3bd6423abc857fe02c69ae5d0"></a>
-static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_BLUE</b> = cv::Scalar(255, 64, 64)</td></tr>
-<tr class="memdesc:a9bc27ab3bd6423abc857fe02c69ae5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_BLUE</b> = cv::Scalar(192, 0, 0)</td></tr>
+<tr class="memdesc:a9bc27ab3bd6423abc857fe02c69ae5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
 <tr class="separator:a9bc27ab3bd6423abc857fe02c69ae5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14b6dc269db3c3e96e611d85410df0c1" id="r_a14b6dc269db3c3e96e611d85410df0c1"><td class="memItemLeft" align="right" valign="top"><a id="a14b6dc269db3c3e96e611d85410df0c1" name="a14b6dc269db3c3e96e611d85410df0c1"></a>
-static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_PURPLE</b> = cv::Scalar(255, 64, 255)</td></tr>
-<tr class="memdesc:a14b6dc269db3c3e96e611d85410df0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
+static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_PURPLE</b> = cv::Scalar(192, 0, 192)</td></tr>
+<tr class="memdesc:a14b6dc269db3c3e96e611d85410df0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours (in BGR format). <br /></td></tr>
 <tr class="separator:a14b6dc269db3c3e96e611d85410df0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a146b1931fe6a8183db97a57a86c42667" id="r_a146b1931fe6a8183db97a57a86c42667"><td class="memItemLeft" align="right" valign="top"><a id="a146b1931fe6a8183db97a57a86c42667" name="a146b1931fe6a8183db97a57a86c42667"></a>
-static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_RED</b> = cv::Scalar(64, 64, 255)</td></tr>
-<tr class="memdesc:a146b1931fe6a8183db97a57a86c42667"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
-<tr class="separator:a146b1931fe6a8183db97a57a86c42667"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfcbbaab63c10aba21d715ec8063d2bf" id="r_adfcbbaab63c10aba21d715ec8063d2bf"><td class="memItemLeft" align="right" valign="top"><a id="adfcbbaab63c10aba21d715ec8063d2bf" name="adfcbbaab63c10aba21d715ec8063d2bf"></a>
-static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_YELLOW</b> = cv::Scalar(64, 255, 255)</td></tr>
-<tr class="memdesc:adfcbbaab63c10aba21d715ec8063d2bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
-<tr class="separator:adfcbbaab63c10aba21d715ec8063d2bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac22c016af64cb5ec4b93b50959417489" id="r_ac22c016af64cb5ec4b93b50959417489"><td class="memItemLeft" align="right" valign="top"><a id="ac22c016af64cb5ec4b93b50959417489" name="ac22c016af64cb5ec4b93b50959417489"></a>
-static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_BRIGHTER_YELLOW</b> = cv::Scalar(0, 200, 200)</td></tr>
-<tr class="memdesc:ac22c016af64cb5ec4b93b50959417489"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
-<tr class="separator:ac22c016af64cb5ec4b93b50959417489"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dfe31f79d74a1b6a11129c7c7716f9a" id="r_a6dfe31f79d74a1b6a11129c7c7716f9a"><td class="memItemLeft" align="right" valign="top"><a id="a6dfe31f79d74a1b6a11129c7c7716f9a" name="a6dfe31f79d74a1b6a11129c7c7716f9a"></a>
-static const cv::Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>G_OPENCV_GREEN</b> = cv::Scalar(0, 64, 0)</td></tr>
-<tr class="memdesc:a6dfe31f79d74a1b6a11129c7c7716f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV Colours. <br /></td></tr>
-<tr class="separator:a6dfe31f79d74a1b6a11129c7c7716f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a375721bd19845ad77d0626700640762b" id="r_a375721bd19845ad77d0626700640762b"><td class="memItemLeft" align="right" valign="top"><a id="a375721bd19845ad77d0626700640762b" name="a375721bd19845ad77d0626700640762b"></a>
-static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_RECORDING_STATUS_RECT</b> = cv::Rect(1495, 410, 400, 50)</td></tr>
-<tr class="memdesc:a375721bd19845ad77d0626700640762b"><td class="mdescLeft">&#160;</td><td class="mdescRight">UI component locations. <br /></td></tr>
-<tr class="separator:a375721bd19845ad77d0626700640762b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69b78341d41b2d8e6179730aedcafafd" id="r_a69b78341d41b2d8e6179730aedcafafd"><td class="memItemLeft" align="right" valign="top"><a id="a69b78341d41b2d8e6179730aedcafafd" name="a69b78341d41b2d8e6179730aedcafafd"></a>
-static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_RIGHT_INFO_RECT</b> = cv::Rect(1495, 25, 400, 360)</td></tr>
-<tr class="memdesc:a69b78341d41b2d8e6179730aedcafafd"><td class="mdescLeft">&#160;</td><td class="mdescRight">UI component locations. <br /></td></tr>
-<tr class="separator:a69b78341d41b2d8e6179730aedcafafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad40ca7c7e6abc60dcf419a819d2efe00" id="r_ad40ca7c7e6abc60dcf419a819d2efe00"><td class="memItemLeft" align="right" valign="top"><a id="ad40ca7c7e6abc60dcf419a819d2efe00" name="ad40ca7c7e6abc60dcf419a819d2efe00"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_INPUT_VIDEO_HEIGHT</b> = 1080</td></tr>
+<tr class="memdesc:ad40ca7c7e6abc60dcf419a819d2efe00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input video dimensions. <br /></td></tr>
+<tr class="separator:ad40ca7c7e6abc60dcf419a819d2efe00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1f48b5371fdc353fbad2509867b5c22" id="r_ae1f48b5371fdc353fbad2509867b5c22"><td class="memItemLeft" align="right" valign="top"><a id="ae1f48b5371fdc353fbad2509867b5c22" name="ae1f48b5371fdc353fbad2509867b5c22"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</b> = 1920</td></tr>
+<tr class="memdesc:ae1f48b5371fdc353fbad2509867b5c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input video dimensions. <br /></td></tr>
+<tr class="separator:ae1f48b5371fdc353fbad2509867b5c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a2b61bb92f2a047660df5e7a425572057" id="r_a2b61bb92f2a047660df5e7a425572057"><td class="memItemLeft" align="right" valign="top"><a id="a2b61bb92f2a047660df5e7a425572057" name="a2b61bb92f2a047660df5e7a425572057"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_OUTPUT_VIDEO_HEIGHT</b> = 1080</td></tr>
+<tr class="memdesc:a2b61bb92f2a047660df5e7a425572057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output video dimensions. <br /></td></tr>
+<tr class="separator:a2b61bb92f2a047660df5e7a425572057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c4f7d16f460c8a8290c0f5cf2c1d07" id="r_ab6c4f7d16f460c8a8290c0f5cf2c1d07"><td class="memItemLeft" align="right" valign="top"><a id="ab6c4f7d16f460c8a8290c0f5cf2c1d07" name="ab6c4f7d16f460c8a8290c0f5cf2c1d07"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_OUTPUT_VIDEO_WIDTH</b> = 1920</td></tr>
+<tr class="memdesc:ab6c4f7d16f460c8a8290c0f5cf2c1d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output video dimensions. <br /></td></tr>
+<tr class="separator:ab6c4f7d16f460c8a8290c0f5cf2c1d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a9041c470b1ad9a051790c61fd3dc8101" id="r_a9041c470b1ad9a051790c61fd3dc8101"><td class="memItemLeft" align="right" valign="top"><a id="a9041c470b1ad9a051790c61fd3dc8101" name="a9041c470b1ad9a051790c61fd3dc8101"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_TOGGLE_RECORDING_KEY</b> = 'r'</td></tr>
+<tr class="memdesc:a9041c470b1ad9a051790c61fd3dc8101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyboard values when getting user input. <br /></td></tr>
+<tr class="separator:a9041c470b1ad9a051790c61fd3dc8101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaa33ab66cef2f67a07dd03a515e6556" id="r_aaaa33ab66cef2f67a07dd03a515e6556"><td class="memItemLeft" align="right" valign="top"><a id="aaaa33ab66cef2f67a07dd03a515e6556" name="aaaa33ab66cef2f67a07dd03a515e6556"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_QUIT_KEY</b> = 'q'</td></tr>
+<tr class="memdesc:aaaa33ab66cef2f67a07dd03a515e6556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyboard values when getting user input. <br /></td></tr>
+<tr class="separator:aaaa33ab66cef2f67a07dd03a515e6556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a15ed4119ca8c9736a3bb54d6bcc7c1ea" id="r_a15ed4119ca8c9736a3bb54d6bcc7c1ea"><td class="memItemLeft" align="right" valign="top"><a id="a15ed4119ca8c9736a3bb54d6bcc7c1ea" name="a15ed4119ca8c9736a3bb54d6bcc7c1ea"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_RECORDING_TEXT</b> = &quot;Recording Output&quot;</td></tr>
+<tr class="memdesc:a15ed4119ca8c9736a3bb54d6bcc7c1ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output text displayed while the recording or not recording. <br /></td></tr>
+<tr class="separator:a15ed4119ca8c9736a3bb54d6bcc7c1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a813a4794cb9ac3da8cef3bf0a33bc9a8" id="r_a813a4794cb9ac3da8cef3bf0a33bc9a8"><td class="memItemLeft" align="right" valign="top"><a id="a813a4794cb9ac3da8cef3bf0a33bc9a8" name="a813a4794cb9ac3da8cef3bf0a33bc9a8"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>G_VIDEO_MANAGER_NOT_RECORDING_TEXT</b> = &quot;Press 'r' to start recording&quot;</td></tr>
+<tr class="memdesc:a813a4794cb9ac3da8cef3bf0a33bc9a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output text displayed while the recording or not recording. <br /></td></tr>
+<tr class="separator:a813a4794cb9ac3da8cef3bf0a33bc9a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:ab0987495d0a99e4f477c4f63774f4485" id="r_ab0987495d0a99e4f477c4f63774f4485"><td class="memItemLeft" align="right" valign="top"><a id="ab0987495d0a99e4f477c4f63774f4485" name="ab0987495d0a99e4f477c4f63774f4485"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_UI_ELEMENT_PADDING</b> = 30</td></tr>
+<tr class="memdesc:ab0987495d0a99e4f477c4f63774f4485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic UI element properties. <br /></td></tr>
+<tr class="separator:ab0987495d0a99e4f477c4f63774f4485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaff106f2f4d27f2c7550c9455583c7cc" id="r_aaff106f2f4d27f2c7550c9455583c7cc"><td class="memItemLeft" align="right" valign="top"><a id="aaff106f2f4d27f2c7550c9455583c7cc" name="aaff106f2f4d27f2c7550c9455583c7cc"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_TITLE_ELEMENT_HEIGHT</b> = 50</td></tr>
+<tr class="memdesc:aaff106f2f4d27f2c7550c9455583c7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic UI element properties. <br /></td></tr>
+<tr class="separator:aaff106f2f4d27f2c7550c9455583c7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae66e515299cdf7d0e2b0915661c0c22a" id="r_ae66e515299cdf7d0e2b0915661c0c22a"><td class="memItemLeft" align="right" valign="top"><a id="ae66e515299cdf7d0e2b0915661c0c22a" name="ae66e515299cdf7d0e2b0915661c0c22a"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_SUBTITLE_ELEMENT_HEIGHT</b> = 30</td></tr>
+<tr class="memdesc:ae66e515299cdf7d0e2b0915661c0c22a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic UI element properties. <br /></td></tr>
+<tr class="separator:ae66e515299cdf7d0e2b0915661c0c22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa118c556ec02ec8ee8fe0233fc2374b4" id="r_aa118c556ec02ec8ee8fe0233fc2374b4"><td class="memItemLeft" align="right" valign="top"><a id="aa118c556ec02ec8ee8fe0233fc2374b4" name="aa118c556ec02ec8ee8fe0233fc2374b4"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_RHS_UI_ELEMENT_WIDTH</b> = 200</td></tr>
+<tr class="memdesc:aa118c556ec02ec8ee8fe0233fc2374b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic UI element properties. <br /></td></tr>
+<tr class="separator:aa118c556ec02ec8ee8fe0233fc2374b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a5839aaf8d24ce3139b2956fe53bff2fc" id="r_a5839aaf8d24ce3139b2956fe53bff2fc"><td class="memItemLeft" align="right" valign="top"><a id="a5839aaf8d24ce3139b2956fe53bff2fc" name="a5839aaf8d24ce3139b2956fe53bff2fc"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_WIDTH</b> = 500</td></tr>
+<tr class="memdesc:a5839aaf8d24ce3139b2956fe53bff2fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related information UI widths. <br /></td></tr>
+<tr class="separator:a5839aaf8d24ce3139b2956fe53bff2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a8014f09802000f3c8d268bc732c263" id="r_a9a8014f09802000f3c8d268bc732c263"><td class="memItemLeft" align="right" valign="top"><a id="a9a8014f09802000f3c8d268bc732c263" name="a9a8014f09802000f3c8d268bc732c263"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_INFORMATION_TURNING_STATE_WIDTH</b> = 300</td></tr>
+<tr class="memdesc:a9a8014f09802000f3c8d268bc732c263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related information UI widths. <br /></td></tr>
+<tr class="separator:a9a8014f09802000f3c8d268bc732c263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a64a96bca71656ade6e6a902c938b4c3d" id="r_a64a96bca71656ade6e6a902c938b4c3d"><td class="memItemLeft" align="right" valign="top"><a id="a64a96bca71656ade6e6a902c938b4c3d" name="a64a96bca71656ade6e6a902c938b4c3d"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_RECT</b> = cv::Rect((<a class="el" href="#ae1f48b5371fdc353fbad2509867b5c22">Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> / 2.0) - (<a class="el" href="#a5839aaf8d24ce3139b2956fe53bff2fc">G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_WIDTH</a> / 2.0), <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>, <a class="el" href="#a5839aaf8d24ce3139b2956fe53bff2fc">G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_WIDTH</a>, <a class="el" href="#aaff106f2f4d27f2c7550c9455583c7cc">G_TITLE_ELEMENT_HEIGHT</a>)</td></tr>
+<tr class="memdesc:a64a96bca71656ade6e6a902c938b4c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related information UI locations. <br /></td></tr>
+<tr class="separator:a64a96bca71656ade6e6a902c938b4c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9933ae151ecf4ebebc9cfafbef008969" id="r_a9933ae151ecf4ebebc9cfafbef008969"><td class="memItemLeft" align="right" valign="top"><a id="a9933ae151ecf4ebebc9cfafbef008969" name="a9933ae151ecf4ebebc9cfafbef008969"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_INFORMATION_TURNING_STATE_RECT</b> = cv::Rect((<a class="el" href="#ae1f48b5371fdc353fbad2509867b5c22">Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> / 2.0) - (<a class="el" href="#a9a8014f09802000f3c8d268bc732c263">G_LANE_DETECTOR_LANE_INFORMATION_TURNING_STATE_WIDTH</a> / 2.0), G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_RECT.height + <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>, <a class="el" href="#a9a8014f09802000f3c8d268bc732c263">G_LANE_DETECTOR_LANE_INFORMATION_TURNING_STATE_WIDTH</a>, <a class="el" href="#ae66e515299cdf7d0e2b0915661c0c22a">G_SUBTITLE_ELEMENT_HEIGHT</a>)</td></tr>
+<tr class="memdesc:a9933ae151ecf4ebebc9cfafbef008969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related information UI locations. <br /></td></tr>
+<tr class="separator:a9933ae151ecf4ebebc9cfafbef008969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca06789bdb9cc00584914360f8f4f2fd" id="r_aca06789bdb9cc00584914360f8f4f2fd"><td class="memItemLeft" align="right" valign="top"><a id="aca06789bdb9cc00584914360f8f4f2fd" name="aca06789bdb9cc00584914360f8f4f2fd"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_INFORMATION_TITLE_RECT</b> = cv::Rect(<a class="el" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> - <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a> - <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a>, <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>, <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a>, <a class="el" href="#ae66e515299cdf7d0e2b0915661c0c22a">G_SUBTITLE_ELEMENT_HEIGHT</a>)</td></tr>
+<tr class="memdesc:aca06789bdb9cc00584914360f8f4f2fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related information UI locations. <br /></td></tr>
+<tr class="separator:aca06789bdb9cc00584914360f8f4f2fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4a9df144b625052ed799edf2a56f208" id="r_aa4a9df144b625052ed799edf2a56f208"><td class="memItemLeft" align="right" valign="top"><a id="aa4a9df144b625052ed799edf2a56f208" name="aa4a9df144b625052ed799edf2a56f208"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_INFORMATION_RECT</b> = cv::Rect(<a class="el" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> - <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a> - <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a>, G_LANE_DETECTOR_LANE_INFORMATION_TITLE_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_TITLE_RECT.height + <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>, <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a>, 200)</td></tr>
+<tr class="memdesc:aa4a9df144b625052ed799edf2a56f208"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related information UI locations. <br /></td></tr>
+<tr class="separator:aa4a9df144b625052ed799edf2a56f208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abac2e851dd5996548525af01e73947fe" id="r_abac2e851dd5996548525af01e73947fe"><td class="memItemLeft" align="right" valign="top"><a id="abac2e851dd5996548525af01e73947fe" name="abac2e851dd5996548525af01e73947fe"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_INFORMATION_TURING_RECT</b> = cv::Rect(<a class="el" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> - <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a> - <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a>, G_LANE_DETECTOR_LANE_INFORMATION_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_RECT.height + <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>, <a class="el" href="#aa118c556ec02ec8ee8fe0233fc2374b4">G_RHS_UI_ELEMENT_WIDTH</a>, <a class="el" href="#ae66e515299cdf7d0e2b0915661c0c22a">G_SUBTITLE_ELEMENT_HEIGHT</a>)</td></tr>
+<tr class="memdesc:abac2e851dd5996548525af01e73947fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related information UI locations. <br /></td></tr>
+<tr class="separator:abac2e851dd5996548525af01e73947fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a177fac0e862cd1f869adeb2b658d4c45" id="r_a177fac0e862cd1f869adeb2b658d4c45"><td class="memItemLeft" align="right" valign="top"><a id="a177fac0e862cd1f869adeb2b658d4c45" name="a177fac0e862cd1f869adeb2b658d4c45"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_STATE_PAD</b> = 30</td></tr>
+<tr class="memdesc:a177fac0e862cd1f869adeb2b658d4c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related lane state UI properties. <br /></td></tr>
+<tr class="separator:a177fac0e862cd1f869adeb2b658d4c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35e27aa32a1473aad1e8802c42871425" id="r_a35e27aa32a1473aad1e8802c42871425"><td class="memItemLeft" align="right" valign="top"><a id="a35e27aa32a1473aad1e8802c42871425" name="a35e27aa32a1473aad1e8802c42871425"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LEFT_LANE_STATE_X_LOCATION</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + <a class="el" href="#a177fac0e862cd1f869adeb2b658d4c45">G_LANE_DETECTOR_LANE_STATE_PAD</a></td></tr>
+<tr class="memdesc:a35e27aa32a1473aad1e8802c42871425"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related lane state UI properties. <br /></td></tr>
+<tr class="separator:a35e27aa32a1473aad1e8802c42871425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a620c407168800bcf1fae7444e2a5b160" id="r_a620c407168800bcf1fae7444e2a5b160"><td class="memItemLeft" align="right" valign="top"><a id="a620c407168800bcf1fae7444e2a5b160" name="a620c407168800bcf1fae7444e2a5b160"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_MIDDLE_LANE_STATE_X_LOCATION</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + (G_LANE_DETECTOR_LANE_INFORMATION_RECT.width / 2.0)</td></tr>
+<tr class="memdesc:a620c407168800bcf1fae7444e2a5b160"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related lane state UI properties. <br /></td></tr>
+<tr class="separator:a620c407168800bcf1fae7444e2a5b160"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdb573db3b7f68d01a3d356bcd26a5af" id="r_afdb573db3b7f68d01a3d356bcd26a5af"><td class="memItemLeft" align="right" valign="top"><a id="afdb573db3b7f68d01a3d356bcd26a5af" name="afdb573db3b7f68d01a3d356bcd26a5af"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_RIGHT_LANE_STATE_X_LOCATION</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + G_LANE_DETECTOR_LANE_INFORMATION_RECT.width - <a class="el" href="#a177fac0e862cd1f869adeb2b658d4c45">G_LANE_DETECTOR_LANE_STATE_PAD</a></td></tr>
+<tr class="memdesc:afdb573db3b7f68d01a3d356bcd26a5af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related lane state UI properties. <br /></td></tr>
+<tr class="separator:afdb573db3b7f68d01a3d356bcd26a5af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7473fa81cdc8782fc1589874fff3616c" id="r_a7473fa81cdc8782fc1589874fff3616c"><td class="memItemLeft" align="right" valign="top"><a id="a7473fa81cdc8782fc1589874fff3616c" name="a7473fa81cdc8782fc1589874fff3616c"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_STATE_Y_START_LOCATION</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.y + <a class="el" href="#a177fac0e862cd1f869adeb2b658d4c45">G_LANE_DETECTOR_LANE_STATE_PAD</a></td></tr>
+<tr class="memdesc:a7473fa81cdc8782fc1589874fff3616c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related lane state UI properties. <br /></td></tr>
+<tr class="separator:a7473fa81cdc8782fc1589874fff3616c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28a0704ab75e2a1ea281144bf6872a85" id="r_a28a0704ab75e2a1ea281144bf6872a85"><td class="memItemLeft" align="right" valign="top"><a id="a28a0704ab75e2a1ea281144bf6872a85" name="a28a0704ab75e2a1ea281144bf6872a85"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_STATE_WIDTH</b> = 3</td></tr>
+<tr class="memdesc:a28a0704ab75e2a1ea281144bf6872a85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related lane state UI properties. <br /></td></tr>
+<tr class="separator:a28a0704ab75e2a1ea281144bf6872a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc9f1339bf357d3eaee7c0492658654d" id="r_afc9f1339bf357d3eaee7c0492658654d"><td class="memItemLeft" align="right" valign="top"><a id="afc9f1339bf357d3eaee7c0492658654d" name="afc9f1339bf357d3eaee7c0492658654d"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTOR_LANE_STATE_HEIGHT</b> = 15</td></tr>
+<tr class="memdesc:afc9f1339bf357d3eaee7c0492658654d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related lane state UI properties. <br /></td></tr>
+<tr class="separator:afc9f1339bf357d3eaee7c0492658654d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a95515f4e19528e98d0623fee970b664f" id="r_a95515f4e19528e98d0623fee970b664f"><td class="memItemLeft" align="right" valign="top"><a id="a95515f4e19528e98d0623fee970b664f" name="a95515f4e19528e98d0623fee970b664f"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTION_VEHICLE_POSITION_WIDTH</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.width - (4 * <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>)</td></tr>
+<tr class="memdesc:a95515f4e19528e98d0623fee970b664f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related vehicle position UI properties. <br /></td></tr>
+<tr class="separator:a95515f4e19528e98d0623fee970b664f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8271a4a592abbcc327038254c4ee94a" id="r_ab8271a4a592abbcc327038254c4ee94a"><td class="memItemLeft" align="right" valign="top"><a id="ab8271a4a592abbcc327038254c4ee94a" name="ab8271a4a592abbcc327038254c4ee94a"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTION_VEHICLE_POSITION_HEIGHT</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.height - (3 * <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>)</td></tr>
+<tr class="memdesc:ab8271a4a592abbcc327038254c4ee94a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related vehicle position UI properties. <br /></td></tr>
+<tr class="separator:ab8271a4a592abbcc327038254c4ee94a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfc11248995fa8dbdfa4cff4ae046123" id="r_acfc11248995fa8dbdfa4cff4ae046123"><td class="memItemLeft" align="right" valign="top"><a id="acfc11248995fa8dbdfa4cff4ae046123" name="acfc11248995fa8dbdfa4cff4ae046123"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTION_VEHICLE_POSITION_X_MIDDLE_LOCATION</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + (G_LANE_DETECTOR_LANE_INFORMATION_RECT.width / 2.0) - (<a class="el" href="#a95515f4e19528e98d0623fee970b664f">G_LANE_DETECTION_VEHICLE_POSITION_WIDTH</a> / 2.0)</td></tr>
+<tr class="memdesc:acfc11248995fa8dbdfa4cff4ae046123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related vehicle position UI properties. <br /></td></tr>
+<tr class="separator:acfc11248995fa8dbdfa4cff4ae046123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a679e1a376df5332f8c12604e800fa544" id="r_a679e1a376df5332f8c12604e800fa544"><td class="memItemLeft" align="right" valign="top"><a id="a679e1a376df5332f8c12604e800fa544" name="a679e1a376df5332f8c12604e800fa544"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_LANE_DETECTION_VEHICLE_POSITION_Y_LOCATION</b> = G_LANE_DETECTOR_LANE_INFORMATION_RECT.y + (1.5 * <a class="el" href="#ab0987495d0a99e4f477c4f63774f4485">G_UI_ELEMENT_PADDING</a>)</td></tr>
+<tr class="memdesc:a679e1a376df5332f8c12604e800fa544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lane detector-related vehicle position UI properties. <br /></td></tr>
+<tr class="separator:a679e1a376df5332f8c12604e800fa544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:a432866a7ae2f7d4630dd120c7da2f3c9" id="r_a432866a7ae2f7d4630dd120c7da2f3c9"><td class="memItemLeft" align="right" valign="top"><a id="a432866a7ae2f7d4630dd120c7da2f3c9" name="a432866a7ae2f7d4630dd120c7da2f3c9"></a>
 static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_ROI_TOP_HEIGHT</b> = 660</td></tr>
@@ -372,90 +466,90 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_NU
 <tr class="memdesc:a0ed0368dc40c314eb03370e3d67de39b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolling average properties. <br /></td></tr>
 <tr class="separator:a0ed0368dc40c314eb03370e3d67de39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a21992c87c26d08a251a7a4dc665389f2" id="r_a21992c87c26d08a251a7a4dc665389f2"><td class="memItemLeft" align="right" valign="top"><a id="a21992c87c26d08a251a7a4dc665389f2" name="a21992c87c26d08a251a7a4dc665389f2"></a>
-static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_SCALE_FACTOR</b> = 1 / 255.0</td></tr>
-<tr class="memdesc:a21992c87c26d08a251a7a4dc665389f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">YOLO threshold and properties. <br /></td></tr>
-<tr class="separator:a21992c87c26d08a251a7a4dc665389f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a671bdc5868d4cf3176f57e8f8698f574" id="r_a671bdc5868d4cf3176f57e8f8698f574"><td class="memItemLeft" align="right" valign="top"><a id="a671bdc5868d4cf3176f57e8f8698f574" name="a671bdc5868d4cf3176f57e8f8698f574"></a>
-static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_CONFIDENCE_THRESHOLD</b> = 0.4</td></tr>
-<tr class="memdesc:a671bdc5868d4cf3176f57e8f8698f574"><td class="mdescLeft">&#160;</td><td class="mdescRight">YOLO threshold and properties. <br /></td></tr>
-<tr class="separator:a671bdc5868d4cf3176f57e8f8698f574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf1664349410e347b300cd5370d74a49" id="r_acf1664349410e347b300cd5370d74a49"><td class="memItemLeft" align="right" valign="top"><a id="acf1664349410e347b300cd5370d74a49" name="acf1664349410e347b300cd5370d74a49"></a>
-static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_NMS_THRESHOLD</b> = 0.4</td></tr>
-<tr class="memdesc:acf1664349410e347b300cd5370d74a49"><td class="mdescLeft">&#160;</td><td class="mdescRight">YOLO threshold and properties. <br /></td></tr>
-<tr class="separator:acf1664349410e347b300cd5370d74a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaffb46b1751901bdfd0d79449d44185" id="r_abaffb46b1751901bdfd0d79449d44185"><td class="memItemLeft" align="right" valign="top"><a id="abaffb46b1751901bdfd0d79449d44185" name="abaffb46b1751901bdfd0d79449d44185"></a>
+static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_SCALE_FACTOR</b> = 1 / 255.0</td></tr>
+<tr class="memdesc:abaffb46b1751901bdfd0d79449d44185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection threshold and properties. <br /></td></tr>
+<tr class="separator:abaffb46b1751901bdfd0d79449d44185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a364f54a6a78e5af8beeb65637ec5c26e" id="r_a364f54a6a78e5af8beeb65637ec5c26e"><td class="memItemLeft" align="right" valign="top"><a id="a364f54a6a78e5af8beeb65637ec5c26e" name="a364f54a6a78e5af8beeb65637ec5c26e"></a>
+static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_CONFIDENCE_THRESHOLD</b> = 0.4</td></tr>
+<tr class="memdesc:a364f54a6a78e5af8beeb65637ec5c26e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection threshold and properties. <br /></td></tr>
+<tr class="separator:a364f54a6a78e5af8beeb65637ec5c26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e6aed2d6373693084aea4b8480bfe48" id="r_a3e6aed2d6373693084aea4b8480bfe48"><td class="memItemLeft" align="right" valign="top"><a id="a3e6aed2d6373693084aea4b8480bfe48" name="a3e6aed2d6373693084aea4b8480bfe48"></a>
+static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_NMS_THRESHOLD</b> = 0.4</td></tr>
+<tr class="memdesc:a3e6aed2d6373693084aea4b8480bfe48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection threshold and properties. <br /></td></tr>
+<tr class="separator:a3e6aed2d6373693084aea4b8480bfe48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a39d14f4032ff7c6c5fcae66e69aaa53d" id="r_a39d14f4032ff7c6c5fcae66e69aaa53d"><td class="memItemLeft" align="right" valign="top"><a id="a39d14f4032ff7c6c5fcae66e69aaa53d" name="a39d14f4032ff7c6c5fcae66e69aaa53d"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_BOUNDING_BOX_BUFFER</b> = 5</td></tr>
-<tr class="memdesc:a39d14f4032ff7c6c5fcae66e69aaa53d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a39d14f4032ff7c6c5fcae66e69aaa53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a533ea341b2e64354317220191d2cea33" id="r_a533ea341b2e64354317220191d2cea33"><td class="memItemLeft" align="right" valign="top"><a id="a533ea341b2e64354317220191d2cea33" name="a533ea341b2e64354317220191d2cea33"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTION_BOUNDING_BOX_HEIGHT</b> = 15</td></tr>
-<tr class="memdesc:a533ea341b2e64354317220191d2cea33"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a533ea341b2e64354317220191d2cea33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f90dc9b203f77c31ef5cb2f0e14fb6b" id="r_a1f90dc9b203f77c31ef5cb2f0e14fb6b"><td class="memItemLeft" align="right" valign="top"><a id="a1f90dc9b203f77c31ef5cb2f0e14fb6b" name="a1f90dc9b203f77c31ef5cb2f0e14fb6b"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTION_BOUNDING_BOX_BORDER_THICKNESS</b> = 1</td></tr>
-<tr class="memdesc:a1f90dc9b203f77c31ef5cb2f0e14fb6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a1f90dc9b203f77c31ef5cb2f0e14fb6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f704e3b7db8e3bf837d6976c93c3841" id="r_a5f704e3b7db8e3bf837d6976c93c3841"><td class="memItemLeft" align="right" valign="top"><a id="a5f704e3b7db8e3bf837d6976c93c3841" name="a5f704e3b7db8e3bf837d6976c93c3841"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTION_BOUNDING_BOX_CHARACTER_WIDTH</b> = 9</td></tr>
-<tr class="memdesc:a5f704e3b7db8e3bf837d6976c93c3841"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a5f704e3b7db8e3bf837d6976c93c3841"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf5ed2b96e17dd60e3d10282dfca62ad" id="r_abf5ed2b96e17dd60e3d10282dfca62ad"><td class="memItemLeft" align="right" valign="top"><a id="abf5ed2b96e17dd60e3d10282dfca62ad" name="abf5ed2b96e17dd60e3d10282dfca62ad"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTION_BOUNDING_BOX_TEXT_HEIGHT_OFFSET</b> = 2</td></tr>
-<tr class="memdesc:abf5ed2b96e17dd60e3d10282dfca62ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:abf5ed2b96e17dd60e3d10282dfca62ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c465656380aa9f868c3a34c2f98c120" id="r_a5c465656380aa9f868c3a34c2f98c120"><td class="memItemLeft" align="right" valign="top"><a id="a5c465656380aa9f868c3a34c2f98c120" name="a5c465656380aa9f868c3a34c2f98c120"></a>
-static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTION_BOUNDING_BOX_FONT_SCALE</b> = 0.5</td></tr>
-<tr class="memdesc:a5c465656380aa9f868c3a34c2f98c120"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a5c465656380aa9f868c3a34c2f98c120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2329da86bfe5c727cc3c96651539c19e" id="r_a2329da86bfe5c727cc3c96651539c19e"><td class="memItemLeft" align="right" valign="top"><a id="a2329da86bfe5c727cc3c96651539c19e" name="a2329da86bfe5c727cc3c96651539c19e"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_BOUNDING_BOX_BUFFER</b> = 5</td></tr>
+<tr class="memdesc:a2329da86bfe5c727cc3c96651539c19e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection bounding box properties. <br /></td></tr>
+<tr class="separator:a2329da86bfe5c727cc3c96651539c19e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1437cab0046f46912e3afebadcb3ac68" id="r_a1437cab0046f46912e3afebadcb3ac68"><td class="memItemLeft" align="right" valign="top"><a id="a1437cab0046f46912e3afebadcb3ac68" name="a1437cab0046f46912e3afebadcb3ac68"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_BOUNDING_BOX_HEADER_HEIGHT</b> = 15</td></tr>
+<tr class="memdesc:a1437cab0046f46912e3afebadcb3ac68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection bounding box properties. <br /></td></tr>
+<tr class="separator:a1437cab0046f46912e3afebadcb3ac68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7065467da329551bbd43bd1fc0857a1" id="r_af7065467da329551bbd43bd1fc0857a1"><td class="memItemLeft" align="right" valign="top"><a id="af7065467da329551bbd43bd1fc0857a1" name="af7065467da329551bbd43bd1fc0857a1"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_BOUNDING_BOX_BORDER_THICKNESS</b> = 1</td></tr>
+<tr class="memdesc:af7065467da329551bbd43bd1fc0857a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection bounding box properties. <br /></td></tr>
+<tr class="separator:af7065467da329551bbd43bd1fc0857a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afccaa77bdc41d25ef2a33efcafe80872" id="r_afccaa77bdc41d25ef2a33efcafe80872"><td class="memItemLeft" align="right" valign="top"><a id="afccaa77bdc41d25ef2a33efcafe80872" name="afccaa77bdc41d25ef2a33efcafe80872"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_BOUNDING_BOX_CHARACTER_WIDTH</b> = 9</td></tr>
+<tr class="memdesc:afccaa77bdc41d25ef2a33efcafe80872"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection bounding box properties. <br /></td></tr>
+<tr class="separator:afccaa77bdc41d25ef2a33efcafe80872"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abce58f7bd31b4937d6988372bd1973a4" id="r_abce58f7bd31b4937d6988372bd1973a4"><td class="memItemLeft" align="right" valign="top"><a id="abce58f7bd31b4937d6988372bd1973a4" name="abce58f7bd31b4937d6988372bd1973a4"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_BOUNDING_BOX_TEXT_HEIGHT_OFFSET</b> = 2</td></tr>
+<tr class="memdesc:abce58f7bd31b4937d6988372bd1973a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection bounding box properties. <br /></td></tr>
+<tr class="separator:abce58f7bd31b4937d6988372bd1973a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a777061cf8379aefa0c8a3a4e8da959f8" id="r_a777061cf8379aefa0c8a3a4e8da959f8"><td class="memItemLeft" align="right" valign="top"><a id="a777061cf8379aefa0c8a3a4e8da959f8" name="a777061cf8379aefa0c8a3a4e8da959f8"></a>
+static const double&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_BOUNDING_BOX_FONT_SCALE</b> = 0.5</td></tr>
+<tr class="memdesc:a777061cf8379aefa0c8a3a4e8da959f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object detection bounding box properties. <br /></td></tr>
+<tr class="separator:a777061cf8379aefa0c8a3a4e8da959f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a56a33a54415dc99ada61a50bdf421864" id="r_a56a33a54415dc99ada61a50bdf421864"><td class="memItemLeft" align="right" valign="top"><a id="a56a33a54415dc99ada61a50bdf421864" name="a56a33a54415dc99ada61a50bdf421864"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_CENTER_X_COORD_INDEX</b> = 0</td></tr>
-<tr class="memdesc:a56a33a54415dc99ada61a50bdf421864"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a56a33a54415dc99ada61a50bdf421864"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e89c69061316b633bba783d24a30cd1" id="r_a1e89c69061316b633bba783d24a30cd1"><td class="memItemLeft" align="right" valign="top"><a id="a1e89c69061316b633bba783d24a30cd1" name="a1e89c69061316b633bba783d24a30cd1"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_CENTER_Y_COORD_INDEX</b> = 1</td></tr>
-<tr class="memdesc:a1e89c69061316b633bba783d24a30cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a1e89c69061316b633bba783d24a30cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93084029e45518df533d50cb53645174" id="r_a93084029e45518df533d50cb53645174"><td class="memItemLeft" align="right" valign="top"><a id="a93084029e45518df533d50cb53645174" name="a93084029e45518df533d50cb53645174"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_WIDTH_INDEX</b> = 2</td></tr>
-<tr class="memdesc:a93084029e45518df533d50cb53645174"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a93084029e45518df533d50cb53645174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e5be25d688c44845598a55a3f7cd35d" id="r_a0e5be25d688c44845598a55a3f7cd35d"><td class="memItemLeft" align="right" valign="top"><a id="a0e5be25d688c44845598a55a3f7cd35d" name="a0e5be25d688c44845598a55a3f7cd35d"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_HEIGHT_INDEX</b> = 3</td></tr>
-<tr class="memdesc:a0e5be25d688c44845598a55a3f7cd35d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a0e5be25d688c44845598a55a3f7cd35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a820f4efb78caf6e68a643935413cf443" id="r_a820f4efb78caf6e68a643935413cf443"><td class="memItemLeft" align="right" valign="top"><a id="a820f4efb78caf6e68a643935413cf443" name="a820f4efb78caf6e68a643935413cf443"></a>
-static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_OBJECT_SCORES_START_INDEX</b> = 5</td></tr>
-<tr class="memdesc:a820f4efb78caf6e68a643935413cf443"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a820f4efb78caf6e68a643935413cf443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6b11ec16d0f062b49743d55d570f547" id="r_aa6b11ec16d0f062b49743d55d570f547"><td class="memItemLeft" align="right" valign="top"><a id="aa6b11ec16d0f062b49743d55d570f547" name="aa6b11ec16d0f062b49743d55d570f547"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_OUTPUT_BLOBS_CENTER_X_COORD_INDEX</b> = 0</td></tr>
+<tr class="memdesc:aa6b11ec16d0f062b49743d55d570f547"><td class="mdescLeft">&#160;</td><td class="mdescRight">The indicies representing various values in the output blobs. <br /></td></tr>
+<tr class="separator:aa6b11ec16d0f062b49743d55d570f547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21844a172518baf25962da35f716dd15" id="r_a21844a172518baf25962da35f716dd15"><td class="memItemLeft" align="right" valign="top"><a id="a21844a172518baf25962da35f716dd15" name="a21844a172518baf25962da35f716dd15"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_OUTPUT_BLOBS_CENTER_Y_COORD_INDEX</b> = 1</td></tr>
+<tr class="memdesc:a21844a172518baf25962da35f716dd15"><td class="mdescLeft">&#160;</td><td class="mdescRight">The indicies representing various values in the output blobs. <br /></td></tr>
+<tr class="separator:a21844a172518baf25962da35f716dd15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7497e98a146c42fe0f4073d2eb5eebe" id="r_ad7497e98a146c42fe0f4073d2eb5eebe"><td class="memItemLeft" align="right" valign="top"><a id="ad7497e98a146c42fe0f4073d2eb5eebe" name="ad7497e98a146c42fe0f4073d2eb5eebe"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_OUTPUT_BLOBS_WIDTH_INDEX</b> = 2</td></tr>
+<tr class="memdesc:ad7497e98a146c42fe0f4073d2eb5eebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The indicies representing various values in the output blobs. <br /></td></tr>
+<tr class="separator:ad7497e98a146c42fe0f4073d2eb5eebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52f54eb6f9d8754879f9a97cc15747e2" id="r_a52f54eb6f9d8754879f9a97cc15747e2"><td class="memItemLeft" align="right" valign="top"><a id="a52f54eb6f9d8754879f9a97cc15747e2" name="a52f54eb6f9d8754879f9a97cc15747e2"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_OUTPUT_BLOBS_HEIGHT_INDEX</b> = 3</td></tr>
+<tr class="memdesc:a52f54eb6f9d8754879f9a97cc15747e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The indicies representing various values in the output blobs. <br /></td></tr>
+<tr class="separator:a52f54eb6f9d8754879f9a97cc15747e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b176ff85c0ad7a3a787cecf57a28eb1" id="r_a8b176ff85c0ad7a3a787cecf57a28eb1"><td class="memItemLeft" align="right" valign="top"><a id="a8b176ff85c0ad7a3a787cecf57a28eb1" name="a8b176ff85c0ad7a3a787cecf57a28eb1"></a>
+static const int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_OUTPUT_BLOBS_OBJECT_SCORES_START_INDEX</b> = 5</td></tr>
+<tr class="memdesc:a8b176ff85c0ad7a3a787cecf57a28eb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The indicies representing various values in the output blobs. <br /></td></tr>
+<tr class="separator:a8b176ff85c0ad7a3a787cecf57a28eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a71c720307c148a7ef6e04428fb686eb1" id="r_a71c720307c148a7ef6e04428fb686eb1"><td class="memItemLeft" align="right" valign="top"><a id="a71c720307c148a7ef6e04428fb686eb1" name="a71c720307c148a7ef6e04428fb686eb1"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_NUMBER_OF_DETECTABLE_OBJECTS</b> = 80</td></tr>
-<tr class="memdesc:a71c720307c148a7ef6e04428fb686eb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Names of detectable YOLO objects. The order is significant and should not be changed. <br /></td></tr>
-<tr class="separator:a71c720307c148a7ef6e04428fb686eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a077956d1a76b8783df2559bb4d8741e1" id="r_a077956d1a76b8783df2559bb4d8741e1"><td class="memItemLeft" align="right" valign="top"><a id="a077956d1a76b8783df2559bb4d8741e1" name="a077956d1a76b8783df2559bb4d8741e1"></a>
-static const std::array&lt; std::string, <a class="el" href="#a71c720307c148a7ef6e04428fb686eb1">G_YOLO_NUMBER_OF_DETECTABLE_OBJECTS</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>G_YOLO_OBJECT_NAMES</b></td></tr>
-<tr class="memdesc:a077956d1a76b8783df2559bb4d8741e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Names of detectable YOLO objects. The order is significant and should not be changed. <br /></td></tr>
-<tr class="separator:a077956d1a76b8783df2559bb4d8741e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a696a857da817722757d2780bce7c9866" id="r_a696a857da817722757d2780bce7c9866"><td class="memItemLeft" align="right" valign="top"><a id="a696a857da817722757d2780bce7c9866" name="a696a857da817722757d2780bce7c9866"></a>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_NUMBER_OF_DETECTABLE_OBJECTS</b> = 80</td></tr>
+<tr class="memdesc:a696a857da817722757d2780bce7c9866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Names of detectable objects. The order is significant and should not be changed. <br /></td></tr>
+<tr class="separator:a696a857da817722757d2780bce7c9866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64c8d226ca83d3007fb472cb22632447" id="r_a64c8d226ca83d3007fb472cb22632447"><td class="memItemLeft" align="right" valign="top"><a id="a64c8d226ca83d3007fb472cb22632447" name="a64c8d226ca83d3007fb472cb22632447"></a>
+static const std::array&lt; std::string, <a class="el" href="#a696a857da817722757d2780bce7c9866">G_OBJECT_DETECTOR_NUMBER_OF_DETECTABLE_OBJECTS</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>G_OBJECT_DETECTOR_OBJECT_NAMES</b></td></tr>
+<tr class="memdesc:a64c8d226ca83d3007fb472cb22632447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Names of detectable objects. The order is significant and should not be changed. <br /></td></tr>
+<tr class="separator:a64c8d226ca83d3007fb472cb22632447"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:ab15105776d22d0edb11de18827ff0c74" id="r_ab15105776d22d0edb11de18827ff0c74"><td class="memItemLeft" align="right" valign="top"><a id="ab15105776d22d0edb11de18827ff0c74" name="ab15105776d22d0edb11de18827ff0c74"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_TEXT_VERTICAL_LOCATION_LINE_ONE</b> = 25</td></tr>
-<tr class="memdesc:ab15105776d22d0edb11de18827ff0c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">The vertical locations of performance-related information. <br /></td></tr>
-<tr class="separator:ab15105776d22d0edb11de18827ff0c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60459eb63547e901c4b5305d88571bc9" id="r_a60459eb63547e901c4b5305d88571bc9"><td class="memItemLeft" align="right" valign="top"><a id="a60459eb63547e901c4b5305d88571bc9" name="a60459eb63547e901c4b5305d88571bc9"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_TEXT_VERTICAL_LOCATION_LINE_TWO</b> = 75</td></tr>
-<tr class="memdesc:a60459eb63547e901c4b5305d88571bc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The vertical locations of performance-related information. <br /></td></tr>
-<tr class="separator:a60459eb63547e901c4b5305d88571bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a579cf03cf5e2a63f4a32f77bd70f32c6" id="r_a579cf03cf5e2a63f4a32f77bd70f32c6"><td class="memItemLeft" align="right" valign="top"><a id="a579cf03cf5e2a63f4a32f77bd70f32c6" name="a579cf03cf5e2a63f4a32f77bd70f32c6"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_AVERAGE_FPS_BACKGROUND_RECT</b> = cv::Rect(30, 30, 250, 30)</td></tr>
+<tr class="memdesc:a579cf03cf5e2a63f4a32f77bd70f32c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performance-related information UI location. <br /></td></tr>
+<tr class="separator:a579cf03cf5e2a63f4a32f77bd70f32c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a031079ed4753528daf959ce6afec8b33" id="r_a031079ed4753528daf959ce6afec8b33"><td class="memItemLeft" align="right" valign="top"><a id="a031079ed4753528daf959ce6afec8b33" name="a031079ed4753528daf959ce6afec8b33"></a>
+static const cv::Rect&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_CURRENT_FPS_BACKGROUND_RECT</b> = cv::Rect(30, 90, 250, 30)</td></tr>
+<tr class="memdesc:a031079ed4753528daf959ce6afec8b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performance-related information UI location. <br /></td></tr>
+<tr class="separator:a031079ed4753528daf959ce6afec8b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:ac134e7d3bd92f42288873047e4ab7b29" id="r_ac134e7d3bd92f42288873047e4ab7b29"><td class="memItemLeft" align="right" valign="top"><a id="ac134e7d3bd92f42288873047e4ab7b29" name="ac134e7d3bd92f42288873047e4ab7b29"></a>
 static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_PERFORMANCE_TESTS_NUMBER_OF_TESTS</b> = 21</td></tr>
 <tr class="memdesc:ac134e7d3bd92f42288873047e4ab7b29"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings. <br /></td></tr>
 <tr class="separator:ac134e7d3bd92f42288873047e4ab7b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78f573839bb3268d3f2794c85210d5c1" id="r_a78f573839bb3268d3f2794c85210d5c1"><td class="memItemLeft" align="right" valign="top">static const std::array&lt; <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a>, <a class="el" href="#ac134e7d3bd92f42288873047e4ab7b29">G_PERFORMANCE_TESTS_NUMBER_OF_TESTS</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78f573839bb3268d3f2794c85210d5c1">G_PERFORMANCE_TESTS_YOLO_TYPES</a></td></tr>
-<tr class="memdesc:a78f573839bb3268d3f2794c85210d5c1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings.  <br /></td></tr>
-<tr class="separator:a78f573839bb3268d3f2794c85210d5c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06dd89f2f769b5c0ac668b2d5c0bbc4" id="r_ad06dd89f2f769b5c0ac668b2d5c0bbc4"><td class="memItemLeft" align="right" valign="top">static const std::array&lt; <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a>, <a class="el" href="#ac134e7d3bd92f42288873047e4ab7b29">G_PERFORMANCE_TESTS_NUMBER_OF_TESTS</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad06dd89f2f769b5c0ac668b2d5c0bbc4">G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES</a></td></tr>
+<tr class="memdesc:ad06dd89f2f769b5c0ac668b2d5c0bbc4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings.  <br /></td></tr>
+<tr class="separator:ad06dd89f2f769b5c0ac668b2d5c0bbc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90765da63a4130b6befff8d1264b3980" id="r_a90765da63a4130b6befff8d1264b3980"><td class="memItemLeft" align="right" valign="top">static const std::array&lt; <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a>, <a class="el" href="#ac134e7d3bd92f42288873047e4ab7b29">G_PERFORMANCE_TESTS_NUMBER_OF_TESTS</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90765da63a4130b6befff8d1264b3980">G_PERFORMANCE_TESTS_BACK_END_TYPES</a></td></tr>
 <tr class="memdesc:a90765da63a4130b6befff8d1264b3980"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings.  <br /></td></tr>
 <tr class="separator:a90765da63a4130b6befff8d1264b3980"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -489,23 +583,23 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_PE
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">        cv::Point((<a class="code hl_variable" href="#ad02bb525b56cf63b2221b94ce47a5d6f">G_INPUT_VIDEO_WIDTH</a> / 2) - (<a class="code hl_variable" href="#ae0c6fd24fd88c6644cb5521ec9a7e400">G_ROI_TOP_WIDTH</a> / 2), <a class="code hl_variable" href="#a432866a7ae2f7d4630dd120c7da2f3c9">G_ROI_TOP_HEIGHT</a>),</div>
-<div class="line">        cv::Point((<a class="code hl_variable" href="#ad02bb525b56cf63b2221b94ce47a5d6f">G_INPUT_VIDEO_WIDTH</a> / 2) + (<a class="code hl_variable" href="#ae0c6fd24fd88c6644cb5521ec9a7e400">G_ROI_TOP_WIDTH</a> / 2), <a class="code hl_variable" href="#a432866a7ae2f7d4630dd120c7da2f3c9">G_ROI_TOP_HEIGHT</a>),</div>
-<div class="line">        cv::Point((<a class="code hl_variable" href="#ad02bb525b56cf63b2221b94ce47a5d6f">G_INPUT_VIDEO_WIDTH</a> / 2) + (<a class="code hl_variable" href="#a9aeed412d8070232012799f6df0e2a76">G_ROI_BOTTOM_WIDTH</a> / 2), <a class="code hl_variable" href="#aa0f3ed0c45bd312b31cfd3fa305a7851">G_ROI_BOTTOM_HEIGHT</a>),</div>
-<div class="line">        cv::Point((<a class="code hl_variable" href="#ad02bb525b56cf63b2221b94ce47a5d6f">G_INPUT_VIDEO_WIDTH</a> / 2) - (<a class="code hl_variable" href="#a9aeed412d8070232012799f6df0e2a76">G_ROI_BOTTOM_WIDTH</a> / 2), <a class="code hl_variable" href="#aa0f3ed0c45bd312b31cfd3fa305a7851">G_ROI_BOTTOM_HEIGHT</a>),</div>
+<div class="line">        cv::Point((<a class="code hl_variable" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> / 2) - (<a class="code hl_variable" href="#ae0c6fd24fd88c6644cb5521ec9a7e400">G_ROI_TOP_WIDTH</a> / 2), <a class="code hl_variable" href="#a432866a7ae2f7d4630dd120c7da2f3c9">G_ROI_TOP_HEIGHT</a>),</div>
+<div class="line">        cv::Point((<a class="code hl_variable" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> / 2) + (<a class="code hl_variable" href="#ae0c6fd24fd88c6644cb5521ec9a7e400">G_ROI_TOP_WIDTH</a> / 2), <a class="code hl_variable" href="#a432866a7ae2f7d4630dd120c7da2f3c9">G_ROI_TOP_HEIGHT</a>),</div>
+<div class="line">        cv::Point((<a class="code hl_variable" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> / 2) + (<a class="code hl_variable" href="#a9aeed412d8070232012799f6df0e2a76">G_ROI_BOTTOM_WIDTH</a> / 2), <a class="code hl_variable" href="#aa0f3ed0c45bd312b31cfd3fa305a7851">G_ROI_BOTTOM_HEIGHT</a>),</div>
+<div class="line">        cv::Point((<a class="code hl_variable" href="#ae1f48b5371fdc353fbad2509867b5c22">G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a> / 2) - (<a class="code hl_variable" href="#a9aeed412d8070232012799f6df0e2a76">G_ROI_BOTTOM_WIDTH</a> / 2), <a class="code hl_variable" href="#aa0f3ed0c45bd312b31cfd3fa305a7851">G_ROI_BOTTOM_HEIGHT</a>),</div>
 <div class="line">    }</div>
-<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_a432866a7ae2f7d4630dd120c7da2f3c9"><div class="ttname"><a href="#a432866a7ae2f7d4630dd120c7da2f3c9">LaneAndObjectDetection::Globals::G_ROI_TOP_HEIGHT</a></div><div class="ttdeci">static const uint32_t G_ROI_TOP_HEIGHT</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:103</div></div>
-<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_a9aeed412d8070232012799f6df0e2a76"><div class="ttname"><a href="#a9aeed412d8070232012799f6df0e2a76">LaneAndObjectDetection::Globals::G_ROI_BOTTOM_WIDTH</a></div><div class="ttdeci">static const uint32_t G_ROI_BOTTOM_WIDTH</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:106</div></div>
-<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_aa0f3ed0c45bd312b31cfd3fa305a7851"><div class="ttname"><a href="#aa0f3ed0c45bd312b31cfd3fa305a7851">LaneAndObjectDetection::Globals::G_ROI_BOTTOM_HEIGHT</a></div><div class="ttdeci">static const uint32_t G_ROI_BOTTOM_HEIGHT</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:104</div></div>
-<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_ad02bb525b56cf63b2221b94ce47a5d6f"><div class="ttname"><a href="#ad02bb525b56cf63b2221b94ce47a5d6f">LaneAndObjectDetection::Globals::G_INPUT_VIDEO_WIDTH</a></div><div class="ttdeci">static const uint32_t G_INPUT_VIDEO_WIDTH</div><div class="ttdoc">Input video dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:44</div></div>
-<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_ae0c6fd24fd88c6644cb5521ec9a7e400"><div class="ttname"><a href="#ae0c6fd24fd88c6644cb5521ec9a7e400">LaneAndObjectDetection::Globals::G_ROI_TOP_WIDTH</a></div><div class="ttdeci">static const uint32_t G_ROI_TOP_WIDTH</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:105</div></div>
+<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_a432866a7ae2f7d4630dd120c7da2f3c9"><div class="ttname"><a href="#a432866a7ae2f7d4630dd120c7da2f3c9">LaneAndObjectDetection::Globals::G_ROI_TOP_HEIGHT</a></div><div class="ttdeci">static const uint32_t G_ROI_TOP_HEIGHT</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:167</div></div>
+<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_a9aeed412d8070232012799f6df0e2a76"><div class="ttname"><a href="#a9aeed412d8070232012799f6df0e2a76">LaneAndObjectDetection::Globals::G_ROI_BOTTOM_WIDTH</a></div><div class="ttdeci">static const uint32_t G_ROI_BOTTOM_WIDTH</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:170</div></div>
+<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_aa0f3ed0c45bd312b31cfd3fa305a7851"><div class="ttname"><a href="#aa0f3ed0c45bd312b31cfd3fa305a7851">LaneAndObjectDetection::Globals::G_ROI_BOTTOM_HEIGHT</a></div><div class="ttdeci">static const uint32_t G_ROI_BOTTOM_HEIGHT</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:168</div></div>
+<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_ae0c6fd24fd88c6644cb5521ec9a7e400"><div class="ttname"><a href="#ae0c6fd24fd88c6644cb5521ec9a7e400">LaneAndObjectDetection::Globals::G_ROI_TOP_WIDTH</a></div><div class="ttdeci">static const uint32_t G_ROI_TOP_WIDTH</div><div class="ttdoc">Region of interest dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:169</div></div>
+<div class="ttc" id="anamespace_lane_and_object_detection_1_1_globals_html_ae1f48b5371fdc353fbad2509867b5c22"><div class="ttname"><a href="#ae1f48b5371fdc353fbad2509867b5c22">LaneAndObjectDetection::Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</a></div><div class="ttdeci">static const uint32_t G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH</div><div class="ttdoc">Input video dimensions.</div><div class="ttdef"><b>Definition</b> Globals.hpp:69</div></div>
 </div><!-- fragment -->
 <p>Region of interest dimensions. </p>
 
 </div>
 </div>
-<a id="a78f573839bb3268d3f2794c85210d5c1" name="a78f573839bb3268d3f2794c85210d5c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78f573839bb3268d3f2794c85210d5c1">&#9670;&#160;</a></span>G_PERFORMANCE_TESTS_YOLO_TYPES</h2>
+<a id="ad06dd89f2f769b5c0ac668b2d5c0bbc4" name="ad06dd89f2f769b5c0ac668b2d5c0bbc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad06dd89f2f769b5c0ac668b2d5c0bbc4">&#9670;&#160;</a></span>G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -514,7 +608,7 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_PE
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::array&lt;<a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a>, <a class="el" href="#ac134e7d3bd92f42288873047e4ab7b29">G_PERFORMANCE_TESTS_NUMBER_OF_TESTS</a>&gt; LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_YOLO_TYPES</td>
+          <td class="memname">const std::array&lt;<a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a>, <a class="el" href="#ac134e7d3bd92f42288873047e4ab7b29">G_PERFORMANCE_TESTS_NUMBER_OF_TESTS</a>&gt; LaneAndObjectDetection::Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES</td>
         </tr>
       </table>
   </td>
@@ -697,7 +791,7 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>G_PE
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="namespace_lane_and_object_detection_1_1_globals.html">Globals</a></li>
-    <li class="footer">Generated on Thu Feb 27 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun Mar 16 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

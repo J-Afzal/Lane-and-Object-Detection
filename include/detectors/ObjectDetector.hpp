@@ -1,13 +1,13 @@
 #pragma once
 
 #include <cstdint>
-#include <map>
 #include <string>
 #include <vector>
 
 #include <opencv2/core/mat.hpp>
-#include <opencv2/core/types.hpp>
 #include <opencv2/dnn/dnn.hpp>
+
+#include "helpers/Information.hpp"
 
 /**
  * @namespace LaneAndObjectDetection
@@ -15,29 +15,33 @@
  */
 namespace LaneAndObjectDetection
 {
+
     /**
-     * @brief TODO
+     * @brief The type of object detector to use with an option to disable object detection. The tiny version is more performant
+     * at the cost of accuracy.
      */
-    enum class Detectors : std::uint8_t
+    enum class ObjectDetectorTypes : std::uint8_t
     {
-        NONE = 0,
+        DEFAULT = 0,
+        NONE,
         STANDARD,
         TINY
     };
 
     /**
-     * @brief TODO
+     * @brief The supported backends for the object detector to run on. CUDA is significantly more performant.
      */
-    enum class BackEnds : std::uint8_t
+    enum class ObjectDetectorBackEnds : std::uint8_t
     {
         CPU = 0,
         CUDA
     };
 
     /**
-     * @brief TODO
+     * @brief The supported blob sizes for the object detector to run with. The larger the blob size the more performant the
+     * detector at the cost of performance.
      */
-    enum class BlobSizes : std::uint16_t
+    enum class ObjectDetectorBlobSizes : std::int16_t
     {
         ONE = 288,
         TWO = 320,
@@ -48,73 +52,70 @@ namespace LaneAndObjectDetection
 
     /**
      * @class ObjectDetector
-     * @brief TODO
+     * @brief The object detector built on YOLOv4.
      */
     class ObjectDetector
     {
     public:
         /**
-         * @brief TODO
+         * @brief Construct a new %ObjectDetector object.
          */
         explicit ObjectDetector();
 
         /**
-         * @brief TODO
+         * @brief Set the properties of the %ObjectDetector object.
+         *
+         * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
+         * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
+         * version is more performant at the cost of accuracy.
+         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. CUDA is significantly more
+         * performant.
+         * @param p_objectDetectorBlobSizes The supported blob sizes for the object detector to run with. The larger the blob
+         * size the more performant the detector at the cost of performance.
          */
-        void SetProperties(
-            const std::string& p_yoloResourcesFolderPath,
-            const Detectors& p_yoloType,
-            const BackEnds& p_backEndType,
-            const BlobSizes& p_blobSize);
+        void SetProperties(const std::string& p_yoloFolderPath,
+                           const ObjectDetectorTypes& p_objectDetectorTypes,
+                           const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                           const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes);
 
         /**
-         * @brief TODO
+         * @brief Run the object detector.
+         *
+         * @param p_frame The frame to run the object detector against.
          */
-        void RunDetector(const cv::Mat& p_frame);
+        void RunObjectDetector(const cv::Mat& p_frame);
 
         /**
-         * @brief TODO
+         * @brief Get the ObjectDetectionInformation struct.
+         *
+         * @return ObjectDetectionInformation The ObjectDetectionInformation struct.
          */
-        std::vector<cv::Rect> GetBoundingBoxes();
-
-        /**
-         * @brief TODO
-         */
-        void PrintToFrame(cv::Mat& p_frame);
+        ObjectDetectionInformation GetInformation();
 
     private:
         /**
-         * @brief TODO
+         * @brief OpenCV object which allows the use of pre-trained neural networks.
          */
-        ///@{
-        std::map<std::string, cv::Scalar> m_modelNamesAndColourList;
-        std::vector<cv::Mat> m_outputBlobs;
-        std::vector<cv::Rect> m_boundingBoxes;
-        std::vector<cv::Rect> m_preNmsObjectBoundingBoxes;
-        std::vector<std::string> m_unconnectedOutputLayerNames;
-        std::vector<std::string> m_modelNames;
-        std::vector<std::string> m_names;
-        std::vector<std::string> m_preNmsObjectNames;
-        std::vector<std::string> m_trafficLightStates;
-        std::vector<cv::Point2f> m_srcTrafficLight;
-        std::vector<cv::Point2f> m_dstTrafficLight;
-        std::vector<float> m_confidences;
-        std::vector<float> m_preNmsObjectConfidences;
-        std::vector<int> m_indicesAfterNms;
         cv::dnn::Net m_net;
-        cv::Point m_classId;
-        cv::Mat m_blobFromImage;
-        cv::Mat m_croppedImage;
-        cv::Mat m_croppedImageInHsv;
-        uint32_t m_nonZeroPixelsInGreen;
-        uint32_t m_nonZeroPixelsInRed;
-        uint32_t m_blobSize;
-        double m_confidence;
-        double m_centerX;
-        double m_centerY;
-        double m_width;
-        double m_height;
-        bool m_skipDetection;
-        ///@}
+
+        /**
+         * @brief The ObjectDetectionInformation struct containing all object detection-related information.
+         */
+        ObjectDetectionInformation m_objectDetectionInformation;
+
+        /**
+         * @brief The names of layers with unconnected outputs.
+         */
+        std::vector<std::string> m_unconnectedOutputLayerNames;
+
+        /**
+         * @brief The spatial size for the output image used by the cv::dnn::blobFromImage function.
+         */
+        int32_t m_blobSize;
+
+        /**
+         * @brief Whether to skip object detection.
+         */
+        bool m_skipObjectDetection;
     };
 }
