@@ -75,6 +75,40 @@ namespace LaneAndObjectDetection
         };
     }
 
+    LaneDetector::RollingAverage::RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates)
+    {
+        for (uint32_t i = 0; i < p_sizeOfRollingAverage; i++) // TODO: use insert?
+        {
+            m_rollingAverageArray.push_back(0);
+        }
+
+        for (uint32_t i = 0; i < p_numberOfStates; i++) // TODO: use insert?
+        {
+            m_occurrenceOfEachState.push_back(0);
+        }
+
+        m_occurrenceOfEachState[0] = p_sizeOfRollingAverage; // TODO: Eh?
+    }
+
+    uint32_t LaneDetector::RollingAverage::CalculateRollingAverage(const uint32_t& p_nextInput)
+    {
+        m_occurrenceOfEachState[m_rollingAverageArray.back()]--;
+        m_rollingAverageArray.pop_back();
+        m_rollingAverageArray.push_front(p_nextInput);
+        m_occurrenceOfEachState[p_nextInput]++;
+
+        uint32_t mostFrequentState = 0;
+        for (uint32_t i = 1; i < m_occurrenceOfEachState.size(); i++)
+        {
+            if (m_occurrenceOfEachState[i] > m_occurrenceOfEachState[mostFrequentState])
+            {
+                mostFrequentState = i;
+            }
+        }
+
+        return mostFrequentState;
+    }
+
     void LaneDetector::Setup()
     {
         m_houghLines.clear();
@@ -93,8 +127,8 @@ namespace LaneAndObjectDetection
     void LaneDetector::GetHoughLines(const cv::Mat& p_frame)
     {
         // Get region of interest (ROI) frame by applying a mask on to the frame
-        m_blankFrame = cv::Mat::zeros(Globals::G_VIDEO_MANAGER_INPUT_VIDEO_HEIGHT, Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH, p_frame.type());
-        cv::fillConvexPoly(m_blankFrame, Globals::G_MASK_DIMENSIONS, Globals::G_OPENCV_WHITE);
+        m_blankFrame = cv::Mat::zeros(Globals::G_INPUT_VIDEO_HEIGHT, Globals::G_INPUT_VIDEO_WIDTH, p_frame.type());
+        cv::fillConvexPoly(m_blankFrame, Globals::G_MASK_DIMENSIONS, Globals::G_COLOUR_WHITE);
         cv::bitwise_and(m_blankFrame, p_frame, m_roiFrame);
         // Convert ROI frame to B&W
         cv::cvtColor(m_roiFrame, m_roiFrame, cv::COLOR_BGR2GRAY);

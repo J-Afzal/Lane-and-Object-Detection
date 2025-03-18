@@ -56,7 +56,7 @@ namespace LaneAndObjectDetection
                         cv::Point(objectInformation.m_boundingBox.x, objectInformation.m_boundingBox.y - Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_TEXT_HEIGHT_OFFSET),
                         Globals::G_DEFAULT_FONT_FACE,
                         Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_FONT_SCALE,
-                        Globals::G_OPENCV_BLACK,
+                        Globals::G_COLOUR_BLACK,
                         Globals::G_DEFAULT_FONT_THICKNESS,
                         cv::LINE_AA);
         }
@@ -65,26 +65,26 @@ namespace LaneAndObjectDetection
     void FrameBuilder::AddLaneDetectorInformation(cv::Mat& p_frame, const LaneDetectionInformation& p_laneDetectionInformation)
     {
         // Add driving state
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_RECT, p_laneDetectionInformation.m_drivingStateTitle);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_DRIVING_STATE_RECT, p_laneDetectionInformation.m_drivingStateTitle);
 
         // Add turning state
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_LANE_DETECTOR_LANE_INFORMATION_TURNING_STATE_RECT, p_laneDetectionInformation.m_currentTurningState);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TURNING_STATE_RECT, p_laneDetectionInformation.m_currentTurningState);
 
         // Add lane information title
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_LANE_DETECTOR_LANE_INFORMATION_TITLE_RECT, p_laneDetectionInformation.m_laneInformationTitle);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TITLE_RECT, p_laneDetectionInformation.m_laneInformationTitle);
 
         // Add lane information lane lines states
-        cv::rectangle(p_frame, Globals::G_LANE_DETECTOR_LANE_INFORMATION_RECT, Globals::G_OPENCV_BLACK, cv::FILLED, cv::LINE_AA);
+        cv::rectangle(p_frame, Globals::G_UI_LANE_INFORMATION_RECT, Globals::G_COLOUR_BLACK, cv::FILLED, cv::LINE_AA);
 
         // Left line states
         for (int32_t i = 0; i < p_laneDetectionInformation.m_leftLineTypesForDisplay.size(); i++)
         {
             cv::rectangle(p_frame,
-                          cv::Rect(Globals::G_LANE_DETECTOR_LEFT_LANE_STATE_X_LOCATION,
-                                   Globals::G_LANE_DETECTOR_LANE_STATE_Y_START_LOCATION + (i * Globals::G_LANE_DETECTOR_LANE_STATE_HEIGHT * 2),
-                                   Globals::G_LANE_DETECTOR_LANE_STATE_WIDTH,
-                                   static_cast<int>(Globals::G_LANE_DETECTOR_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_leftLineTypesForDisplay[i])),
-                          Globals::G_OPENCV_WHITE,
+                          cv::Rect(Globals::G_LANE_INFORMATION_LEFT_LANE_STATE_X_LOCATION,
+                                   Globals::G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION + (i * Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * 2),
+                                   Globals::G_LANE_INFORMATION_LANE_STATE_WIDTH,
+                                   static_cast<int>(Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_leftLineTypesForDisplay[i])),
+                          Globals::G_COLOUR_WHITE,
                           cv::FILLED,
                           cv::LINE_AA);
         }
@@ -93,11 +93,11 @@ namespace LaneAndObjectDetection
         for (uint32_t i = 0; i < p_laneDetectionInformation.m_middleLineTypesForDisplay.size(); i++)
         {
             cv::rectangle(p_frame,
-                          cv::Rect(Globals::G_LANE_DETECTOR_MIDDLE_LANE_STATE_X_LOCATION,
-                                   Globals::G_LANE_DETECTOR_LANE_STATE_Y_START_LOCATION + static_cast<int>(i * Globals::G_LANE_DETECTOR_LANE_STATE_HEIGHT * 2),
-                                   Globals::G_LANE_DETECTOR_LANE_STATE_WIDTH,
-                                   static_cast<int>(Globals::G_LANE_DETECTOR_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_middleLineTypesForDisplay[i])),
-                          Globals::G_OPENCV_WHITE,
+                          cv::Rect(Globals::G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION,
+                                   Globals::G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION + static_cast<int>(i * Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * 2),
+                                   Globals::G_LANE_INFORMATION_LANE_STATE_WIDTH,
+                                   static_cast<int>(Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_middleLineTypesForDisplay[i])),
+                          Globals::G_COLOUR_WHITE,
                           cv::FILLED,
                           cv::LINE_AA);
         }
@@ -106,30 +106,30 @@ namespace LaneAndObjectDetection
         for (int32_t i = 0; i < p_laneDetectionInformation.m_rightLineTypesForDisplay.size(); i++)
         {
             cv::rectangle(p_frame,
-                          cv::Rect(Globals::G_LANE_DETECTOR_RIGHT_LANE_STATE_X_LOCATION,
-                                   Globals::G_LANE_DETECTOR_LANE_STATE_Y_START_LOCATION + (i * Globals::G_LANE_DETECTOR_LANE_STATE_HEIGHT * 2),
-                                   Globals::G_LANE_DETECTOR_LANE_STATE_WIDTH,
-                                   static_cast<int>(Globals::G_LANE_DETECTOR_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_rightLineTypesForDisplay[i])),
-                          Globals::G_OPENCV_WHITE,
+                          cv::Rect(Globals::G_LANE_INFORMATION_RIGHT_LANE_STATE_X_LOCATION,
+                                   Globals::G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION + (i * Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * 2),
+                                   Globals::G_LANE_INFORMATION_LANE_STATE_WIDTH,
+                                   static_cast<int>(Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_rightLineTypesForDisplay[i])),
+                          Globals::G_COLOUR_WHITE,
                           cv::FILLED,
                           cv::LINE_AA);
         }
 
         // Add turning required to return to center of the lane
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_LANE_DETECTOR_LANE_INFORMATION_TURING_RECT, p_laneDetectionInformation.m_turningRequiredToReturnToCenter);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT, p_laneDetectionInformation.m_turningRequiredToReturnToCenter);
 
         // Used for the below overlays
-        cv::Mat blankFrame = cv::Mat::zeros(Globals::G_VIDEO_MANAGER_INPUT_VIDEO_HEIGHT, Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH, p_frame.type());
+        cv::Mat blankFrame = cv::Mat::zeros(Globals::G_INPUT_VIDEO_HEIGHT, Globals::G_INPUT_VIDEO_WIDTH, p_frame.type());
 
         if (p_laneDetectionInformation.m_drivingState == 0)
         {
             // Add the box overlay signifying vehicle location within the lane
             cv::rectangle(blankFrame,
-                          cv::Rect(Globals::G_LANE_DETECTION_VEHICLE_POSITION_X_MIDDLE_LOCATION - p_laneDetectionInformation.m_turningRequired,
-                                   Globals::G_LANE_DETECTION_VEHICLE_POSITION_Y_LOCATION,
-                                   Globals::G_LANE_DETECTION_VEHICLE_POSITION_WIDTH,
-                                   Globals::G_LANE_DETECTION_VEHICLE_POSITION_HEIGHT),
-                          Globals::G_OPENCV_YELLOW,
+                          cv::Rect(Globals::G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION - p_laneDetectionInformation.m_turningRequired,
+                                   Globals::G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION,
+                                   Globals::G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH,
+                                   Globals::G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT),
+                          Globals::G_COLOUR_YELLOW,
                           cv::FILLED,
                           cv::LINE_AA);
         }
@@ -137,7 +137,7 @@ namespace LaneAndObjectDetection
         // Draw the green lane overlay to signify the area of the road which is considered the 'current lane'
         cv::fillConvexPoly(blankFrame,
                            p_laneDetectionInformation.m_lanePoints,
-                           Globals::G_LANE_DETECTOR_LANE_OVERLAY_COLOUR,
+                           Globals::G_LANE_INFORMATION_LANE_OVERLAY_COLOUR,
                            cv::LINE_AA);
 
         // Using add to give a transparent overlay
@@ -158,8 +158,8 @@ namespace LaneAndObjectDetection
     void FrameBuilder::AddVideoManagerInformation(cv::Mat& p_frame, const VideoManagerInformation& p_videoManagerInformation)
     {
         AddBackgroundRectAndCentredText(p_frame,
-                                        Globals::G_VIDEO_MANAGER_RECORDING_STATUS_RECT,
-                                        p_videoManagerInformation.m_saveOutput ? Globals::G_VIDEO_MANAGER_RECORDING_TEXT : Globals::G_VIDEO_MANAGER_NOT_RECORDING_TEXT);
+                                        Globals::G_RECORDING_STATUS_RECT,
+                                        p_videoManagerInformation.m_saveOutput ? Globals::G_UI_TEXT_RECORDING : Globals::G_UI_TEXT_NOT_RECORDING);
     }
 
     void FrameBuilder::AddBackgroundRectAndCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale)
@@ -169,7 +169,7 @@ namespace LaneAndObjectDetection
             return;
         }
 
-        cv::rectangle(p_frame, p_backgroundRect, Globals::G_OPENCV_BLACK, cv::FILLED, cv::LINE_AA);
+        cv::rectangle(p_frame, p_backgroundRect, Globals::G_COLOUR_BLACK, cv::FILLED, cv::LINE_AA);
 
         AddCentredText(p_frame, p_backgroundRect, p_text, p_fontScale);
     }
@@ -199,7 +199,7 @@ namespace LaneAndObjectDetection
                     {p_backgroundRect.x + X_PAD, p_backgroundRect.y + textSize.height + Y_PAD},
                     Globals::G_DEFAULT_FONT_FACE,
                     currentFontScale,
-                    Globals::G_OPENCV_WHITE,
+                    Globals::G_COLOUR_WHITE,
                     Globals::G_DEFAULT_FONT_THICKNESS,
                     cv::LINE_AA);
     }

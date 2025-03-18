@@ -10,7 +10,6 @@
 #include <opencv2/core/types.hpp>
 
 #include "helpers/Information.hpp"
-#include "helpers/RollingAverage.hpp"
 
 /**
  * @namespace LaneAndObjectDetection
@@ -43,6 +42,40 @@ namespace LaneAndObjectDetection
         LaneDetectionInformation GetInformation();
 
     private:
+        /**
+         * @class RollingAverage
+         * @brief TODO
+         */
+        class RollingAverage
+        {
+        public:
+            /**
+             * @brief TODO
+             */
+            explicit RollingAverage() = default;
+
+            /**
+             * @brief TODO
+             */
+            explicit RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates);
+
+            /**
+             * @brief TODO
+             */
+            uint32_t CalculateRollingAverage(const uint32_t& p_nextInput);
+
+        private:
+            /**
+             * @brief TODO
+             */
+            std::deque<uint32_t> m_rollingAverageArray;
+
+            /**
+             * @brief TODO
+             */
+            std::vector<uint32_t> m_occurrenceOfEachState;
+        };
+
         /**
          * @brief TODO
          */
@@ -102,5 +135,7 @@ namespace LaneAndObjectDetection
         double m_rightLineAverageSize;
         bool m_giveWayWarning;
         ///@}
+
+
     };
 }

@@ -120,27 +120,27 @@ namespace LaneAndObjectDetection::Globals
      * @brief Lane detector-related information UI locations.
      */
     ///@{
-    static inline const cv::Rect G_UI_DRIVING_STATE_RECT = cv::Rect((Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH / 2.0) - (G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_WIDTH / 2.0), G_UI_PADDING, G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_WIDTH, G_TITLE_ELEMENT_HEIGHT);
-    static inline const cv::Rect G_UI_TURNING_STATE_RECT = cv::Rect((Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH / 2.0) - (G_LANE_DETECTOR_LANE_INFORMATION_TURNING_STATE_WIDTH / 2.0), G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_DRIVING_STATE_RECT.height + G_UI_PADDING, G_LANE_DETECTOR_LANE_INFORMATION_TURNING_STATE_WIDTH, G_SUBTITLE_ELEMENT_HEIGHT);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_TITLE_RECT = cv::Rect(G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_RHS_UI_ELEMENT_WIDTH, G_UI_PADDING, G_RHS_UI_ELEMENT_WIDTH, G_SUBTITLE_ELEMENT_HEIGHT);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_RECT = cv::Rect(G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_RHS_UI_ELEMENT_WIDTH, G_LANE_DETECTOR_LANE_INFORMATION_TITLE_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_TITLE_RECT.height + G_UI_PADDING, G_RHS_UI_ELEMENT_WIDTH, 200);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT = cv::Rect(G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_RHS_UI_ELEMENT_WIDTH, G_LANE_DETECTOR_LANE_INFORMATION_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_RECT.height + G_UI_PADDING, G_RHS_UI_ELEMENT_WIDTH, G_SUBTITLE_ELEMENT_HEIGHT);
+    static inline const cv::Rect G_UI_DRIVING_STATE_RECT = cv::Rect((Globals::G_INPUT_VIDEO_WIDTH / 2.0) - (G_UI_DRIVING_STATE_WIDTH / 2.0), G_UI_PADDING, G_UI_DRIVING_STATE_WIDTH, G_UI_TITLE_HEIGHT);
+    static inline const cv::Rect G_UI_TURNING_STATE_RECT = cv::Rect((Globals::G_INPUT_VIDEO_WIDTH / 2.0) - (G_UI_TURNING_STATE_WIDTH / 2.0), G_UI_DRIVING_STATE_RECT.y + G_UI_DRIVING_STATE_RECT.height + G_UI_PADDING, G_UI_TURNING_STATE_WIDTH, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Rect G_UI_LANE_INFORMATION_TITLE_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Rect G_UI_LANE_INFORMATION_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_LANE_INFORMATION_TITLE_RECT.y + G_UI_LANE_INFORMATION_TITLE_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, 200);
+    static inline const cv::Rect G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_LANE_INFORMATION_RECT.y + G_UI_LANE_INFORMATION_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
     ///@}
 
     /**
      * @brief Recording status UI location.
      */
-    static inline const cv::Rect G_RECORDING_STATUS_RECT = cv::Rect(G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH - G_RHS_UI_ELEMENT_WIDTH - G_UI_PADDING, G_LANE_DETECTOR_LANE_INFORMATION_TURING_RECT.y + G_LANE_DETECTOR_LANE_INFORMATION_TURING_RECT.height + G_UI_PADDING, G_RHS_UI_ELEMENT_WIDTH, G_SUBTITLE_ELEMENT_HEIGHT);
+    static inline const cv::Rect G_RECORDING_STATUS_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_LANE_INFORMATION_WIDTH - G_UI_PADDING, G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT.y + G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
 
     /**
      * @brief Lane information-related lane state UI properties.
      */
     ///@{
     static inline const int32_t G_LANE_INFORMATION_LANE_STATE_PAD = 30;
-    static inline const int32_t G_LANE_INFORMATION_LEFT_LANE_STATE_X_LOCATION = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + G_LANE_DETECTOR_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + (G_LANE_DETECTOR_LANE_INFORMATION_RECT.width / 2.0);
-    static inline const int32_t G_LANE_INFORMATION_RIGHT_LANE_STATE_X_LOCATION = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + G_LANE_DETECTOR_LANE_INFORMATION_RECT.width - G_LANE_DETECTOR_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION = G_LANE_DETECTOR_LANE_INFORMATION_RECT.y + G_LANE_DETECTOR_LANE_STATE_PAD;
+    static inline const int32_t G_LANE_INFORMATION_LEFT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_LANE_INFORMATION_LANE_STATE_PAD;
+    static inline const int32_t G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + (G_UI_LANE_INFORMATION_RECT.width / 2.0);
+    static inline const int32_t G_LANE_INFORMATION_RIGHT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_UI_LANE_INFORMATION_RECT.width - G_LANE_INFORMATION_LANE_STATE_PAD;
+    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION = G_UI_LANE_INFORMATION_RECT.y + G_LANE_INFORMATION_LANE_STATE_PAD;
     static inline const int32_t G_LANE_INFORMATION_LANE_STATE_WIDTH = 3;
     static inline const int32_t G_LANE_INFORMATION_LANE_STATE_HEIGHT = 15;
     ///@}
@@ -149,17 +149,19 @@ namespace LaneAndObjectDetection::Globals
      * @brief Lane information-related vehicle position UI properties.
      */
     ///@{
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH = G_LANE_DETECTOR_LANE_INFORMATION_RECT.width - (4 * G_UI_PADDING);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT = G_LANE_DETECTOR_LANE_INFORMATION_RECT.height - (3 * G_UI_PADDING);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION = G_LANE_DETECTOR_LANE_INFORMATION_RECT.x + (G_LANE_DETECTOR_LANE_INFORMATION_RECT.width / 2.0) - (G_LANE_DETECTION_VEHICLE_POSITION_WIDTH / 2.0);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION = G_LANE_DETECTOR_LANE_INFORMATION_RECT.y + (1.5 * G_UI_PADDING);
+    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH = G_UI_LANE_INFORMATION_RECT.width - (4 * G_UI_PADDING);
+    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT = G_UI_LANE_INFORMATION_RECT.height - (3 * G_UI_PADDING);
+    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION = G_UI_LANE_INFORMATION_RECT.x + (G_UI_LANE_INFORMATION_RECT.width / 2.0) - (G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH / 2.0);
+    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION = G_UI_LANE_INFORMATION_RECT.y + (1.5 * G_UI_PADDING);
     ///@}
 
     /**
      * @brief Translucent colour of the overlay for the current lane.
      */
     static inline const cv::Scalar G_LANE_INFORMATION_LANE_OVERLAY_COLOUR = cv::Scalar(0, 64, 0);
-    
+
+    // TODO: -------------------------------------------------------------------------------------------------------------------
+
     /**
      * @brief Region of interest dimensions.
      */
@@ -170,10 +172,10 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_ROI_BOTTOM_WIDTH = 900;
     static inline const uint32_t G_NUMBER_OF_POINTS = 4;
     static inline const std::array<cv::Point, G_NUMBER_OF_POINTS> G_MASK_DIMENSIONS = {
-        cv::Point((G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH / 2) - (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
-        cv::Point((G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH / 2) + (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
-        cv::Point((G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH / 2) + (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
-        cv::Point((G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH / 2) - (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
+        cv::Point((G_INPUT_VIDEO_WIDTH / 2) - (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
+        cv::Point((G_INPUT_VIDEO_WIDTH / 2) + (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
+        cv::Point((G_INPUT_VIDEO_WIDTH / 2) + (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
+        cv::Point((G_INPUT_VIDEO_WIDTH / 2) - (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
     };
     ///@}
 
@@ -249,6 +251,8 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_NUMBER_OF_VERTICAL_LINE_STATES = 3;
     static inline const uint32_t G_NUMBER_OF_DRIVING_STATES = 5;
     ///@}
+
+    // TODO: -------------------------------------------------------------------------------------------------------------------
 
     /**
      * @brief Object detection threshold and properties.
@@ -376,86 +380,86 @@ namespace LaneAndObjectDetection::Globals
      * to object more commonly found while driving.
      */
     static inline const std::map<std::string, cv::Scalar> G_OBJECT_DETECTOR_OBJECT_NAMES_AND_COLOURS = {
-        {"aeroplane",      G_OPENCV_WHITE },
-        {"apple",          G_OPENCV_WHITE },
-        {"backpack",       G_OPENCV_WHITE },
-        {"banana",         G_OPENCV_WHITE },
-        {"baseball bat",   G_OPENCV_WHITE },
-        {"baseball glove", G_OPENCV_WHITE },
-        {"bear",           G_OPENCV_WHITE },
-        {"bed",            G_OPENCV_WHITE },
-        {"bench",          G_OPENCV_WHITE },
-        {"bicycle",        G_OPENCV_ORANGE},
-        {"bird",           G_OPENCV_WHITE },
-        {"boat",           G_OPENCV_WHITE },
-        {"book",           G_OPENCV_WHITE },
-        {"bottle",         G_OPENCV_WHITE },
-        {"bowl",           G_OPENCV_WHITE },
-        {"broccoli",       G_OPENCV_WHITE },
-        {"bus",            G_OPENCV_GREY  },
-        {"cake",           G_OPENCV_WHITE },
-        {"car",            G_OPENCV_YELLOW},
-        {"carrot",         G_OPENCV_WHITE },
-        {"cat",            G_OPENCV_WHITE },
-        {"cell phone",     G_OPENCV_WHITE },
-        {"chair",          G_OPENCV_WHITE },
-        {"clock",          G_OPENCV_WHITE },
-        {"cow",            G_OPENCV_WHITE },
-        {"cup",            G_OPENCV_WHITE },
-        {"diningtable",    G_OPENCV_WHITE },
-        {"dog",            G_OPENCV_WHITE },
-        {"donut",          G_OPENCV_WHITE },
-        {"elephant",       G_OPENCV_WHITE },
-        {"fire hydrant",   G_OPENCV_WHITE },
-        {"fork",           G_OPENCV_WHITE },
-        {"frisbee",        G_OPENCV_WHITE },
-        {"giraffe",        G_OPENCV_WHITE },
-        {"hair drier",     G_OPENCV_WHITE },
-        {"handbag",        G_OPENCV_WHITE },
-        {"horse",          G_OPENCV_WHITE },
-        {"hot dog",        G_OPENCV_WHITE },
-        {"keyboard",       G_OPENCV_WHITE },
-        {"kite",           G_OPENCV_WHITE },
-        {"knife",          G_OPENCV_WHITE },
-        {"laptop",         G_OPENCV_WHITE },
-        {"microwave",      G_OPENCV_WHITE },
-        {"motorbike",      G_OPENCV_GREEN },
-        {"mouse",          G_OPENCV_WHITE },
-        {"orange",         G_OPENCV_WHITE },
-        {"oven",           G_OPENCV_WHITE },
-        {"parking meter",  G_OPENCV_WHITE },
-        {"person",         G_OPENCV_BLUE  },
-        {"pizza",          G_OPENCV_WHITE },
-        {"pottedplant",    G_OPENCV_WHITE },
-        {"refrigerator",   G_OPENCV_WHITE },
-        {"remote",         G_OPENCV_WHITE },
-        {"sandwich",       G_OPENCV_WHITE },
-        {"scissors",       G_OPENCV_WHITE },
-        {"sheep",          G_OPENCV_WHITE },
-        {"sink",           G_OPENCV_WHITE },
-        {"skateboard",     G_OPENCV_WHITE },
-        {"skis",           G_OPENCV_WHITE },
-        {"snowboard",      G_OPENCV_WHITE },
-        {"sofa",           G_OPENCV_WHITE },
-        {"spoon",          G_OPENCV_WHITE },
-        {"sports ball",    G_OPENCV_WHITE },
-        {"stop sign",      G_OPENCV_WHITE },
-        {"suitcase",       G_OPENCV_WHITE },
-        {"surfboard",      G_OPENCV_WHITE },
-        {"teddy bear",     G_OPENCV_WHITE },
-        {"tennis racket",  G_OPENCV_WHITE },
-        {"tie",            G_OPENCV_WHITE },
-        {"toaster",        G_OPENCV_WHITE },
-        {"toilet",         G_OPENCV_WHITE },
-        {"toothbrush",     G_OPENCV_WHITE },
-        {"traffic light",  G_OPENCV_RED   },
-        {"train",          G_OPENCV_WHITE },
-        {"truck",          G_OPENCV_PURPLE},
-        {"tvmonitor",      G_OPENCV_WHITE },
-        {"umbrella",       G_OPENCV_WHITE },
-        {"vase",           G_OPENCV_WHITE },
-        {"wine glass",     G_OPENCV_WHITE },
-        {"zebra",          G_OPENCV_WHITE },
+        {"aeroplane",      G_COLOUR_WHITE },
+        {"apple",          G_COLOUR_WHITE },
+        {"backpack",       G_COLOUR_WHITE },
+        {"banana",         G_COLOUR_WHITE },
+        {"baseball bat",   G_COLOUR_WHITE },
+        {"baseball glove", G_COLOUR_WHITE },
+        {"bear",           G_COLOUR_WHITE },
+        {"bed",            G_COLOUR_WHITE },
+        {"bench",          G_COLOUR_WHITE },
+        {"bicycle",        G_COLOUR_ORANGE},
+        {"bird",           G_COLOUR_WHITE },
+        {"boat",           G_COLOUR_WHITE },
+        {"book",           G_COLOUR_WHITE },
+        {"bottle",         G_COLOUR_WHITE },
+        {"bowl",           G_COLOUR_WHITE },
+        {"broccoli",       G_COLOUR_WHITE },
+        {"bus",            G_COLOUR_GREY  },
+        {"cake",           G_COLOUR_WHITE },
+        {"car",            G_COLOUR_YELLOW},
+        {"carrot",         G_COLOUR_WHITE },
+        {"cat",            G_COLOUR_WHITE },
+        {"cell phone",     G_COLOUR_WHITE },
+        {"chair",          G_COLOUR_WHITE },
+        {"clock",          G_COLOUR_WHITE },
+        {"cow",            G_COLOUR_WHITE },
+        {"cup",            G_COLOUR_WHITE },
+        {"diningtable",    G_COLOUR_WHITE },
+        {"dog",            G_COLOUR_WHITE },
+        {"donut",          G_COLOUR_WHITE },
+        {"elephant",       G_COLOUR_WHITE },
+        {"fire hydrant",   G_COLOUR_WHITE },
+        {"fork",           G_COLOUR_WHITE },
+        {"frisbee",        G_COLOUR_WHITE },
+        {"giraffe",        G_COLOUR_WHITE },
+        {"hair drier",     G_COLOUR_WHITE },
+        {"handbag",        G_COLOUR_WHITE },
+        {"horse",          G_COLOUR_WHITE },
+        {"hot dog",        G_COLOUR_WHITE },
+        {"keyboard",       G_COLOUR_WHITE },
+        {"kite",           G_COLOUR_WHITE },
+        {"knife",          G_COLOUR_WHITE },
+        {"laptop",         G_COLOUR_WHITE },
+        {"microwave",      G_COLOUR_WHITE },
+        {"motorbike",      G_COLOUR_GREEN },
+        {"mouse",          G_COLOUR_WHITE },
+        {"orange",         G_COLOUR_WHITE },
+        {"oven",           G_COLOUR_WHITE },
+        {"parking meter",  G_COLOUR_WHITE },
+        {"person",         G_COLOUR_BLUE  },
+        {"pizza",          G_COLOUR_WHITE },
+        {"pottedplant",    G_COLOUR_WHITE },
+        {"refrigerator",   G_COLOUR_WHITE },
+        {"remote",         G_COLOUR_WHITE },
+        {"sandwich",       G_COLOUR_WHITE },
+        {"scissors",       G_COLOUR_WHITE },
+        {"sheep",          G_COLOUR_WHITE },
+        {"sink",           G_COLOUR_WHITE },
+        {"skateboard",     G_COLOUR_WHITE },
+        {"skis",           G_COLOUR_WHITE },
+        {"snowboard",      G_COLOUR_WHITE },
+        {"sofa",           G_COLOUR_WHITE },
+        {"spoon",          G_COLOUR_WHITE },
+        {"sports ball",    G_COLOUR_WHITE },
+        {"stop sign",      G_COLOUR_WHITE },
+        {"suitcase",       G_COLOUR_WHITE },
+        {"surfboard",      G_COLOUR_WHITE },
+        {"teddy bear",     G_COLOUR_WHITE },
+        {"tennis racket",  G_COLOUR_WHITE },
+        {"tie",            G_COLOUR_WHITE },
+        {"toaster",        G_COLOUR_WHITE },
+        {"toilet",         G_COLOUR_WHITE },
+        {"toothbrush",     G_COLOUR_WHITE },
+        {"traffic light",  G_COLOUR_RED   },
+        {"train",          G_COLOUR_WHITE },
+        {"truck",          G_COLOUR_PURPLE},
+        {"tvmonitor",      G_COLOUR_WHITE },
+        {"umbrella",       G_COLOUR_WHITE },
+        {"vase",           G_COLOUR_WHITE },
+        {"wine glass",     G_COLOUR_WHITE },
+        {"zebra",          G_COLOUR_WHITE },
     };
 
     /**

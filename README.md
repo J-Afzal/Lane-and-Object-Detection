@@ -124,12 +124,13 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 <!--
 x. Clean up C++ lane and object detection code.
 
-    Move rolling average class in to lane detector
-    Make driving state an enum?
+    Debug and clean up rolling average code (including global constants)
     Debug lane detection code to make sure it is correct.
+    Make driving state an enum?
+    Why is NAN being used?
     Rename all vars and functions and delete some member vars
     redo get information functions
-    Why is NAN being used?
+
 
     Make sure all global vars are used and all information vars
     Make sure all consts in globals
@@ -160,9 +161,10 @@ x. Enhancements
 
 x. Test with CUDA? (regardless do performance heat map and optimisation)
 
-x. Implement C GUI window to encapsulate main code and performance test code with debug mode to show all stats (and roi/canny/hough line debug views) and option to adjust ROI?
-    Use Clay?
-    where are std::cout displayed?
-    run performance tests?
-    display and export performance graphs?
+x. Implement C GUI window to encapsulate main code and performance test code with debug mode to show all stats (and roi/canny
+   /hough line debug views) and option to adjust ROI?
+        Use Clay?
+        where are std::cout displayed?
+        run performance tests?
+        display and export performance graphs?
 -->

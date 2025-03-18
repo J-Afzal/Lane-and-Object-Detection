@@ -58,7 +58,7 @@ namespace LaneAndObjectDetection
         {
             if (argument == "-h" || argument == "--help")
             {
-                std::cout << Globals::G_VIDEO_MANAGER_CLI_HELP_MESSAGE;
+                std::cout << Globals::G_CLI_HELP_MESSAGE;
                 exit(1);
             }
 
@@ -93,7 +93,7 @@ namespace LaneAndObjectDetection
 
                     else
                     {
-                        std::cout << Globals::G_VIDEO_MANAGER_CLI_HELP_MESSAGE;
+                        std::cout << Globals::G_CLI_HELP_MESSAGE;
                         exit(1);
                     }
                 }
@@ -112,7 +112,7 @@ namespace LaneAndObjectDetection
 
                     else
                     {
-                        std::cout << Globals::G_VIDEO_MANAGER_CLI_HELP_MESSAGE;
+                        std::cout << Globals::G_CLI_HELP_MESSAGE;
                         exit(1);
                     }
                 }
@@ -146,7 +146,7 @@ namespace LaneAndObjectDetection
 
                     else
                     {
-                        std::cout << Globals::G_VIDEO_MANAGER_CLI_HELP_MESSAGE;
+                        std::cout << Globals::G_CLI_HELP_MESSAGE;
                         exit(1);
                     }
                 }
@@ -154,7 +154,7 @@ namespace LaneAndObjectDetection
 
             catch (...)
             {
-                std::cout << Globals::G_VIDEO_MANAGER_CLI_HELP_MESSAGE;
+                std::cout << Globals::G_CLI_HELP_MESSAGE;
                 exit(1);
             }
 
@@ -164,7 +164,7 @@ namespace LaneAndObjectDetection
         // Check that the required arguments have been provided
         if (parsedInputVideoFilePath.empty() || parsedYoloFolderPath.empty() || parsedObjectDetectorTypes == ObjectDetectorTypes::DEFAULT)
         {
-            std::cout << Globals::G_VIDEO_MANAGER_CLI_HELP_MESSAGE;
+            std::cout << Globals::G_CLI_HELP_MESSAGE;
             exit(1);
         }
 
@@ -192,8 +192,8 @@ namespace LaneAndObjectDetection
             exit(1);
         }
 
-        m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH);
-        m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_VIDEO_MANAGER_INPUT_VIDEO_HEIGHT);
+        m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_INPUT_VIDEO_WIDTH);
+        m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_INPUT_VIDEO_HEIGHT);
 
         m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
@@ -214,8 +214,8 @@ namespace LaneAndObjectDetection
             exit(1);
         }
 
-        m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_VIDEO_MANAGER_INPUT_VIDEO_WIDTH);
-        m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_VIDEO_MANAGER_INPUT_VIDEO_HEIGHT);
+        m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_INPUT_VIDEO_WIDTH);
+        m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_INPUT_VIDEO_HEIGHT);
 
         m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
@@ -248,11 +248,11 @@ namespace LaneAndObjectDetection
 
             switch (cv::waitKey(1))
             {
-            case Globals::G_VIDEO_MANAGER_TOGGLE_RECORDING_KEY:
+            case Globals::G_TOGGLE_RECORDING_KEY:
                 ToggleSaveOutput();
                 break;
 
-            case Globals::G_VIDEO_MANAGER_QUIT_KEY:
+            case Globals::G_QUIT_KEY:
                 cv::destroyAllWindows();
                 return;
 
@@ -279,8 +279,8 @@ namespace LaneAndObjectDetection
 
             m_outputVideo.open(OUTPUT_FILE_NAME,
                                cv::VideoWriter::fourcc('m', 'p', '4', 'v'),
-                               Globals::G_VIDEO_MANAGER_OUTPUT_VIDEO_FPS,
-                               cv::Size(Globals::G_VIDEO_MANAGER_OUTPUT_VIDEO_WIDTH, Globals::G_VIDEO_MANAGER_OUTPUT_VIDEO_HEIGHT));
+                               Globals::G_OUTPUT_VIDEO_FPS,
+                               cv::Size(Globals::G_OUTPUT_VIDEO_WIDTH, Globals::G_OUTPUT_VIDEO_HEIGHT));
 
             if (!m_outputVideo.isOpened())
             {

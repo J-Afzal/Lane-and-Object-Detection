@@ -23,7 +23,6 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/RollingAverage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 
@@ -46,7 +45,6 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/RollingAverage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 
