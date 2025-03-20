@@ -12,9 +12,8 @@ jobs:
         uses: ./.github/workflows/Build.yml
 
     lint:
-        uses: J-Afzal/Linters/.github/workflows/Linting-PowerShell.yml@main
+        uses: J-Afzal/Linters/.github/workflows/Linting.yml@main
         with:
             path_to_linters_submodule_root: "./submodules/Linters"
-            path_back_to_repository_root: "../.."
             run_powershell_linters: true
             run_cpp_linters: true
