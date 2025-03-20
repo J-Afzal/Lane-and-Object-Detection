@@ -131,7 +131,6 @@ x. Clean up C++ lane and object detection code.
     Rename all vars and functions and delete some member vars
     redo get information functions
 
-
     Make sure all global vars are used and all information vars
     Make sure all consts in globals
     Make global consts shorter? re-org?
