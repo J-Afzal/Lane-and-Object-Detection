@@ -22,8 +22,7 @@ namespace LaneAndObjectDetection
      */
     enum class ObjectDetectorTypes : std::uint8_t
     {
-        DEFAULT = 0,
-        NONE,
+        NONE = 0,
         STANDARD,
         TINY
     };

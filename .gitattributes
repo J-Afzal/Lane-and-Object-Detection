@@ -6,6 +6,8 @@
 *.hpp           text        diff=cpp
 
 # Config
+.clang-format   text
+.clang-tidy     text
 .editorconfig   text
 .gitattributes  text
 .gitignore      text
@@ -33,6 +35,7 @@ LICENSE         text
 *.psm1          text
 
 # Serialisation
+*.json          text
 *.yml           text
 
 # Web

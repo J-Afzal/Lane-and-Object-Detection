@@ -24,279 +24,178 @@ namespace LaneAndObjectDetection
         m_changingLanesPreviousDifference(0),
         m_leftLineAverageSize(0),
         m_middleLineAverageSize(0),
-        m_rightLineAverageSize(0),
-        m_giveWayWarning(false)
+        m_rightLineAverageSize(0)
     {
-        m_horizontalLineStateRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_HORIZONTAL_LINE_STATES);
-        m_leftLineTypeRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_VERTICAL_LINE_STATES);
-        m_middleLineTypeRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_VERTICAL_LINE_STATES);
-        m_rightLineTypeRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_VERTICAL_LINE_STATES);
-        m_drivingStateRollingAverage = RollingAverage(Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, Globals::G_NUMBER_OF_DRIVING_STATES);
-
-        m_leftLineTypesForDisplay = {0, 0, 0, 0, 0}; // TODO: better names and improve other names
-        m_middleLineTypesForDisplay = {0, 0, 0, 0, 0};
-        m_rightLineTypesForDisplay = {0, 0, 0, 0, 0};
-
-        m_lanePoints = {
-            {0, 0},
-            {0, 0},
-            {0, 0},
-            {0, 0}
-        };
+        m_laneDetectionInformation.m_leftLineTypesForDisplay.insert(m_laneDetectionInformation.m_leftLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LINES_TO_DISPLAY, 0);
+        m_laneDetectionInformation.m_middleLineTypesForDisplay.insert(m_laneDetectionInformation.m_middleLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LINES_TO_DISPLAY, 0);
+        m_laneDetectionInformation.m_rightLineTypesForDisplay.insert(m_laneDetectionInformation.m_rightLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LINES_TO_DISPLAY, 0);
     }
 
     void LaneDetector::RunLaneDetector(const cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation)
     {
-        Setup();
+        cv::Mat cannyFrame;
+        cv::Mat roiFrame;
+        std::vector<cv::Vec4i> houghLines;
 
-        GetHoughLines(p_frame);
+        // Get region of interest (ROI) frame by applying a mask on to the frame
+        cv::Mat blankFrame = cv::Mat::zeros(Globals::G_INPUT_VIDEO_HEIGHT, Globals::G_INPUT_VIDEO_WIDTH, p_frame.type());
+        cv::fillConvexPoly(blankFrame, Globals::G_ROI_MASK_POINTS, Globals::G_COLOUR_WHITE);
+        cv::bitwise_and(blankFrame, p_frame, roiFrame);
+        cv::cvtColor(roiFrame, roiFrame, cv::COLOR_BGR2GRAY);
 
-        AnalyseHoughLines(p_objectDetectionInformation);
+        // Get edges using Canny Algorithm on the ROI Frame
+        cv::Canny(roiFrame, cannyFrame, Globals::G_CANNY_ALGORITHM_LOWER_THRESHOLD, Globals::G_CANNY_ALGORITHM_UPPER_THRESHOLD);
 
-        GetDrivingState();
+        // Get straight lines using the Probabilistic Hough Transform (PHT) on the output of Canny Algorithm
+        cv::HoughLinesP(cannyFrame, houghLines, Globals::G_HOUGH_RHO, Globals::G_HOUGH_THETA, Globals::G_HOUGH_THRESHOLD, Globals::G_HOUGH_MIN_LINE_LENGTH, Globals::G_HOUGH_MAX_LINE_GAP);
+
+        AnalyseHoughLines(houghLines, p_objectDetectionInformation);
+
+        UpdateLineTypes();
+
+        UpdateDrivingState();
 
         ExecuteDrivingState();
     }
 
     LaneDetectionInformation LaneDetector::GetInformation()
     {
-        return {
-            // TODO: update this.
-            .m_lanePoints = m_lanePoints,
-            .m_leftLineTypesForDisplay = m_leftLineTypesForDisplay,
-            .m_middleLineTypesForDisplay = m_middleLineTypesForDisplay,
-            .m_rightLineTypesForDisplay = m_rightLineTypesForDisplay,
-            .m_currentTurningState = m_currentTurningState,
-            .m_drivingStateTitle = m_drivingStateTitle,
-            .m_laneInformationTitle = m_laneInformationTitle,
-            .m_turningRequiredToReturnToCenter = m_turningRequiredToReturnToCenter,
-            .m_drivingState = m_drivingState,
-            .m_turningRequired = m_turningRequired,
-        };
+        return m_laneDetectionInformation;
     }
 
-    LaneDetector::RollingAverage::RollingAverage(const uint32_t& p_sizeOfRollingAverage, const uint32_t& p_numberOfStates)
+    LaneDetector::RollingAverage::RollingAverage()
     {
-        for (uint32_t i = 0; i < p_sizeOfRollingAverage; i++) // TODO: use insert?
-        {
-            m_rollingAverageArray.push_back(0);
-        }
-
-        for (uint32_t i = 0; i < p_numberOfStates; i++) // TODO: use insert?
-        {
-            m_occurrenceOfEachState.push_back(0);
-        }
-
-        m_occurrenceOfEachState[0] = p_sizeOfRollingAverage; // TODO: Eh?
+        m_rollingAverageArray.insert(m_rollingAverageArray.begin(), Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, 0);
     }
 
     uint32_t LaneDetector::RollingAverage::CalculateRollingAverage(const uint32_t& p_nextInput)
     {
-        m_occurrenceOfEachState[m_rollingAverageArray.back()]--;
         m_rollingAverageArray.pop_back();
         m_rollingAverageArray.push_front(p_nextInput);
-        m_occurrenceOfEachState[p_nextInput]++;
 
-        uint32_t mostFrequentState = 0;
-        for (uint32_t i = 1; i < m_occurrenceOfEachState.size(); i++)
+        std::unordered_map<uint32_t, uint32_t> elementCount;
+        for (const uint32_t& element : m_rollingAverageArray)
         {
-            if (m_occurrenceOfEachState[i] > m_occurrenceOfEachState[mostFrequentState])
+            elementCount[element]++;
+        }
+
+        uint32_t mostFrequentElement = 0;
+        uint32_t mostFrequentElementCount = 0;
+
+        for (const std::pair<uint32_t, uint32_t> element : elementCount)
+        {
+            if (element.second > mostFrequentElementCount)
             {
-                mostFrequentState = i;
+                mostFrequentElement = element.first;
+                mostFrequentElementCount = element.second;
             }
         }
 
-        return mostFrequentState;
+        return mostFrequentElement;
     }
 
-    void LaneDetector::Setup()
+    void LaneDetector::AnalyseHoughLines(const std::vector<cv::Vec4i>& p_houghLines, const ObjectDetectionInformation& p_objectDetectionInformation)
     {
-        m_houghLines.clear();
         m_leftLines.clear();
         m_middleLines.clear();
         m_rightLines.clear();
-        m_leftLineAverageSize = m_middleLineAverageSize = m_rightLineAverageSize = 0;
-        m_lanePoints = {
-            {0, 0},
-            {0, 0},
-            {0, 0},
-            {0, 0}
-        };
-    }
+        m_leftLineAverageSize = 0;
+        m_middleLineAverageSize = 0;
+        m_rightLineAverageSize = 0;
 
-    void LaneDetector::GetHoughLines(const cv::Mat& p_frame)
-    {
-        // Get region of interest (ROI) frame by applying a mask on to the frame
-        m_blankFrame = cv::Mat::zeros(Globals::G_INPUT_VIDEO_HEIGHT, Globals::G_INPUT_VIDEO_WIDTH, p_frame.type());
-        cv::fillConvexPoly(m_blankFrame, Globals::G_MASK_DIMENSIONS, Globals::G_COLOUR_WHITE);
-        cv::bitwise_and(m_blankFrame, p_frame, m_roiFrame);
-        // Convert ROI frame to B&W
-        cv::cvtColor(m_roiFrame, m_roiFrame, cv::COLOR_BGR2GRAY);
-        // Get edges using Canny Algorithm on the ROI Frame
-        cv::Canny(m_roiFrame, m_cannyFrame, Globals::G_CANNY_LOWER_THRESHOLD, Globals::G_CANNY_UPPER_THRESHOLD);
-        // Get straight lines using the Probabilistic Hough Transform (PHT) on the output of Canny Algorithm
-        cv::HoughLinesP(m_cannyFrame, m_houghLines, Globals::G_HOUGH_RHO, Globals::G_HOUGH_THETA, Globals::G_HOUGH_THRESHOLD, Globals::G_HOUGH_MIN_LINE_LENGTH, Globals::G_HOUGH_MAX_LINE_GAP);
-    }
-
-    void LaneDetector::AnalyseHoughLines(const ObjectDetectionInformation& p_objectDetectionInformation) // NOLINT(readability-function-cognitive-complexity) // TODO: remove
-    {
-        /**
-         * The straight lines received from the PHT contain lines that are not a part of any
-         * road markings (i.e. noise) and so this for loop tries to remove as much as them whilst
-         * preserving the useful lines.
-         *
-         * For example, the ROI frame is the same size as the original frame (1920x1080) but is blank
-         * expect for the locations within the area defined by m_MASK_DIMENSIONS (region of interest/ROI).
-         * This means an edge between the black pixels and the contents within the ROI will be
-         * picked up by the Canny Algorithm on the ROI Frame, which will be picked up by the
-         * Probabilistic Hough Transform (PHT). Thus these lines (mask edge lines) must be removed.
-         */
-        uint32_t horizontalCount = 0;
-        uint32_t lowerX = 0;
-        uint32_t lowerY = 0;
-        uint32_t upperX = 0;
-        uint32_t upperY = 0;
-        double changeInX = NAN;
-        double changeInY = NAN;
-        double gradient = NAN;
-        double leftY1 = NAN;
-        double leftY2 = NAN;
-        double rightY1 = NAN;
-        double rightY2 = NAN;
-        bool lineIsInBoundingBox = false;
-
-        for (const auto& houghLine : m_houghLines)
+        for (const cv::Vec4i& houghLine : p_houghLines)
         {
-            lineIsInBoundingBox = false;
+            const double CHANGE_IN_X = houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX];
+            const double CHANGE_IN_Y = houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX];
 
-            for (const auto& objectInformation : p_objectDetectionInformation.m_objectInformation)
-            {
-                lowerX = objectInformation.m_boundingBox.x;
-                upperX = objectInformation.m_boundingBox.x + objectInformation.m_boundingBox.width;
-                lowerY = objectInformation.m_boundingBox.y;
-                upperY = objectInformation.m_boundingBox.y + objectInformation.m_boundingBox.height;
-
-                if ((houghLine[0] >= lowerX && houghLine[0] <= upperX && houghLine[1] >= lowerY && houghLine[1] <= upperY) ||
-                    (houghLine[2] >= lowerX && houghLine[2] <= upperX && houghLine[3] >= lowerY && houghLine[3] <= upperY))
-                {
-                    lineIsInBoundingBox = true;
-                    break;
-                }
-            }
-
-            /**
-             * The bounding boxes are created by the object detector, which
-             * cannot detect road markings, thus if the line is in a bounding
-             * box, it cannot be a road marking and must be ignored.
-             */
-            if (lineIsInBoundingBox)
+            // Filter out vertical lines
+            if (CHANGE_IN_X == 0)
             {
                 continue;
             }
 
-            changeInX = houghLine[0] - houghLine[2];
-            changeInY = houghLine[1] - houghLine[3];
-            if (changeInX == 0)
+            const double GRADIENT = CHANGE_IN_Y / CHANGE_IN_X;
+
+            // Filter out horizontal lines
+            if (std::fabs(GRADIENT) < Globals::G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD)
             {
                 continue;
             }
-            gradient = changeInY / changeInX;
 
-            /**
-             * Lines are considered horizontal lines if they have:
-             *    an absolute gradient below a certain gradient threshold
-             *    a length above a threshold
-             *    are not the top or bottom edge of the ROI frame
-             */
-            if (std::fabs(gradient) < Globals::G_HORIZONTAL_GRADIENT_THRESHOLD)
+            // The bounding boxes are created by the object detector which cannot detect road markings. Thus, if the line is in
+            // a bounding box, it cannot be a road marking and is ignored.
+            if (IsLineWithinBoundingBoxes(houghLine, p_objectDetectionInformation))
             {
-                if ((std::sqrt((changeInY * changeInY) + (changeInX * changeInX)) > Globals::G_HORIZONTAL_LENGTH_THRESHOLD) &&
-                    (((houghLine[1] >= Globals::G_ROI_TOP_HEIGHT + 1) && (houghLine[3] >= Globals::G_ROI_TOP_HEIGHT + 1)) || ((houghLine[1] <= Globals::G_ROI_BOTTOM_HEIGHT - 1) && (houghLine[3] <= Globals::G_ROI_BOTTOM_HEIGHT - 1))))
-                {
-                    horizontalCount++;
-                }
+                continue;
             }
 
-            /**
-             * All lines with an absolute gradient above the gradient
-             * threshold are considered for vertical lines
-             */
-            else
+            // ROI frame:
+            //
+            //    Top edge of mask -->  ____________________
+            //                         /         / \        \
+            // Left edge of mask -->  /         /   \        \
+            //                       /         /     \        \
+            //                      /    #    /   @   \    &   \
+            //                     /         /         \        \  <-- Right edge of mask
+            //                    /         /           \        \
+            //                    ---------- ----------- ----------  <-- Bottom edge of mask
+            //        Left line threshold  ^             ^ Right line threshold
+            //
+            // Any lines within:
+            //      '#' region will be considered left lines
+            //      '@' region will be considered middle lines
+            //      '&' region will be considered right lines
+            //
+            // Within OpenCV, the origin is located at the top left of the frame. Thus, left lines should have negative
+            // gradients and right positive gradients.
+
+            // Remove the left edge of the ROI frame
+            double y1 = Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_LEFT_EDGE_OF_MASK_C;
+            double y2 = Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[2] + Globals::G_LEFT_EDGE_OF_MASK_C;
+            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] <= y1 + 1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] <= y2 + 1)) // TODO: why +1
             {
-                /**
-                 *    Top edge of mask -->   ____________________
-                 *                          /         / \        \
-                 * Left edge of mask -->   /         /   \        \
-                 *                        /         /     \        \
-                 *                       /    #    /   @   \    &   \
-                 *                      /         /         \        \   <-- Right edge of mask
-                 *                     /         /           \        \
-                 *                     ---------- ----------- ----------   <-- Bottom edge of mask
-                 *                               ^           ^
-                 *                            Left line    Right line
-                 *                            threshold    threshold
-                 *
-                 * Any lines within:
-                 *      '#' region will be considered left lines
-                 *      '@' region will be considered middle lines
-                 *      '&' region will be considered right lines
-                 *
-                 * Please note that, for OpenCV, the origin is located at the top left of the frame.
-                 *
-                 * Thus, left lines should have negative gradients and right positive gradients.
-                 *
-                 * Equations are used to determine the locations of two lines with respect to each other
-                 */
-
-                // Remove the left edge of the ROI frame
-                leftY1 = Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[0] + Globals::G_LEFT_EDGE_OF_MASK_C;
-                leftY2 = Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[2] + Globals::G_LEFT_EDGE_OF_MASK_C;
-                if ((houghLine[1] <= leftY1 + 1) && (houghLine[3] <= leftY2 + 1))
-                {
-                    continue;
-                }
-
-                // If within left threshold and has a negative gradient, then it is a left line
-                leftY1 = Globals::G_LEFT_EDGE_THRESHOLD_M * houghLine[0] + Globals::G_LEFT_EDGE_THRESHOLD_C;
-                leftY2 = Globals::G_LEFT_EDGE_THRESHOLD_M * houghLine[2] + Globals::G_LEFT_EDGE_THRESHOLD_C;
-                if ((houghLine[1] < leftY1) && (houghLine[3] < leftY2) && gradient < 0)
-                {
-                    m_leftLines.push_back(houghLine);
-                    m_leftLineAverageSize += std::sqrt(((houghLine[0] - houghLine[2]) * (houghLine[0] - houghLine[2])) + ((houghLine[1] - houghLine[3]) * (houghLine[1] - houghLine[3])));
-                    continue;
-                }
-
-                // Remove the right edge of the ROI frame
-                rightY1 = Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[0] + Globals::G_RIGHT_EDGE_OF_MASK_C;
-                rightY2 = Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[2] + Globals::G_RIGHT_EDGE_OF_MASK_C;
-                if ((houghLine[1] <= rightY1 + 1) && (houghLine[3] <= rightY2 + 1))
-                {
-                    continue;
-                }
-
-                // If within right threshold and has a positive gradient, then it is a right line
-                rightY1 = Globals::G_RIGHT_EDGE_THRESHOLD_M * houghLine[0] + Globals::G_RIGHT_EDGE_THRESHOLD_C;
-                rightY2 = Globals::G_RIGHT_EDGE_THRESHOLD_M * houghLine[2] + Globals::G_RIGHT_EDGE_THRESHOLD_C;
-                if ((houghLine[1] < rightY1) && (houghLine[3] < rightY2) && gradient > 0)
-                {
-                    m_rightLines.push_back(houghLine);
-                    m_rightLineAverageSize += std::sqrt(((houghLine[0] - houghLine[2]) * (houghLine[0] - houghLine[2])) + ((houghLine[1] - houghLine[3]) * (houghLine[1] - houghLine[3])));
-                    continue;
-                }
-
-                // Thus, the line must be a middle line
-                m_middleLines.push_back(houghLine);
-                m_middleLineAverageSize += std::sqrt(((houghLine[0] - houghLine[2]) * (houghLine[0] - houghLine[2])) + ((houghLine[1] - houghLine[3]) * (houghLine[1] - houghLine[3])));
+                continue;
             }
-        }
 
-        if (horizontalCount > Globals::G_HORIZONTAL_COUNT_THRESHOLD)
-        {
-            m_giveWayWarning = (m_horizontalLineStateRollingAverage.CalculateRollingAverage(1) != 0);
-        }
-        else
-        {
-            m_giveWayWarning = (m_horizontalLineStateRollingAverage.CalculateRollingAverage(0) != 0);
+            // If within left threshold and has a negative gradient (meaning the line follows the expected path shown in the
+            // diagram above), then it is a left line
+            y1 = Globals::G_LEFT_LINE_THRESHOLD_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_LEFT_LINE_THRESHOLD_C;
+            y2 = Globals::G_LEFT_LINE_THRESHOLD_M * houghLine[2] + Globals::G_LEFT_LINE_THRESHOLD_C;
+            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] < y1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] < y2) && GRADIENT < 0)
+            {
+                m_leftLines.push_back(houghLine);
+                m_leftLineAverageSize += std::sqrt(
+                    ((houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX])) +
+                    ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX])));
+                continue;
+            }
+
+            // Remove the right edge of the ROI frame
+            y1 = Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_RIGHT_EDGE_OF_MASK_C;
+            y2 = Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[Globals::G_HOUGH_LINE_X2_INDEX] + Globals::G_RIGHT_EDGE_OF_MASK_C;
+            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] <= y1 + 1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] <= y2 + 1)) // TODO: why +1
+            {
+                continue;
+            }
+
+            // If within right threshold and has a positive gradient (meaning the line follows the expected path shown in the
+            // diagram above), then it is a right line
+            y1 = Globals::G_RIGHT_LINE_THRESHOLD_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_RIGHT_LINE_THRESHOLD_C;
+            y2 = Globals::G_RIGHT_LINE_THRESHOLD_M * houghLine[Globals::G_HOUGH_LINE_X2_INDEX] + Globals::G_RIGHT_LINE_THRESHOLD_C;
+            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] < y1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] < y2) && GRADIENT > 0)
+            {
+                m_rightLines.push_back(houghLine);
+                m_rightLineAverageSize += std::sqrt(
+                    ((houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX])) +
+                    ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX])));
+                continue;
+            }
+
+            // Otherwise the line is be a middle line
+            m_middleLines.push_back(houghLine);
+            m_middleLineAverageSize += std::sqrt(
+                ((houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX])) +
+                ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX])));
         }
 
         m_leftLineAverageSize /= static_cast<double>(m_leftLines.size());
@@ -304,124 +203,139 @@ namespace LaneAndObjectDetection
         m_rightLineAverageSize /= static_cast<double>(m_rightLines.size());
     }
 
-    void LaneDetector::GetDrivingState()
+    bool LaneDetector::IsLineWithinBoundingBoxes(const cv::Vec4i& p_houghLine, const ObjectDetectionInformation& p_objectDetectionInformation)
     {
-        uint32_t leftLineType = 0;
-        uint32_t middleLineType = 0;
-        uint32_t rightLineType = 0;
+        for (const auto& objectInformation : p_objectDetectionInformation.m_objectInformation)
+        {
+            int32_t lowerX = objectInformation.m_boundingBox.x;
+            int32_t upperX = objectInformation.m_boundingBox.x + objectInformation.m_boundingBox.width;
+            int32_t lowerY = objectInformation.m_boundingBox.y;
+            int32_t upperY = objectInformation.m_boundingBox.y + objectInformation.m_boundingBox.height;
 
+            // The OR operator means that only whole line does not need to be within the bounding box for the line to be
+            // considered within the bounding boxes
+            if ((p_houghLine[0] >= lowerX && p_houghLine[0] <= upperX && p_houghLine[1] >= lowerY && p_houghLine[1] <= upperY) ||
+                (p_houghLine[2] >= lowerX && p_houghLine[2] <= upperX && p_houghLine[3] >= lowerY && p_houghLine[3] <= upperY))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void LaneDetector::UpdateLineTypes()
+    {
+        LineType leftLineType;
         if (m_leftLines.empty())
         {
-            leftLineType = m_leftLineTypeRollingAverage.CalculateRollingAverage(0);
+            leftLineType = LineType::EMPTY;
         }
         else if (m_leftLineAverageSize < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
         {
-            leftLineType = m_leftLineTypeRollingAverage.CalculateRollingAverage(1);
+            leftLineType = LineType::DASHED;
         }
         else
         {
-            leftLineType = m_leftLineTypeRollingAverage.CalculateRollingAverage(2);
+            leftLineType = LineType::SOLID;
         }
 
+        LineType middleLineType;
         if (m_middleLines.empty())
         {
-            middleLineType = m_middleLineTypeRollingAverage.CalculateRollingAverage(0);
+            middleLineType = LineType::EMPTY;
         }
         else if (m_middleLineAverageSize < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
         {
-            middleLineType = m_middleLineTypeRollingAverage.CalculateRollingAverage(1);
+            middleLineType = LineType::DASHED;
         }
         else
         {
-            middleLineType = m_middleLineTypeRollingAverage.CalculateRollingAverage(2);
+            middleLineType = LineType::SOLID;
         }
 
+        LineType rightLineType;
         if (m_rightLines.empty())
         {
-            rightLineType = m_rightLineTypeRollingAverage.CalculateRollingAverage(0);
+            rightLineType = LineType::EMPTY;
         }
         else if (m_rightLineAverageSize < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
         {
-            rightLineType = m_rightLineTypeRollingAverage.CalculateRollingAverage(1);
+            rightLineType = LineType::DASHED;
         }
         else
         {
-            rightLineType = m_rightLineTypeRollingAverage.CalculateRollingAverage(2);
+            rightLineType = LineType::SOLID;
         }
 
-        m_leftLineTypesForDisplay.push_front(leftLineType);
-        m_leftLineTypesForDisplay.pop_back();
+        m_laneDetectionInformation.m_leftLineTypesForDisplay.push_front(m_leftLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(leftLineType)));
+        m_laneDetectionInformation.m_leftLineTypesForDisplay.pop_back();
 
-        m_middleLineTypesForDisplay.push_front(middleLineType);
-        m_middleLineTypesForDisplay.pop_back();
+        m_laneDetectionInformation.m_middleLineTypesForDisplay.push_front(m_middleLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(middleLineType)));
+        m_laneDetectionInformation.m_middleLineTypesForDisplay.pop_back();
 
-        m_rightLineTypesForDisplay.push_front(rightLineType);
-        m_rightLineTypesForDisplay.pop_back();
-
-        /**
-         * For left lanes lines, middle lane lines, and right lane lines '1' represents that
-         * one or more of those lines has been detected and a '0' means no of those lines has
-         * been detected. The driving state is used in the Execute_Driving_State() switch
-         * statement.
-         *
-         * |----------------------------------------------------------------------------------------|
-         * |  Left Lane  | Middle Lane | Right Lane | Driving State |      Driving State Name       |
-         * |     Lines   |    Lines    |    Lines   |     Value     |                               |
-         * |-------------|-------------|------------|---------------|-------------------------------|
-         * |      1      |      1      |     1      |       0       |     Within Detected Lanes     |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         * |      1      |      0      |     1      |       0       |     Within Detected Lanes     |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         * |      0      |      1      |     0      |       1       |        Changing Lanes         |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         * |      1      |      1      |     0      |       1       |        Changing Lanes         |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         * |      0      |      1      |     1      |       1       |        Changing Lanes         |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         * |      1      |      0      |     0      |       2       | Only left lane line detected  |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         * |      0      |      0      |     1      |       3       | Only right lane line detected |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         * |      0      |      0      |     0      |       4       |    No lane lines detected     |
-         * |-------------|---------- --|------------|---------------|-------------------------------|
-         */
-
-        // Within Lanes
-        if ((!m_leftLines.empty() && !m_middleLines.empty() && !m_rightLines.empty()) ||
-            (!m_leftLines.empty() && m_middleLines.empty() && !m_rightLines.empty()))
-        {
-            m_drivingState = m_drivingStateRollingAverage.CalculateRollingAverage(0);
-
-            // Changing Lanes
-        }
-        else if ((m_leftLines.empty() && !m_middleLines.empty() && m_rightLines.empty()) ||
-                 (!m_leftLines.empty() && !m_middleLines.empty() && m_rightLines.empty()) ||
-                 (m_leftLines.empty() && !m_middleLines.empty() && !m_rightLines.empty()))
-        {
-            m_drivingState = m_drivingStateRollingAverage.CalculateRollingAverage(1);
-
-            // Only left road marking detected
-        }
-        else if (!m_leftLines.empty() && m_middleLines.empty() && m_rightLines.empty())
-        {
-            m_drivingState = m_drivingStateRollingAverage.CalculateRollingAverage(2);
-
-            // Only right road marking detected
-        }
-        else if (m_leftLines.empty() && m_middleLines.empty() && !m_rightLines.empty())
-        {
-            m_drivingState = m_drivingStateRollingAverage.CalculateRollingAverage(3);
-
-            // No road marking detected
-        }
-        else
-        {
-            m_drivingState = m_drivingStateRollingAverage.CalculateRollingAverage(4);
-        }
+        m_laneDetectionInformation.m_rightLineTypesForDisplay.push_front(m_rightLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(rightLineType)));
+        m_laneDetectionInformation.m_rightLineTypesForDisplay.pop_back();
     }
 
-    void LaneDetector::ExecuteDrivingState() // NOLINT(readability-function-cognitive-complexity) // TODO: remove
+    void LaneDetector::UpdateDrivingState()
     {
+        // Driving state mapping:
+        //
+        // | Left Lane Lines | Middle Lane Lines | Right Lane Lines |           Driving State          |
+        // | --------------- |------------------ | ---------------- | -------------------------------- |
+        // |    Detected     |      Detected     |  Detected        |            WITHIN_LANE           |
+        // |    Detected     |                   |  Detected        |            WITHIN_LANE           |
+        // |                 |      Detected     |                  |          CHANGING_LANES          |
+        // |    Detected     |      Detected     |                  |          CHANGING_LANES          |
+        // |                 |      Detected     |  Detected        |          CHANGING_LANES          |
+        // |    Detected     |                   |                  |  ONLY_LEFT_LANE_MARKING_DETECTED |
+        // |                 |                   |  Detected        | ONLY_RIGHT_LANE_MARKING_DETECTED |
+        // |                 |                   |                  |     NO_LANE_MARKINGS_DETECTED    |
+
+        const bool LEFT_LINES_PRESENT = !m_leftLines.empty();
+        const bool MIDDLE_LINES_PRESENT = !m_middleLines.empty();
+        const bool RIGHT_LINES_PRESNET = !m_rightLines.empty();
+
+        DrivingState currentDrivingState;
+
+        if ((LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET) ||
+            (LEFT_LINES_PRESENT && !MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET))
+        {
+            currentDrivingState = DrivingState::WITHIN_LANE;
+        }
+        else if ((!LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && !RIGHT_LINES_PRESNET) ||
+                 (LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && !RIGHT_LINES_PRESNET) ||
+                 (!LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET))
+        {
+            currentDrivingState = DrivingState::CHANGING_LANES;
+        }
+        else if (LEFT_LINES_PRESENT && !MIDDLE_LINES_PRESENT && !RIGHT_LINES_PRESNET)
+        {
+            currentDrivingState = DrivingState::ONLY_LEFT_LANE_MARKING_DETECTED;
+        }
+        else if (!LEFT_LINES_PRESENT && !MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET)
+        {
+            currentDrivingState = DrivingState::ONLY_RIGHT_LANE_MARKING_DETECTED;
+        }
+        else
+        {
+            currentDrivingState = DrivingState::NO_LANE_MARKINGS_DETECTED;
+        }
+
+        m_laneDetectionInformation.m_drivingState = m_drivingStateRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(currentDrivingState));
+
+
+        // TODO: Some way to auto update below. Maybe fixed global array? and index it using driving state. but then don't need these vars
+        // as frame builder could also access that?
+        // m_drivingStateTitle = "Within Detected Lanes";
+        // m_laneInformationTitle = "Detected Lanes";
+    }
+
+    void LaneDetector::ExecuteDrivingState()
+    {
+        // TODO: do lane_points all need clearing before use?
+
         switch (m_drivingState)
         {
         case 0: // Within lanes

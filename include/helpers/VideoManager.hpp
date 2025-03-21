@@ -83,10 +83,10 @@ namespace LaneAndObjectDetection
          *
          *   -i --input                      File path or camera ID
          *   -y --yolo-folder-path           Path to the yolo folder
-         *   -o --object-detector-type       One of: none, standard or tiny.
          *
          * Optional options:
          *
+         *   -o --object-detector-type       One of: none, standard or tiny. (default = none)
          *   -b --object-detector-backend    One of: cpu or cuda (default = cpu)
          *   -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)
          *

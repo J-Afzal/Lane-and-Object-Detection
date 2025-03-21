@@ -13,6 +13,7 @@ ignorePaths:
     - resources/yolo/yolov4.weights
 words:
     - afzal
+    - bugprone
     - cuda
     - darkmode
     - doxyfile
@@ -21,6 +22,7 @@ words:
     - opencv
     - sigmas
 ignoreWords:
+    - altera
     - axisbelow
     - choco
     - ciou
@@ -37,15 +39,20 @@ ignoreWords:
     - fontsize
     - fourcc
     - greedynms
+    - hicpp
     - ilammy
     - imshow
     - labelsize
+    - linuxkernel
+    - llvmlibc
     - logosize
     - mathjax
     - mdfile
     - memb
     - mish
+    - nodiscard
     - noncommercially
+    - openmp
     - pottedplant
     - projectbrief
     - tvmonitor

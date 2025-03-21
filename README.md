@@ -56,10 +56,10 @@ Required Options:
 
   -i --input                      File path or camera ID
   -y --yolo-folder-path           Path to the yolo folder
-  -o --object-detector-type       One of: none, standard or tiny.
 
 Optional options:
 
+  -o --object-detector-type       One of: none, standard or tiny. (default = none)
   -b --object-detector-backend    One of: cpu or cuda (default = cpu)
   -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)
 ```
@@ -124,7 +124,6 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 <!--
 x. Clean up C++ lane and object detection code.
 
-    Debug and clean up rolling average code (including global constants)
     Debug lane detection code to make sure it is correct.
     Make driving state an enum?
     Why is NAN being used?

@@ -35,7 +35,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief CLI help message for the video manager.
      */
-    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n  -o --object-detector-type       One of: none, standard or tiny\n\nOptional options:\n\n  -b --object-detector-backend    One of: cpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
+    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
 
     /**
      * @brief Input video dimensions.
@@ -160,7 +160,10 @@ namespace LaneAndObjectDetection::Globals
      */
     static inline const cv::Scalar G_LANE_INFORMATION_LANE_OVERLAY_COLOUR = cv::Scalar(0, 64, 0);
 
-    // TODO: -------------------------------------------------------------------------------------------------------------------
+    /**
+     * @brief Default rolling average size.
+     */
+    static inline const uint32_t G_DEFAULT_ROLLING_AVERAGE_SIZE = 10;
 
     /**
      * @brief Region of interest dimensions.
@@ -171,39 +174,79 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_ROI_TOP_WIDTH = 200;
     static inline const uint32_t G_ROI_BOTTOM_WIDTH = 900;
     static inline const uint32_t G_NUMBER_OF_POINTS = 4;
-    static inline const std::array<cv::Point, G_NUMBER_OF_POINTS> G_MASK_DIMENSIONS = {
+    ///@}
+
+    /**
+     * @brief Region of interest points. Below is how the indicies of the array map to the points.
+     *
+     *       Top left (0) >  ____________________  < Top right (1)
+     *                      /         / \        \
+     *                     /         /   \        \
+     *                    /         /     \        \
+     *                   /         /       \        \
+     *                  /         /         \        \
+     *                 /         /           \        \
+     *                 ---------- ----------- ----------
+     * Bottom Left (3) ^                               ^ Bottom right (2)
+     */
+    static inline const std::array<cv::Point, G_NUMBER_OF_POINTS> G_ROI_MASK_POINTS = {
         cv::Point((G_INPUT_VIDEO_WIDTH / 2) - (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
         cv::Point((G_INPUT_VIDEO_WIDTH / 2) + (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
         cv::Point((G_INPUT_VIDEO_WIDTH / 2) + (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
         cv::Point((G_INPUT_VIDEO_WIDTH / 2) - (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
     };
+
+    /**
+     * @brief TODO
+     */
+    ///@{
+    static inline const uint32_t G_ROI_TOP_LEFT_INDEX = 0;
+    static inline const uint32_t G_ROI_TOP_RIGHT_INDEX = 1;
+    static inline const uint32_t G_ROI_BOTTOM_RIGHT_INDEX = 2;
+    static inline const uint32_t G_ROI_BOTTOM_LEFT_INDEX = 3;
     ///@}
 
     /**
-     * @brief Region of interest sub-division line equations.
+     * @brief Region of interest sub-division line equations (y = mx + c).
+     *
+     *                                   Top mid-point
+     *                         __________|__________
+     *                        /         # &        \
+     *                       /         #   &        \
+     * Left edge of mask >  /         #     &        \  < Right edge of mask
+     *                     /         #       &        \
+     *                    /         #         &        \
+     *                   /         #           &        \
+     *                   ---------- ----------- ----------
+     *           Bottom one third ^             ^ Bottom two thirds
+     *
+     * Left edge threshold = '#'
+     * Right edge threshold = '@'
      */
     ///@{
-    static inline const double G_LEFT_EDGE_OF_MASK_M = (static_cast<double>(G_MASK_DIMENSIONS[0].y) - static_cast<double>(G_MASK_DIMENSIONS[3].y)) / (static_cast<double>(G_MASK_DIMENSIONS[0].x) - static_cast<double>(G_MASK_DIMENSIONS[3].x));
-    static inline const double G_LEFT_EDGE_OF_MASK_C = G_MASK_DIMENSIONS[0].y - (G_LEFT_EDGE_OF_MASK_M * G_MASK_DIMENSIONS[0].x);
-    static inline const double G_RIGHT_EDGE_OF_MASK_M = (static_cast<double>(G_MASK_DIMENSIONS[1].y) - static_cast<double>(G_MASK_DIMENSIONS[2].y)) / (static_cast<double>(G_MASK_DIMENSIONS[1].x) - static_cast<double>(G_MASK_DIMENSIONS[2].x));
-    static inline const double G_RIGHT_EDGE_OF_MASK_C = G_MASK_DIMENSIONS[1].y - (G_RIGHT_EDGE_OF_MASK_M * G_MASK_DIMENSIONS[1].x);
+    static inline const double G_LEFT_EDGE_OF_MASK_M = (G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].y - G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].y) / (G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].x - G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].x);
+    static inline const double G_LEFT_EDGE_OF_MASK_C = G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].y - (G_LEFT_EDGE_OF_MASK_M * G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].x);
 
-    static inline const double G_TOP_MID_POINT = G_MASK_DIMENSIONS[0].x + ((static_cast<double>(G_MASK_DIMENSIONS[1].x) - static_cast<double>(G_MASK_DIMENSIONS[0].x)) / 2.);
-    static inline const double G_BOTTOM_ONE_THIRD = G_MASK_DIMENSIONS[3].x + ((static_cast<double>(G_MASK_DIMENSIONS[2].x) - static_cast<double>(G_MASK_DIMENSIONS[3].x)) / 3.);
-    static inline const double G_BOTTOM_TWO_THIRD = G_MASK_DIMENSIONS[3].x + (2. * (static_cast<double>(G_MASK_DIMENSIONS[2].x) - static_cast<double>(G_MASK_DIMENSIONS[3].x)) / 3.);
+    static inline const double G_RIGHT_EDGE_OF_MASK_M = (G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].y - G_ROI_MASK_POINTS[G_ROI_BOTTOM_RIGHT_INDEX].y) / (G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].x - G_ROI_MASK_POINTS[G_ROI_BOTTOM_RIGHT_INDEX].x);
+    static inline const double G_RIGHT_EDGE_OF_MASK_C = G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].y - (G_RIGHT_EDGE_OF_MASK_M * G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].x);
 
-    static inline const double G_LEFT_EDGE_THRESHOLD_M = (static_cast<double>(G_ROI_TOP_HEIGHT) - static_cast<double>(G_ROI_BOTTOM_HEIGHT)) / (G_TOP_MID_POINT - G_BOTTOM_ONE_THIRD);
-    static inline const double G_LEFT_EDGE_THRESHOLD_C = G_ROI_TOP_HEIGHT - (G_LEFT_EDGE_THRESHOLD_M * G_TOP_MID_POINT);
-    static inline const double G_RIGHT_EDGE_THRESHOLD_M = (static_cast<double>(G_ROI_TOP_HEIGHT) - static_cast<double>(G_ROI_BOTTOM_HEIGHT)) / (G_TOP_MID_POINT - G_BOTTOM_TWO_THIRD);
-    static inline const double G_RIGHT_EDGE_THRESHOLD_C = G_ROI_TOP_HEIGHT - (G_RIGHT_EDGE_THRESHOLD_M * G_TOP_MID_POINT);
+    static inline const double G_TOP_MID_POINT_X_LOCATION = G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].x + (G_ROI_TOP_WIDTH / 2.0);
+    static inline const double G_BOTTOM_ONE_THIRD_LOCATION = G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].x + (G_ROI_BOTTOM_WIDTH / 3.0);
+    static inline const double G_BOTTOM_TWO_THIRD_LOCATION = G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].x + (2.0 * G_ROI_BOTTOM_WIDTH / 3.0);
+
+    static inline const double G_LEFT_LINE_THRESHOLD_M = (G_ROI_TOP_HEIGHT - G_ROI_BOTTOM_HEIGHT) / (G_TOP_MID_POINT_X_LOCATION - G_BOTTOM_ONE_THIRD_LOCATION);
+    static inline const double G_LEFT_LINE_THRESHOLD_C = G_ROI_TOP_HEIGHT - (G_LEFT_LINE_THRESHOLD_M * G_TOP_MID_POINT_X_LOCATION);
+
+    static inline const double G_RIGHT_LINE_THRESHOLD_M = (G_ROI_TOP_HEIGHT - G_ROI_BOTTOM_HEIGHT) / (G_TOP_MID_POINT_X_LOCATION - G_BOTTOM_TWO_THIRD_LOCATION);
+    static inline const double G_RIGHT_LINE_THRESHOLD_C = G_ROI_TOP_HEIGHT - (G_RIGHT_LINE_THRESHOLD_M * G_TOP_MID_POINT_X_LOCATION);
     ///@}
 
     /**
      * @brief Canny algorithm thresholds.
      */
     ///@{
-    static inline const uint32_t G_CANNY_LOWER_THRESHOLD = 128;
-    static inline const uint32_t G_CANNY_UPPER_THRESHOLD = 255;
+    static inline const uint32_t G_CANNY_ALGORITHM_LOWER_THRESHOLD = 128;
+    static inline const uint32_t G_CANNY_ALGORITHM_UPPER_THRESHOLD = 255;
     ///@}
 
     /**
@@ -218,39 +261,29 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
+     * @brief Hough line index mapping.
+     */
+    static inline const uint32_t G_HOUGH_LINE_X1_INDEX = 0;
+    static inline const uint32_t G_HOUGH_LINE_Y1_INDEX = 1;
+    static inline const uint32_t G_HOUGH_LINE_X2_INDEX = 2;
+    static inline const uint32_t G_HOUGH_LINE_Y2_INDEX = 3;
+
+    /**
+     * @brief Threshold gradient to decide whether a line is to be considered horizontal.
+     */
+    static inline const double G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD = 0.15;
+
+    // TODO: -------------------------------------------------------------------------------------------------------------------
+
+    /**
      * @brief Threshold length to decide whether a line is to be considered solid line road marking.
      */
     static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75;
 
     /**
-     * @brief Threshold gradient to decide whether a line is to be considered horizontal.
-     */
-    static inline const double G_HORIZONTAL_GRADIENT_THRESHOLD = 0.15;
-
-    /**
-     * @brief Threshold length to decide whether a line is to be added to the count of horizontal lines.
-     */
-    static inline const uint32_t G_HORIZONTAL_LENGTH_THRESHOLD = 50;
-
-    /**
-     * @brief Threshold count to decide whether enough horizontal lines have been detected to prompt a giveway warning.
-     */
-    static inline const uint32_t G_HORIZONTAL_COUNT_THRESHOLD = 10;
-
-    /**
      * @brief Smoothing threshold to determine when to flag the vehicle as changing lanes.
      */
     static inline const uint32_t G_FRAME_COUNT_THRESHOLD = 10;
-
-    /**
-     * @brief Rolling average properties.
-     */
-    ///@{
-    static inline const uint32_t G_DEFAULT_ROLLING_AVERAGE_SIZE = 10;
-    static inline const uint32_t G_NUMBER_OF_HORIZONTAL_LINE_STATES = 2;
-    static inline const uint32_t G_NUMBER_OF_VERTICAL_LINE_STATES = 3;
-    static inline const uint32_t G_NUMBER_OF_DRIVING_STATES = 5;
-    ///@}
 
     // TODO: -------------------------------------------------------------------------------------------------------------------
 

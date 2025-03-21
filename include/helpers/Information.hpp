@@ -50,11 +50,6 @@ namespace LaneAndObjectDetection
     struct LaneDetectionInformation
     {
         /**
-         * @brief The co-ordinate points that outline the current lane.
-         */
-        std::vector<cv::Point> m_lanePoints;
-
-        /**
          * @brief The left-hand side road marking types to display.
          */
         std::deque<uint32_t> m_leftLineTypesForDisplay;
@@ -68,6 +63,21 @@ namespace LaneAndObjectDetection
          * @brief The right-hand side road marking types to display.
          */
         std::deque<uint32_t> m_rightLineTypesForDisplay;
+
+        /**
+         * @brief The current driving state.
+         */
+        uint32_t m_drivingState;
+
+
+
+
+
+
+        /**
+         * @brief The co-ordinate points that outline the current lane.
+         */
+        std::vector<cv::Point> m_lanePoints;
 
         /**
          * @brief The current turning state title.
@@ -88,11 +98,6 @@ namespace LaneAndObjectDetection
          * @brief The text for the current turning required to return the vehicle to the center of the current lane.
          */
         std::string m_turningRequiredToReturnToCenter;
-
-        /**
-         * @brief The current driving state.
-         */
-        uint32_t m_drivingState;
 
         /**
          * @brief The number for the current turning required to return the vehicle to the center of the current lane.
