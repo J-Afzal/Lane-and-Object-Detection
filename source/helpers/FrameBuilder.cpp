@@ -145,9 +145,8 @@ namespace LaneAndObjectDetection
     void FrameBuilder::AddPerformanceInformation(cv::Mat& p_frame, const PerformanceInformation& p_performanceInformation)
     {
         // Round frame per second values to two decimal places
-        const double DIVISOR = 100; // TODO(Main): const
-        const std::string AVERAGE_FPS = std::format("Average FPS: {}", std::round(p_performanceInformation.m_averageFramesPerSecond * DIVISOR) / DIVISOR);
-        const std::string CURRENT_FPS = std::format("Current FPS: {}", std::round(p_performanceInformation.m_currentFramesPerSecond * DIVISOR) / DIVISOR);
+        const std::string AVERAGE_FPS = std::format("Average FPS: {}", std::round(p_performanceInformation.m_averageFramesPerSecond));
+        const std::string CURRENT_FPS = std::format("Current FPS: {}", std::round(p_performanceInformation.m_currentFramesPerSecond));
 
         AddBackgroundRectAndCentredText(p_frame, Globals::G_PERFORMANCE_AVERAGE_FPS_BACKGROUND_RECT, AVERAGE_FPS);
         AddBackgroundRectAndCentredText(p_frame, Globals::G_PERFORMANCE_CURRENT_FPS_BACKGROUND_RECT, CURRENT_FPS);
@@ -172,23 +171,20 @@ namespace LaneAndObjectDetection
 
     void FrameBuilder::AddCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale)
     {
-        const double DIVISOR = 2;              // TODO(Main): const
-        const double FONT_DECREMENT = 0.1;     // TODO(Main): const
-        const int32_t HORIZONTAL_PADDING = 10; // TODO(Main): const
-        const int32_t VERTICAL_PADDING = 15;   // TODO(Main): const
-
         double currentFontScale = p_fontScale;
 
         cv::Size textSize = cv::getTextSize(p_text, Globals::G_DEFAULT_FONT_FACE, currentFontScale, Globals::G_DEFAULT_FONT_THICKNESS, nullptr);
 
-        while ((((textSize.width + HORIZONTAL_PADDING) > p_backgroundRect.width) || ((textSize.height + VERTICAL_PADDING) > p_backgroundRect.height)) && (currentFontScale > FONT_DECREMENT))
+        while ((((textSize.width + Globals::G_DEFAULT_HORIZONTAL_PADDING) > p_backgroundRect.width) ||
+                ((textSize.height + Globals::G_DEFAULT_VERTICAL_PADDING) > p_backgroundRect.height)) &&
+               (currentFontScale > Globals::G_DEFAULT_FONT_DECREMENT))
         {
-            currentFontScale -= FONT_DECREMENT;
+            currentFontScale -= Globals::G_DEFAULT_FONT_DECREMENT;
             textSize = cv::getTextSize(p_text, Globals::G_DEFAULT_FONT_FACE, currentFontScale, Globals::G_DEFAULT_FONT_THICKNESS, nullptr);
         }
 
-        const int32_t X_PAD = std::ceil((p_backgroundRect.width - textSize.width) / DIVISOR);
-        const int32_t Y_PAD = std::ceil((p_backgroundRect.height - textSize.height) / DIVISOR);
+        const int32_t X_PAD = std::ceil((p_backgroundRect.width - textSize.width) / Globals::G_DIVIDE_BY_TWO);
+        const int32_t Y_PAD = std::ceil((p_backgroundRect.height - textSize.height) / Globals::G_DIVIDE_BY_TWO);
 
         cv::putText(p_frame,
                     p_text,

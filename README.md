@@ -123,12 +123,6 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 
 <!--
 x. Clean up C++ lane and object detection code.
-
-    Finish all TODO(Main)s (Linters check)
-    Commit code
-
-    Update General Information in readme
-
     Debug lane detection code to make sure it is correct.
 
 x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
@@ -157,6 +151,7 @@ x. Implement C GUI window to encapsulate main code and performance test code wit
         where are std::cout displayed?
         run performance tests?
         display and export performance graphs?
+    Update General Information in readme
 
 x. Find better dash cam footage like american highway footage or m1 motorway footage?
 -->

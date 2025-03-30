@@ -71,6 +71,9 @@ namespace LaneAndObjectDetection::Globals
     ///@{
     static inline const uint32_t G_DEFAULT_FONT_FACE = cv::FONT_HERSHEY_DUPLEX;
     static inline const uint32_t G_DEFAULT_FONT_THICKNESS = 1;
+    static inline const int32_t G_DEFAULT_HORIZONTAL_PADDING = 10;
+    static inline const int32_t G_DEFAULT_VERTICAL_PADDING = 15;
+    static inline const double G_DEFAULT_FONT_DECREMENT = 0.1;
     static inline const double G_DEFAULT_FONT_SCALE = 1;
     ///@}
 
@@ -88,6 +91,26 @@ namespace LaneAndObjectDetection::Globals
     static inline const cv::Scalar G_COLOUR_BLUE = cv::Scalar(192, 0, 0);
     static inline const cv::Scalar G_COLOUR_PURPLE = cv::Scalar(192, 0, 192);
     ///@}
+
+    /**
+     * @brief Conversion between time units.
+     */
+    ///@{
+    static inline const double G_MINUTES_IN_HOUR = 60;
+    static inline const double G_SECONDS_IN_HOUR = 3600;
+    static inline const double G_SECONDS_IN_MINUTE = 60;
+    static inline const double G_MILLISECONDS_IN_SECOND = 1000;
+    ///@}
+
+    /**
+     * @brief Convert a decimal value to a percentage.
+     */
+    static inline const uint32_t G_CONVERT_DECIMAL_TO_PERCENTAGE = 100;
+
+    /**
+     * @brief Divide by two.
+     */
+    static inline const double G_DIVIDE_BY_TWO = 2;
 
     /**
      * @brief Text to display whether recording or not recording.

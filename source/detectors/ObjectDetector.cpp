@@ -106,9 +106,8 @@ namespace LaneAndObjectDetection
                     // Remove object detections on the hood of car
                     if (CENTER_Y < Globals::G_ROI_BOTTOM_HEIGHT)
                     {
-                        const double DIVISOR = 2; // TODO(Main): const
                         initialObjectNames.push_back(Globals::G_OBJECT_DETECTOR_OBJECT_NAMES.at(maxConfidenceObjectIndex.x));
-                        initialObjectBoundingBoxes.emplace_back(CENTER_X - (WIDTH / DIVISOR), CENTER_Y - (HEIGHT / DIVISOR), WIDTH, HEIGHT);
+                        initialObjectBoundingBoxes.emplace_back(CENTER_X - (WIDTH / Globals::G_DIVIDE_BY_TWO), CENTER_Y - (HEIGHT / Globals::G_DIVIDE_BY_TWO), WIDTH, HEIGHT);
                         initialObjectConfidences.push_back(static_cast<float>(maxConfidence));
                     }
                 }
@@ -120,13 +119,11 @@ namespace LaneAndObjectDetection
 
         cv::dnn::NMSBoxes(initialObjectBoundingBoxes, initialObjectConfidences, 0.0, static_cast<float>(Globals::G_OBJECT_DETECTOR_NMS_THRESHOLD), nonMaximaSuppressedFilteredIndicies);
 
-        const uint32_t CONVERT_TO_PERCENTAGE = 100; // TODO(Main): const
-
         for (const int32_t& index : nonMaximaSuppressedFilteredIndicies)
         {
             m_objectDetectionInformation.m_objectInformation.push_back({.m_boundingBox = initialObjectBoundingBoxes.at(index),
                                                                         .m_boundingBoxColour = Globals::G_OBJECT_DETECTOR_OBJECT_NAMES_AND_COLOURS.at(initialObjectNames.at(index)),
-                                                                        .m_objectName = std::format("{} ({} %)", initialObjectNames.at(index), std::to_string(static_cast<uint32_t>(initialObjectConfidences.at(index) * CONVERT_TO_PERCENTAGE)))});
+                                                                        .m_objectName = std::format("{} ({} %)", initialObjectNames.at(index), std::to_string(static_cast<uint32_t>(initialObjectConfidences.at(index) * Globals::G_CONVERT_DECIMAL_TO_PERCENTAGE)))});
         }
     }
 

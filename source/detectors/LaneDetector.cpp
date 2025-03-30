@@ -239,8 +239,10 @@ namespace LaneAndObjectDetection
 
             // The OR operator means that only whole line does not need to be within the bounding box for the line to be
             // considered within the bounding boxes
-            if ((p_houghLine[0] >= LOWER_X && p_houghLine[0] <= UPPER_X && p_houghLine[1] >= LOWER_Y && p_houghLine[1] <= UPPER_Y) || // TODO(Main): index use globals
-                (p_houghLine[2] >= LOWER_X && p_houghLine[2] <= UPPER_X && p_houghLine[3] >= LOWER_Y && p_houghLine[3] <= UPPER_Y))
+            if ((p_houghLine[Globals::G_VEC4_X1_INDEX] >= LOWER_X && p_houghLine[Globals::G_VEC4_X1_INDEX] <= UPPER_X &&
+                 p_houghLine[Globals::G_VEC4_Y1_INDEX] >= LOWER_Y && p_houghLine[Globals::G_VEC4_Y1_INDEX] <= UPPER_Y) ||
+                (p_houghLine[Globals::G_VEC4_X2_INDEX] >= LOWER_X && p_houghLine[Globals::G_VEC4_X2_INDEX] <= UPPER_X &&
+                 p_houghLine[Globals::G_VEC4_Y2_INDEX] >= LOWER_Y && p_houghLine[Globals::G_VEC4_Y2_INDEX] <= UPPER_Y))
             {
                 return true;
             }

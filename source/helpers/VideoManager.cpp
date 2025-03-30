@@ -59,7 +59,7 @@ namespace LaneAndObjectDetection
             if (argument == "-h" || argument == "--help")
             {
                 std::cout << Globals::G_CLI_HELP_MESSAGE;
-                exit(1);
+                std::exit(1);
             }
 
             try
@@ -94,7 +94,7 @@ namespace LaneAndObjectDetection
                     else
                     {
                         std::cout << Globals::G_CLI_HELP_MESSAGE;
-                        exit(1);
+                        std::exit(1);
                     }
                 }
 
@@ -113,7 +113,7 @@ namespace LaneAndObjectDetection
                     else
                     {
                         std::cout << Globals::G_CLI_HELP_MESSAGE;
-                        exit(1);
+                        std::exit(1);
                     }
                 }
 
@@ -126,7 +126,7 @@ namespace LaneAndObjectDetection
             catch (...)
             {
                 std::cout << Globals::G_CLI_HELP_MESSAGE;
-                exit(1);
+                std::exit(1);
             }
 
             index++;
@@ -136,7 +136,7 @@ namespace LaneAndObjectDetection
         if (parsedInputVideoFilePath.empty() || parsedYoloFolderPath.empty())
         {
             std::cout << Globals::G_CLI_HELP_MESSAGE;
-            exit(1);
+            std::exit(1);
         }
 
         SetProperties(parsedInputVideoFilePath, parsedYoloFolderPath, parsedObjectDetectorTypes, parsedObjectDetectorBackEnds, parsedObjectDetectorBlobSizes);
@@ -160,7 +160,7 @@ namespace LaneAndObjectDetection
         if (!m_inputVideo.isOpened())
         {
             std::cout << "\nERROR: Input video camera '" + std::to_string(p_inputVideoCamera) + "' cannot be found!\n";
-            exit(1);
+            std::exit(1);
         }
 
         m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_INPUT_VIDEO_WIDTH);
@@ -182,7 +182,7 @@ namespace LaneAndObjectDetection
         if (!m_inputVideo.isOpened())
         {
             std::cout << "\nERROR: Input video file path '" + p_inputVideoFilePath + "' cannot be found!\n";
-            exit(1);
+            std::exit(1);
         }
 
         m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_INPUT_VIDEO_WIDTH);
@@ -246,7 +246,7 @@ namespace LaneAndObjectDetection
 
         if (m_saveOutput)
         {
-            const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now()); // TODO(Main): const the format string?
+            const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now());
 
             m_outputVideo.open(OUTPUT_FILE_NAME,
                                cv::VideoWriter::fourcc('m', 'p', '4', 'v'),

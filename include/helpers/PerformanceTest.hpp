@@ -22,7 +22,7 @@ namespace LaneAndObjectDetection
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_numberOfRepetitions The number of times to repeat each test.
          */
-        explicit PerformanceTest(const std::string& p_inputVideoFilePath, const std::string& p_yoloFolderPath, const uint32_t& p_numberOfRepetitions);
+        explicit PerformanceTest(std::string& p_inputVideoFilePath, std::string& p_yoloFolderPath, const uint32_t& p_numberOfRepetitions);
 
         /**
          * @brief Constructs a new %PerformanceTest object (for CLI use).
