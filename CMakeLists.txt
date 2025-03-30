@@ -20,9 +20,10 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/VideoManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/FrameBuilder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/PerformanceTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 
@@ -42,9 +43,10 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/VideoManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/FrameBuilder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/PerformanceTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 

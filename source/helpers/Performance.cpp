@@ -19,7 +19,7 @@ namespace LaneAndObjectDetection
 
     void Performance::EndTimer()
     {
-        const double MILLISECONDS_IN_SECOND = 1000;
+        const double MILLISECONDS_IN_SECOND = 1000; // TODO(Main): const
         const uint32_t FRAME_TIME = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_startTime).count();
 
         m_performanceInformation.m_frameTimes.push_back(FRAME_TIME);

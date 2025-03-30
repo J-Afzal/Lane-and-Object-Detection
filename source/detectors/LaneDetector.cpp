@@ -2,12 +2,15 @@
 #include <cmath>
 #include <cstdint>
 #include <deque>
-#include <iostream>
+#include <format>
+#include <limits>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
+#include <opencv2/core/matx.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/imgproc.hpp>
 
@@ -18,17 +21,16 @@
 namespace LaneAndObjectDetection
 {
     LaneDetector::LaneDetector() :
+        m_changingLanesPreviousDistanceDifference(0),
+        m_leftLineAverageLength(0),
+        m_middleLineAverageLength(0),
+        m_rightLineAverageLength(0),
         m_changingLanesFrameCount(0),
-        m_drivingState(0),
-        m_turningRequired(0),
-        m_changingLanesPreviousDifference(0),
-        m_leftLineAverageSize(0),
-        m_middleLineAverageSize(0),
-        m_rightLineAverageSize(0)
+        m_changingLanesFirstFrame(false)
     {
-        m_laneDetectionInformation.m_leftLineTypesForDisplay.insert(m_laneDetectionInformation.m_leftLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LINES_TO_DISPLAY, 0);
-        m_laneDetectionInformation.m_middleLineTypesForDisplay.insert(m_laneDetectionInformation.m_middleLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LINES_TO_DISPLAY, 0);
-        m_laneDetectionInformation.m_rightLineTypesForDisplay.insert(m_laneDetectionInformation.m_rightLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LINES_TO_DISPLAY, 0);
+        m_laneDetectionInformation.m_leftLineTypesForDisplay.insert(m_laneDetectionInformation.m_leftLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LANE_LINES_TO_DISPLAY, 0);
+        m_laneDetectionInformation.m_middleLineTypesForDisplay.insert(m_laneDetectionInformation.m_middleLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LANE_LINES_TO_DISPLAY, 0);
+        m_laneDetectionInformation.m_rightLineTypesForDisplay.insert(m_laneDetectionInformation.m_rightLineTypesForDisplay.begin(), Globals::G_NUMBER_OF_LANE_LINES_TO_DISPLAY, 0);
     }
 
     void LaneDetector::RunLaneDetector(const cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation)
@@ -55,7 +57,28 @@ namespace LaneAndObjectDetection
 
         UpdateDrivingState();
 
-        ExecuteDrivingState();
+        // Set titles based on driving state
+        m_laneDetectionInformation.m_drivingStateTitle = Globals::G_DRIVING_STATE_TITLES.find(m_laneDetectionInformation.m_drivingState)->second;
+        m_laneDetectionInformation.m_laneInformationTitle = m_laneDetectionInformation.m_drivingState == Globals::DrivingState::NO_LANE_MARKINGS_DETECTED ? Globals::G_LANE_INFORMATION_TITLE_LANE_NOT_DETECTED :
+                                                                                                                                                            Globals::G_LANE_INFORMATION_TITLE_LANE_DETECTED;
+        switch (m_laneDetectionInformation.m_drivingState)
+        {
+        case Globals::DrivingState::WITHIN_LANE:
+            CalculateLanePosition();
+            break;
+
+        case Globals::DrivingState::CHANGING_LANES:
+            CalculateTurningDirection();
+            break;
+
+        case Globals::DrivingState::ONLY_LEFT_LANE_MARKING_DETECTED:
+        case Globals::DrivingState::ONLY_RIGHT_LANE_MARKING_DETECTED:
+        case Globals::DrivingState::NO_LANE_MARKINGS_DETECTED:
+            break;
+
+        default:
+            throw Globals::Exceptions::NotImplementedError();
+        }
     }
 
     LaneDetectionInformation LaneDetector::GetInformation()
@@ -63,26 +86,28 @@ namespace LaneAndObjectDetection
         return m_laneDetectionInformation;
     }
 
-    LaneDetector::RollingAverage::RollingAverage()
+    template<typename T>
+    LaneDetector::RollingAverage<T>::RollingAverage()
     {
-        m_rollingAverageArray.insert(m_rollingAverageArray.begin(), Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, 0);
+        m_rollingAverageArray.insert(m_rollingAverageArray.begin(), Globals::G_DEFAULT_ROLLING_AVERAGE_SIZE, static_cast<T>(0));
     }
 
-    uint32_t LaneDetector::RollingAverage::CalculateRollingAverage(const uint32_t& p_nextInput)
+    template<typename T>
+    T LaneDetector::RollingAverage<T>::CalculateRollingAverage(const T& p_nextInput)
     {
         m_rollingAverageArray.pop_back();
         m_rollingAverageArray.push_front(p_nextInput);
 
-        std::unordered_map<uint32_t, uint32_t> elementCount;
-        for (const uint32_t& element : m_rollingAverageArray)
+        std::unordered_map<T, uint32_t> elementCount;
+        for (const T& element : m_rollingAverageArray)
         {
             elementCount[element]++;
         }
 
-        uint32_t mostFrequentElement = 0;
+        T mostFrequentElement = static_cast<T>(0);
         uint32_t mostFrequentElementCount = 0;
 
-        for (const std::pair<uint32_t, uint32_t> element : elementCount)
+        for (const std::pair<T, uint32_t> element : elementCount) // NOLINT(readability-identifier-naming)
         {
             if (element.second > mostFrequentElementCount)
             {
@@ -96,17 +121,17 @@ namespace LaneAndObjectDetection
 
     void LaneDetector::AnalyseHoughLines(const std::vector<cv::Vec4i>& p_houghLines, const ObjectDetectionInformation& p_objectDetectionInformation)
     {
-        m_leftLines.clear();
-        m_middleLines.clear();
-        m_rightLines.clear();
-        m_leftLineAverageSize = 0;
-        m_middleLineAverageSize = 0;
-        m_rightLineAverageSize = 0;
+        m_leftLaneLines.clear();
+        m_middleLaneLines.clear();
+        m_rightLaneLines.clear();
+        m_leftLineAverageLength = 0;
+        m_middleLineAverageLength = 0;
+        m_rightLineAverageLength = 0;
 
         for (const cv::Vec4i& houghLine : p_houghLines)
         {
-            const double CHANGE_IN_X = houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX];
-            const double CHANGE_IN_Y = houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX];
+            const double CHANGE_IN_X = houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX];
+            const double CHANGE_IN_Y = houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX];
 
             // Filter out vertical lines
             if (CHANGE_IN_X == 0)
@@ -124,7 +149,7 @@ namespace LaneAndObjectDetection
 
             // The bounding boxes are created by the object detector which cannot detect road markings. Thus, if the line is in
             // a bounding box, it cannot be a road marking and is ignored.
-            if (IsLineWithinBoundingBoxes(houghLine, p_objectDetectionInformation))
+            if (IsLineWithinObjectBoundingBoxes(houghLine, p_objectDetectionInformation))
             {
                 continue;
             }
@@ -150,72 +175,72 @@ namespace LaneAndObjectDetection
             // gradients and right positive gradients.
 
             // Remove the left edge of the ROI frame
-            double y1 = Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_LEFT_EDGE_OF_MASK_C;
-            double y2 = Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[2] + Globals::G_LEFT_EDGE_OF_MASK_C;
-            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] <= y1 + 1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] <= y2 + 1)) // TODO: why +1
+            const double LEFT_EDGE_Y1 = (Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[Globals::G_VEC4_X1_INDEX]) + Globals::G_LEFT_EDGE_OF_MASK_C;
+            const double LEFT_EDGE_Y2 = (Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[Globals::G_VEC4_X2_INDEX]) + Globals::G_LEFT_EDGE_OF_MASK_C;
+            if ((houghLine[Globals::G_VEC4_Y1_INDEX] <= LEFT_EDGE_Y1 + 1) && (houghLine[Globals::G_VEC4_Y2_INDEX] <= LEFT_EDGE_Y2 + 1)) // +1 for extra buffer
             {
                 continue;
             }
 
             // If within left threshold and has a negative gradient (meaning the line follows the expected path shown in the
             // diagram above), then it is a left line
-            y1 = Globals::G_LEFT_LINE_THRESHOLD_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_LEFT_LINE_THRESHOLD_C;
-            y2 = Globals::G_LEFT_LINE_THRESHOLD_M * houghLine[2] + Globals::G_LEFT_LINE_THRESHOLD_C;
-            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] < y1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] < y2) && GRADIENT < 0)
+            const double LEFT_THRESHOLD_Y1 = (Globals::G_LEFT_LINE_THRESHOLD_M * houghLine[Globals::G_VEC4_X1_INDEX]) + Globals::G_LEFT_LINE_THRESHOLD_C;
+            const double LEFT_THRESHOLD_Y2 = (Globals::G_LEFT_LINE_THRESHOLD_M * houghLine[Globals::G_VEC4_X2_INDEX]) + Globals::G_LEFT_LINE_THRESHOLD_C;
+            if ((houghLine[Globals::G_VEC4_Y1_INDEX] < LEFT_THRESHOLD_Y1) && (houghLine[Globals::G_VEC4_Y2_INDEX] < LEFT_THRESHOLD_Y2) && GRADIENT < 0)
             {
-                m_leftLines.push_back(houghLine);
-                m_leftLineAverageSize += std::sqrt(
-                    ((houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX])) +
-                    ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX])));
+                m_leftLaneLines.push_back(houghLine);
+                m_leftLineAverageLength += std::sqrt(
+                    ((houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX]) * (houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX])) +
+                    ((houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX]) * (houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX])));
                 continue;
             }
 
             // Remove the right edge of the ROI frame
-            y1 = Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_RIGHT_EDGE_OF_MASK_C;
-            y2 = Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[Globals::G_HOUGH_LINE_X2_INDEX] + Globals::G_RIGHT_EDGE_OF_MASK_C;
-            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] <= y1 + 1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] <= y2 + 1)) // TODO: why +1
+            const double RIGHT_EDGE_Y1 = (Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[Globals::G_VEC4_X1_INDEX]) + Globals::G_RIGHT_EDGE_OF_MASK_C;
+            const double RIGHT_EDGE_Y2 = (Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[Globals::G_VEC4_X2_INDEX]) + Globals::G_RIGHT_EDGE_OF_MASK_C;
+            if ((houghLine[Globals::G_VEC4_Y1_INDEX] <= RIGHT_EDGE_Y1 + 1) && (houghLine[Globals::G_VEC4_Y2_INDEX] <= RIGHT_EDGE_Y2 + 1)) // +1 for extra buffer
             {
                 continue;
             }
 
             // If within right threshold and has a positive gradient (meaning the line follows the expected path shown in the
             // diagram above), then it is a right line
-            y1 = Globals::G_RIGHT_LINE_THRESHOLD_M * houghLine[Globals::G_HOUGH_LINE_X1_INDEX] + Globals::G_RIGHT_LINE_THRESHOLD_C;
-            y2 = Globals::G_RIGHT_LINE_THRESHOLD_M * houghLine[Globals::G_HOUGH_LINE_X2_INDEX] + Globals::G_RIGHT_LINE_THRESHOLD_C;
-            if ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] < y1) && (houghLine[Globals::G_HOUGH_LINE_Y2_INDEX] < y2) && GRADIENT > 0)
+            const double RIGHT_THRESHOLD_Y1 = (Globals::G_RIGHT_LINE_THRESHOLD_M * houghLine[Globals::G_VEC4_X1_INDEX]) + Globals::G_RIGHT_LINE_THRESHOLD_C;
+            const double RIGHT_THRESHOLD_Y2 = (Globals::G_RIGHT_LINE_THRESHOLD_M * houghLine[Globals::G_VEC4_X2_INDEX]) + Globals::G_RIGHT_LINE_THRESHOLD_C;
+            if ((houghLine[Globals::G_VEC4_Y1_INDEX] < RIGHT_THRESHOLD_Y1) && (houghLine[Globals::G_VEC4_Y2_INDEX] < RIGHT_THRESHOLD_Y2) && GRADIENT > 0)
             {
-                m_rightLines.push_back(houghLine);
-                m_rightLineAverageSize += std::sqrt(
-                    ((houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX])) +
-                    ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX])));
+                m_rightLaneLines.push_back(houghLine);
+                m_rightLineAverageLength += std::sqrt(
+                    ((houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX]) * (houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX])) +
+                    ((houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX]) * (houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX])));
                 continue;
             }
 
             // Otherwise the line is be a middle line
-            m_middleLines.push_back(houghLine);
-            m_middleLineAverageSize += std::sqrt(
-                ((houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_X1_INDEX] - houghLine[Globals::G_HOUGH_LINE_X2_INDEX])) +
-                ((houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX]) * (houghLine[Globals::G_HOUGH_LINE_Y1_INDEX] - houghLine[Globals::G_HOUGH_LINE_Y2_INDEX])));
+            m_middleLaneLines.push_back(houghLine);
+            m_middleLineAverageLength += std::sqrt(
+                ((houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX]) * (houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX])) +
+                ((houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX]) * (houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX])));
         }
 
-        m_leftLineAverageSize /= static_cast<double>(m_leftLines.size());
-        m_middleLineAverageSize /= static_cast<double>(m_middleLines.size());
-        m_rightLineAverageSize /= static_cast<double>(m_rightLines.size());
+        m_leftLineAverageLength /= static_cast<double>(m_leftLaneLines.size());
+        m_middleLineAverageLength /= static_cast<double>(m_middleLaneLines.size());
+        m_rightLineAverageLength /= static_cast<double>(m_rightLaneLines.size());
     }
 
-    bool LaneDetector::IsLineWithinBoundingBoxes(const cv::Vec4i& p_houghLine, const ObjectDetectionInformation& p_objectDetectionInformation)
+    bool LaneDetector::IsLineWithinObjectBoundingBoxes(const cv::Vec4i& p_houghLine, const ObjectDetectionInformation& p_objectDetectionInformation)
     {
-        for (const auto& objectInformation : p_objectDetectionInformation.m_objectInformation)
+        for (const ObjectDetectionInformation::DetectedObjectInformation& detectedObjectInformation : p_objectDetectionInformation.m_objectInformation)
         {
-            int32_t lowerX = objectInformation.m_boundingBox.x;
-            int32_t upperX = objectInformation.m_boundingBox.x + objectInformation.m_boundingBox.width;
-            int32_t lowerY = objectInformation.m_boundingBox.y;
-            int32_t upperY = objectInformation.m_boundingBox.y + objectInformation.m_boundingBox.height;
+            const int32_t LOWER_X = detectedObjectInformation.m_boundingBox.x;
+            const int32_t UPPER_X = detectedObjectInformation.m_boundingBox.x + detectedObjectInformation.m_boundingBox.width;
+            const int32_t LOWER_Y = detectedObjectInformation.m_boundingBox.y;
+            const int32_t UPPER_Y = detectedObjectInformation.m_boundingBox.y + detectedObjectInformation.m_boundingBox.height;
 
             // The OR operator means that only whole line does not need to be within the bounding box for the line to be
             // considered within the bounding boxes
-            if ((p_houghLine[0] >= lowerX && p_houghLine[0] <= upperX && p_houghLine[1] >= lowerY && p_houghLine[1] <= upperY) ||
-                (p_houghLine[2] >= lowerX && p_houghLine[2] <= upperX && p_houghLine[3] >= lowerY && p_houghLine[3] <= upperY))
+            if ((p_houghLine[0] >= LOWER_X && p_houghLine[0] <= UPPER_X && p_houghLine[1] >= LOWER_Y && p_houghLine[1] <= UPPER_Y) || // TODO(Main): index use globals
+                (p_houghLine[2] >= LOWER_X && p_houghLine[2] <= UPPER_X && p_houghLine[3] >= LOWER_Y && p_houghLine[3] <= UPPER_Y))
             {
                 return true;
             }
@@ -226,55 +251,46 @@ namespace LaneAndObjectDetection
 
     void LaneDetector::UpdateLineTypes()
     {
-        LineType leftLineType;
-        if (m_leftLines.empty())
+        Globals::LaneLineType leftLineType = Globals::LaneLineType::SOLID;
+        if (m_leftLaneLines.empty())
         {
-            leftLineType = LineType::EMPTY;
-        }
-        else if (m_leftLineAverageSize < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
-        {
-            leftLineType = LineType::DASHED;
-        }
-        else
-        {
-            leftLineType = LineType::SOLID;
+            leftLineType = Globals::LaneLineType::EMPTY;
         }
 
-        LineType middleLineType;
-        if (m_middleLines.empty())
+        else if (m_leftLineAverageLength < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
         {
-            middleLineType = LineType::EMPTY;
-        }
-        else if (m_middleLineAverageSize < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
-        {
-            middleLineType = LineType::DASHED;
-        }
-        else
-        {
-            middleLineType = LineType::SOLID;
+            leftLineType = Globals::LaneLineType::DASHED;
         }
 
-        LineType rightLineType;
-        if (m_rightLines.empty())
+        Globals::LaneLineType middleLineType = Globals::LaneLineType::SOLID;
+        if (m_middleLaneLines.empty())
         {
-            rightLineType = LineType::EMPTY;
-        }
-        else if (m_rightLineAverageSize < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
-        {
-            rightLineType = LineType::DASHED;
-        }
-        else
-        {
-            rightLineType = LineType::SOLID;
+            middleLineType = Globals::LaneLineType::EMPTY;
         }
 
-        m_laneDetectionInformation.m_leftLineTypesForDisplay.push_front(m_leftLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(leftLineType)));
+        else if (m_middleLineAverageLength < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
+        {
+            middleLineType = Globals::LaneLineType::DASHED;
+        }
+
+        Globals::LaneLineType rightLineType = Globals::LaneLineType::SOLID;
+        if (m_rightLaneLines.empty())
+        {
+            rightLineType = Globals::LaneLineType::EMPTY;
+        }
+
+        else if (m_rightLineAverageLength < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
+        {
+            rightLineType = Globals::LaneLineType::DASHED;
+        }
+
+        m_laneDetectionInformation.m_leftLineTypesForDisplay.push_front(m_leftLaneLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(leftLineType)));
         m_laneDetectionInformation.m_leftLineTypesForDisplay.pop_back();
 
-        m_laneDetectionInformation.m_middleLineTypesForDisplay.push_front(m_middleLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(middleLineType)));
+        m_laneDetectionInformation.m_middleLineTypesForDisplay.push_front(m_middleLaneLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(middleLineType)));
         m_laneDetectionInformation.m_middleLineTypesForDisplay.pop_back();
 
-        m_laneDetectionInformation.m_rightLineTypesForDisplay.push_front(m_rightLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(rightLineType)));
+        m_laneDetectionInformation.m_rightLineTypesForDisplay.push_front(m_rightLaneLineTypeRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(rightLineType)));
         m_laneDetectionInformation.m_rightLineTypesForDisplay.pop_back();
     }
 
@@ -293,357 +309,272 @@ namespace LaneAndObjectDetection
         // |                 |                   |  Detected        | ONLY_RIGHT_LANE_MARKING_DETECTED |
         // |                 |                   |                  |     NO_LANE_MARKINGS_DETECTED    |
 
-        const bool LEFT_LINES_PRESENT = !m_leftLines.empty();
-        const bool MIDDLE_LINES_PRESENT = !m_middleLines.empty();
-        const bool RIGHT_LINES_PRESNET = !m_rightLines.empty();
+        const bool LEFT_LINES_PRESENT = !m_leftLaneLines.empty();
+        const bool MIDDLE_LINES_PRESENT = !m_middleLaneLines.empty();
+        const bool RIGHT_LINES_PRESNET = !m_rightLaneLines.empty();
 
-        DrivingState currentDrivingState;
+        Globals::DrivingState currentDrivingState = Globals::DrivingState::NO_LANE_MARKINGS_DETECTED;
 
         if ((LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET) ||
             (LEFT_LINES_PRESENT && !MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET))
         {
-            currentDrivingState = DrivingState::WITHIN_LANE;
+            currentDrivingState = Globals::DrivingState::WITHIN_LANE;
         }
+
         else if ((!LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && !RIGHT_LINES_PRESNET) ||
                  (LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && !RIGHT_LINES_PRESNET) ||
                  (!LEFT_LINES_PRESENT && MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET))
         {
-            currentDrivingState = DrivingState::CHANGING_LANES;
+            currentDrivingState = Globals::DrivingState::CHANGING_LANES;
         }
+
         else if (LEFT_LINES_PRESENT && !MIDDLE_LINES_PRESENT && !RIGHT_LINES_PRESNET)
         {
-            currentDrivingState = DrivingState::ONLY_LEFT_LANE_MARKING_DETECTED;
+            currentDrivingState = Globals::DrivingState::ONLY_LEFT_LANE_MARKING_DETECTED;
         }
+
         else if (!LEFT_LINES_PRESENT && !MIDDLE_LINES_PRESENT && RIGHT_LINES_PRESNET)
         {
-            currentDrivingState = DrivingState::ONLY_RIGHT_LANE_MARKING_DETECTED;
+            currentDrivingState = Globals::DrivingState::ONLY_RIGHT_LANE_MARKING_DETECTED;
         }
-        else
+
+        const Globals::DrivingState NEXT_DRIVING_STATE = m_drivingStateRollingAverage.CalculateRollingAverage(currentDrivingState);
+
+        // Check if the driving state is changing from or will change to CHANGING_LANES and if so reset some variables
+        if (NEXT_DRIVING_STATE != m_laneDetectionInformation.m_drivingState)
         {
-            currentDrivingState = DrivingState::NO_LANE_MARKINGS_DETECTED;
+            // Reset turning state title is no longer in CHANGING_LANES state
+            if (m_laneDetectionInformation.m_drivingState == Globals::DrivingState::CHANGING_LANES)
+            {
+                m_laneDetectionInformation.m_turningStateTitle = "";
+            }
+
+            // Reset CHANGING_LANES variables for upcoming changing lanes calculations
+            if (NEXT_DRIVING_STATE == Globals::DrivingState::CHANGING_LANES)
+            {
+                m_changingLanesFrameCount = 0;
+                m_changingLanesPreviousDistanceDifference = 0;
+                m_changingLanesFirstFrame = true;
+            }
         }
 
-        m_laneDetectionInformation.m_drivingState = m_drivingStateRollingAverage.CalculateRollingAverage(static_cast<uint32_t>(currentDrivingState));
-
-
-        // TODO: Some way to auto update below. Maybe fixed global array? and index it using driving state. but then don't need these vars
-        // as frame builder could also access that?
-        // m_drivingStateTitle = "Within Detected Lanes";
-        // m_laneInformationTitle = "Detected Lanes";
+        m_laneDetectionInformation.m_drivingState = NEXT_DRIVING_STATE;
     }
 
-    void LaneDetector::ExecuteDrivingState()
+    void LaneDetector::CalculateLanePosition()
     {
-        // TODO: do lane_points all need clearing before use?
+        m_laneDetectionInformation.m_laneOverlayCorners = {
+            {0, 0},
+            {0, 0},
+            {0, 0},
+            {0, 0}
+        };
 
-        switch (m_drivingState)
+        double averageDistanceFromLeft = 0;
+        double leftLaneLineC = 0;
+        double leftLaneLineM = 0;
+        double leftLaneLineMinimumY = std::numeric_limits<double>::max();
+
+        for (const cv::Vec4i& leftLaneLine : m_leftLaneLines)
         {
-        case 0: // Within lanes
+            // Determine X along the left/right edge of the mask using the Y co-ordinates of leftLaneLine and then use this X
+            // value to compare with the actual X co-ordinates of leftLaneLine to determine the distance.
+
+            const double LEFT_EDGE_X1 = (leftLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
+            const double LEFT_EDGE_X2 = (leftLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
+
+            averageDistanceFromLeft += std::fabs(leftLaneLine[Globals::G_VEC4_X1_INDEX] - LEFT_EDGE_X1);
+            averageDistanceFromLeft += std::fabs(leftLaneLine[Globals::G_VEC4_X2_INDEX] - LEFT_EDGE_X2);
+
+            // Find the minimum height of a left lane line
+            leftLaneLineMinimumY = std::min({static_cast<double>(leftLaneLine[Globals::G_VEC4_Y1_INDEX]),
+                                             static_cast<double>(leftLaneLine[Globals::G_VEC4_Y2_INDEX]),
+                                             leftLaneLineMinimumY});
+
+            // Find average gradient using m = dy/dx
+            leftLaneLineM += (leftLaneLine[Globals::G_VEC4_Y1_INDEX] - leftLaneLine[Globals::G_VEC4_Y2_INDEX]) / static_cast<double>(leftLaneLine[Globals::G_VEC4_X1_INDEX] - leftLaneLine[Globals::G_VEC4_X2_INDEX]);
+            // Find average c using c = y - mx and just x1,y1 co-ordinates
+            leftLaneLineC += leftLaneLine[Globals::G_VEC4_Y1_INDEX] - ((leftLaneLine[Globals::G_VEC4_Y1_INDEX] - leftLaneLine[Globals::G_VEC4_Y2_INDEX]) / static_cast<double>(leftLaneLine[Globals::G_VEC4_X1_INDEX] - leftLaneLine[Globals::G_VEC4_X2_INDEX]) * leftLaneLine[Globals::G_VEC4_X1_INDEX]);
+        }
+
+        if (!m_leftLaneLines.empty())
         {
-            // Calculate the average distance to left edge, minimum y,
-            // and average LeftLaneEdgeM and LeftLaneEdgeC
-            double averageDistanceFromLeft = 0;
-            double averageDistanceFromRight = 0;
-            double leftLaneEdgeM = 0;
-            double leftLaneEdgeC = 0;
-            double leftMinY = NAN;
-            double minY = NAN;
-            double rightLaneEdgeM = 0;
-            double rightLaneEdgeC = 0;
-            double rightMinY = Globals::G_ROI_BOTTOM_HEIGHT;
+            averageDistanceFromLeft /= static_cast<double>(m_leftLaneLines.size() * 2);
+            leftLaneLineM /= static_cast<double>(m_leftLaneLines.size());
+            leftLaneLineC /= static_cast<double>(m_leftLaneLines.size());
+        }
 
-            if (!m_leftLines.empty())
+        // The same logic as above but for m_rightLaneLines
+        double averageDistanceFromRight = 0;
+        double rightLaneLineC = 0;
+        double rightLaneLineM = 0;
+        double rightLaneLineMinimumY = std::numeric_limits<double>::max();
+
+        for (const cv::Vec4i& rightLaneLine : m_rightLaneLines)
+        {
+            // Determine X along the right/right edge of the mask using the Y co-ordinates of rightLaneLine and then use this X
+            // value to compare with the actual X co-ordinates of rightLaneLine to determine the distance.
+
+            const double RIGHT_EDGE_X1 = (rightLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
+            const double RIGHT_EDGE_X2 = (rightLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
+
+            averageDistanceFromRight += std::fabs(rightLaneLine[Globals::G_VEC4_X1_INDEX] - RIGHT_EDGE_X1);
+            averageDistanceFromRight += std::fabs(rightLaneLine[Globals::G_VEC4_X2_INDEX] - RIGHT_EDGE_X2);
+
+            // Find the minimum height of a right lane line
+            rightLaneLineMinimumY = std::min({static_cast<double>(rightLaneLine[Globals::G_VEC4_Y1_INDEX]),
+                                              static_cast<double>(rightLaneLine[Globals::G_VEC4_Y2_INDEX]),
+                                              rightLaneLineMinimumY});
+
+            // Find average gradient using m = dy/dx
+            rightLaneLineM += (rightLaneLine[Globals::G_VEC4_Y1_INDEX] - rightLaneLine[Globals::G_VEC4_Y2_INDEX]) / static_cast<double>(rightLaneLine[Globals::G_VEC4_X1_INDEX] - rightLaneLine[Globals::G_VEC4_X2_INDEX]);
+            // Find average c using c = y - mx and just x1,y1 co-ordinates
+            rightLaneLineC += rightLaneLine[Globals::G_VEC4_Y1_INDEX] - ((rightLaneLine[Globals::G_VEC4_Y1_INDEX] - rightLaneLine[Globals::G_VEC4_Y2_INDEX]) / static_cast<double>(rightLaneLine[Globals::G_VEC4_X1_INDEX] - rightLaneLine[Globals::G_VEC4_X2_INDEX]) * rightLaneLine[Globals::G_VEC4_X1_INDEX]);
+        }
+
+        if (!m_rightLaneLines.empty())
+        {
+            averageDistanceFromRight /= static_cast<double>(m_rightLaneLines.size() * 2);
+            rightLaneLineM /= static_cast<double>(m_rightLaneLines.size());
+            rightLaneLineC /= static_cast<double>(m_rightLaneLines.size());
+        }
+
+        // Determine the position of the vehicle as a value from G_WITHIN_LANE_MINIMUM_CLAMP_DIFFERENCE_DISTANCE to
+        // G_WITHIN_LANE_MAXIMUM_CLAMP_DIFFERENCE_DISTANCE and thus the turning required to return to the center of the current
+        // lane.
+        const double TURNING_REQUIRED = std::clamp(averageDistanceFromLeft - averageDistanceFromRight,
+                                                   Globals::G_WITHIN_LANE_MINIMUM_CLAMP_DIFFERENCE_DISTANCE,
+                                                   Globals::G_WITHIN_LANE_MAXIMUM_CLAMP_DIFFERENCE_DISTANCE);
+
+        // Round the turning required to return to the center of the current lane down to the nearest
+        // G_WITHIN_LANE_TURNING_REQUIRED_ROUNDING percent
+        m_laneDetectionInformation.m_turningRequiredToReturnToCenterPercentage = static_cast<int32_t>(floor(TURNING_REQUIRED) - fmod(floor(TURNING_REQUIRED), Globals::G_WITHIN_LANE_TURNING_REQUIRED_ROUNDING));
+
+        // Get the turning required to return to the center of the current lane in text
+        if (m_laneDetectionInformation.m_turningRequiredToReturnToCenterPercentage > 0)
+        {
+            m_laneDetectionInformation.m_turningRequiredToReturnToCenterText = std::format("Turn Right {} %", m_laneDetectionInformation.m_turningRequiredToReturnToCenterPercentage);
+        }
+
+        else if (m_laneDetectionInformation.m_turningRequiredToReturnToCenterPercentage < 0)
+        {
+            m_laneDetectionInformation.m_turningRequiredToReturnToCenterText = std::format("Turn Left {} %", -m_laneDetectionInformation.m_turningRequiredToReturnToCenterPercentage);
+        }
+
+        else
+        {
+            m_laneDetectionInformation.m_turningRequiredToReturnToCenterText = "In Centre";
+        }
+
+        // Skip determining the overlay if no gradient has been calculated for the left or right lane lines
+        if ((leftLaneLineM == 0) || (rightLaneLineM == 0))
+        {
+            return;
+        }
+
+        // Find the minimum lane line height - due to OpenCV origin being located at the top left of the frame, visually this
+        // represents the maximum y value
+        const double LANE_LINE_MINIMUM_Y = std::min(leftLaneLineMinimumY, rightLaneLineMinimumY);
+
+        // Calculate the value y0 value for the intersection point of the left and right lane lines
+        //
+        //                   \  /
+        //                    \/  (x0, y0)
+        //                    /\
+        //                   /  \
+        //                  /    \
+        //                 /      \
+        //                /        \
+        //               /          \
+        //              ^            ^
+        // y0 = m1x0 + c1            y0 = m2x0 + c2
+        // x0 = (y0 - c1) / m1       x0 = (y0 - c2) / m2
+        //
+        //      (y0 - c1) / m1 = (y0 - c2) / m2
+        //         m2y0 - m2c1 = m1y0 - m1c2
+        //         m2y0 - m1y0 = m2c1 - m1c2
+        //         y0(m2 - m1) = m2c1 - m1c2
+        //                  y0 = (m2c1 - m1c2) / (m2 - m1)
+
+        const int32_t INTERSECTION_Y0 = static_cast<int32_t>((rightLaneLineM * leftLaneLineC - leftLaneLineM * rightLaneLineC) / (rightLaneLineM - leftLaneLineM));
+
+        // Only draw the lane overlay if the left and right lane lines intersect beyond the visible overlay. Otherwise they
+        // would intersect within the visible section and the overlay would turn in to an hourglass.
+        if (INTERSECTION_Y0 < LANE_LINE_MINIMUM_Y)
+        {
+            m_laneDetectionInformation.m_laneOverlayCorners[0] = cv::Point(static_cast<int32_t>((LANE_LINE_MINIMUM_Y - leftLaneLineC) / leftLaneLineM), static_cast<int32_t>(LANE_LINE_MINIMUM_Y));   // Top left
+            m_laneDetectionInformation.m_laneOverlayCorners[1] = cv::Point(static_cast<int32_t>((LANE_LINE_MINIMUM_Y - rightLaneLineC) / rightLaneLineM), static_cast<int32_t>(LANE_LINE_MINIMUM_Y)); // Top right
+            m_laneDetectionInformation.m_laneOverlayCorners[2] = cv::Point(static_cast<int32_t>((Globals::G_ROI_BOTTOM_HEIGHT - rightLaneLineC) / rightLaneLineM), Globals::G_ROI_BOTTOM_HEIGHT);     // Bottom right
+            m_laneDetectionInformation.m_laneOverlayCorners[3] = cv::Point(static_cast<int32_t>((Globals::G_ROI_BOTTOM_HEIGHT - leftLaneLineC) / leftLaneLineM), Globals::G_ROI_BOTTOM_HEIGHT);       // Bottom left
+        }
+    }
+
+    void LaneDetector::CalculateTurningDirection()
+    {
+        if (m_middleLaneLines.empty())
+        {
+            return;
+        }
+
+        double averageDistanceFromLeft = 0;
+        double averageDistanceFromRight = 0;
+
+        for (const cv::Vec4i& middleLaneLine : m_middleLaneLines)
+        {
+            // Determine X along the left/right edge of the mask using the Y co-ordinates of middleLaneLine and then use this X
+            // value to compare with the actual X co-ordinates of middleLaneLine to determine the distance.
+
+            const double LEFT_EDGE_X1 = (middleLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
+            const double LEFT_EDGE_X2 = (middleLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
+
+            averageDistanceFromLeft += std::fabs(middleLaneLine[Globals::G_VEC4_X1_INDEX] - LEFT_EDGE_X1);
+            averageDistanceFromLeft += std::fabs(middleLaneLine[Globals::G_VEC4_X2_INDEX] - LEFT_EDGE_X2);
+
+            const double RIGHT_EDGE_X1 = (middleLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
+            const double RIGHT_EDGE_X2 = (middleLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
+
+            averageDistanceFromRight += std::fabs(middleLaneLine[Globals::G_VEC4_X1_INDEX] - RIGHT_EDGE_X1);
+            averageDistanceFromRight += std::fabs(middleLaneLine[Globals::G_VEC4_X2_INDEX] - RIGHT_EDGE_X2);
+        }
+
+        averageDistanceFromLeft /= static_cast<double>(m_middleLaneLines.size() * 2);
+        averageDistanceFromRight /= static_cast<double>(m_middleLaneLines.size() * 2);
+
+        const double CURRENT_DISTANCE_DIFFERENCE = averageDistanceFromLeft - averageDistanceFromRight;
+
+        // There is no previous distance difference to compare to on the first frame
+        if (m_changingLanesFirstFrame)
+        {
+            m_changingLanesPreviousDistanceDifference = CURRENT_DISTANCE_DIFFERENCE;
+            m_changingLanesFirstFrame = false;
+            return;
+        }
+
+        // Allow for enough frames to pass to accurately determine a difference
+        if (m_changingLanesFrameCount == Globals::G_CHANGING_LANES_DISTANCE_DIFFERENCE_FRAME_COUNT_THRESHOLD)
+        {
+            const double CHANGE_IN_DISTANCE_DIFFERENCE = m_changingLanesPreviousDistanceDifference - CURRENT_DISTANCE_DIFFERENCE;
+
+            if (CHANGE_IN_DISTANCE_DIFFERENCE < 0)
             {
-                leftMinY = m_leftLines[0][1]; // Bug - Initially was before if. IDK why.
-                double leftX1 = NAN;
-                double leftX2 = NAN;
-                for (const auto& leftLine : m_leftLines)
-                {
-                    leftX1 = (leftLine[1] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
-                    leftX2 = (leftLine[3] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
-
-                    averageDistanceFromLeft += std::fabs(leftLine[0] - leftX1);
-                    averageDistanceFromLeft += std::fabs(leftLine[2] - leftX2);
-
-                    leftMinY = std::min<double>(leftLine[1], leftMinY);
-
-                    leftMinY = std::min<double>(leftLine[3], leftMinY);
-
-                    // Find average m and c values for left lane
-                    leftLaneEdgeM += (leftLine[1] - leftLine[3]) / static_cast<double>(leftLine[0] - leftLine[2]);
-                    leftLaneEdgeC += leftLine[1] - ((leftLine[1] - leftLine[3]) / static_cast<double>(leftLine[0] - leftLine[2])) * leftLine[0];
-                }
-
-                averageDistanceFromLeft /= static_cast<double>(m_leftLines.size() * 2);
-                leftLaneEdgeM /= static_cast<double>(m_leftLines.size());
-                leftLaneEdgeC /= static_cast<double>(m_leftLines.size());
+                m_laneDetectionInformation.m_turningStateTitle = "(Currently Turning Left)";
             }
 
-            // Calculate the average distance to right edge, minimum y,
-            // and average RightLaneEdgeM and RightLaneEdgeC
-            if (!m_rightLines.empty())
+            else if (CHANGE_IN_DISTANCE_DIFFERENCE > 0)
             {
-                double rightX1 = NAN;
-                double rightX2 = NAN;
-                for (auto& rightLine : m_rightLines)
-                {
-                    rightX1 = (rightLine[1] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
-                    rightX2 = (rightLine[3] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
-
-                    averageDistanceFromRight += std::fabs(rightLine[0] - rightX1);
-                    averageDistanceFromRight += std::fabs(rightLine[2] - rightX2);
-
-                    rightMinY = std::min<double>(rightLine[1], rightMinY);
-
-                    rightMinY = std::min<double>(rightLine[3], rightMinY);
-
-                    // Find average m and c values for right lane
-                    rightLaneEdgeM += (rightLine[1] - rightLine[3]) / static_cast<double>(rightLine[0] - rightLine[2]);
-                    rightLaneEdgeC += rightLine[1] - ((rightLine[1] - rightLine[3]) / static_cast<double>(rightLine[0] - rightLine[2])) * rightLine[0];
-                }
-
-                averageDistanceFromRight /= static_cast<double>(m_rightLines.size() * 2);
-                rightLaneEdgeM /= static_cast<double>(m_rightLines.size());
-                rightLaneEdgeC /= static_cast<double>(m_rightLines.size());
+                m_laneDetectionInformation.m_turningStateTitle = "(Currently Turning Right)";
             }
 
-            // Next determine position of car using distances from left and right lane to the left and right edge
-            const double MAXIMUM_DIFFERENCE = 200;
-            const double MINIMUM_DIFFERENCE = -200;
-            double withinLaneCurrentDifference = NAN;
-            if ((averageDistanceFromLeft - averageDistanceFromRight) > MAXIMUM_DIFFERENCE)
-            {
-                withinLaneCurrentDifference = 1;
-            }
-            else if ((averageDistanceFromLeft - averageDistanceFromRight) < MINIMUM_DIFFERENCE)
-            {
-                withinLaneCurrentDifference = -1;
-            }
             else
             {
-                withinLaneCurrentDifference = (averageDistanceFromLeft - averageDistanceFromRight) / MAXIMUM_DIFFERENCE;
+                m_laneDetectionInformation.m_turningStateTitle = "(Currently Not Turning)";
             }
 
-            // Calculate the turning needed to return to centre to the nearest 10% // TODO: fix this as currently always small number
-            const int32_t CONVERT_TO_PERCENTAGE = 100;
-            const int32_t ROUNDING = 10;
-            m_turningRequired = static_cast<int32_t>((withinLaneCurrentDifference * CONVERT_TO_PERCENTAGE) - (floor(withinLaneCurrentDifference) * CONVERT_TO_PERCENTAGE)) % ROUNDING;
+            m_changingLanesPreviousDistanceDifference = CURRENT_DISTANCE_DIFFERENCE;
 
-            // Calculate the direction of turning needed
-            if (m_turningRequired == 0)
-            {
-                m_turningRequiredToReturnToCenter = "In Centre";
-            }
-            else if (m_turningRequired < 0)
-            {
-                m_turningRequiredToReturnToCenter = "Turn Left " + std::to_string(-m_turningRequired) + "%";
-            }
-            else
-            {
-                m_turningRequiredToReturnToCenter = "Turn Right " + std::to_string(m_turningRequired) + "%";
-            }
-
-            // Draw the lane overlay
-            if ((leftLaneEdgeM != 0) && (rightLaneEdgeM != 0))
-            {
-                // Then plot line from ROI_BOTTOM_HEIGHT to the lowest MinY
-                if (leftMinY < rightMinY)
-                {
-                    minY = leftMinY;
-                }
-                else
-                {
-                    minY = rightMinY;
-                }
-
-                // To prevent hour glass error, detect y value that lines intersect and if within overlay
-                // region then skip printing overlay to screen as is error. This done by the following equation:
-                //
-                // y = (m2*c1 - m1*c2) / (m2-m1)
-                //
-                // where m1 and c1 are left lane edge and m2 and c2 are right lane edge
-                const int INTERSECTION_Y = static_cast<int32_t>((rightLaneEdgeM * leftLaneEdgeC - leftLaneEdgeM * rightLaneEdgeC) / (rightLaneEdgeM - leftLaneEdgeM));
-
-                if (INTERSECTION_Y < minY)
-                {
-                    // Add the four points of the quadrangle
-                    m_lanePoints[0] = cv::Point(static_cast<int32_t>((minY - leftLaneEdgeC) / leftLaneEdgeM), static_cast<int32_t>(minY));
-                    m_lanePoints[1] = cv::Point(static_cast<int32_t>((minY - rightLaneEdgeC) / rightLaneEdgeM), static_cast<int32_t>(minY));
-                    m_lanePoints[2] = cv::Point(static_cast<int32_t>((Globals::G_ROI_BOTTOM_HEIGHT - rightLaneEdgeC) / rightLaneEdgeM), Globals::G_ROI_BOTTOM_HEIGHT);
-                    m_lanePoints[3] = cv::Point(static_cast<int32_t>((Globals::G_ROI_BOTTOM_HEIGHT - leftLaneEdgeC) / leftLaneEdgeM), Globals::G_ROI_BOTTOM_HEIGHT);
-                }
-                else
-                {
-                    m_lanePoints = {
-                        {0, 0},
-                        {0, 0},
-                        {0, 0},
-                        {0, 0}
-                    };
-                }
-            }
-            else
-            {
-                m_lanePoints = {
-                    {0, 0},
-                    {0, 0},
-                    {0, 0},
-                    {0, 0}
-                };
-            }
-
-            m_drivingStateTitle = "Within Detected Lanes";
-            m_laneInformationTitle = "Detected Lanes";
-            // Reset these to prevent errors
-            m_changingLanesPreviousDifference = 0;
             m_changingLanesFrameCount = 0;
-            m_currentTurningState.clear();
-            break;
         }
 
-        case 1: // Changing lanes
-        {
-            // Check to prevent divide by zero error
-            if (!m_middleLines.empty())
-            {
-                double averageDistanceFromLeft = 0;
-                double averageDistanceFromRight = 0;
-                double changingLanesCurrentDifference = NAN;
-                double leftY1 = NAN;
-                double leftY2 = NAN;
-                double rightY1 = NAN;
-                double rightY2 = NAN;
-
-                // Calculate the average distance to the left and right edge of the middle lane
-                for (const auto& middleLine : m_middleLines)
-                {
-                    leftY1 = (middleLine[1] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
-                    leftY2 = (middleLine[3] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
-
-                    averageDistanceFromLeft += std::fabs(middleLine[0] - leftY1);
-                    averageDistanceFromLeft += std::fabs(middleLine[2] - leftY2);
-
-                    rightY1 = (middleLine[1] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
-                    rightY2 = (middleLine[3] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
-
-                    averageDistanceFromRight += std::fabs(middleLine[0] - rightY1);
-                    averageDistanceFromRight += std::fabs(middleLine[2] - rightY2);
-                }
-
-                averageDistanceFromLeft /= static_cast<double>(m_middleLines.size() * 2);
-                averageDistanceFromRight /= static_cast<double>(m_middleLines.size() * 2);
-
-                changingLanesCurrentDifference = averageDistanceFromLeft - averageDistanceFromRight;
-
-                // To determine the direction the car is moving, multiple frames that are many frames apart need to be compared
-                // to see a difference in lane position; thus, a frame count is used
-
-                // Increment frame count and then check if the threshold met. If so, the current turning state is compared to the previous
-                // turning state - which occurred FRAME_COUNT_THRESHOLD number of frames ago - and then determine the car's turning state and
-                // update the previous difference and reset the counter.
-
-                // this for if coming from a different driving state
-                if (m_changingLanesFrameCount == 0)
-                {
-                    m_changingLanesPreviousDifference = changingLanesCurrentDifference;
-                }
-
-                m_changingLanesFrameCount++;
-
-                if (m_changingLanesFrameCount == Globals::G_FRAME_COUNT_THRESHOLD)
-                {
-                    // Returns whether the car is turning left, right, or not turning based on
-                    // a current and previous difference, which is a value that represents the
-                    // difference between the distances from the left and right edge with respect
-                    // to the left and right road markings. The threshold value defines how big of
-                    // a difference between current and previous for the car to be detected as turning
-                    if ((m_changingLanesPreviousDifference - changingLanesCurrentDifference) < 0)
-                    {
-                        m_currentTurningState = "(Currently Turning Left)";
-                    }
-                    else if ((m_changingLanesPreviousDifference - changingLanesCurrentDifference) > 0)
-                    {
-                        m_currentTurningState = "(Currently Turning Right)";
-                    }
-                    else
-                    {
-                        m_currentTurningState = "(Currently Not Turning)";
-                    }
-
-                    if (changingLanesCurrentDifference != 0)
-                    {
-                        m_changingLanesPreviousDifference = changingLanesCurrentDifference;
-                    }
-
-                    m_changingLanesFrameCount = 0;
-                }
-            }
-
-            m_drivingStateTitle = "WARNING: Changing lanes";
-            m_laneInformationTitle = "Detected Lanes";
-            m_lanePoints = {
-                {0, 0},
-                {0, 0},
-                {0, 0},
-                {0, 0}
-            };
-            break;
-        }
-
-        case 2: // Only left road marking detected
-        {
-            m_drivingStateTitle = "WARNING: Only left road marking detected";
-            m_laneInformationTitle = "Detected Lanes";
-            // Reset these to prevent errors
-            m_lanePoints = {
-                {0, 0},
-                {0, 0},
-                {0, 0},
-                {0, 0}
-            };
-            m_changingLanesPreviousDifference = 0;
-            m_changingLanesFrameCount = 0;
-            m_currentTurningState.clear();
-            break;
-        }
-
-        case 3: // Only right road marking detected
-        {
-            m_drivingStateTitle = "WARNING: Only right road marking detected";
-            m_laneInformationTitle = "Detected Lanes";
-            // Reset these to prevent errors
-            m_lanePoints = {
-                {0, 0},
-                {0, 0},
-                {0, 0},
-                {0, 0}
-            };
-            m_changingLanesPreviousDifference = 0;
-            m_changingLanesFrameCount = 0;
-            m_currentTurningState.clear();
-            break;
-        }
-
-        case 4: // No road markings detected
-        {
-            m_drivingStateTitle = "WARNING: No road markings detected";
-            m_laneInformationTitle = "No Lanes Detected";
-            // Reset these to prevent errors
-            m_lanePoints = {
-                {0, 0},
-                {0, 0},
-                {0, 0},
-                {0, 0}
-            };
-            m_changingLanesPreviousDifference = 0;
-            m_changingLanesFrameCount = 0;
-            m_currentTurningState.clear();
-            break;
-        }
-
-        default:
-            std::cout << "\ncurrentDrivingState switch statement error: " << m_drivingState;
-            break;
-        }
+        m_changingLanesFrameCount++;
     }
 }

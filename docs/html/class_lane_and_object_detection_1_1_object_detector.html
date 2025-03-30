@@ -116,22 +116,21 @@ $(function(){initNavTree('class_lane_and_object_detection_1_1_object_detector.ht
 </div><!--header-->
 <div class="contents">
 
-<p>The object detector built on YOLOv4.  
+<p>YOLOv4 based object detector.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7b4509db942718492f383152bb271451" id="r_a7b4509db942718492f383152bb271451"><td class="memItemLeft" align="right" valign="top"><a id="a7b4509db942718492f383152bb271451" name="a7b4509db942718492f383152bb271451"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ObjectDetector</b> ()</td></tr>
-<tr class="memdesc:a7b4509db942718492f383152bb271451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new ObjectDetector object. <br /></td></tr>
+<tr class="memitem:a7b4509db942718492f383152bb271451" id="r_a7b4509db942718492f383152bb271451"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b4509db942718492f383152bb271451">ObjectDetector</a> ()</td></tr>
+<tr class="memdesc:a7b4509db942718492f383152bb271451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new ObjectDetector object.  <br /></td></tr>
 <tr class="separator:a7b4509db942718492f383152bb271451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a458f9992e25026bda8b8cc0131d079b4" id="r_a458f9992e25026bda8b8cc0131d079b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a458f9992e25026bda8b8cc0131d079b4">SetProperties</a> (const std::string &amp;p_yoloFolderPath, const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;p_objectDetectorTypes, const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;p_objectDetectorBackEnds, const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;p_objectDetectorBlobSizes)</td></tr>
-<tr class="memdesc:a458f9992e25026bda8b8cc0131d079b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the properties of the ObjectDetector object.  <br /></td></tr>
-<tr class="separator:a458f9992e25026bda8b8cc0131d079b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c02b779dab3a00fbe39fffcfac9164a" id="r_a2c02b779dab3a00fbe39fffcfac9164a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c02b779dab3a00fbe39fffcfac9164a">SetProperties</a> (const std::string &amp;p_yoloFolderPath, const <a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6b">Globals::ObjectDetectorTypes</a> &amp;p_objectDetectorTypes, const <a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0">Globals::ObjectDetectorBackEnds</a> &amp;p_objectDetectorBackEnds, const <a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4">Globals::ObjectDetectorBlobSizes</a> &amp;p_objectDetectorBlobSizes)</td></tr>
+<tr class="memdesc:a2c02b779dab3a00fbe39fffcfac9164a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the properties of the ObjectDetector object.  <br /></td></tr>
+<tr class="separator:a2c02b779dab3a00fbe39fffcfac9164a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a980d69bf2a1a51f4e0c1770251bea075" id="r_a980d69bf2a1a51f4e0c1770251bea075"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a980d69bf2a1a51f4e0c1770251bea075">RunObjectDetector</a> (const cv::Mat &amp;p_frame)</td></tr>
-<tr class="memdesc:a980d69bf2a1a51f4e0c1770251bea075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the object detector.  <br /></td></tr>
+<tr class="memdesc:a980d69bf2a1a51f4e0c1770251bea075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the object detector against <code>p_frame</code>.  <br /></td></tr>
 <tr class="separator:a980d69bf2a1a51f4e0c1770251bea075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad202b463cac19641d4d6511b44374e6" id="r_aad202b463cac19641d4d6511b44374e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad202b463cac19641d4d6511b44374e6">GetInformation</a> ()</td></tr>
 <tr class="memdesc:aad202b463cac19641d4d6511b44374e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct.  <br /></td></tr>
@@ -139,32 +138,59 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a0d21d71440357d93f73a988fe6df72a0" id="r_a0d21d71440357d93f73a988fe6df72a0"><td class="memItemLeft" align="right" valign="top"><a id="a0d21d71440357d93f73a988fe6df72a0" name="a0d21d71440357d93f73a988fe6df72a0"></a>
-cv::dnn::Net&#160;</td><td class="memItemRight" valign="bottom"><b>m_net</b></td></tr>
-<tr class="memdesc:a0d21d71440357d93f73a988fe6df72a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV object which allows the use of pre-trained neural networks. <br /></td></tr>
+<tr class="memitem:a0d21d71440357d93f73a988fe6df72a0" id="r_a0d21d71440357d93f73a988fe6df72a0"><td class="memItemLeft" align="right" valign="top">cv::dnn::Net&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d21d71440357d93f73a988fe6df72a0">m_net</a></td></tr>
+<tr class="memdesc:a0d21d71440357d93f73a988fe6df72a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV object which allows the use of pre-trained neural networks.  <br /></td></tr>
 <tr class="separator:a0d21d71440357d93f73a988fe6df72a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05b71ca822971471d87f0acbc9f2f84c" id="r_a05b71ca822971471d87f0acbc9f2f84c"><td class="memItemLeft" align="right" valign="top"><a id="a05b71ca822971471d87f0acbc9f2f84c" name="a05b71ca822971471d87f0acbc9f2f84c"></a>
-<a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_objectDetectionInformation</b></td></tr>
-<tr class="memdesc:a05b71ca822971471d87f0acbc9f2f84c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct containing all object detection-related information. <br /></td></tr>
+<tr class="memitem:a05b71ca822971471d87f0acbc9f2f84c" id="r_a05b71ca822971471d87f0acbc9f2f84c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05b71ca822971471d87f0acbc9f2f84c">m_objectDetectionInformation</a></td></tr>
+<tr class="memdesc:a05b71ca822971471d87f0acbc9f2f84c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct containing all object detection-related information.  <br /></td></tr>
 <tr class="separator:a05b71ca822971471d87f0acbc9f2f84c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11885db8e0ba5d26fdd6d793fa2e3b81" id="r_a11885db8e0ba5d26fdd6d793fa2e3b81"><td class="memItemLeft" align="right" valign="top"><a id="a11885db8e0ba5d26fdd6d793fa2e3b81" name="a11885db8e0ba5d26fdd6d793fa2e3b81"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_unconnectedOutputLayerNames</b></td></tr>
-<tr class="memdesc:a11885db8e0ba5d26fdd6d793fa2e3b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">The names of layers with unconnected outputs. <br /></td></tr>
+<tr class="memitem:a11885db8e0ba5d26fdd6d793fa2e3b81" id="r_a11885db8e0ba5d26fdd6d793fa2e3b81"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11885db8e0ba5d26fdd6d793fa2e3b81">m_unconnectedOutputLayerNames</a></td></tr>
+<tr class="memdesc:a11885db8e0ba5d26fdd6d793fa2e3b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">The names of layers with unconnected outputs.  <br /></td></tr>
 <tr class="separator:a11885db8e0ba5d26fdd6d793fa2e3b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b38e1b50341f6fb5ba9c78c9c876781" id="r_a5b38e1b50341f6fb5ba9c78c9c876781"><td class="memItemLeft" align="right" valign="top"><a id="a5b38e1b50341f6fb5ba9c78c9c876781" name="a5b38e1b50341f6fb5ba9c78c9c876781"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_blobSize</b></td></tr>
-<tr class="memdesc:a5b38e1b50341f6fb5ba9c78c9c876781"><td class="mdescLeft">&#160;</td><td class="mdescRight">The spatial size for the output image used by the cv::dnn::blobFromImage function. <br /></td></tr>
+<tr class="memitem:a5b38e1b50341f6fb5ba9c78c9c876781" id="r_a5b38e1b50341f6fb5ba9c78c9c876781"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b38e1b50341f6fb5ba9c78c9c876781">m_blobSize</a></td></tr>
+<tr class="memdesc:a5b38e1b50341f6fb5ba9c78c9c876781"><td class="mdescLeft">&#160;</td><td class="mdescRight">The spatial size for the output image used by the <code>cv::dnn::blobFromImage</code> function.  <br /></td></tr>
 <tr class="separator:a5b38e1b50341f6fb5ba9c78c9c876781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8cd30300ffbd38cd6e899236e5e8d23" id="r_aa8cd30300ffbd38cd6e899236e5e8d23"><td class="memItemLeft" align="right" valign="top"><a id="aa8cd30300ffbd38cd6e899236e5e8d23" name="aa8cd30300ffbd38cd6e899236e5e8d23"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipObjectDetection</b></td></tr>
-<tr class="memdesc:aa8cd30300ffbd38cd6e899236e5e8d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to skip object detection. <br /></td></tr>
+<tr class="memitem:aa8cd30300ffbd38cd6e899236e5e8d23" id="r_aa8cd30300ffbd38cd6e899236e5e8d23"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8cd30300ffbd38cd6e899236e5e8d23">m_skipObjectDetection</a></td></tr>
+<tr class="memdesc:aa8cd30300ffbd38cd6e899236e5e8d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to skip object detection.  <br /></td></tr>
 <tr class="separator:aa8cd30300ffbd38cd6e899236e5e8d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The object detector built on YOLOv4. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a458f9992e25026bda8b8cc0131d079b4" name="a458f9992e25026bda8b8cc0131d079b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a458f9992e25026bda8b8cc0131d079b4">&#9670;&#160;</a></span>SetProperties()</h2>
+<div class="textblock"><p>YOLOv4 based object detector. </p>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00023">23</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a7b4509db942718492f383152bb271451" name="a7b4509db942718492f383152bb271451"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b4509db942718492f383152bb271451">&#9670;&#160;</a></span>ObjectDetector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LaneAndObjectDetection::ObjectDetector::ObjectDetector </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new ObjectDetector object. </p>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00017">17</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2c02b779dab3a00fbe39fffcfac9164a" name="a2c02b779dab3a00fbe39fffcfac9164a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c02b779dab3a00fbe39fffcfac9164a">&#9670;&#160;</a></span>SetProperties()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,17 +203,17 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipObjectDetection
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a3f8a8002a536073da3727d36fc5cbb0b">ObjectDetectorTypes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorTypes</em></span>, </td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6b">Globals::ObjectDetectorTypes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorTypes</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a104cf678f9842241b85bd4922f915b32">ObjectDetectorBackEnds</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBackEnds</em></span>, </td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0">Globals::ObjectDetectorBackEnds</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBackEnds</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection.html#a93ef9b244c140c900affc419bd3f6247">ObjectDetectorBlobSizes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBlobSizes</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4">Globals::ObjectDetectorBlobSizes</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectorBlobSizes</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -202,6 +228,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipObjectDetection
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00022">22</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
 
 </div>
 </div>
@@ -220,13 +248,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipObjectDetection
       </table>
 </div><div class="memdoc">
 
-<p>Run the object detector. </p>
+<p>Run the object detector against <code>p_frame</code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p_frame</td><td>The frame to run the object detector against. </td></tr>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00068">68</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
 
 </div>
 </div>
@@ -248,11 +278,144 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipObjectDetection
 <p>Get the <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00133">133</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0d21d71440357d93f73a988fe6df72a0" name="a0d21d71440357d93f73a988fe6df72a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d21d71440357d93f73a988fe6df72a0">&#9670;&#160;</a></span>m_net</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">cv::dnn::Net LaneAndObjectDetection::ObjectDetector::m_net</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>OpenCV object which allows the use of pre-trained neural networks. </p>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00065">65</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a05b71ca822971471d87f0acbc9f2f84c" name="a05b71ca822971471d87f0acbc9f2f84c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05b71ca822971471d87f0acbc9f2f84c">&#9670;&#160;</a></span>m_objectDetectionInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> LaneAndObjectDetection::ObjectDetector::m_objectDetectionInformation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct containing all object detection-related information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00070">70</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a11885db8e0ba5d26fdd6d793fa2e3b81" name="a11885db8e0ba5d26fdd6d793fa2e3b81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11885db8e0ba5d26fdd6d793fa2e3b81">&#9670;&#160;</a></span>m_unconnectedOutputLayerNames</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; LaneAndObjectDetection::ObjectDetector::m_unconnectedOutputLayerNames</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The names of layers with unconnected outputs. </p>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00075">75</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a5b38e1b50341f6fb5ba9c78c9c876781" name="a5b38e1b50341f6fb5ba9c78c9c876781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b38e1b50341f6fb5ba9c78c9c876781">&#9670;&#160;</a></span>m_blobSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t LaneAndObjectDetection::ObjectDetector::m_blobSize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The spatial size for the output image used by the <code>cv::dnn::blobFromImage</code> function. </p>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00080">80</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aa8cd30300ffbd38cd6e899236e5e8d23" name="aa8cd30300ffbd38cd6e899236e5e8d23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8cd30300ffbd38cd6e899236e5e8d23">&#9670;&#160;</a></span>m_skipObjectDetection</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LaneAndObjectDetection::ObjectDetector::m_skipObjectDetection</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether to skip object detection. </p>
+
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00085">85</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/detectors/<a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a></li>
-<li>source/detectors/<b>ObjectDetector.cpp</b></li>
+<li>source/detectors/<a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -260,7 +423,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_skipObjectDetection
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_object_detector.html">ObjectDetector</a></li>
-    <li class="footer">Generated on Sun Mar 16 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun Mar 30 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

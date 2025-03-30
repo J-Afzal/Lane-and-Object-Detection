@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['updateframe_0',['UpdateFrame',['../class_lane_and_object_detection_1_1_frame_builder.html#aba8c7e43ea81837617ae55ff35beb81b',1,'LaneAndObjectDetection::FrameBuilder']]]
+  ['togglesaveoutput_0',['ToggleSaveOutput',['../class_lane_and_object_detection_1_1_video_manager.html#a6cfb42a2cfc2bf8b8c5a002887424864',1,'LaneAndObjectDetection::VideoManager']]]
 ];

@@ -1,7 +1,7 @@
 var class_lane_and_object_detection_1_1_object_detector =
 [
     [ "ObjectDetector", "class_lane_and_object_detection_1_1_object_detector.html#a7b4509db942718492f383152bb271451", null ],
-    [ "SetProperties", "class_lane_and_object_detection_1_1_object_detector.html#a458f9992e25026bda8b8cc0131d079b4", null ],
+    [ "SetProperties", "class_lane_and_object_detection_1_1_object_detector.html#a2c02b779dab3a00fbe39fffcfac9164a", null ],
     [ "RunObjectDetector", "class_lane_and_object_detection_1_1_object_detector.html#a980d69bf2a1a51f4e0c1770251bea075", null ],
     [ "GetInformation", "class_lane_and_object_detection_1_1_object_detector.html#aad202b463cac19641d4d6511b44374e6", null ],
     [ "m_net", "class_lane_and_object_detection_1_1_object_detector.html#a0d21d71440357d93f73a988fe6df72a0", null ],

@@ -7,6 +7,7 @@
 #include <opencv2/core/mat.hpp>
 #include <opencv2/dnn/dnn.hpp>
 
+#include "helpers/Globals.hpp"
 #include "helpers/Information.hpp"
 
 /**
@@ -15,43 +16,9 @@
  */
 namespace LaneAndObjectDetection
 {
-
-    /**
-     * @brief The type of object detector to use with an option to disable object detection. The tiny version is more performant
-     * at the cost of accuracy.
-     */
-    enum class ObjectDetectorTypes : std::uint8_t
-    {
-        NONE = 0,
-        STANDARD,
-        TINY
-    };
-
-    /**
-     * @brief The supported backends for the object detector to run on. CUDA is significantly more performant.
-     */
-    enum class ObjectDetectorBackEnds : std::uint8_t
-    {
-        CPU = 0,
-        CUDA
-    };
-
-    /**
-     * @brief The supported blob sizes for the object detector to run with. The larger the blob size the more performant the
-     * detector at the cost of performance.
-     */
-    enum class ObjectDetectorBlobSizes : std::int16_t
-    {
-        ONE = 288,
-        TWO = 320,
-        THREE = 416,
-        FOUR = 512,
-        FIVE = 608
-    };
-
     /**
      * @class ObjectDetector
-     * @brief The object detector built on YOLOv4.
+     * @brief YOLOv4 based object detector.
      */
     class ObjectDetector
     {
@@ -73,12 +40,12 @@ namespace LaneAndObjectDetection
          * size the more performant the detector at the cost of performance.
          */
         void SetProperties(const std::string& p_yoloFolderPath,
-                           const ObjectDetectorTypes& p_objectDetectorTypes,
-                           const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                           const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes);
+                           const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                           const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                           const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes);
 
         /**
-         * @brief Run the object detector.
+         * @brief Run the object detector against `p_frame`.
          *
          * @param p_frame The frame to run the object detector against.
          */
@@ -108,7 +75,7 @@ namespace LaneAndObjectDetection
         std::vector<std::string> m_unconnectedOutputLayerNames;
 
         /**
-         * @brief The spatial size for the output image used by the cv::dnn::blobFromImage function.
+         * @brief The spatial size for the output image used by the `cv::dnn::blobFromImage` function.
          */
         int32_t m_blobSize;
 

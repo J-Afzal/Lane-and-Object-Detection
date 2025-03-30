@@ -124,20 +124,12 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 <!--
 x. Clean up C++ lane and object detection code.
 
-    Debug lane detection code to make sure it is correct.
-    Make driving state an enum?
-    Why is NAN being used?
-    Rename all vars and functions and delete some member vars
-    redo get information functions
+    Finish all TODO(Main)s (Linters check)
+    Commit code
 
-    Make sure all global vars are used and all information vars
-    Make sure all consts in globals
-    Make global consts shorter? re-org?
     Update General Information in readme
-    add backticks to docs
-    remove use at []
-    Finish all todos
-    Linters check
+
+    Debug lane detection code to make sure it is correct.
 
 x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
 
@@ -165,4 +157,6 @@ x. Implement C GUI window to encapsulate main code and performance test code wit
         where are std::cout displayed?
         run performance tests?
         display and export performance graphs?
+
+x. Find better dash cam footage like american highway footage or m1 motorway footage?
 -->

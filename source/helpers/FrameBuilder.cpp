@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <format>
 
+#include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/imgproc.hpp>
@@ -68,7 +69,7 @@ namespace LaneAndObjectDetection
         AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_DRIVING_STATE_RECT, p_laneDetectionInformation.m_drivingStateTitle);
 
         // Add turning state
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TURNING_STATE_RECT, p_laneDetectionInformation.m_currentTurningState);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TURNING_STATE_RECT, p_laneDetectionInformation.m_turningStateTitle);
 
         // Add lane information title
         AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TITLE_RECT, p_laneDetectionInformation.m_laneInformationTitle);
@@ -116,16 +117,16 @@ namespace LaneAndObjectDetection
         }
 
         // Add turning required to return to center of the lane
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT, p_laneDetectionInformation.m_turningRequiredToReturnToCenter);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT, p_laneDetectionInformation.m_turningRequiredToReturnToCenterText);
 
         // Used for the below overlays
         cv::Mat blankFrame = cv::Mat::zeros(Globals::G_INPUT_VIDEO_HEIGHT, Globals::G_INPUT_VIDEO_WIDTH, p_frame.type());
 
-        if (p_laneDetectionInformation.m_drivingState == 0)
+        if (p_laneDetectionInformation.m_drivingState == Globals::DrivingState::WITHIN_LANE)
         {
             // Add the box overlay signifying vehicle location within the lane
             cv::rectangle(blankFrame,
-                          cv::Rect(Globals::G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION - p_laneDetectionInformation.m_turningRequired,
+                          cv::Rect(Globals::G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION - p_laneDetectionInformation.m_turningRequiredToReturnToCenterPercentage,
                                    Globals::G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION,
                                    Globals::G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH,
                                    Globals::G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT),
@@ -135,10 +136,7 @@ namespace LaneAndObjectDetection
         }
 
         // Draw the green lane overlay to signify the area of the road which is considered the 'current lane'
-        cv::fillConvexPoly(blankFrame,
-                           p_laneDetectionInformation.m_lanePoints,
-                           Globals::G_LANE_INFORMATION_LANE_OVERLAY_COLOUR,
-                           cv::LINE_AA);
+        cv::fillConvexPoly(blankFrame, p_laneDetectionInformation.m_laneOverlayCorners, Globals::G_LANE_INFORMATION_LANE_OVERLAY_COLOUR, cv::LINE_AA);
 
         // Using add to give a transparent overlay
         cv::add(p_frame, blankFrame, p_frame);
@@ -147,7 +145,7 @@ namespace LaneAndObjectDetection
     void FrameBuilder::AddPerformanceInformation(cv::Mat& p_frame, const PerformanceInformation& p_performanceInformation)
     {
         // Round frame per second values to two decimal places
-        const double DIVISOR = 100;
+        const double DIVISOR = 100; // TODO(Main): const
         const std::string AVERAGE_FPS = std::format("Average FPS: {}", std::round(p_performanceInformation.m_averageFramesPerSecond * DIVISOR) / DIVISOR);
         const std::string CURRENT_FPS = std::format("Current FPS: {}", std::round(p_performanceInformation.m_currentFramesPerSecond * DIVISOR) / DIVISOR);
 
@@ -157,9 +155,7 @@ namespace LaneAndObjectDetection
 
     void FrameBuilder::AddVideoManagerInformation(cv::Mat& p_frame, const VideoManagerInformation& p_videoManagerInformation)
     {
-        AddBackgroundRectAndCentredText(p_frame,
-                                        Globals::G_RECORDING_STATUS_RECT,
-                                        p_videoManagerInformation.m_saveOutput ? Globals::G_UI_TEXT_RECORDING : Globals::G_UI_TEXT_NOT_RECORDING);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_RECORDING_STATUS_RECT, p_videoManagerInformation.m_saveOutputText);
     }
 
     void FrameBuilder::AddBackgroundRectAndCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale)
@@ -176,10 +172,10 @@ namespace LaneAndObjectDetection
 
     void FrameBuilder::AddCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale)
     {
-        const double DIVISOR = 2;
-        const double FONT_DECREMENT = 0.1;
-        const int32_t HORIZONTAL_PADDING = 10;
-        const int32_t VERTICAL_PADDING = 15;
+        const double DIVISOR = 2;              // TODO(Main): const
+        const double FONT_DECREMENT = 0.1;     // TODO(Main): const
+        const int32_t HORIZONTAL_PADDING = 10; // TODO(Main): const
+        const int32_t VERTICAL_PADDING = 15;   // TODO(Main): const
 
         double currentFontScale = p_fontScale;
 

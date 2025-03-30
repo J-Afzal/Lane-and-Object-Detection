@@ -25,9 +25,9 @@ namespace LaneAndObjectDetection
 
     VideoManager::VideoManager(const int32_t& p_inputVideoCamera,
                                const std::string& p_yoloFolderPath,
-                               const ObjectDetectorTypes& p_objectDetectorTypes,
-                               const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                               const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes) :
+                               const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                               const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                               const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes) :
         m_saveOutput(false)
     {
         SetProperties(p_inputVideoCamera, p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
@@ -35,22 +35,22 @@ namespace LaneAndObjectDetection
 
     VideoManager::VideoManager(const std::string& p_inputVideoFilePath,
                                const std::string& p_yoloFolderPath,
-                               const ObjectDetectorTypes& p_objectDetectorTypes,
-                               const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                               const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes) :
+                               const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                               const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                               const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes) :
         m_saveOutput(false)
     {
         SetProperties(p_inputVideoFilePath, p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
     }
 
-    VideoManager::VideoManager(const std::vector<std::string>& p_commandLineArguments) :
+    VideoManager::VideoManager(const std::vector<std::string>& p_commandLineArguments) : // NOLINT(readability-function-cognitive-complexity)
         m_saveOutput(false)
     {
         std::string parsedInputVideoFilePath;
         std::string parsedYoloFolderPath;
-        ObjectDetectorTypes parsedObjectDetectorTypes = ObjectDetectorTypes::NONE;
-        ObjectDetectorBackEnds parsedObjectDetectorBackEnds = ObjectDetectorBackEnds::CPU;
-        ObjectDetectorBlobSizes parsedObjectDetectorBlobSizes = ObjectDetectorBlobSizes::ONE;
+        Globals::ObjectDetectorTypes parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::NONE;
+        Globals::ObjectDetectorBackEnds parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
+        Globals::ObjectDetectorBlobSizes parsedObjectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::ONE;
 
         uint32_t index = 0;
 
@@ -78,17 +78,17 @@ namespace LaneAndObjectDetection
                 {
                     if (p_commandLineArguments.at(index + 1) == "none")
                     {
-                        parsedObjectDetectorTypes = ObjectDetectorTypes::NONE;
+                        parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::NONE;
                     }
 
                     else if (p_commandLineArguments.at(index + 1) == "standard")
                     {
-                        parsedObjectDetectorTypes = ObjectDetectorTypes::STANDARD;
+                        parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::STANDARD;
                     }
 
                     else if (p_commandLineArguments.at(index + 1) == "tiny")
                     {
-                        parsedObjectDetectorTypes = ObjectDetectorTypes::TINY;
+                        parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::TINY;
                     }
 
                     else
@@ -102,12 +102,12 @@ namespace LaneAndObjectDetection
                 {
                     if (p_commandLineArguments.at(index + 1) == "cpu")
                     {
-                        parsedObjectDetectorBackEnds = ObjectDetectorBackEnds::CPU;
+                        parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
                     }
 
                     else if (p_commandLineArguments.at(index + 1) == "cuda")
                     {
-                        parsedObjectDetectorBackEnds = ObjectDetectorBackEnds::CUDA;
+                        parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CUDA;
                     }
 
                     else
@@ -119,36 +119,7 @@ namespace LaneAndObjectDetection
 
                 if (argument == "-s" || argument == "--object-detector-blob-size")
                 {
-                    if (p_commandLineArguments.at(index + 1) == "208")
-                    {
-                        parsedObjectDetectorBlobSizes = ObjectDetectorBlobSizes::ONE;
-                    }
-
-                    else if (p_commandLineArguments.at(index + 1) == "320")
-                    {
-                        parsedObjectDetectorBlobSizes = ObjectDetectorBlobSizes::TWO;
-                    }
-
-                    else if (p_commandLineArguments.at(index + 1) == "416")
-                    {
-                        parsedObjectDetectorBlobSizes = ObjectDetectorBlobSizes::THREE;
-                    }
-
-                    else if (p_commandLineArguments.at(index + 1) == "512")
-                    {
-                        parsedObjectDetectorBlobSizes = ObjectDetectorBlobSizes::FOUR;
-                    }
-
-                    else if (p_commandLineArguments.at(index + 1) == "608")
-                    {
-                        parsedObjectDetectorBlobSizes = ObjectDetectorBlobSizes::FIVE;
-                    }
-
-                    else
-                    {
-                        std::cout << Globals::G_CLI_HELP_MESSAGE;
-                        exit(1);
-                    }
+                    parsedObjectDetectorBlobSizes = static_cast<Globals::ObjectDetectorBlobSizes>(std::stoi(p_commandLineArguments.at(index + 1)));
                 }
             }
 
@@ -180,9 +151,9 @@ namespace LaneAndObjectDetection
 
     void VideoManager::SetProperties(const int32_t& p_inputVideoCamera,
                                      const std::string& p_yoloFolderPath,
-                                     const ObjectDetectorTypes& p_objectDetectorTypes,
-                                     const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                                     const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
+                                     const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                                     const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                                     const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
     {
         m_inputVideo.open(p_inputVideoCamera);
 
@@ -202,9 +173,9 @@ namespace LaneAndObjectDetection
 
     void VideoManager::SetProperties(const std::string& p_inputVideoFilePath,
                                      const std::string& p_yoloFolderPath,
-                                     const ObjectDetectorTypes& p_objectDetectorTypes,
-                                     const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                                     const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
+                                     const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                                     const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                                     const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
     {
         m_inputVideo.open(p_inputVideoFilePath);
 
@@ -222,7 +193,7 @@ namespace LaneAndObjectDetection
         m_saveOutput = false;
     }
 
-    void VideoManager::Run()
+    void VideoManager::RunLaneAndObjectDetector()
     {
         while (true)
         {
@@ -237,7 +208,7 @@ namespace LaneAndObjectDetection
 
             m_laneDetector.RunLaneDetector(m_currentFrame, m_objectDetector.GetInformation());
 
-            FrameBuilder::UpdateFrame(m_currentFrame, m_objectDetector.GetInformation(), m_laneDetector.GetInformation(), m_performance.GetInformation(), {.m_saveOutput = m_saveOutput});
+            FrameBuilder::UpdateFrame(m_currentFrame, m_objectDetector.GetInformation(), m_laneDetector.GetInformation(), m_performance.GetInformation(), m_videoManagerInformation);
 
             if (m_saveOutput)
             {
@@ -275,7 +246,7 @@ namespace LaneAndObjectDetection
 
         if (m_saveOutput)
         {
-            const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now());
+            const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now()); // TODO(Main): const the format string?
 
             m_outputVideo.open(OUTPUT_FILE_NAME,
                                cv::VideoWriter::fourcc('m', 'p', '4', 'v'),
@@ -287,11 +258,17 @@ namespace LaneAndObjectDetection
                 std::cout << std::format("\nERROR: Output video file '{}' could not be opened! Recording stopped!\n", OUTPUT_FILE_NAME);
                 m_saveOutput = false;
             }
+
+            else
+            {
+                m_videoManagerInformation.m_saveOutputText = Globals::G_UI_TEXT_RECORDING;
+            }
         }
 
         else
         {
             m_outputVideo.release();
+            m_videoManagerInformation.m_saveOutputText = Globals::G_UI_TEXT_NOT_RECORDING;
         }
     }
 }

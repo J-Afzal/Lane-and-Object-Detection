@@ -34,6 +34,8 @@ FORCE_LOCAL_INCLUDES   = YES
 
 SORT_MEMBER_DOCS       = NO
 
+SOURCE_BROWSER         = YES
+
 #---------------------------------------------------------------------------
 # Configuration options related to warning and progress messages
 #---------------------------------------------------------------------------

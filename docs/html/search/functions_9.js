@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['setproperties_0',['SetProperties',['../class_lane_and_object_detection_1_1_object_detector.html#a458f9992e25026bda8b8cc0131d079b4',1,'LaneAndObjectDetection::ObjectDetector::SetProperties()'],['../class_lane_and_object_detection_1_1_video_manager.html#a9dedcaa0069d00fb4d0366b12057181c',1,'LaneAndObjectDetection::VideoManager::SetProperties(const int32_t &amp;p_inputVideoCamera, const std::string &amp;p_yoloFolderPath, const ObjectDetectorTypes &amp;p_objectDetectorTypes, const ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)'],['../class_lane_and_object_detection_1_1_video_manager.html#accc97853b93326bc219c963fd7955cda',1,'LaneAndObjectDetection::VideoManager::SetProperties(const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloFolderPath, const ObjectDetectorTypes &amp;p_objectDetectorTypes, const ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)']]],
-  ['setup_1',['Setup',['../class_lane_and_object_detection_1_1_lane_detector.html#a84be2b6e2622cd85fe81414b791d681d',1,'LaneAndObjectDetection::LaneDetector']]],
-  ['starttimer_2',['StartTimer',['../class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb',1,'LaneAndObjectDetection::Performance']]]
+  ['rollingaverage_0',['RollingAverage',['../class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html#a4eb456b42bf691586858c2242d234128',1,'LaneAndObjectDetection::LaneDetector::RollingAverage']]],
+  ['runlaneandobjectdetector_1',['RunLaneAndObjectDetector',['../class_lane_and_object_detection_1_1_video_manager.html#ad8e33a4eaf3ab1c1e16c050d10aeda09',1,'LaneAndObjectDetection::VideoManager']]],
+  ['runlanedetector_2',['RunLaneDetector',['../class_lane_and_object_detection_1_1_lane_detector.html#a6e77decdad63551b310f8f015562329b',1,'LaneAndObjectDetection::LaneDetector']]],
+  ['runobjectdetector_3',['RunObjectDetector',['../class_lane_and_object_detection_1_1_object_detector.html#a980d69bf2a1a51f4e0c1770251bea075',1,'LaneAndObjectDetection::ObjectDetector']]],
+  ['runperformancetest_4',['RunPerformanceTest',['../class_lane_and_object_detection_1_1_performance_test.html#a0457c464a4b23b3eb6d6566ebbcdbceb',1,'LaneAndObjectDetection::PerformanceTest']]]
 ];

@@ -17,12 +17,12 @@ words:
     - cuda
     - darkmode
     - doxyfile
-    - giveway
     - linters
     - opencv
     - sigmas
 ignoreWords:
     - altera
+    - anyofallof
     - axisbelow
     - choco
     - ciou

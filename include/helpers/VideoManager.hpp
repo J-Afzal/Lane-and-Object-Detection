@@ -9,6 +9,7 @@
 
 #include "detectors/LaneDetector.hpp"
 #include "detectors/ObjectDetector.hpp"
+#include "helpers/Globals.hpp"
 #include "helpers/Information.hpp"
 #include "helpers/Performance.hpp"
 
@@ -35,7 +36,7 @@ namespace LaneAndObjectDetection
         /**
          * @brief Constructs a new %VideoManager object for use with an OpenCV camera input (for API use).
          *
-         * @param p_inputVideoCamera Camera ID of the video capturing device to open using the OpenCV VideoCapture class.
+         * @param p_inputVideoCamera Camera Id of the video capturing device to open using the OpenCV `VideoCapture` class.
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
@@ -46,14 +47,14 @@ namespace LaneAndObjectDetection
          */
         explicit VideoManager(const int32_t& p_inputVideoCamera,
                               const std::string& p_yoloFolderPath,
-                              const ObjectDetectorTypes& p_objectDetectorTypes,
-                              const ObjectDetectorBackEnds& p_objectDetectorBackEnds = ObjectDetectorBackEnds::CPU,
-                              const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes = ObjectDetectorBlobSizes::ONE);
+                              const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                              const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU,
+                              const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::ONE);
 
         /**
          * @brief Constructs a new %VideoManager object for use with a video file input (for API use).
          *
-         * @param p_inputVideoFilePath The file path of the video file to open using the OpenCV VideoCapture class.
+         * @param p_inputVideoFilePath The file path of the video file to open using the OpenCV `VideoCapture` class.
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
@@ -64,9 +65,9 @@ namespace LaneAndObjectDetection
          */
         explicit VideoManager(const std::string& p_inputVideoFilePath,
                               const std::string& p_yoloFolderPath,
-                              const ObjectDetectorTypes& p_objectDetectorTypes,
-                              const ObjectDetectorBackEnds& p_objectDetectorBackEnds = ObjectDetectorBackEnds::CPU,
-                              const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes = ObjectDetectorBlobSizes::ONE);
+                              const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                              const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU,
+                              const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::ONE);
 
         /**
          * @brief Constructs a new %VideoManager object (for CLI use).
@@ -102,7 +103,7 @@ namespace LaneAndObjectDetection
         /**
          * @brief Set the properties of the %VideoManager object.
          *
-         * @param p_inputVideoCamera Camera ID of the video capturing device to open using the OpenCV VideoCapture class.
+         * @param p_inputVideoCamera Camera ID of the video capturing device to open using the OpenCV `VideoCapture` class.
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
@@ -113,14 +114,14 @@ namespace LaneAndObjectDetection
          */
         void SetProperties(const int32_t& p_inputVideoCamera,
                            const std::string& p_yoloFolderPath,
-                           const ObjectDetectorTypes& p_objectDetectorTypes,
-                           const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                           const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes);
+                           const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                           const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                           const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes);
 
         /**
          * @brief Set the properties of the %VideoManager object.
          *
-         * @param p_inputVideoFilePath The file path of the video file to open using the OpenCV VideoCapture class.
+         * @param p_inputVideoFilePath The file path of the video file to open using the OpenCV `VideoCapture` class.
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
@@ -131,14 +132,14 @@ namespace LaneAndObjectDetection
          */
         void SetProperties(const std::string& p_inputVideoFilePath,
                            const std::string& p_yoloFolderPath,
-                           const ObjectDetectorTypes& p_objectDetectorTypes,
-                           const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                           const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes);
+                           const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                           const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                           const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes);
 
         /**
          * @brief Orchestration function which contains the main program loop.
          */
-        void Run();
+        void RunLaneAndObjectDetector();
 
         /**
          * @brief Get the performance information. Useful for performance benchmarking.
@@ -178,7 +179,7 @@ namespace LaneAndObjectDetection
     private:
         /**
          * @brief Toggles whether the output video stream should be recorded locally. If toggled on, it creates a new file in
-         * the format "YYYY-MM-DD-HH:mm:ss-output.mp4".
+         * the format `YYYY-MM-DD-HH:mm:ss-output.mp4`".
          */
         void ToggleSaveOutput();
 
@@ -211,6 +212,11 @@ namespace LaneAndObjectDetection
          * @brief The frame time and current/average frames per second performance calculator.
          */
         Performance m_performance;
+
+        /**
+         * @brief The VideoManagerInformation struct containing all video manager-related information.
+         */
+        VideoManagerInformation m_videoManagerInformation;
 
         /**
          * @brief Whether the output video stream should be saved locally.

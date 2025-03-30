@@ -3,8 +3,11 @@
 #include <cstdint>
 #include <deque>
 #include <string>
+#include <vector>
 
 #include <opencv2/core/types.hpp>
+
+#include "helpers/Globals.hpp"
 
 /**
  * @namespace LaneAndObjectDetection
@@ -13,7 +16,7 @@
 namespace LaneAndObjectDetection
 {
     /**
-     * @brief The information needed by %FrameBuilder to update frame with object detection information.
+     * @brief The information needed by FrameBuilder to update frame with object detection information.
      */
     struct ObjectDetectionInformation
     {
@@ -45,10 +48,15 @@ namespace LaneAndObjectDetection
     };
 
     /**
-     * @brief The information needed by %FrameBuilder to update frame with lane detection information.
+     * @brief The information needed by FrameBuilder to update frame with lane detection information.
      */
     struct LaneDetectionInformation
     {
+        /**
+         * @brief The co-ordinate points that outline the current lane.
+         */
+        std::vector<cv::Point> m_laneOverlayCorners;
+
         /**
          * @brief The left-hand side road marking types to display.
          */
@@ -67,22 +75,7 @@ namespace LaneAndObjectDetection
         /**
          * @brief The current driving state.
          */
-        uint32_t m_drivingState;
-
-
-
-
-
-
-        /**
-         * @brief The co-ordinate points that outline the current lane.
-         */
-        std::vector<cv::Point> m_lanePoints;
-
-        /**
-         * @brief The current turning state title.
-         */
-        std::string m_currentTurningState;
+        Globals::DrivingState m_drivingState;
 
         /**
          * @brief The current driving state title.
@@ -95,18 +88,23 @@ namespace LaneAndObjectDetection
         std::string m_laneInformationTitle;
 
         /**
+         * @brief The current turning state title.
+         */
+        std::string m_turningStateTitle;
+
+        /**
          * @brief The text for the current turning required to return the vehicle to the center of the current lane.
          */
-        std::string m_turningRequiredToReturnToCenter;
+        std::string m_turningRequiredToReturnToCenterText;
 
         /**
          * @brief The number for the current turning required to return the vehicle to the center of the current lane.
          */
-        uint32_t m_turningRequired;
+        int32_t m_turningRequiredToReturnToCenterPercentage;
     };
 
     /**
-     * @brief The information needed by %FrameBuilder to update frame with performance information.
+     * @brief The information needed by FrameBuilder to update frame with performance information.
      */
     struct PerformanceInformation
     {
@@ -127,13 +125,13 @@ namespace LaneAndObjectDetection
     };
 
     /**
-     * @brief The information needed by %FrameBuilder to update frame with video manager information.
+     * @brief The information needed by FrameBuilder to update frame with video manager information.
      */
     struct VideoManagerInformation
     {
         /**
-         * @brief Whether the output video stream should be saved locally.
+         * @brief Text to display whether or not the program is recording the output.
          */
-        bool m_saveOutput;
+        std::string m_saveOutputText;
     };
 }

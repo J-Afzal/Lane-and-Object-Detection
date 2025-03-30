@@ -25,6 +25,7 @@ Checks: "*, \
     -objc-*, \
     -openmp-*, \
     -readability-qualified-auto, \
+    -readability-use-anyofallof, \
     -zircon-*"
 WarningsAsErrors: "*"
 CheckOptions:

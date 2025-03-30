@@ -109,179 +109,202 @@ $(function(){initNavTree('class_lane_and_object_detection_1_1_lane_detector.html
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_lane_and_object_detection_1_1_lane_detector-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">LaneAndObjectDetection::LaneDetector Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>TODO.  
+<p>Detects the lane the vehicle is in and other lane-related metrics.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>&quot;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates a rolling average to provide a smoothed view of state trends over time.  <a href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9990553b658820f3b6bbbf019407d055" id="r_a9990553b658820f3b6bbbf019407d055"><td class="memItemLeft" align="right" valign="top"><a id="a9990553b658820f3b6bbbf019407d055" name="a9990553b658820f3b6bbbf019407d055"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>LaneDetector</b> ()</td></tr>
-<tr class="memdesc:a9990553b658820f3b6bbbf019407d055"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memitem:a9990553b658820f3b6bbbf019407d055" id="r_a9990553b658820f3b6bbbf019407d055"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9990553b658820f3b6bbbf019407d055">LaneDetector</a> ()</td></tr>
+<tr class="memdesc:a9990553b658820f3b6bbbf019407d055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new LaneDetector object.  <br /></td></tr>
 <tr class="separator:a9990553b658820f3b6bbbf019407d055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e77decdad63551b310f8f015562329b" id="r_a6e77decdad63551b310f8f015562329b"><td class="memItemLeft" align="right" valign="top"><a id="a6e77decdad63551b310f8f015562329b" name="a6e77decdad63551b310f8f015562329b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RunLaneDetector</b> (const cv::Mat &amp;p_frame, const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;p_objectDetectionInformation)</td></tr>
-<tr class="memdesc:a6e77decdad63551b310f8f015562329b"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memitem:a6e77decdad63551b310f8f015562329b" id="r_a6e77decdad63551b310f8f015562329b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e77decdad63551b310f8f015562329b">RunLaneDetector</a> (const cv::Mat &amp;p_frame, const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;p_objectDetectionInformation)</td></tr>
+<tr class="memdesc:a6e77decdad63551b310f8f015562329b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the lane detector against <code>p_frame</code>.  <br /></td></tr>
 <tr class="separator:a6e77decdad63551b310f8f015562329b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c03efbee133a7d23c1d28f8588ac007" id="r_a0c03efbee133a7d23c1d28f8588ac007"><td class="memItemLeft" align="right" valign="top"><a id="a0c03efbee133a7d23c1d28f8588ac007" name="a0c03efbee133a7d23c1d28f8588ac007"></a>
-<a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetInformation</b> ()</td></tr>
-<tr class="memdesc:a0c03efbee133a7d23c1d28f8588ac007"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memitem:a0c03efbee133a7d23c1d28f8588ac007" id="r_a0c03efbee133a7d23c1d28f8588ac007"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c03efbee133a7d23c1d28f8588ac007">GetInformation</a> ()</td></tr>
+<tr class="memdesc:a0c03efbee133a7d23c1d28f8588ac007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html" title="The information needed by FrameBuilder to update frame with lane detection information.">LaneDetectionInformation</a> struct.  <br /></td></tr>
 <tr class="separator:a0c03efbee133a7d23c1d28f8588ac007"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a84be2b6e2622cd85fe81414b791d681d" id="r_a84be2b6e2622cd85fe81414b791d681d"><td class="memItemLeft" align="right" valign="top"><a id="a84be2b6e2622cd85fe81414b791d681d" name="a84be2b6e2622cd85fe81414b791d681d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Setup</b> ()</td></tr>
-<tr class="memdesc:a84be2b6e2622cd85fe81414b791d681d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a84be2b6e2622cd85fe81414b791d681d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89c0ee4e20c0771416a32d0a9bebccc1" id="r_a89c0ee4e20c0771416a32d0a9bebccc1"><td class="memItemLeft" align="right" valign="top"><a id="a89c0ee4e20c0771416a32d0a9bebccc1" name="a89c0ee4e20c0771416a32d0a9bebccc1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>GetHoughLines</b> (const cv::Mat &amp;p_frame)</td></tr>
-<tr class="memdesc:a89c0ee4e20c0771416a32d0a9bebccc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a89c0ee4e20c0771416a32d0a9bebccc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa519dc0ed98be275358921b3c378dac1" id="r_aa519dc0ed98be275358921b3c378dac1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa519dc0ed98be275358921b3c378dac1">AnalyseHoughLines</a> (const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;p_objectDetectionInformation)</td></tr>
-<tr class="memdesc:aa519dc0ed98be275358921b3c378dac1"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <br /></td></tr>
-<tr class="separator:aa519dc0ed98be275358921b3c378dac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5512bf83e303767a79e4776230a8aa81" id="r_a5512bf83e303767a79e4776230a8aa81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5512bf83e303767a79e4776230a8aa81">GetDrivingState</a> ()</td></tr>
-<tr class="memdesc:a5512bf83e303767a79e4776230a8aa81"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO.  <br /></td></tr>
-<tr class="separator:a5512bf83e303767a79e4776230a8aa81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d81743d39d1d4f660fdb45debd2058a" id="r_a8d81743d39d1d4f660fdb45debd2058a"><td class="memItemLeft" align="right" valign="top"><a id="a8d81743d39d1d4f660fdb45debd2058a" name="a8d81743d39d1d4f660fdb45debd2058a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ExecuteDrivingState</b> ()</td></tr>
-<tr class="memdesc:a8d81743d39d1d4f660fdb45debd2058a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a8d81743d39d1d4f660fdb45debd2058a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a997e3671aff75479f7082ae54d4855cd" id="r_a997e3671aff75479f7082ae54d4855cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a997e3671aff75479f7082ae54d4855cd">AnalyseHoughLines</a> (const std::vector&lt; cv::Vec4i &gt; &amp;p_houghLines, const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;p_objectDetectionInformation)</td></tr>
+<tr class="memdesc:a997e3671aff75479f7082ae54d4855cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether the detected hough lines are left, middle or right lane lines. The majority of the noise removal occurs here.  <br /></td></tr>
+<tr class="separator:a997e3671aff75479f7082ae54d4855cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3476f8bd2c53a6853b3378c526147c6" id="r_ae3476f8bd2c53a6853b3378c526147c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae3476f8bd2c53a6853b3378c526147c6">UpdateLineTypes</a> ()</td></tr>
+<tr class="memdesc:ae3476f8bd2c53a6853b3378c526147c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether the left, middle, and right lane lines detected are solid, dashed or empty.  <br /></td></tr>
+<tr class="separator:ae3476f8bd2c53a6853b3378c526147c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad55171af84b8e6be46db828b3f59de05" id="r_ad55171af84b8e6be46db828b3f59de05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad55171af84b8e6be46db828b3f59de05">UpdateDrivingState</a> ()</td></tr>
+<tr class="memdesc:ad55171af84b8e6be46db828b3f59de05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the current driving state depending upon the absence/presence of left, right and middle lane lines.  <br /></td></tr>
+<tr class="separator:ad55171af84b8e6be46db828b3f59de05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9f267d52557dd9d8fbd4c0ccd81148c" id="r_af9f267d52557dd9d8fbd4c0ccd81148c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9f267d52557dd9d8fbd4c0ccd81148c">CalculateLanePosition</a> ()</td></tr>
+<tr class="memdesc:af9f267d52557dd9d8fbd4c0ccd81148c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the vehicles position within the current lane, the turning required to return to the centre of the lane and the lane overlay.  <br /></td></tr>
+<tr class="separator:af9f267d52557dd9d8fbd4c0ccd81148c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95f21a50243bdd7d1e539e5d41eaab3b" id="r_a95f21a50243bdd7d1e539e5d41eaab3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95f21a50243bdd7d1e539e5d41eaab3b">CalculateTurningDirection</a> ()</td></tr>
+<tr class="memdesc:a95f21a50243bdd7d1e539e5d41eaab3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the direction (left, right or neither) that the vehicle is turning while changing lanes.  <br /></td></tr>
+<tr class="separator:a95f21a50243bdd7d1e539e5d41eaab3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a4f66712f90789f3bb7f36a772ed3ed20" id="r_a4f66712f90789f3bb7f36a772ed3ed20"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f66712f90789f3bb7f36a772ed3ed20">IsLineWithinObjectBoundingBoxes</a> (const cv::Vec4i &amp;p_houghLine, const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;p_objectDetectionInformation)</td></tr>
+<tr class="memdesc:a4f66712f90789f3bb7f36a772ed3ed20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether <code>p_houghLine</code> is within any one of the <code>p_objectDetectionInformation</code> object bounding boxes.  <br /></td></tr>
+<tr class="separator:a4f66712f90789f3bb7f36a772ed3ed20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:ace164805ccd8743f1a9f787fb08dfe45" id="r_ace164805ccd8743f1a9f787fb08dfe45"><td class="memItemLeft" align="right" valign="top"><a id="ace164805ccd8743f1a9f787fb08dfe45" name="ace164805ccd8743f1a9f787fb08dfe45"></a>
-<a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_laneDetectionInformation</b></td></tr>
-<tr class="memdesc:ace164805ccd8743f1a9f787fb08dfe45"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memitem:ace164805ccd8743f1a9f787fb08dfe45" id="r_ace164805ccd8743f1a9f787fb08dfe45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace164805ccd8743f1a9f787fb08dfe45">m_laneDetectionInformation</a></td></tr>
+<tr class="memdesc:ace164805ccd8743f1a9f787fb08dfe45"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html" title="The information needed by FrameBuilder to update frame with lane detection information.">LaneDetectionInformation</a> struct containing all lane detection-related information.  <br /></td></tr>
 <tr class="separator:ace164805ccd8743f1a9f787fb08dfe45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74407ad734dc28af1628721f4dd3584d" id="r_a74407ad734dc28af1628721f4dd3584d"><td class="memItemLeft" align="right" valign="top"><a id="a74407ad734dc28af1628721f4dd3584d" name="a74407ad734dc28af1628721f4dd3584d"></a>
-<a class="el" href="class_lane_and_object_detection_1_1_rolling_average.html">RollingAverage</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_horizontalLineStateRollingAverage</b></td></tr>
-<tr class="memdesc:a74407ad734dc28af1628721f4dd3584d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a74407ad734dc28af1628721f4dd3584d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1222ad611a8fa268215ebc3102985bf" id="r_ab1222ad611a8fa268215ebc3102985bf"><td class="memItemLeft" align="right" valign="top"><a id="ab1222ad611a8fa268215ebc3102985bf" name="ab1222ad611a8fa268215ebc3102985bf"></a>
-<a class="el" href="class_lane_and_object_detection_1_1_rolling_average.html">RollingAverage</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_leftLineTypeRollingAverage</b></td></tr>
-<tr class="memdesc:ab1222ad611a8fa268215ebc3102985bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ab1222ad611a8fa268215ebc3102985bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8361424d3f97d515089eb6e174e76849" id="r_a8361424d3f97d515089eb6e174e76849"><td class="memItemLeft" align="right" valign="top"><a id="a8361424d3f97d515089eb6e174e76849" name="a8361424d3f97d515089eb6e174e76849"></a>
-<a class="el" href="class_lane_and_object_detection_1_1_rolling_average.html">RollingAverage</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_middleLineTypeRollingAverage</b></td></tr>
-<tr class="memdesc:a8361424d3f97d515089eb6e174e76849"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a8361424d3f97d515089eb6e174e76849"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a589f062ce49f77574c5bfcff2d13b026" id="r_a589f062ce49f77574c5bfcff2d13b026"><td class="memItemLeft" align="right" valign="top"><a id="a589f062ce49f77574c5bfcff2d13b026" name="a589f062ce49f77574c5bfcff2d13b026"></a>
-<a class="el" href="class_lane_and_object_detection_1_1_rolling_average.html">RollingAverage</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_rightLineTypeRollingAverage</b></td></tr>
-<tr class="memdesc:a589f062ce49f77574c5bfcff2d13b026"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a589f062ce49f77574c5bfcff2d13b026"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70561233e35d08c081a68fcc8fb5251e" id="r_a70561233e35d08c081a68fcc8fb5251e"><td class="memItemLeft" align="right" valign="top"><a id="a70561233e35d08c081a68fcc8fb5251e" name="a70561233e35d08c081a68fcc8fb5251e"></a>
-<a class="el" href="class_lane_and_object_detection_1_1_rolling_average.html">RollingAverage</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_drivingStateRollingAverage</b></td></tr>
-<tr class="memdesc:a70561233e35d08c081a68fcc8fb5251e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a70561233e35d08c081a68fcc8fb5251e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b98690e7844b37a05803d6d6c9d82e3" id="r_a8b98690e7844b37a05803d6d6c9d82e3"><td class="memItemLeft" align="right" valign="top"><a id="a8b98690e7844b37a05803d6d6c9d82e3" name="a8b98690e7844b37a05803d6d6c9d82e3"></a>
-std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_leftLineTypesForDisplay</b></td></tr>
-<tr class="memdesc:a8b98690e7844b37a05803d6d6c9d82e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a8b98690e7844b37a05803d6d6c9d82e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7022f5ee5c5ebedc5b39744c0c46b4e" id="r_ae7022f5ee5c5ebedc5b39744c0c46b4e"><td class="memItemLeft" align="right" valign="top"><a id="ae7022f5ee5c5ebedc5b39744c0c46b4e" name="ae7022f5ee5c5ebedc5b39744c0c46b4e"></a>
-std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_middleLineTypesForDisplay</b></td></tr>
-<tr class="memdesc:ae7022f5ee5c5ebedc5b39744c0c46b4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ae7022f5ee5c5ebedc5b39744c0c46b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab271c14353bf5d141d9826acf99437bc" id="r_ab271c14353bf5d141d9826acf99437bc"><td class="memItemLeft" align="right" valign="top"><a id="ab271c14353bf5d141d9826acf99437bc" name="ab271c14353bf5d141d9826acf99437bc"></a>
-std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_rightLineTypesForDisplay</b></td></tr>
-<tr class="memdesc:ab271c14353bf5d141d9826acf99437bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ab271c14353bf5d141d9826acf99437bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a579b2d7186f460ec28a1f6b0ac1ce9f3" id="r_a579b2d7186f460ec28a1f6b0ac1ce9f3"><td class="memItemLeft" align="right" valign="top"><a id="a579b2d7186f460ec28a1f6b0ac1ce9f3" name="a579b2d7186f460ec28a1f6b0ac1ce9f3"></a>
-std::vector&lt; cv::Point &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_lanePoints</b></td></tr>
-<tr class="memdesc:a579b2d7186f460ec28a1f6b0ac1ce9f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a579b2d7186f460ec28a1f6b0ac1ce9f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49d848db7c6634dee68c0ce6917aad44" id="r_a49d848db7c6634dee68c0ce6917aad44"><td class="memItemLeft" align="right" valign="top"><a id="a49d848db7c6634dee68c0ce6917aad44" name="a49d848db7c6634dee68c0ce6917aad44"></a>
-std::vector&lt; cv::Vec4i &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_houghLines</b></td></tr>
-<tr class="memdesc:a49d848db7c6634dee68c0ce6917aad44"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a49d848db7c6634dee68c0ce6917aad44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8554d50404ed00e055406174287480a1" id="r_a8554d50404ed00e055406174287480a1"><td class="memItemLeft" align="right" valign="top"><a id="a8554d50404ed00e055406174287480a1" name="a8554d50404ed00e055406174287480a1"></a>
-std::vector&lt; cv::Vec4i &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_leftLines</b></td></tr>
-<tr class="memdesc:a8554d50404ed00e055406174287480a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a8554d50404ed00e055406174287480a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6af569ef8aa4f41778d02177866bdeb0" id="r_a6af569ef8aa4f41778d02177866bdeb0"><td class="memItemLeft" align="right" valign="top"><a id="a6af569ef8aa4f41778d02177866bdeb0" name="a6af569ef8aa4f41778d02177866bdeb0"></a>
-std::vector&lt; cv::Vec4i &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_middleLines</b></td></tr>
-<tr class="memdesc:a6af569ef8aa4f41778d02177866bdeb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a6af569ef8aa4f41778d02177866bdeb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7042f53f3e1ce578eab61a0e6b8eeb7" id="r_ac7042f53f3e1ce578eab61a0e6b8eeb7"><td class="memItemLeft" align="right" valign="top"><a id="ac7042f53f3e1ce578eab61a0e6b8eeb7" name="ac7042f53f3e1ce578eab61a0e6b8eeb7"></a>
-std::vector&lt; cv::Vec4i &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_rightLines</b></td></tr>
-<tr class="memdesc:ac7042f53f3e1ce578eab61a0e6b8eeb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ac7042f53f3e1ce578eab61a0e6b8eeb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23473ee93de04511cc2ec753a08093ca" id="r_a23473ee93de04511cc2ec753a08093ca"><td class="memItemLeft" align="right" valign="top"><a id="a23473ee93de04511cc2ec753a08093ca" name="a23473ee93de04511cc2ec753a08093ca"></a>
-cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>m_blankFrame</b></td></tr>
-<tr class="memdesc:a23473ee93de04511cc2ec753a08093ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a23473ee93de04511cc2ec753a08093ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7db2dfbe3c5ebe01d4e74ba3f3961c6f" id="r_a7db2dfbe3c5ebe01d4e74ba3f3961c6f"><td class="memItemLeft" align="right" valign="top"><a id="a7db2dfbe3c5ebe01d4e74ba3f3961c6f" name="a7db2dfbe3c5ebe01d4e74ba3f3961c6f"></a>
-cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>m_cannyFrame</b></td></tr>
-<tr class="memdesc:a7db2dfbe3c5ebe01d4e74ba3f3961c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a7db2dfbe3c5ebe01d4e74ba3f3961c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51fc8665fa013b5e9ef29bdb69d6f853" id="r_a51fc8665fa013b5e9ef29bdb69d6f853"><td class="memItemLeft" align="right" valign="top"><a id="a51fc8665fa013b5e9ef29bdb69d6f853" name="a51fc8665fa013b5e9ef29bdb69d6f853"></a>
-cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>m_roiFrame</b></td></tr>
-<tr class="memdesc:a51fc8665fa013b5e9ef29bdb69d6f853"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a51fc8665fa013b5e9ef29bdb69d6f853"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a956477cdbe8b9ff26b9ea0e8a148c50c" id="r_a956477cdbe8b9ff26b9ea0e8a148c50c"><td class="memItemLeft" align="right" valign="top"><a id="a956477cdbe8b9ff26b9ea0e8a148c50c" name="a956477cdbe8b9ff26b9ea0e8a148c50c"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_currentTurningState</b></td></tr>
-<tr class="memdesc:a956477cdbe8b9ff26b9ea0e8a148c50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a956477cdbe8b9ff26b9ea0e8a148c50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a255e311570a0103671c73b71d601cb28" id="r_a255e311570a0103671c73b71d601cb28"><td class="memItemLeft" align="right" valign="top"><a id="a255e311570a0103671c73b71d601cb28" name="a255e311570a0103671c73b71d601cb28"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_laneInformationTitle</b></td></tr>
-<tr class="memdesc:a255e311570a0103671c73b71d601cb28"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a255e311570a0103671c73b71d601cb28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8da5d42619c4728cd5834f6836b74dc" id="r_ac8da5d42619c4728cd5834f6836b74dc"><td class="memItemLeft" align="right" valign="top"><a id="ac8da5d42619c4728cd5834f6836b74dc" name="ac8da5d42619c4728cd5834f6836b74dc"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_drivingStateTitle</b></td></tr>
-<tr class="memdesc:ac8da5d42619c4728cd5834f6836b74dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ac8da5d42619c4728cd5834f6836b74dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9099d7da2167f8a12763ae77b87cf9b4" id="r_a9099d7da2167f8a12763ae77b87cf9b4"><td class="memItemLeft" align="right" valign="top"><a id="a9099d7da2167f8a12763ae77b87cf9b4" name="a9099d7da2167f8a12763ae77b87cf9b4"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_turningRequiredToReturnToCenter</b></td></tr>
-<tr class="memdesc:a9099d7da2167f8a12763ae77b87cf9b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a9099d7da2167f8a12763ae77b87cf9b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8efcf183948f056c9d3b6f6ac5ee0e04" id="r_a8efcf183948f056c9d3b6f6ac5ee0e04"><td class="memItemLeft" align="right" valign="top"><a id="a8efcf183948f056c9d3b6f6ac5ee0e04" name="a8efcf183948f056c9d3b6f6ac5ee0e04"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_changingLanesFrameCount</b></td></tr>
-<tr class="memdesc:a8efcf183948f056c9d3b6f6ac5ee0e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
+<tr class="memitem:ab94f5c5824ea6e43ffca8185521aa89a" id="r_ab94f5c5824ea6e43ffca8185521aa89a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt; <a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#abd235c8782d5e767fd19b1903794e0e9">Globals::DrivingState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab94f5c5824ea6e43ffca8185521aa89a">m_drivingStateRollingAverage</a></td></tr>
+<tr class="memdesc:ab94f5c5824ea6e43ffca8185521aa89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The rolling average to determine the driving state.  <br /></td></tr>
+<tr class="separator:ab94f5c5824ea6e43ffca8185521aa89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbede69f7fd97180d7b00428918e6474" id="r_adbede69f7fd97180d7b00428918e6474"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbede69f7fd97180d7b00428918e6474">m_changingLanesPreviousDistanceDifference</a></td></tr>
+<tr class="memdesc:adbede69f7fd97180d7b00428918e6474"><td class="mdescLeft">&#160;</td><td class="mdescRight">The distance difference that will be compared to in order to determine the direction the vehicle is moving while changing lanes.  <br /></td></tr>
+<tr class="separator:adbede69f7fd97180d7b00428918e6474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8efcf183948f056c9d3b6f6ac5ee0e04" id="r_a8efcf183948f056c9d3b6f6ac5ee0e04"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8efcf183948f056c9d3b6f6ac5ee0e04">m_changingLanesFrameCount</a></td></tr>
+<tr class="memdesc:a8efcf183948f056c9d3b6f6ac5ee0e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of frames passed since a distance difference was calculated while the vehicle is changing lanes.  <br /></td></tr>
 <tr class="separator:a8efcf183948f056c9d3b6f6ac5ee0e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4208dfb016afb246243a1ec6b7061d8" id="r_ab4208dfb016afb246243a1ec6b7061d8"><td class="memItemLeft" align="right" valign="top"><a id="ab4208dfb016afb246243a1ec6b7061d8" name="ab4208dfb016afb246243a1ec6b7061d8"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_drivingState</b></td></tr>
-<tr class="memdesc:ab4208dfb016afb246243a1ec6b7061d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ab4208dfb016afb246243a1ec6b7061d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81812fa62bf20483ecbb8393fa8f2073" id="r_a81812fa62bf20483ecbb8393fa8f2073"><td class="memItemLeft" align="right" valign="top"><a id="a81812fa62bf20483ecbb8393fa8f2073" name="a81812fa62bf20483ecbb8393fa8f2073"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_turningRequired</b></td></tr>
-<tr class="memdesc:a81812fa62bf20483ecbb8393fa8f2073"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a81812fa62bf20483ecbb8393fa8f2073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a413c5beda6d0d39792b19a15449da5b9" id="r_a413c5beda6d0d39792b19a15449da5b9"><td class="memItemLeft" align="right" valign="top"><a id="a413c5beda6d0d39792b19a15449da5b9" name="a413c5beda6d0d39792b19a15449da5b9"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_changingLanesPreviousDifference</b></td></tr>
-<tr class="memdesc:a413c5beda6d0d39792b19a15449da5b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a413c5beda6d0d39792b19a15449da5b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a587d051769a423ab4ced652b6055e65e" id="r_a587d051769a423ab4ced652b6055e65e"><td class="memItemLeft" align="right" valign="top"><a id="a587d051769a423ab4ced652b6055e65e" name="a587d051769a423ab4ced652b6055e65e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_leftLineAverageSize</b></td></tr>
-<tr class="memdesc:a587d051769a423ab4ced652b6055e65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a587d051769a423ab4ced652b6055e65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58c0623a4219b6cc413b0daafa699397" id="r_a58c0623a4219b6cc413b0daafa699397"><td class="memItemLeft" align="right" valign="top"><a id="a58c0623a4219b6cc413b0daafa699397" name="a58c0623a4219b6cc413b0daafa699397"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_middleLineAverageSize</b></td></tr>
-<tr class="memdesc:a58c0623a4219b6cc413b0daafa699397"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a58c0623a4219b6cc413b0daafa699397"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac85a98c18bbe188d9b7b83c5dae159f7" id="r_ac85a98c18bbe188d9b7b83c5dae159f7"><td class="memItemLeft" align="right" valign="top"><a id="ac85a98c18bbe188d9b7b83c5dae159f7" name="ac85a98c18bbe188d9b7b83c5dae159f7"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_rightLineAverageSize</b></td></tr>
-<tr class="memdesc:ac85a98c18bbe188d9b7b83c5dae159f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:ac85a98c18bbe188d9b7b83c5dae159f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2744c719ca1fa259a498d8a475f73600" id="r_a2744c719ca1fa259a498d8a475f73600"><td class="memItemLeft" align="right" valign="top"><a id="a2744c719ca1fa259a498d8a475f73600" name="a2744c719ca1fa259a498d8a475f73600"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_giveWayWarning</b></td></tr>
-<tr class="memdesc:a2744c719ca1fa259a498d8a475f73600"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO. <br /></td></tr>
-<tr class="separator:a2744c719ca1fa259a498d8a475f73600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9066c4ec6fc0b9be71014463041f56d" id="r_ab9066c4ec6fc0b9be71014463041f56d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9066c4ec6fc0b9be71014463041f56d">m_changingLanesFirstFrame</a></td></tr>
+<tr class="memdesc:ab9066c4ec6fc0b9be71014463041f56d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the current frame is the frame in which the driving state changed to CHANGING_LANES.  <br /></td></tr>
+<tr class="separator:ab9066c4ec6fc0b9be71014463041f56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a2568c300b44ff6b0878c85e44d5d3936" id="r_a2568c300b44ff6b0878c85e44d5d3936"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2568c300b44ff6b0878c85e44d5d3936">m_leftLaneLineTypeRollingAverage</a></td></tr>
+<tr class="memdesc:a2568c300b44ff6b0878c85e44d5d3936"><td class="mdescLeft">&#160;</td><td class="mdescRight">The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane lines.  <br /></td></tr>
+<tr class="separator:a2568c300b44ff6b0878c85e44d5d3936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab165e982e5ba783ba06af6ee53fd3f68" id="r_ab165e982e5ba783ba06af6ee53fd3f68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab165e982e5ba783ba06af6ee53fd3f68">m_middleLaneLineTypeRollingAverage</a></td></tr>
+<tr class="memdesc:ab165e982e5ba783ba06af6ee53fd3f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane lines.  <br /></td></tr>
+<tr class="separator:ab165e982e5ba783ba06af6ee53fd3f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e1d2b6ff55328d615b43c39701bc093" id="r_a1e1d2b6ff55328d615b43c39701bc093"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e1d2b6ff55328d615b43c39701bc093">m_rightLaneLineTypeRollingAverage</a></td></tr>
+<tr class="memdesc:a1e1d2b6ff55328d615b43c39701bc093"><td class="mdescLeft">&#160;</td><td class="mdescRight">The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane lines.  <br /></td></tr>
+<tr class="separator:a1e1d2b6ff55328d615b43c39701bc093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:af555b6578dad3af8c8acfbbebdbf796a" id="r_af555b6578dad3af8c8acfbbebdbf796a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; cv::Vec4i &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af555b6578dad3af8c8acfbbebdbf796a">m_leftLaneLines</a></td></tr>
+<tr class="memdesc:af555b6578dad3af8c8acfbbebdbf796a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The left, middle and right lane lines that have been detected for the current frame.  <br /></td></tr>
+<tr class="separator:af555b6578dad3af8c8acfbbebdbf796a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cd5b3b22e9962d5deac07bc9ff3fcbe" id="r_a7cd5b3b22e9962d5deac07bc9ff3fcbe"><td class="memItemLeft" align="right" valign="top">std::vector&lt; cv::Vec4i &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7cd5b3b22e9962d5deac07bc9ff3fcbe">m_middleLaneLines</a></td></tr>
+<tr class="memdesc:a7cd5b3b22e9962d5deac07bc9ff3fcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The left, middle and right lane lines that have been detected for the current frame.  <br /></td></tr>
+<tr class="separator:a7cd5b3b22e9962d5deac07bc9ff3fcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0faaa10aa7071b718abad0f6aae2a4c" id="r_ac0faaa10aa7071b718abad0f6aae2a4c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; cv::Vec4i &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0faaa10aa7071b718abad0f6aae2a4c">m_rightLaneLines</a></td></tr>
+<tr class="memdesc:ac0faaa10aa7071b718abad0f6aae2a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The left, middle and right lane lines that have been detected for the current frame.  <br /></td></tr>
+<tr class="separator:ac0faaa10aa7071b718abad0f6aae2a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:af03fd4c8eb61631d6a9fde1e77eda5a7" id="r_af03fd4c8eb61631d6a9fde1e77eda5a7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af03fd4c8eb61631d6a9fde1e77eda5a7">m_leftLineAverageLength</a></td></tr>
+<tr class="memdesc:af03fd4c8eb61631d6a9fde1e77eda5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The average left, middle and right lane line lengths for the current frame.  <br /></td></tr>
+<tr class="separator:af03fd4c8eb61631d6a9fde1e77eda5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b88239bebd8085bb8a3fa6db93211ea" id="r_a8b88239bebd8085bb8a3fa6db93211ea"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b88239bebd8085bb8a3fa6db93211ea">m_middleLineAverageLength</a></td></tr>
+<tr class="memdesc:a8b88239bebd8085bb8a3fa6db93211ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The average left, middle and right lane line lengths for the current frame.  <br /></td></tr>
+<tr class="separator:a8b88239bebd8085bb8a3fa6db93211ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbb38a4f8f00fb6a27d0a02b57a44f6e" id="r_acbb38a4f8f00fb6a27d0a02b57a44f6e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbb38a4f8f00fb6a27d0a02b57a44f6e">m_rightLineAverageLength</a></td></tr>
+<tr class="memdesc:acbb38a4f8f00fb6a27d0a02b57a44f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The average left, middle and right lane line lengths for the current frame.  <br /></td></tr>
+<tr class="separator:acbb38a4f8f00fb6a27d0a02b57a44f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODO. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa519dc0ed98be275358921b3c378dac1" name="aa519dc0ed98be275358921b3c378dac1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa519dc0ed98be275358921b3c378dac1">&#9670;&#160;</a></span>AnalyseHoughLines()</h2>
+<div class="textblock"><p>Detects the lane the vehicle is in and other lane-related metrics. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00023">23</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9990553b658820f3b6bbbf019407d055" name="a9990553b658820f3b6bbbf019407d055"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9990553b658820f3b6bbbf019407d055">&#9670;&#160;</a></span>LaneDetector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LaneAndObjectDetection::LaneDetector::LaneDetector </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new LaneDetector object. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00023">23</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6e77decdad63551b310f8f015562329b" name="a6e77decdad63551b310f8f015562329b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e77decdad63551b310f8f015562329b">&#9670;&#160;</a></span>RunLaneDetector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::LaneDetector::RunLaneDetector </td>
+          <td>(</td>
+          <td class="paramtype">const cv::Mat &amp;</td>          <td class="paramname"><span class="paramname"><em>p_frame</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectionInformation</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Runs the lane detector against <code>p_frame</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_frame</td><td>The frame to run the lane detector against. </td></tr>
+    <tr><td class="paramname">p_objectDetectionInformation</td><td>The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct containing all object detection-related information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00036">36</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0c03efbee133a7d23c1d28f8588ac007" name="a0c03efbee133a7d23c1d28f8588ac007"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c03efbee133a7d23c1d28f8588ac007">&#9670;&#160;</a></span>GetInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a> LaneAndObjectDetection::LaneDetector::GetInformation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the <a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html" title="The information needed by FrameBuilder to update frame with lane detection information.">LaneDetectionInformation</a> struct. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html" title="The information needed by FrameBuilder to update frame with lane detection information.">LaneDetectionInformation</a> The <a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html" title="The information needed by FrameBuilder to update frame with lane detection information.">LaneDetectionInformation</a> struct. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00084">84</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a997e3671aff75479f7082ae54d4855cd" name="a997e3671aff75479f7082ae54d4855cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a997e3671aff75479f7082ae54d4855cd">&#9670;&#160;</a></span>AnalyseHoughLines()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -292,8 +315,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_giveWayWarning</b><
         <tr>
           <td class="memname">void LaneAndObjectDetection::LaneDetector::AnalyseHoughLines </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectionInformation</em></span></td><td>)</td>
+          <td class="paramtype">const std::vector&lt; cv::Vec4i &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>p_houghLines</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectionInformation</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -303,22 +330,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_giveWayWarning</b><
 </table>
 </div><div class="memdoc">
 
-<p>TODO. </p>
-<p>The straight lines received from the PHT contain lines that are not a part of any road markings (i.e. noise) and so this for loop tries to remove as much as them whilst preserving the useful lines.</p>
-<p>For example, the ROI frame is the same size as the original frame (1920x1080) but is blank expect for the locations within the area defined by m_MASK_DIMENSIONS (region of interest/ROI). This means an edge between the black pixels and the contents within the ROI will be picked up by the Canny Algorithm on the ROI Frame, which will be picked up by the Probabilistic Hough Transform (PHT). Thus these lines (mask edge lines) must be removed.</p>
-<p>The bounding boxes are created by the object detector, which cannot detect road markings, thus if the line is in a bounding box, it cannot be a road marking and must be ignored.</p>
-<p>Lines are considered horizontal lines if they have: an absolute gradient below a certain gradient threshold a length above a threshold are not the top or bottom edge of the ROI frame</p>
-<p>All lines with an absolute gradient above the gradient threshold are considered for vertical lines</p>
-<p>Top edge of mask --&gt; ____________________ / / \ \ Left edge of mask --&gt; / / \ \ / / \ \ / # / @ \ &amp; \ / / \ \ &lt;&ndash; Right edge of mask / / \ \ -------&mdash; --------&mdash; -------&mdash; &lt;&ndash; Bottom edge of mask ^ ^ Left line Right line threshold threshold</p>
-<p>Any lines within: '#' region will be considered left lines '@' region will be considered middle lines '&amp;' region will be considered right lines</p>
-<p>Please note that, for OpenCV, the origin is located at the top left of the frame.</p>
-<p>Thus, left lines should have negative gradients and right positive gradients.</p>
-<p>Equations are used to determine the locations of two lines with respect to each other</p>
+<p>Determines whether the detected hough lines are left, middle or right lane lines. The majority of the noise removal occurs here. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_houghLines</td><td>The hough lines that have been detected. </td></tr>
+    <tr><td class="paramname">p_objectDetectionInformation</td><td>The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct containing the object bounding boxes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00122">122</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a5512bf83e303767a79e4776230a8aa81" name="a5512bf83e303767a79e4776230a8aa81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5512bf83e303767a79e4776230a8aa81">&#9670;&#160;</a></span>GetDrivingState()</h2>
+<a id="a4f66712f90789f3bb7f36a772ed3ed20" name="a4f66712f90789f3bb7f36a772ed3ed20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f66712f90789f3bb7f36a772ed3ed20">&#9670;&#160;</a></span>IsLineWithinObjectBoundingBoxes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -327,7 +353,50 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_giveWayWarning</b><
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void LaneAndObjectDetection::LaneDetector::GetDrivingState </td>
+          <td class="memname">bool LaneAndObjectDetection::LaneDetector::IsLineWithinObjectBoundingBoxes </td>
+          <td>(</td>
+          <td class="paramtype">const cv::Vec4i &amp;</td>          <td class="paramname"><span class="paramname"><em>p_houghLine</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html">ObjectDetectionInformation</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p_objectDetectionInformation</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determines whether <code>p_houghLine</code> is within any one of the <code>p_objectDetectionInformation</code> object bounding boxes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_houghLine</td><td>The line to check. </td></tr>
+    <tr><td class="paramname">p_objectDetectionInformation</td><td>The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct containing the object bounding boxes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If <code>p_houghLine</code> is within the object bounding boxes found within <code>p_objectDetectionInformation</code>. </dd>
+<dd>
+false If <code>p_houghLine</code> is NOT within the object bounding boxes found within <code>p_objectDetectionInformation</code>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00231">231</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae3476f8bd2c53a6853b3378c526147c6" name="ae3476f8bd2c53a6853b3378c526147c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3476f8bd2c53a6853b3378c526147c6">&#9670;&#160;</a></span>UpdateLineTypes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::LaneDetector::UpdateLineTypes </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -340,50 +409,467 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_giveWayWarning</b><
 </table>
 </div><div class="memdoc">
 
-<p>TODO. </p>
-<p>For left lanes lines, middle lane lines, and right lane lines '1' represents that one or more of those lines has been detected and a '0' means no of those lines has been detected. The driving state is used in the Execute_Driving_State() switch statement.</p>
-<p>|-------------------------------------------------------------------------------------&mdash;| | Left Lane | Middle Lane | Right Lane | Driving State | Driving State Name | </p><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Lines   </th><th class="markdownTableHeadNone">Lines   </th><th class="markdownTableHeadNone">Lines   </th><th class="markdownTableHeadNone">Value   </th><th class="markdownTableHeadNone"></th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Within Detected Lanes    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Within Detected Lanes    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">Changing Lanes    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">Changing Lanes    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">Changing Lanes    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">2   </td><td class="markdownTableBodyNone">Only left lane line detected    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">3   </td><td class="markdownTableBodyNone">Only right lane line detected    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">4   </td><td class="markdownTableBodyNone">No lane lines detected    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">----------&mdash;   </td><td class="markdownTableBodyNone">-------&mdash; &ndash;   </td><td class="markdownTableBodyNone">---------&mdash;   </td><td class="markdownTableBodyNone">------------&mdash;   </td><td class="markdownTableBodyNone">----------------------------&mdash;   </td></tr>
+<p>Determines whether the left, middle, and right lane lines detected are solid, dashed or empty. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00252">252</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad55171af84b8e6be46db828b3f59de05" name="ad55171af84b8e6be46db828b3f59de05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad55171af84b8e6be46db828b3f59de05">&#9670;&#160;</a></span>UpdateDrivingState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::LaneDetector::UpdateDrivingState </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
 </table>
+</div><div class="memdoc">
+
+<p>Determines the current driving state depending upon the absence/presence of left, right and middle lane lines. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00297">297</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af9f267d52557dd9d8fbd4c0ccd81148c" name="af9f267d52557dd9d8fbd4c0ccd81148c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9f267d52557dd9d8fbd4c0ccd81148c">&#9670;&#160;</a></span>CalculateLanePosition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::LaneDetector::CalculateLanePosition </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determines the vehicles position within the current lane, the turning required to return to the centre of the lane and the lane overlay. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00364">364</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a95f21a50243bdd7d1e539e5d41eaab3b" name="a95f21a50243bdd7d1e539e5d41eaab3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95f21a50243bdd7d1e539e5d41eaab3b">&#9670;&#160;</a></span>CalculateTurningDirection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::LaneDetector::CalculateTurningDirection </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determines the direction (left, right or neither) that the vehicle is turning while changing lanes. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8cpp_source.html#l00512">512</a> of file <a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ace164805ccd8743f1a9f787fb08dfe45" name="ace164805ccd8743f1a9f787fb08dfe45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace164805ccd8743f1a9f787fb08dfe45">&#9670;&#160;</a></span>m_laneDetectionInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a> LaneAndObjectDetection::LaneDetector::m_laneDetectionInformation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The <a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html" title="The information needed by FrameBuilder to update frame with lane detection information.">LaneDetectionInformation</a> struct containing all lane detection-related information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00121">121</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a2568c300b44ff6b0878c85e44d5d3936" name="a2568c300b44ff6b0878c85e44d5d3936"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2568c300b44ff6b0878c85e44d5d3936">&#9670;&#160;</a></span>m_leftLaneLineTypeRollingAverage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt;uint32_t&gt; LaneAndObjectDetection::LaneDetector::m_leftLaneLineTypeRollingAverage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane lines. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00128">128</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ab165e982e5ba783ba06af6ee53fd3f68" name="ab165e982e5ba783ba06af6ee53fd3f68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab165e982e5ba783ba06af6ee53fd3f68">&#9670;&#160;</a></span>m_middleLaneLineTypeRollingAverage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt;uint32_t&gt; LaneAndObjectDetection::LaneDetector::m_middleLaneLineTypeRollingAverage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane lines. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00129">129</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a1e1d2b6ff55328d615b43c39701bc093" name="a1e1d2b6ff55328d615b43c39701bc093"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1d2b6ff55328d615b43c39701bc093">&#9670;&#160;</a></span>m_rightLaneLineTypeRollingAverage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt;uint32_t&gt; LaneAndObjectDetection::LaneDetector::m_rightLaneLineTypeRollingAverage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane lines. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00130">130</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ab94f5c5824ea6e43ffca8185521aa89a" name="ab94f5c5824ea6e43ffca8185521aa89a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab94f5c5824ea6e43ffca8185521aa89a">&#9670;&#160;</a></span>m_drivingStateRollingAverage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html">RollingAverage</a>&lt;<a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#abd235c8782d5e767fd19b1903794e0e9">Globals::DrivingState</a>&gt; LaneAndObjectDetection::LaneDetector::m_drivingStateRollingAverage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The rolling average to determine the driving state. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00136">136</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="af555b6578dad3af8c8acfbbebdbf796a" name="af555b6578dad3af8c8acfbbebdbf796a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af555b6578dad3af8c8acfbbebdbf796a">&#9670;&#160;</a></span>m_leftLaneLines</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;cv::Vec4i&gt; LaneAndObjectDetection::LaneDetector::m_leftLaneLines</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The left, middle and right lane lines that have been detected for the current frame. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00142">142</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a7cd5b3b22e9962d5deac07bc9ff3fcbe" name="a7cd5b3b22e9962d5deac07bc9ff3fcbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cd5b3b22e9962d5deac07bc9ff3fcbe">&#9670;&#160;</a></span>m_middleLaneLines</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;cv::Vec4i&gt; LaneAndObjectDetection::LaneDetector::m_middleLaneLines</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The left, middle and right lane lines that have been detected for the current frame. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00143">143</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ac0faaa10aa7071b718abad0f6aae2a4c" name="ac0faaa10aa7071b718abad0f6aae2a4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0faaa10aa7071b718abad0f6aae2a4c">&#9670;&#160;</a></span>m_rightLaneLines</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;cv::Vec4i&gt; LaneAndObjectDetection::LaneDetector::m_rightLaneLines</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The left, middle and right lane lines that have been detected for the current frame. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00144">144</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="adbede69f7fd97180d7b00428918e6474" name="adbede69f7fd97180d7b00428918e6474"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbede69f7fd97180d7b00428918e6474">&#9670;&#160;</a></span>m_changingLanesPreviousDistanceDifference</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double LaneAndObjectDetection::LaneDetector::m_changingLanesPreviousDistanceDifference</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The distance difference that will be compared to in order to determine the direction the vehicle is moving while changing lanes. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00151">151</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="af03fd4c8eb61631d6a9fde1e77eda5a7" name="af03fd4c8eb61631d6a9fde1e77eda5a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af03fd4c8eb61631d6a9fde1e77eda5a7">&#9670;&#160;</a></span>m_leftLineAverageLength</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double LaneAndObjectDetection::LaneDetector::m_leftLineAverageLength</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The average left, middle and right lane line lengths for the current frame. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00157">157</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a8b88239bebd8085bb8a3fa6db93211ea" name="a8b88239bebd8085bb8a3fa6db93211ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b88239bebd8085bb8a3fa6db93211ea">&#9670;&#160;</a></span>m_middleLineAverageLength</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double LaneAndObjectDetection::LaneDetector::m_middleLineAverageLength</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The average left, middle and right lane line lengths for the current frame. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00158">158</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="acbb38a4f8f00fb6a27d0a02b57a44f6e" name="acbb38a4f8f00fb6a27d0a02b57a44f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbb38a4f8f00fb6a27d0a02b57a44f6e">&#9670;&#160;</a></span>m_rightLineAverageLength</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double LaneAndObjectDetection::LaneDetector::m_rightLineAverageLength</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The average left, middle and right lane line lengths for the current frame. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00159">159</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a8efcf183948f056c9d3b6f6ac5ee0e04" name="a8efcf183948f056c9d3b6f6ac5ee0e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8efcf183948f056c9d3b6f6ac5ee0e04">&#9670;&#160;</a></span>m_changingLanesFrameCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t LaneAndObjectDetection::LaneDetector::m_changingLanesFrameCount</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number of frames passed since a distance difference was calculated while the vehicle is changing lanes. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00165">165</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ab9066c4ec6fc0b9be71014463041f56d" name="ab9066c4ec6fc0b9be71014463041f56d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9066c4ec6fc0b9be71014463041f56d">&#9670;&#160;</a></span>m_changingLanesFirstFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LaneAndObjectDetection::LaneDetector::m_changingLanesFirstFrame</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether the current frame is the frame in which the driving state changed to CHANGING_LANES. </p>
+
+<p class="definition">Definition at line <a class="el" href="_lane_detector_8hpp_source.html#l00170">170</a> of file <a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/detectors/<a class="el" href="_lane_detector_8hpp_source.html">LaneDetector.hpp</a></li>
-<li>source/detectors/<b>LaneDetector.cpp</b></li>
+<li>source/detectors/<a class="el" href="_lane_detector_8cpp_source.html">LaneDetector.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -391,7 +877,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_giveWayWarning</b><
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_lane_detector.html">LaneDetector</a></li>
-    <li class="footer">Generated on Sun Mar 16 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun Mar 30 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

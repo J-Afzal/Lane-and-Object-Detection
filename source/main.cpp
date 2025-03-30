@@ -6,5 +6,5 @@
 int main(int argc, char* argv[])
 {
     LaneAndObjectDetection::VideoManager videoManager(std::vector<std::string>(argv, argv + argc));
-    videoManager.Run();
+    videoManager.RunLaneAndObjectDetector();
 }

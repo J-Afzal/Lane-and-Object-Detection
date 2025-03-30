@@ -20,21 +20,21 @@ namespace LaneAndObjectDetection
     {}
 
     void ObjectDetector::SetProperties(const std::string& p_yoloFolderPath,
-                                       const ObjectDetectorTypes& p_objectDetectorTypes,
-                                       const ObjectDetectorBackEnds& p_objectDetectorBackEnds,
-                                       const ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
+                                       const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                                       const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                                       const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
     {
         switch (p_objectDetectorTypes)
         {
-        case ObjectDetectorTypes::NONE:
+        case Globals::ObjectDetectorTypes::NONE:
             m_skipObjectDetection = true;
             break;
 
-        case ObjectDetectorTypes::STANDARD:
+        case Globals::ObjectDetectorTypes::STANDARD:
             m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov4.cfg", p_yoloFolderPath + "yolov4.weights");
             break;
 
-        case ObjectDetectorTypes::TINY:
+        case Globals::ObjectDetectorTypes::TINY:
             m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov4-tiny.cfg", p_yoloFolderPath + "yolov4-tiny.weights");
             break;
 
@@ -45,12 +45,12 @@ namespace LaneAndObjectDetection
 
         switch (p_objectDetectorBackEnds)
         {
-        case ObjectDetectorBackEnds::CPU:
+        case Globals::ObjectDetectorBackEnds::CPU:
             m_net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
             m_net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
             break;
 
-        case ObjectDetectorBackEnds::CUDA:
+        case Globals::ObjectDetectorBackEnds::CUDA:
             m_net.setPreferableBackend(cv::dnn::DNN_BACKEND_CUDA);
             m_net.setPreferableTarget(cv::dnn::DNN_TARGET_CUDA);
             break;
@@ -106,7 +106,7 @@ namespace LaneAndObjectDetection
                     // Remove object detections on the hood of car
                     if (CENTER_Y < Globals::G_ROI_BOTTOM_HEIGHT)
                     {
-                        const double DIVISOR = 2;
+                        const double DIVISOR = 2; // TODO(Main): const
                         initialObjectNames.push_back(Globals::G_OBJECT_DETECTOR_OBJECT_NAMES.at(maxConfidenceObjectIndex.x));
                         initialObjectBoundingBoxes.emplace_back(CENTER_X - (WIDTH / DIVISOR), CENTER_Y - (HEIGHT / DIVISOR), WIDTH, HEIGHT);
                         initialObjectConfidences.push_back(static_cast<float>(maxConfidence));
@@ -120,7 +120,7 @@ namespace LaneAndObjectDetection
 
         cv::dnn::NMSBoxes(initialObjectBoundingBoxes, initialObjectConfidences, 0.0, static_cast<float>(Globals::G_OBJECT_DETECTOR_NMS_THRESHOLD), nonMaximaSuppressedFilteredIndicies);
 
-        const uint32_t CONVERT_TO_PERCENTAGE = 100;
+        const uint32_t CONVERT_TO_PERCENTAGE = 100; // TODO(Main): const
 
         for (const int32_t& index : nonMaximaSuppressedFilteredIndicies)
         {

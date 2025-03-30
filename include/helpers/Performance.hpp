@@ -46,7 +46,7 @@ namespace LaneAndObjectDetection
         PerformanceInformation m_performanceInformation;
 
         /**
-         * @brief The time the internal timer was started within the StartTimer function.
+         * @brief The time the internal timer was started within `StartTimer()`.
          */
         std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;
     };

@@ -5,12 +5,11 @@
 #include <exception>
 #include <map>
 #include <string>
+#include <unordered_map>
 
 #include <opencv2/core/cvdef.h>
 #include <opencv2/core/types.hpp>
 #include <opencv2/imgproc.hpp>
-
-#include "detectors/ObjectDetector.hpp"
 
 /**
  * @namespace LaneAndObjectDetection::Globals
@@ -102,18 +101,18 @@ namespace LaneAndObjectDetection::Globals
      * @brief Generic UI element properties.
      */
     ///@{
-    static inline const uint32_t G_UI_PADDING = 30;
-    static inline const uint32_t G_UI_TITLE_HEIGHT = 50;
-    static inline const uint32_t G_UI_SUBTITLE_HEIGHT = 30;
+    static inline const int32_t G_UI_PADDING = 30;
+    static inline const int32_t G_UI_TITLE_HEIGHT = 50;
+    static inline const int32_t G_UI_SUBTITLE_HEIGHT = 30;
     ///@}
 
     /**
      * @brief Lane detector-related information UI widths.
      */
     ///@{
-    static inline const uint32_t G_UI_DRIVING_STATE_WIDTH = 500;
-    static inline const uint32_t G_UI_TURNING_STATE_WIDTH = 300;
-    static inline const uint32_t G_UI_LANE_INFORMATION_WIDTH = 200;
+    static inline const int32_t G_UI_DRIVING_STATE_WIDTH = 500;
+    static inline const int32_t G_UI_TURNING_STATE_WIDTH = 300;
+    static inline const int32_t G_UI_LANE_INFORMATION_WIDTH = 200;
     ///@}
 
     /**
@@ -138,7 +137,7 @@ namespace LaneAndObjectDetection::Globals
     ///@{
     static inline const int32_t G_LANE_INFORMATION_LANE_STATE_PAD = 30;
     static inline const int32_t G_LANE_INFORMATION_LEFT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_LANE_INFORMATION_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + (G_UI_LANE_INFORMATION_RECT.width / 2.0);
+    static inline const int32_t G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + static_cast<int32_t>(G_UI_LANE_INFORMATION_RECT.width / 2.0);
     static inline const int32_t G_LANE_INFORMATION_RIGHT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_UI_LANE_INFORMATION_RECT.width - G_LANE_INFORMATION_LANE_STATE_PAD;
     static inline const int32_t G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION = G_UI_LANE_INFORMATION_RECT.y + G_LANE_INFORMATION_LANE_STATE_PAD;
     static inline const int32_t G_LANE_INFORMATION_LANE_STATE_WIDTH = 3;
@@ -151,8 +150,8 @@ namespace LaneAndObjectDetection::Globals
     ///@{
     static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH = G_UI_LANE_INFORMATION_RECT.width - (4 * G_UI_PADDING);
     static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT = G_UI_LANE_INFORMATION_RECT.height - (3 * G_UI_PADDING);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION = G_UI_LANE_INFORMATION_RECT.x + (G_UI_LANE_INFORMATION_RECT.width / 2.0) - (G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH / 2.0);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION = G_UI_LANE_INFORMATION_RECT.y + (1.5 * G_UI_PADDING);
+    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION = G_UI_LANE_INFORMATION_RECT.x + static_cast<int32_t>((G_UI_LANE_INFORMATION_RECT.width / 2.0) - (G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH / 2.0));
+    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION = G_UI_LANE_INFORMATION_RECT.y + static_cast<int32_t>(1.5 * G_UI_PADDING);
     ///@}
 
     /**
@@ -164,6 +163,11 @@ namespace LaneAndObjectDetection::Globals
      * @brief Default rolling average size.
      */
     static inline const uint32_t G_DEFAULT_ROLLING_AVERAGE_SIZE = 10;
+
+    /**
+     * @brief The number of lane lines to display to the frame.
+     */
+    static inline const uint32_t G_NUMBER_OF_LANE_LINES_TO_DISPLAY = 5;
 
     /**
      * @brief Region of interest dimensions.
@@ -197,7 +201,7 @@ namespace LaneAndObjectDetection::Globals
     };
 
     /**
-     * @brief TODO
+     * @brief The index values which represent each corner of G_ROI_MASK_POINTS.
      */
     ///@{
     static inline const uint32_t G_ROI_TOP_LEFT_INDEX = 0;
@@ -224,10 +228,10 @@ namespace LaneAndObjectDetection::Globals
      * Right edge threshold = '@'
      */
     ///@{
-    static inline const double G_LEFT_EDGE_OF_MASK_M = (G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].y - G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].y) / (G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].x - G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].x);
+    static inline const double G_LEFT_EDGE_OF_MASK_M = (G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].y - G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].y) / static_cast<double>(G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].x - G_ROI_MASK_POINTS[G_ROI_BOTTOM_LEFT_INDEX].x);
     static inline const double G_LEFT_EDGE_OF_MASK_C = G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].y - (G_LEFT_EDGE_OF_MASK_M * G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].x);
 
-    static inline const double G_RIGHT_EDGE_OF_MASK_M = (G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].y - G_ROI_MASK_POINTS[G_ROI_BOTTOM_RIGHT_INDEX].y) / (G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].x - G_ROI_MASK_POINTS[G_ROI_BOTTOM_RIGHT_INDEX].x);
+    static inline const double G_RIGHT_EDGE_OF_MASK_M = (G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].y - G_ROI_MASK_POINTS[G_ROI_BOTTOM_RIGHT_INDEX].y) / static_cast<double>(G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].x - G_ROI_MASK_POINTS[G_ROI_BOTTOM_RIGHT_INDEX].x);
     static inline const double G_RIGHT_EDGE_OF_MASK_C = G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].y - (G_RIGHT_EDGE_OF_MASK_M * G_ROI_MASK_POINTS[G_ROI_TOP_RIGHT_INDEX].x);
 
     static inline const double G_TOP_MID_POINT_X_LOCATION = G_ROI_MASK_POINTS[G_ROI_TOP_LEFT_INDEX].x + (G_ROI_TOP_WIDTH / 2.0);
@@ -263,17 +267,17 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief Hough line index mapping.
      */
-    static inline const uint32_t G_HOUGH_LINE_X1_INDEX = 0;
-    static inline const uint32_t G_HOUGH_LINE_Y1_INDEX = 1;
-    static inline const uint32_t G_HOUGH_LINE_X2_INDEX = 2;
-    static inline const uint32_t G_HOUGH_LINE_Y2_INDEX = 3;
+    ///@{
+    static inline const uint32_t G_VEC4_X1_INDEX = 0;
+    static inline const uint32_t G_VEC4_Y1_INDEX = 1;
+    static inline const uint32_t G_VEC4_X2_INDEX = 2;
+    static inline const uint32_t G_VEC4_Y2_INDEX = 3;
+    ///@}
 
     /**
      * @brief Threshold gradient to decide whether a line is to be considered horizontal.
      */
     static inline const double G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD = 0.15;
-
-    // TODO: -------------------------------------------------------------------------------------------------------------------
 
     /**
      * @brief Threshold length to decide whether a line is to be considered solid line road marking.
@@ -281,11 +285,96 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75;
 
     /**
-     * @brief Smoothing threshold to determine when to flag the vehicle as changing lanes.
+     * @brief The type of lane line.
      */
-    static inline const uint32_t G_FRAME_COUNT_THRESHOLD = 10;
+    enum class LaneLineType : std::uint8_t
+    {
+        EMPTY = 0,
+        DASHED,
+        SOLID
+    };
 
-    // TODO: -------------------------------------------------------------------------------------------------------------------
+    /**
+     * @brief The different driving states supported by the lane detector.
+     */
+    enum class DrivingState : std::uint8_t
+    {
+        WITHIN_LANE = 0,
+        CHANGING_LANES,
+        ONLY_LEFT_LANE_MARKING_DETECTED,
+        ONLY_RIGHT_LANE_MARKING_DETECTED,
+        NO_LANE_MARKINGS_DETECTED
+    };
+
+    /**
+     * @brief The driving state titles to display.
+     */
+    static inline const std::unordered_map<DrivingState, std::string> G_DRIVING_STATE_TITLES = {
+        {DrivingState::WITHIN_LANE,                      "Within Lanes"                             },
+        {DrivingState::CHANGING_LANES,                   "WARNING: Changing lanes"                  },
+        {DrivingState::ONLY_LEFT_LANE_MARKING_DETECTED,  "WARNING: Only left road marking detected" },
+        {DrivingState::ONLY_RIGHT_LANE_MARKING_DETECTED, "WARNING: Only right road marking detected"},
+        {DrivingState::NO_LANE_MARKINGS_DETECTED,        "WARNING: No road markings detected"       },
+    };
+
+    /**
+     * @brief Text to display whether recording or not recording.
+     */
+    ///@{
+    static inline const std::string G_LANE_INFORMATION_TITLE_LANE_DETECTED = "Detected Lanes";
+    static inline const std::string G_LANE_INFORMATION_TITLE_LANE_NOT_DETECTED = "No Lanes Detected";
+    ///@}
+
+    /**
+     * @brief The clamp parameters for determining the distance difference when the vehicle is within a lane.
+     */
+    ///@{
+    static inline const double G_WITHIN_LANE_MINIMUM_CLAMP_DIFFERENCE_DISTANCE = -100;
+    static inline const double G_WITHIN_LANE_MAXIMUM_CLAMP_DIFFERENCE_DISTANCE = 100;
+    ///@}
+
+    /**
+     * @brief The nearest percentage amount to round the turning required down to.
+     */
+    static inline const uint32_t G_WITHIN_LANE_TURNING_REQUIRED_ROUNDING = 10;
+
+    /**
+     * @brief The number of frames to wait before calculating another distance difference while the vehicle is changing lanes.
+     */
+    static inline const uint32_t G_CHANGING_LANES_DISTANCE_DIFFERENCE_FRAME_COUNT_THRESHOLD = 10;
+
+    /**
+     * @brief The type of object detector to use with an option to disable object detection. The tiny version is more performant
+     * at the cost of accuracy.
+     */
+    enum class ObjectDetectorTypes : std::uint8_t
+    {
+        NONE = 0,
+        STANDARD,
+        TINY
+    };
+
+    /**
+     * @brief The supported backends for the object detector to run on. CUDA is significantly more performant.
+     */
+    enum class ObjectDetectorBackEnds : std::uint8_t
+    {
+        CPU = 0,
+        CUDA
+    };
+
+    /**
+     * @brief The supported blob sizes for the object detector to run with. The larger the blob size the more performant the
+     * detector at the cost of performance.
+     */
+    enum class ObjectDetectorBlobSizes : std::int16_t
+    {
+        ONE = 288,
+        TWO = 320,
+        THREE = 416,
+        FOUR = 512,
+        FIVE = 608
+    };
 
     /**
      * @brief Object detection threshold and properties.
@@ -514,75 +603,75 @@ namespace LaneAndObjectDetection::Globals
     ///@{
     static inline const uint32_t G_PERFORMANCE_TESTS_NUMBER_OF_TESTS = 21;
 
-    static inline const std::array<ObjectDetectorTypes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES = {
-        ObjectDetectorTypes::NONE,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD};
+    static inline const std::array<Globals::ObjectDetectorTypes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES = {
+        Globals::ObjectDetectorTypes::NONE,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::TINY,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD,
+        Globals::ObjectDetectorTypes::STANDARD};
 
-    static inline const std::array<ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
+    static inline const std::array<Globals::ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CUDA,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
+        Globals::ObjectDetectorBackEnds::CPU,
     };
 
-    static inline const std::array<ObjectDetectorBlobSizes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BLOB_SIZES = {
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
-        ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
-        ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
-        ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
-        ObjectDetectorBlobSizes::FIVE,
+    static inline const std::array<Globals::ObjectDetectorBlobSizes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BLOB_SIZES = {
+        Globals::ObjectDetectorBlobSizes::ONE,
+        Globals::ObjectDetectorBlobSizes::ONE,
+        Globals::ObjectDetectorBlobSizes::TWO,
+        Globals::ObjectDetectorBlobSizes::THREE,
+        Globals::ObjectDetectorBlobSizes::FOUR,
+        Globals::ObjectDetectorBlobSizes::FIVE,
+        Globals::ObjectDetectorBlobSizes::ONE,
+        Globals::ObjectDetectorBlobSizes::TWO,
+        Globals::ObjectDetectorBlobSizes::THREE,
+        Globals::ObjectDetectorBlobSizes::FOUR,
+        Globals::ObjectDetectorBlobSizes::FIVE,
+        Globals::ObjectDetectorBlobSizes::ONE,
+        Globals::ObjectDetectorBlobSizes::TWO,
+        Globals::ObjectDetectorBlobSizes::THREE,
+        Globals::ObjectDetectorBlobSizes::FOUR,
+        Globals::ObjectDetectorBlobSizes::FIVE,
+        Globals::ObjectDetectorBlobSizes::ONE,
+        Globals::ObjectDetectorBlobSizes::TWO,
+        Globals::ObjectDetectorBlobSizes::THREE,
+        Globals::ObjectDetectorBlobSizes::FOUR,
+        Globals::ObjectDetectorBlobSizes::FIVE,
     };
 
     static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES = {
