@@ -196,10 +196,10 @@ namespace LaneAndObjectDetection::Globals
      * @brief Region of interest dimensions.
      */
     ///@{
-    static inline const uint32_t G_ROI_TOP_HEIGHT = 660;
-    static inline const uint32_t G_ROI_BOTTOM_HEIGHT = 840;
-    static inline const uint32_t G_ROI_TOP_WIDTH = 200;
-    static inline const uint32_t G_ROI_BOTTOM_WIDTH = 900;
+    static inline const int32_t G_ROI_TOP_HEIGHT = 660;
+    static inline const int32_t G_ROI_BOTTOM_HEIGHT = 840;
+    static inline const int32_t G_ROI_TOP_WIDTH = 200;
+    static inline const int32_t G_ROI_BOTTOM_WIDTH = 900;
     static inline const uint32_t G_NUMBER_OF_POINTS = 4;
     ///@}
 

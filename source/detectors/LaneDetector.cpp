@@ -417,8 +417,8 @@ namespace LaneAndObjectDetection
             // Determine X along the right/right edge of the mask using the Y co-ordinates of rightLaneLine and then use this X
             // value to compare with the actual X co-ordinates of rightLaneLine to determine the distance.
 
-            const double RIGHT_EDGE_X1 = (rightLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
-            const double RIGHT_EDGE_X2 = (rightLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
+            const double RIGHT_EDGE_X1 = (rightLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
+            const double RIGHT_EDGE_X2 = (rightLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
 
             averageDistanceFromRight += std::fabs(rightLaneLine[Globals::G_VEC4_X1_INDEX] - RIGHT_EDGE_X1);
             averageDistanceFromRight += std::fabs(rightLaneLine[Globals::G_VEC4_X2_INDEX] - RIGHT_EDGE_X2);
