@@ -372,6 +372,13 @@ namespace LaneAndObjectDetection
             {0, 0}
         };
 
+        // TODO
+        if (m_leftLaneLines.empty() || m_rightLaneLines.empty())
+        {
+            return;
+        }
+
+
         double averageDistanceFromLeft = 0;
         double leftLaneLineC = 0;
         double leftLaneLineM = 0;
@@ -466,12 +473,6 @@ namespace LaneAndObjectDetection
         else
         {
             m_laneDetectionInformation.m_turningRequiredToReturnToCenterText = "In Centre";
-        }
-
-        // Skip determining the overlay if no gradient has been calculated for the left or right lane lines
-        if ((leftLaneLineM == 0) || (rightLaneLineM == 0))
-        {
-            return;
         }
 
         // Find the minimum lane line height - due to OpenCV origin being located at the top left of the frame, visually this

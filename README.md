@@ -122,12 +122,13 @@ On Windows, Visual Studio 2022 can be used by opening the folder as a CMake proj
 opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
 
 <!--
-x. Clean up C++ lane and object detection code.
+x. Correct lane detection code
+    Get better dash cam video. Both benchmark and all scenarios video
+        https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k
     Debug lane detection code to make sure it is correct.
 
 x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
-
-x. clean up folder org (resources and tests)
+    clean up tests
 
 x. Enhancements
     Upgrade to newer YOLO (and better performance?)
