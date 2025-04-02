@@ -1,5 +1,3 @@
-#include <algorithm>
-#include <cctype>
 #include <chrono>
 #include <cstdint>
 #include <cstdlib>
@@ -10,47 +8,138 @@
 
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
 
 #include "detectors/LaneDetector.hpp"
 #include "detectors/ObjectDetector.hpp"
+#include "helpers/FrameBuilder.hpp"
 #include "helpers/Globals.hpp"
+#include "helpers/Information.hpp"
 #include "helpers/Performance.hpp"
 #include "helpers/VideoManager.hpp"
 
 namespace LaneAndObjectDetection
 {
-    VideoManager::VideoManager(const std::string& p_inputVideoFilePath,
-                               const std::string& p_yoloResourcesFolderPath,
-                               const Detectors& p_objectDetectorType,
-                               const BackEnds& p_backEndType,
-                               const BlobSizes& p_blobSize)
+    VideoManager::VideoManager() :
+        m_saveOutput(false) {}
+
+    VideoManager::VideoManager(const int32_t& p_inputVideoCamera,
+                               const std::string& p_yoloFolderPath,
+                               const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                               const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                               const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes) :
+        m_saveOutput(false)
     {
-        // If InputVideoPath is an integer, convert it to one so that OpenCV will use a camera as the input
-        if (std::ranges::all_of(p_inputVideoFilePath, [](const char& p_i) { return isdigit(p_i); }))
+        SetProperties(p_inputVideoCamera, p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
+    }
+
+    VideoManager::VideoManager(const std::string& p_inputVideoFilePath,
+                               const std::string& p_yoloFolderPath,
+                               const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                               const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                               const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes) :
+        m_saveOutput(false)
+    {
+        SetProperties(p_inputVideoFilePath, p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
+    }
+
+    VideoManager::VideoManager(const std::vector<std::string>& p_commandLineArguments) : // NOLINT(readability-function-cognitive-complexity)
+        m_saveOutput(false)
+    {
+        std::string parsedInputVideoFilePath;
+        std::string parsedYoloFolderPath;
+        Globals::ObjectDetectorTypes parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::NONE;
+        Globals::ObjectDetectorBackEnds parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
+        Globals::ObjectDetectorBlobSizes parsedObjectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::ONE;
+
+        uint32_t index = 0;
+
+        for (const std::string& argument : p_commandLineArguments)
         {
-            m_inputVideo.open(std::stoi(p_inputVideoFilePath));
+            if (argument == "-h" || argument == "--help")
+            {
+                std::cout << Globals::G_CLI_HELP_MESSAGE;
+                std::exit(1);
+            }
+
+            try
+            {
+                if (argument == "-i" || argument == "--input")
+                {
+                    parsedInputVideoFilePath = p_commandLineArguments.at(index + 1);
+                }
+
+                if (argument == "-y" || argument == "--yolo-folder-path")
+                {
+                    parsedYoloFolderPath = p_commandLineArguments.at(index + 1);
+                }
+
+                if (argument == "-o" || argument == "--object-detector-type")
+                {
+                    if (p_commandLineArguments.at(index + 1) == "none")
+                    {
+                        parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::NONE;
+                    }
+
+                    else if (p_commandLineArguments.at(index + 1) == "standard")
+                    {
+                        parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::STANDARD;
+                    }
+
+                    else if (p_commandLineArguments.at(index + 1) == "tiny")
+                    {
+                        parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::TINY;
+                    }
+
+                    else
+                    {
+                        std::cout << Globals::G_CLI_HELP_MESSAGE;
+                        std::exit(1);
+                    }
+                }
+
+                if (argument == "-b" || argument == "--object-detector-backend")
+                {
+                    if (p_commandLineArguments.at(index + 1) == "cpu")
+                    {
+                        parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
+                    }
+
+                    else if (p_commandLineArguments.at(index + 1) == "cuda")
+                    {
+                        parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CUDA;
+                    }
+
+                    else
+                    {
+                        std::cout << Globals::G_CLI_HELP_MESSAGE;
+                        std::exit(1);
+                    }
+                }
+
+                if (argument == "-s" || argument == "--object-detector-blob-size")
+                {
+                    parsedObjectDetectorBlobSizes = static_cast<Globals::ObjectDetectorBlobSizes>(std::stoi(p_commandLineArguments.at(index + 1)));
+                }
+            }
+
+            catch (...)
+            {
+                std::cout << Globals::G_CLI_HELP_MESSAGE;
+                std::exit(1);
+            }
+
+            index++;
         }
 
-        else
+        // Check that the required arguments have been provided
+        if (parsedInputVideoFilePath.empty() || parsedYoloFolderPath.empty())
         {
-            m_inputVideo.open(p_inputVideoFilePath);
+            std::cout << Globals::G_CLI_HELP_MESSAGE;
+            std::exit(1);
         }
 
-        // Set size to avoid errors in hard coded values
-        m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_VIDEO_WIDTH);
-        m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_VIDEO_HEIGHT);
-
-        if (!m_inputVideo.isOpened())
-        {
-            std::cout << "\nInput video file: " + p_inputVideoFilePath + " cannot be found\n";
-            exit(1);
-        }
-
-        m_objectDetector.SetProperties(p_yoloResourcesFolderPath, p_objectDetectorType, p_backEndType, p_blobSize);
-
-        m_recordOutput = false;
+        SetProperties(parsedInputVideoFilePath, parsedYoloFolderPath, parsedObjectDetectorTypes, parsedObjectDetectorBackEnds, parsedObjectDetectorBlobSizes);
     }
 
     VideoManager::~VideoManager()
@@ -60,102 +149,126 @@ namespace LaneAndObjectDetection
         cv::destroyAllWindows();
     }
 
-    std::vector<uint32_t> VideoManager::Run()
+    void VideoManager::SetProperties(const int32_t& p_inputVideoCamera,
+                                     const std::string& p_yoloFolderPath,
+                                     const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                                     const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                                     const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
+    {
+        m_inputVideo.open(p_inputVideoCamera);
+
+        if (!m_inputVideo.isOpened())
+        {
+            std::cout << "\nERROR: Input video camera '" + std::to_string(p_inputVideoCamera) + "' cannot be found!\n";
+            std::exit(1);
+        }
+
+        m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_INPUT_VIDEO_WIDTH);
+        m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_INPUT_VIDEO_HEIGHT);
+
+        m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
+
+        m_saveOutput = false;
+    }
+
+    void VideoManager::SetProperties(const std::string& p_inputVideoFilePath,
+                                     const std::string& p_yoloFolderPath,
+                                     const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
+                                     const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                                     const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSizes)
+    {
+        m_inputVideo.open(p_inputVideoFilePath);
+
+        if (!m_inputVideo.isOpened())
+        {
+            std::cout << "\nERROR: Input video file path '" + p_inputVideoFilePath + "' cannot be found!\n";
+            std::exit(1);
+        }
+
+        m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_INPUT_VIDEO_WIDTH);
+        m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_INPUT_VIDEO_HEIGHT);
+
+        m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
+
+        m_saveOutput = false;
+    }
+
+    void VideoManager::RunLaneAndObjectDetector()
     {
         while (true)
         {
             m_performance.StartTimer();
 
-            // Generate the next frame
-            m_inputVideo >> m_frame;
-            if (m_frame.empty())
+            if (!m_inputVideo.read(m_currentFrame))
             {
                 break;
             }
 
-            // Run the detectors
-            m_objectDetector.RunDetector(m_frame);
-            m_laneDetector.RunDetector(m_frame, m_objectDetector.GetBoundingBoxes());
+            m_objectDetector.RunObjectDetector(m_currentFrame);
 
-            // Print all info to the frame
-            m_objectDetector.PrintToFrame(m_frame);
-            m_laneDetector.PrintToFrame(m_frame);
-            m_performance.PrintFpsToFrame(m_frame);
-            PrintRecordingStatusToFrame();
+            m_laneDetector.RunLaneDetector(m_currentFrame, m_objectDetector.GetInformation());
 
-            // If recording, add frame to output file
-            if (m_recordOutput)
+            FrameBuilder::UpdateFrame(m_currentFrame, m_objectDetector.GetInformation(), m_laneDetector.GetInformation(), m_performance.GetInformation(), m_videoManagerInformation);
+
+            if (m_saveOutput)
             {
-                m_outputVideo << m_frame;
+                m_outputVideo.write(m_currentFrame);
             }
 
-            cv::imshow("frame", m_frame);
+            cv::imshow("frame", m_currentFrame);
 
-            const uint32_t KEY = cv::waitKey(1);
-
-            if (KEY == 'r')
+            switch (cv::waitKey(1))
             {
-                ToggleRecording();
-            }
+            case Globals::G_TOGGLE_RECORDING_KEY:
+                ToggleSaveOutput();
+                break;
 
-            else if (KEY == 'q')
-            {
+            case Globals::G_QUIT_KEY:
+                cv::destroyAllWindows();
+                return;
+
+            default:
                 break;
             }
 
-            m_performance.StopTimer();
+            m_performance.EndTimer();
         }
-
-        cv::destroyAllWindows();
-
-        return m_performance.GetFrameTimes();
     }
 
-    void VideoManager::PrintRecordingStatusToFrame()
+    PerformanceInformation VideoManager::GetPerformanceInformation()
     {
-        const double DIVISOR = 2;
+        return m_performance.GetInformation();
+    }
 
-        cv::rectangle(m_frame, Globals::G_RECORDING_STATUS_RECT, Globals::G_OPENCV_BLACK, cv::FILLED);
+    void VideoManager::ToggleSaveOutput()
+    {
+        m_saveOutput = !m_saveOutput;
 
-        if (m_recordOutput)
+        if (m_saveOutput)
         {
-            const std::string RECORDING_OUTPUT_TEXT = "Recording Output";
+            const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now());
 
-            // The next four lines are used to center the text horizontally and vertically
-            int baseline = 0;
-            const cv::Size TEXT_SIZE = cv::getTextSize(RECORDING_OUTPUT_TEXT, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_DEFAULT_FONT_THICKNESS, &baseline);
-            baseline += Globals::G_DEFAULT_FONT_THICKNESS;
-            const cv::Point TEXT_ORG = cv::Point(static_cast<int>((Globals::G_RECORDING_STATUS_RECT.x + (Globals::G_RECORDING_STATUS_RECT.width / DIVISOR)) - (TEXT_SIZE.width / DIVISOR)), Globals::G_RECORDING_STATUS_RECT.y + baseline + TEXT_SIZE.height);
-            cv::putText(m_frame, RECORDING_OUTPUT_TEXT, TEXT_ORG, Globals::G_DEFAULT_FONT_FACE, Globals::G_DEFAULT_FONT_SCALE, Globals::G_OPENCV_BLACK, Globals::G_DEFAULT_FONT_THICKNESS);
+            m_outputVideo.open(OUTPUT_FILE_NAME,
+                               cv::VideoWriter::fourcc('m', 'p', '4', 'v'),
+                               Globals::G_OUTPUT_VIDEO_FPS,
+                               cv::Size(Globals::G_OUTPUT_VIDEO_WIDTH, Globals::G_OUTPUT_VIDEO_HEIGHT));
+
+            if (!m_outputVideo.isOpened())
+            {
+                std::cout << std::format("\nERROR: Output video file '{}' could not be opened! Recording stopped!\n", OUTPUT_FILE_NAME);
+                m_saveOutput = false;
+            }
+
+            else
+            {
+                m_videoManagerInformation.m_saveOutputText = Globals::G_UI_TEXT_RECORDING;
+            }
         }
 
         else
         {
-            const std::string RECORDING_OUTPUT_TEXT = "Press 'r' to start recording";
-
-            // The next four lines are used to center the text horizontally and vertically
-            const int32_t HEIGHT_OFFSET = 5;
-            int baseline = 0;
-            const cv::Size TEXT_SIZE = cv::getTextSize(RECORDING_OUTPUT_TEXT, Globals::G_DEFAULT_FONT_FACE, Globals::G_SMALL_FONT_SCALE, Globals::G_DEFAULT_FONT_THICKNESS, &baseline);
-            baseline += Globals::G_DEFAULT_FONT_THICKNESS;
-            const cv::Point TEXT_ORG = cv::Point(static_cast<int>((Globals::G_RECORDING_STATUS_RECT.x + (Globals::G_RECORDING_STATUS_RECT.width / DIVISOR)) - (TEXT_SIZE.width / DIVISOR)), Globals::G_RECORDING_STATUS_RECT.y + baseline + TEXT_SIZE.height + HEIGHT_OFFSET);
-            cv::putText(m_frame, RECORDING_OUTPUT_TEXT, TEXT_ORG, Globals::G_DEFAULT_FONT_FACE, Globals::G_SMALL_FONT_SCALE, Globals::G_OPENCV_BLACK, Globals::G_DEFAULT_FONT_THICKNESS);
-        }
-    }
-
-    void VideoManager::ToggleRecording()
-    {
-        m_recordOutput = !m_recordOutput;
-
-        if (m_recordOutput)
-        {
-            // Create a unique file name based on the current date and time
-            m_outputVideo.open(std::format("{:%F-%T}", std::chrono::system_clock::now()) + " Frame.mp4", cv::VideoWriter::fourcc('m', 'p', '4', 'v'), Globals::G_OUTPUT_VIDEO_FPS, cv::Size(Globals::G_VIDEO_WIDTH, Globals::G_VIDEO_HEIGHT));
-
-            if (!m_outputVideo.isOpened())
-            {
-                std::cout << "\nERROR: Output video file could not be opened! Recording stopped!\n";
-            }
+            m_outputVideo.release();
+            m_videoManagerInformation.m_saveOutputText = Globals::G_UI_TEXT_NOT_RECORDING;
         }
     }
 }

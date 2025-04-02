@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['calculaterollingaverage_0',['CalculateRollingAverage',['../class_lane_and_object_detection_1_1_rolling_average.html#ae9dfe9b46f73d1959d7928b0610d2556',1,'LaneAndObjectDetection::RollingAverage']]]
+  ['calculatelaneposition_0',['CalculateLanePosition',['../class_lane_and_object_detection_1_1_lane_detector.html#af9f267d52557dd9d8fbd4c0ccd81148c',1,'LaneAndObjectDetection::LaneDetector']]],
+  ['calculaterollingaverage_1',['CalculateRollingAverage',['../class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html#abfcedb4c77cd8ba3b4b979efbb451382',1,'LaneAndObjectDetection::LaneDetector::RollingAverage']]],
+  ['calculateturningdirection_2',['CalculateTurningDirection',['../class_lane_and_object_detection_1_1_lane_detector.html#a95f21a50243bdd7d1e539e5d41eaab3b',1,'LaneAndObjectDetection::LaneDetector']]]
 ];

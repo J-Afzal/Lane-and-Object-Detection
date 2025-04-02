@@ -121,7 +121,8 @@ Getting Started</h1>
 <div class="line">Build-CppCodeUsingCMake -Platform windows-latest -BuildType Release -BuildDirectory build -Parallel 8 -Verbose</div>
 <div class="line"> </div>
 <div class="line">./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe</div>
-</div><!-- fragment --><p>or manually:</p>
+</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>If on Windows make sure to run the above within a Visual Studio Developer Command Prompt otherwise you may see errors around <code>cl.exe</code> not being found.</dd></dl>
+<p>or manually:</p>
 <div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git</div>
 <div class="line">cd Lane-and-Object-Detection</div>
 <div class="line"> </div>
@@ -137,16 +138,31 @@ Getting Started</h1>
 <div class="line"> </div>
 <div class="line">./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe</div>
 </div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.</dd></dl>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<p>Here are the full list of options for Lane and Object Detection:</p>
+<div class="fragment"><div class="line">Usage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]</div>
+<div class="line"> </div>
+<div class="line">OPTIONS:</div>
+<div class="line"> </div>
+<div class="line">Generic Options:</div>
+<div class="line"> </div>
+<div class="line">  -h --help                       Display available options.</div>
+<div class="line"> </div>
+<div class="line">Required Options:</div>
+<div class="line"> </div>
+<div class="line">  -i --input                      File path or camera ID</div>
+<div class="line">  -y --yolo-folder-path           Path to the yolo folder</div>
+<div class="line"> </div>
+<div class="line">Optional options:</div>
+<div class="line"> </div>
+<div class="line">  -o --object-detector-type       One of: none, standard or tiny. (default = none)</div>
+<div class="line">  -b --object-detector-backend    One of: cpu or cuda (default = cpu)</div>
+<div class="line">  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
 Documentation</h1>
-<p>Checkout the GitHub pages-hosted <a href="https://J-Afzal.github.io/Lane-and-Object-Detection">documentation page</a> built using doxygen.</p>
-<div class="image">
-<img src="DocumentationHomepage.png" alt=""/>
-<div class="caption">
-Documentation Homepage</div></div>
-    <h1><a class="anchor" id="autotoc_md3"></a>
+<p>Checkout the <a href="https://J-Afzal.github.io/Lane-and-Object-Detection">documentation page</a> built using Doxygen and hosted using Github pages.</p>
+<p><img src="./resources/screenshots/DocumentationHomepage.png" alt="Documentation Homepage" class="inline"/></p>
+<h1><a class="anchor" id="autotoc_md3"></a>
 General Information</h1>
-<p>TODO</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 CI / CD</h1>
 <p><a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg" alt="Continuous Integration" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg" alt="Continuous Deployment" style="pointer-events: none;" class="inline"/></a></p>
@@ -154,7 +170,7 @@ CI / CD</h1>
 <p>The continuous deployment workflow runs against all commits to main, builds the code and deploys the executables as a release.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Development Setup</h1>
-<p>For development a few extra tools are needed to check for linting issues locally. For this clone the repo with the <a href="https://github.com/J-Afzal/Linters"><code>Linters</code></a> and <a href="https://github.com/opencv/opencv"><code>OpenCV</code></a> submodules:</p>
+<p>For development a few extra tools are needed to check for linting issues locally which include the <a href="https://github.com/J-Afzal/Linters"><code>Linters</code></a> and <a href="https://github.com/opencv/opencv"><code>OpenCV</code></a> submodules:</p>
 <div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git</div>
 </div><!-- fragment --><p>The development dependencies are:</p>
 <ul>
@@ -166,12 +182,12 @@ Development Setup</h1>
 <li>Ninja &gt;= 1.12.1</li>
 </ul>
 <p>All linting helper functions can be found in the <a href="https://github.com/J-Afzal/Linters"><code>Linters</code></a> submodule.</p>
+<p>Any generator can be used to build the project but to prior to running <code>clang-tidy</code>/<code>clang-format</code> CMake must be configured using a generator that creates a <code>compile_commands.json</code> file in the build directory (e.g. <code>-G "Ninja"</code>, <code>-G "NMake Makefiles"</code>, etc)</p>
+<p>On windows, clang-tidy and clang-format can be installed using the <code>LLVM-x.x.x-win64.exe</code> binary from the <a href="https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6">LLVM release page</a> or from <a href="https://community.chocolatey.org/packages/llvm">chocolatey</a> using <code>choco install llvm -y</code>.</p>
 <dl class="section important"><dt>Important</dt><dd>The <code>yolo4.weights</code> file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded <a href="https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights">here</a> and should be copied to the <code>resources/yolo</code> folder.</dd></dl>
 <h2><a class="anchor" id="autotoc_md6"></a>
-Notes</h2>
-<p>Any generator can be used to build the project but to run <code>clang-tidy</code>/<code>clang-format</code> CMake must be configured using a generator that creates a <code>compile_commands.json</code> file in the build directory before running <code>clang-tidy</code>/<code>clang-format</code> (e.g. <code>-G "Ninja"</code>, <code>-G "NMake Makefiles"</code>, etc)</p>
+IDE</h2>
 <p>On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by opening the folder through the <code>Developer PowerShell for VS</code> (otherwise you may see errors around cl.exe not being found).</p>
-<p>On windows, clang-tidy and clang-format can be installed using the <code>LLVM-x.x.x-win64.exe</code> binary from the <a href="https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6">LLVM release page</a> or from <a href="https://community.chocolatey.org/packages/llvm">chocolatey</a> using <code>choco install llvm -y</code>.</p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
@@ -179,7 +195,7 @@ Notes</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Feb 17 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Wed Apr 2 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

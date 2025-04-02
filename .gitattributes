@@ -6,6 +6,8 @@
 *.hpp           text        diff=cpp
 
 # Config
+.clang-format   text
+.clang-tidy     text
 .editorconfig   text
 .gitattributes  text
 .gitignore      text
@@ -20,8 +22,6 @@ LICENSE         text
 
 # Graphics
 *.ico           binary
-*.gif           binary
-*.mp4           binary
 *.png           binary
 *.svg           text
 
@@ -33,6 +33,7 @@ LICENSE         text
 *.psm1          text
 
 # Serialisation
+*.json          text
 *.yml           text
 
 # Web
@@ -42,5 +43,4 @@ LICENSE         text
 
 # YOLO
 *.cfg           text
-*.names         text
 *.weights       binary

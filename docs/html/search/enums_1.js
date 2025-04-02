@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['detectors_0',['Detectors',['../namespace_lane_and_object_detection.html#a1d221d0dd4e19a46298454c19d1b4aa7',1,'LaneAndObjectDetection']]]
+  ['lanelinetype_0',['LaneLineType',['../namespace_lane_and_object_detection_1_1_globals.html#a12ce8dfa138a0ffc74b98bc75036afc9',1,'LaneAndObjectDetection::Globals']]]
 ];

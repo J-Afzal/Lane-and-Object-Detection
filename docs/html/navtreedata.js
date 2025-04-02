@@ -30,7 +30,7 @@ var NAVTREE =
     [ "General Information", "index.html#autotoc_md3", null ],
     [ "CI / CD", "index.html#autotoc_md4", null ],
     [ "Development Setup", "index.html#autotoc_md5", [
-      [ "Notes", "index.html#autotoc_md6", null ]
+      [ "IDE", "index.html#autotoc_md6", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -43,6 +43,7 @@ var NAVTREE =
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
@@ -57,8 +58,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_globals_8hpp_source.html",
-"namespace_lane_and_object_detection_1_1_globals.html#a087f031f99bd678f6d89239a6ccb7c44"
+"_frame_builder_8cpp_source.html",
+"namespace_lane_and_object_detection_1_1_globals.html#a5d49c5b31fb651c6e1fe6dc95164161d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

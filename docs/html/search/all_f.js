@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['videomanager_0',['VideoManager',['../class_lane_and_object_detection_1_1_video_manager.html',1,'LaneAndObjectDetection::VideoManager'],['../class_lane_and_object_detection_1_1_video_manager.html#a875d682234fc005a865ca1b11188fba8',1,'LaneAndObjectDetection::VideoManager::VideoManager(const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloResourcesFolderPath, const Detectors &amp;p_objectDetectorType=Detectors::STANDARD, const BackEnds &amp;p_backEndType=BackEnds::CPU, const BlobSizes &amp;p_blobSize=BlobSizes::FIVE)'],['../class_lane_and_object_detection_1_1_video_manager.html#a6fa9483adb219fb3b7a12985bb5dc9dc',1,'LaneAndObjectDetection::VideoManager::VideoManager(const VideoManager &amp;p_videoManager)=delete'],['../class_lane_and_object_detection_1_1_video_manager.html#ab60f9ac9e1525a2e20f73cff9a9d3c8a',1,'LaneAndObjectDetection::VideoManager::VideoManager(const VideoManager &amp;&amp;p_videoManager)=delete']]]
+  ['updatedrivingstate_0',['UpdateDrivingState',['../class_lane_and_object_detection_1_1_lane_detector.html#ad55171af84b8e6be46db828b3f59de05',1,'LaneAndObjectDetection::LaneDetector']]],
+  ['updateframe_1',['UpdateFrame',['../class_lane_and_object_detection_1_1_frame_builder.html#aba8c7e43ea81837617ae55ff35beb81b',1,'LaneAndObjectDetection::FrameBuilder']]],
+  ['updatelinetypes_2',['UpdateLineTypes',['../class_lane_and_object_detection_1_1_lane_detector.html#ae3476f8bd2c53a6853b3378c526147c6',1,'LaneAndObjectDetection::LaneDetector']]]
 ];

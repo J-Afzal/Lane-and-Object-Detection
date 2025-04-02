@@ -1,64 +1,53 @@
 #pragma once
 
 #include <chrono>
-#include <cstdint>
-#include <vector>
 
-#include <opencv2/core/mat.hpp>
+#include "helpers/Information.hpp"
 
 /**
  * @namespace LaneAndObjectDetection
- * @brief TODO
+ * @brief Contains all Lane-and-Object-Detection objects.
  */
 namespace LaneAndObjectDetection
 {
     /**
      * @class Performance
-     * @brief TODO
+     * @brief Calculates the frame times and current/average frames per second for real-time performance tracking.
      */
     class Performance
     {
     public:
         /**
-         * @brief TODO
-         *
+         * @brief Constructs a new %Performance object.
          */
         explicit Performance();
 
         /**
-         * @brief TODO
-         *
+         * @brief Start the internal timer.
          */
         void StartTimer();
 
         /**
-         * @brief TODO
-         *
+         * @brief End the internal timer.
          */
-        void StopTimer();
+        void EndTimer();
 
         /**
-         * @brief TODO
+         * @brief Get the PerformanceInformation struct.
          *
+         * @return PerformanceInformation The PerformanceInformation struct.
          */
-        void PrintFpsToFrame(cv::Mat& p_frame) const;
-
-        /**
-         * @brief TODO
-         *
-         */
-        std::vector<uint32_t> GetFrameTimes();
+        PerformanceInformation GetInformation();
 
     private:
         /**
-         * @brief TODO
+         * @brief The PerformanceInformation struct containing all performance-related information.
          */
-        ///@{
+        PerformanceInformation m_performanceInformation;
+
+        /**
+         * @brief The time the internal timer was started within `StartTimer()`.
+         */
         std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;
-        std::vector<uint32_t> m_frameTimes;
-        uint64_t m_frameCount;
-        double m_averageFps;
-        double m_currentFps;
-        ///@}
     };
 }

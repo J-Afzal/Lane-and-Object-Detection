@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['calculaterollingaverage_0',['CalculateRollingAverage',['../class_lane_and_object_detection_1_1_rolling_average.html#ae9dfe9b46f73d1959d7928b0610d2556',1,'LaneAndObjectDetection::RollingAverage']]],
-  ['cd_1',['CI / CD',['../index.html#autotoc_md4',1,'']]],
-  ['ci_20cd_2',['CI / CD',['../index.html#autotoc_md4',1,'']]]
+  ['detectedobjectinformation_0',['DetectedObjectInformation',['../struct_lane_and_object_detection_1_1_object_detection_information_1_1_detected_object_information.html',1,'LaneAndObjectDetection::ObjectDetectionInformation']]],
+  ['detection_1',['Lane and Object Detection',['../index.html',1,'']]],
+  ['development_20setup_2',['Development Setup',['../index.html#autotoc_md5',1,'']]],
+  ['documentation_3',['Documentation',['../index.html#autotoc_md2',1,'']]],
+  ['drivingstate_4',['DrivingState',['../namespace_lane_and_object_detection_1_1_globals.html#abd235c8782d5e767fd19b1903794e0e9',1,'LaneAndObjectDetection::Globals']]]
 ];

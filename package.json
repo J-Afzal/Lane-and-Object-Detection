@@ -1,0 +1,7 @@
+{
+    "name": "lane-and-object-detection",
+    "version": "1.0",
+    "devDependencies": {
+        "linters": "file:submodules/Linters"
+    }
+}

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['setproperties_0',['SetProperties',['../class_lane_and_object_detection_1_1_object_detector.html#a3e1628cc503e8908c9868d9bb1c49761',1,'LaneAndObjectDetection::ObjectDetector']]],
-  ['setup_1',['Setup',['../class_lane_and_object_detection_1_1_lane_detector.html#a84be2b6e2622cd85fe81414b791d681d',1,'LaneAndObjectDetection::LaneDetector']]],
-  ['starttimer_2',['StartTimer',['../class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb',1,'LaneAndObjectDetection::Performance']]],
-  ['stoptimer_3',['StopTimer',['../class_lane_and_object_detection_1_1_performance.html#acc70db8e745ca255ba9ba1d6576e4bfa',1,'LaneAndObjectDetection::Performance']]]
+  ['performance_0',['Performance',['../class_lane_and_object_detection_1_1_performance.html#a3bc9e108e69ca90718a19779ad1e87e4',1,'LaneAndObjectDetection::Performance']]],
+  ['performancetest_1',['PerformanceTest',['../class_lane_and_object_detection_1_1_performance_test.html#a8639f92eb9759215dea77adf23aebc7e',1,'LaneAndObjectDetection::PerformanceTest::PerformanceTest(std::string &amp;p_inputVideoFilePath, std::string &amp;p_yoloFolderPath, const uint32_t &amp;p_numberOfRepetitions)'],['../class_lane_and_object_detection_1_1_performance_test.html#a5c0a7842424e9e0b6d71b11483e3af90',1,'LaneAndObjectDetection::PerformanceTest::PerformanceTest(const std::vector&lt; std::string &gt; &amp;p_commandLineArguments)']]]
 ];
