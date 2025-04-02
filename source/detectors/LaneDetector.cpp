@@ -372,12 +372,11 @@ namespace LaneAndObjectDetection
             {0, 0}
         };
 
-        // TODO
+        // Skip if either no left or right lane lines detected
         if (m_leftLaneLines.empty() || m_rightLaneLines.empty())
         {
             return;
         }
-
 
         double averageDistanceFromLeft = 0;
         double leftLaneLineC = 0;

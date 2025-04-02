@@ -50,7 +50,7 @@ INPUT                  = ./README.md ./include/ ./source/
 
 RECURSIVE              = YES
 
-IMAGE_PATH             = ./resources/screenshots/
+IMAGE_PATH             = 
 
 USE_MDFILE_AS_MAINPAGE = README.md
 
