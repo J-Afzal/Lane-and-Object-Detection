@@ -2,4 +2,4 @@
 .vscode/
 build/
 node_modules/
-resources/yolo/yolov4.weights
+resources/yolo/yolov7.weights

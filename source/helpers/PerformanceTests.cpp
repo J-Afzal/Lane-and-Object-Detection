@@ -121,14 +121,7 @@ namespace LaneAndObjectDetection
             }
         }
 
-        // Calculate total time taken in hrs mins secs
-        const uint32_t TOTAL_TIME_IN_SECONDS = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - START_TIME).count();
-
-        const double HOURS = TOTAL_TIME_IN_SECONDS / Globals::G_SECONDS_IN_HOUR;
-        const double MINUTES = (HOURS - floor(HOURS)) * Globals::G_MINUTES_IN_HOUR;
-        const double SECONDS = (MINUTES - floor(MINUTES)) * Globals::G_SECONDS_IN_MINUTE;
-
-        std::cout << std::format("\n\nTotal elapsed time = {} hrs {} mins {} secs", floor(HOURS), floor(MINUTES), floor(SECONDS));
+        std::cout << std::format("\n\nTotal elapsed time = {} (H?:mm:ss)", Globals::GetTimeElapsed(START_TIME));
         std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n\n";
     }
 }

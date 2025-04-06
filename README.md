@@ -1,6 +1,6 @@
 # Lane and Object Detection
 
-Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.
+Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv7.
 
 ## Getting Started
 
@@ -64,6 +64,11 @@ Optional options:
   -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)
 ```
 
+> [!IMPORTANT]
+> The `yolov7.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded
+> [here](https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights) and should be copied to the
+> `./resources/yolo` folder.
+
 ## Documentation
 
 Checkout the [documentation page](https://J-Afzal.github.io/Lane-and-Object-Detection) built using Doxygen and hosted using
@@ -111,48 +116,35 @@ On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-w
 [LLVM release page](https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6) or from
 [chocolatey](https://community.chocolatey.org/packages/llvm) using `choco install llvm -y`.
 
-> [!IMPORTANT]
-> The `yolo4.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded
-> [here](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights) and should be copied to
-> the `resources/yolo` folder.
-
 ### IDE
 
 On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by
 opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
 
 <!--
-x. Correct lane detection code
-    Get better dash cam video. Both benchmark and all scenarios video
-        https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k
-    Debug lane detection code to make sure it is correct.
+x. Enhancements
+        Press D for debug mode (non debug mode only shows dash cam output maybe with current timestamp?):
+            Add the different frames at the top (ROI, Canny, Hough) (1/4 of width each)
+
+            Conditionally display lane lines box information to the right of the different frames after hough transform
+
+            Allow for ROI to be adjusted? And other lane detection variables? (add GUI sliders?)
+                The following need to be dynamic
+                    ROI dimensions and everything built on them![alt text](image-1.png)
+                    Canny algorithm thresholds
+                    Hough transform thresholds and properties
+                    object detection thresholds
+                    Any other thresholds?
+
+        Check all globals used, named correctly and organised correctly
+        Update General Information in readme
 
 x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
-    clean up tests
+        clean up tests folder
 
-x. Enhancements
-    Upgrade to newer YOLO (and better performance?)
-        Any perf or accuracy increases?
-    Add info more discretely at the bottom of the frame?
-    Press D for debug mode to display lane lines and driving state
-        Also add the different frames at the top
-        Also allow for ROI to be adjusted? And other variables?
-            ROI dimensions need to be dynamic
-            ROI line equations
-            Canny algorithm thresholds
-            Hough transform thresholds and properties
-            All other lane detection thresholds
-    Allow UI to be scaled up and down?
+x. Correct lane detection code
+        Get better dash cam video. Both benchmark and all scenarios video (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
+        Debug lane detection code to make sure it is correct.
 
 x. Test with CUDA? (regardless do performance heat map and optimisation)
-
-x. Implement C GUI window to encapsulate main code and performance test code with debug mode to show all stats (and roi/canny
-   /hough line debug views) and option to adjust ROI?
-        Use Clay?
-        where are std::cout displayed?
-        run performance tests?
-        display and export performance graphs?
-    Update General Information in readme
-
-x. Find better dash cam footage like american highway footage or m1 motorway footage?
 -->

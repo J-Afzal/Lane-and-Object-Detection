@@ -51,8 +51,9 @@ namespace LaneAndObjectDetection
          * @param p_frame The frame to update.
          * @param p_objectDetectionInformation The information needed by %FrameBuilder to update frame with object detection
          * information.
+         * @param p_debugMode Whether in debug mode.
          */
-        static void AddObjectDetectorInformation(cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation);
+        static void AddObjectDetectorInformation(cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation, const bool& p_debugMode);
 
         /**
          * @brief Adds lane detection information to `p_frame`.
@@ -60,16 +61,18 @@ namespace LaneAndObjectDetection
          * @param p_frame The frame to update.
          * @param p_laneDetectionInformation The information needed by %FrameBuilder to update frame with lane detection
          * information.
+         * @param p_debugMode Whether in debug mode.
          */
-        static void AddLaneDetectorInformation(cv::Mat& p_frame, const LaneDetectionInformation& p_laneDetectionInformation);
+        static void AddLaneDetectorInformation(cv::Mat& p_frame, const LaneDetectionInformation& p_laneDetectionInformation, const bool& p_debugMode);
 
         /**
          * @brief Adds performance information to `p_frame`.
          *
          * @param p_frame The frame to update.
          * @param p_performanceInformation The information needed by %FrameBuilder to update frame with performance information.
+         * @param p_debugMode Whether in debug mode.
          */
-        static void AddPerformanceInformation(cv::Mat& p_frame, const PerformanceInformation& p_performanceInformation);
+        static void AddPerformanceInformation(cv::Mat& p_frame, const PerformanceInformation& p_performanceInformation, const bool& p_debugMode);
 
         /**
          * @brief Adds video manager information to `p_frame`.
@@ -88,16 +91,6 @@ namespace LaneAndObjectDetection
          * @param p_text The text to add to `p_frame`.
          * @param p_fontScale The font scale of p_text.
          */
-        static void AddBackgroundRectAndCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale = Globals::G_DEFAULT_FONT_SCALE);
-
-        /**
-         * @brief Adds `p_text` to `p_frame` centred within `p_backgroundRect`.
-         *
-         * @param p_frame The frame to update.
-         * @param p_backgroundRect The text background rect to add to `p_frame`.
-         * @param p_text The text to add to `p_frame`.
-         * @param p_fontScale The font scale of p_text.
-         */
-        static void AddCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale);
+        static void AddBackgroundRectAndCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale = Globals::G_FONT_DEFAULT_SCALE);
     };
 }

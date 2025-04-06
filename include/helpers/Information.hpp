@@ -53,6 +53,21 @@ namespace LaneAndObjectDetection
     struct LaneDetectionInformation
     {
         /**
+         * @brief TODO
+         */
+        cv::Mat m_roiFrame;
+
+        /**
+         * @brief TODO
+         */
+        cv::Mat m_cannyFrame;
+
+        /**
+         * @brief TODO
+         */
+        cv::Mat m_houghLinesFrame;
+
+        /**
          * @brief The co-ordinate points that outline the current lane.
          */
         std::vector<cv::Point> m_laneOverlayCorners;
@@ -130,8 +145,33 @@ namespace LaneAndObjectDetection
     struct VideoManagerInformation
     {
         /**
+         * @brief The time that the output started to be saved locally.
+         */
+        std::chrono::time_point<std::chrono::high_resolution_clock> m_saveOutputStartTime;
+
+        /**
+         * @brief Text to display whether or not the program is in debug mode.
+         */
+        std::string m_debugModeText;
+
+        /**
+         * @brief The time that has elapsed since starting to save the output video stream locally.
+         */
+        std::string m_saveOutputElapsedTime;
+
+        /**
          * @brief Text to display whether or not the program is recording the output.
          */
         std::string m_saveOutputText;
+
+        /**
+         * @brief Whether in debug mode.
+         */
+        bool m_debugMode;
+
+        /**
+         * @brief Whether the output video stream should be saved locally.
+         */
+        bool m_saveOutput;
     };
 }

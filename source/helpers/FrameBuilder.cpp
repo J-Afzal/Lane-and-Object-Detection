@@ -1,7 +1,10 @@
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdint>
 #include <format>
+#include <iostream>
+#include <locale>
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
@@ -21,17 +24,22 @@ namespace LaneAndObjectDetection
                                    const PerformanceInformation& p_performanceInformation,
                                    const VideoManagerInformation& p_videoManagerInformation)
     {
-        AddObjectDetectorInformation(p_frame, p_objectDetectionInformation);
+        AddObjectDetectorInformation(p_frame, p_objectDetectionInformation, p_videoManagerInformation.m_debugMode);
 
-        AddLaneDetectorInformation(p_frame, p_laneDetectionInformation);
+        AddLaneDetectorInformation(p_frame, p_laneDetectionInformation, p_videoManagerInformation.m_debugMode);
 
-        AddPerformanceInformation(p_frame, p_performanceInformation);
+        AddPerformanceInformation(p_frame, p_performanceInformation, p_videoManagerInformation.m_debugMode);
 
         AddVideoManagerInformation(p_frame, p_videoManagerInformation);
     }
 
-    void FrameBuilder::AddObjectDetectorInformation(cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation)
+    void FrameBuilder::AddObjectDetectorInformation(cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation, const bool& p_debugMode)
     {
+        if (!p_debugMode)
+        {
+            return;
+        }
+
         for (const ObjectDetectionInformation::DetectedObjectInformation& objectInformation : p_objectDetectionInformation.m_objectInformation)
         {
             // Draw the bounding box
@@ -55,21 +63,26 @@ namespace LaneAndObjectDetection
             cv::putText(p_frame,
                         objectInformation.m_objectName,
                         cv::Point(objectInformation.m_boundingBox.x, objectInformation.m_boundingBox.y - Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_TEXT_HEIGHT_OFFSET),
-                        Globals::G_DEFAULT_FONT_FACE,
+                        Globals::G_FONT_DEFAULT_FACE,
                         Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_FONT_SCALE,
                         Globals::G_COLOUR_BLACK,
-                        Globals::G_DEFAULT_FONT_THICKNESS,
+                        Globals::G_FONT_DEFAULT_THICKNESS,
                         cv::LINE_AA);
         }
     }
 
-    void FrameBuilder::AddLaneDetectorInformation(cv::Mat& p_frame, const LaneDetectionInformation& p_laneDetectionInformation)
+    void FrameBuilder::AddLaneDetectorInformation(cv::Mat& p_frame, const LaneDetectionInformation& p_laneDetectionInformation, const bool& p_debugMode)
     {
         // Add driving state
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_DRIVING_STATE_RECT, p_laneDetectionInformation.m_drivingStateTitle);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_DRIVING_STATE_RECT, p_laneDetectionInformation.m_drivingStateTitle, Globals::G_UI_H1_FONT_SCALE);
 
         // Add turning state
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TURNING_STATE_RECT, p_laneDetectionInformation.m_turningStateTitle);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TURNING_STATE_RECT, p_laneDetectionInformation.m_turningStateTitle, Globals::G_UI_H2_FONT_SCALE);
+
+        if (!p_debugMode)
+        {
+            return;
+        }
 
         // Add lane information title
         AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TITLE_RECT, p_laneDetectionInformation.m_laneInformationTitle);
@@ -120,7 +133,7 @@ namespace LaneAndObjectDetection
         AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT, p_laneDetectionInformation.m_turningRequiredToReturnToCenterText);
 
         // Used for the below overlays
-        cv::Mat blankFrame = cv::Mat::zeros(Globals::G_INPUT_VIDEO_HEIGHT, Globals::G_INPUT_VIDEO_WIDTH, p_frame.type());
+        cv::Mat blankFrame = cv::Mat::zeros(Globals::G_VIDEO_INPUT_HEIGHT, Globals::G_VIDEO_INPUT_WIDTH, p_frame.type());
 
         if (p_laneDetectionInformation.m_drivingState == Globals::DrivingState::WITHIN_LANE)
         {
@@ -142,45 +155,63 @@ namespace LaneAndObjectDetection
         cv::add(p_frame, blankFrame, p_frame);
     }
 
-    void FrameBuilder::AddPerformanceInformation(cv::Mat& p_frame, const PerformanceInformation& p_performanceInformation)
+    void FrameBuilder::AddPerformanceInformation(cv::Mat& p_frame, const PerformanceInformation& p_performanceInformation, const bool& p_debugMode)
     {
-        // Round frame per second values to two decimal places
-        const std::string AVERAGE_FPS = std::format("Average FPS: {}", std::round(p_performanceInformation.m_averageFramesPerSecond));
-        const std::string CURRENT_FPS = std::format("Current FPS: {}", std::round(p_performanceInformation.m_currentFramesPerSecond));
-
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_PERFORMANCE_AVERAGE_FPS_BACKGROUND_RECT, AVERAGE_FPS);
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_PERFORMANCE_CURRENT_FPS_BACKGROUND_RECT, CURRENT_FPS);
-    }
-
-    void FrameBuilder::AddVideoManagerInformation(cv::Mat& p_frame, const VideoManagerInformation& p_videoManagerInformation)
-    {
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_RECORDING_STATUS_RECT, p_videoManagerInformation.m_saveOutputText);
-    }
-
-    void FrameBuilder::AddBackgroundRectAndCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale)
-    {
-        if (p_text.empty())
+        if (!p_debugMode)
         {
             return;
         }
 
-        cv::rectangle(p_frame, p_backgroundRect, Globals::G_COLOUR_BLACK, cv::FILLED, cv::LINE_AA);
+        // Round frame per second values to two decimal places
+        const std::string CURRENT_FPS = std::format("{} Current FPS ({} Average FPS)",
+                                                    std::round(p_performanceInformation.m_currentFramesPerSecond * 100.0) / 100.0,
+                                                    std::round(p_performanceInformation.m_averageFramesPerSecond));
 
-        AddCentredText(p_frame, p_backgroundRect, p_text, p_fontScale);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_FPS_RECT, CURRENT_FPS, Globals::G_UI_H2_FONT_SCALE);
     }
 
-    void FrameBuilder::AddCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale)
+    void FrameBuilder::AddVideoManagerInformation(cv::Mat& p_frame, const VideoManagerInformation& p_videoManagerInformation)
     {
+        // E.g. Thursday 01 January 1970 10:11:03
+        const std::string TIMESTAMP = std::format("{:%A %d %B %Y} ", std::chrono::system_clock::now()) + std::format("{:%H:%M:%S}", std::chrono::system_clock::now()).substr(0, 8);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TIMESTAMP_RECT, TIMESTAMP, Globals::G_UI_H2_FONT_SCALE);
+
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_DEBUG_MODE_STATUS_RECT, p_videoManagerInformation.m_debugModeText, Globals::G_UI_H2_FONT_SCALE);
+
+        if (p_videoManagerInformation.m_saveOutput)
+        {
+            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECORDING_STATUS_RECT, p_videoManagerInformation.m_saveOutputText, Globals::G_UI_H2_FONT_SCALE);
+            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECORDING_ELAPSED_TIME_RECT, p_videoManagerInformation.m_saveOutputElapsedTime, Globals::G_UI_H2_FONT_SCALE);
+
+            // Add flashing recording dot and time spent recording
+            const uint32_t SECONDS_SINCE_EPOCH = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+            if (SECONDS_SINCE_EPOCH % 2)
+            {
+                cv::circle(p_frame, Globals::G_UI_RECORDING_DOT_POINT, Globals::G_UI_RECORDING_DOT_RADIUS, Globals::G_COLOUR_RED, cv::FILLED, cv::LINE_AA);
+            }
+        }
+
+        else
+        {
+            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_NOT_RECORDING_STATUS_RECT, p_videoManagerInformation.m_saveOutputText, Globals::G_UI_H2_FONT_SCALE);
+        }
+    }
+
+    void FrameBuilder::AddBackgroundRectAndCentredText(cv::Mat& p_frame, const cv::Rect& p_backgroundRect, const std::string& p_text, const double& p_fontScale)
+    {
+        cv::rectangle(p_frame, p_backgroundRect, Globals::G_COLOUR_BLACK, cv::FILLED, cv::LINE_AA);
+
         double currentFontScale = p_fontScale;
 
-        cv::Size textSize = cv::getTextSize(p_text, Globals::G_DEFAULT_FONT_FACE, currentFontScale, Globals::G_DEFAULT_FONT_THICKNESS, nullptr);
+        cv::Size textSize = cv::getTextSize(p_text, Globals::G_FONT_DEFAULT_FACE, currentFontScale, Globals::G_FONT_DEFAULT_THICKNESS, nullptr);
 
-        while ((((textSize.width + Globals::G_DEFAULT_HORIZONTAL_PADDING) > p_backgroundRect.width) ||
-                ((textSize.height + Globals::G_DEFAULT_VERTICAL_PADDING) > p_backgroundRect.height)) &&
-               (currentFontScale > Globals::G_DEFAULT_FONT_DECREMENT))
+        while ((((textSize.width + Globals::G_FONT_DEFAULT_HORIZONTAL_PADDING) > p_backgroundRect.width) ||
+                ((textSize.height + Globals::G_FONT_DEFAULT_VERTICAL_PADDING) > p_backgroundRect.height)) &&
+               (currentFontScale > Globals::G_FONT_DEFAULT_DECREMENT))
         {
-            currentFontScale -= Globals::G_DEFAULT_FONT_DECREMENT;
-            textSize = cv::getTextSize(p_text, Globals::G_DEFAULT_FONT_FACE, currentFontScale, Globals::G_DEFAULT_FONT_THICKNESS, nullptr);
+            currentFontScale -= Globals::G_FONT_DEFAULT_DECREMENT;
+            textSize = cv::getTextSize(p_text, Globals::G_FONT_DEFAULT_FACE, currentFontScale, Globals::G_FONT_DEFAULT_THICKNESS, nullptr);
         }
 
         const int32_t X_PAD = std::ceil((p_backgroundRect.width - textSize.width) / Globals::G_DIVIDE_BY_TWO);
@@ -189,10 +220,10 @@ namespace LaneAndObjectDetection
         cv::putText(p_frame,
                     p_text,
                     {p_backgroundRect.x + X_PAD, p_backgroundRect.y + textSize.height + Y_PAD},
-                    Globals::G_DEFAULT_FONT_FACE,
+                    Globals::G_FONT_DEFAULT_FACE,
                     currentFontScale,
                     Globals::G_COLOUR_WHITE,
-                    Globals::G_DEFAULT_FONT_THICKNESS,
+                    Globals::G_FONT_DEFAULT_THICKNESS,
                     cv::LINE_AA);
     }
 }

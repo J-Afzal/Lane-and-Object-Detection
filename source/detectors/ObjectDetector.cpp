@@ -31,11 +31,11 @@ namespace LaneAndObjectDetection
             break;
 
         case Globals::ObjectDetectorTypes::STANDARD:
-            m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov4.cfg", p_yoloFolderPath + "yolov4.weights");
+            m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov7-tiny.cfg", p_yoloFolderPath + "yolov7-tiny.weights");
             break;
 
         case Globals::ObjectDetectorTypes::TINY:
-            m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov4-tiny.cfg", p_yoloFolderPath + "yolov4-tiny.weights");
+            m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov7-tiny.cfg", p_yoloFolderPath + "yolov7-tiny.weights");
             break;
 
         default:
@@ -98,10 +98,10 @@ namespace LaneAndObjectDetection
 
                 if (maxConfidence > Globals::G_OBJECT_DETECTOR_CONFIDENCE_THRESHOLD)
                 {
-                    const double CENTER_X = outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_CENTER_X_COORD_INDEX) * Globals::G_INPUT_VIDEO_WIDTH;
-                    const double CENTER_Y = outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_CENTER_Y_COORD_INDEX) * Globals::G_INPUT_VIDEO_HEIGHT;
-                    const double WIDTH = (outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_WIDTH_INDEX) * Globals::G_INPUT_VIDEO_WIDTH) + Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_BUFFER;
-                    const double HEIGHT = (outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_HEIGHT_INDEX) * Globals::G_INPUT_VIDEO_HEIGHT) + Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_BUFFER;
+                    const double CENTER_X = outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_CENTER_X_COORD_INDEX) * Globals::G_VIDEO_INPUT_WIDTH;
+                    const double CENTER_Y = outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_CENTER_Y_COORD_INDEX) * Globals::G_VIDEO_INPUT_HEIGHT;
+                    const double WIDTH = (outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_WIDTH_INDEX) * Globals::G_VIDEO_INPUT_WIDTH) + Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_BUFFER;
+                    const double HEIGHT = (outputBlob.at<float>(rowIndex, Globals::G_OBJECT_DETECTOR_OUTPUT_BLOBS_HEIGHT_INDEX) * Globals::G_VIDEO_INPUT_HEIGHT) + Globals::G_OBJECT_DETECTOR_BOUNDING_BOX_BUFFER;
 
                     // Remove object detections on the hood of car
                     if (CENTER_Y < Globals::G_ROI_BOTTOM_HEIGHT)

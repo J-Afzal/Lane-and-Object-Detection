@@ -178,8 +178,8 @@ namespace LaneAndObjectDetection
 
     private:
         /**
-         * @brief Toggles whether the output video stream should be recorded locally. If toggled on, it creates a new file in
-         * the format `YYYY-MM-DD-HH:mm:ss-output.mp4`".
+         * @brief Toggles whether the output video stream is saved locally. If toggled on, it creates a new file in the format
+         * `YYYY-MM-DD-HH:mm:ss-output.mp4`, and if toggled off, it closes the output file.
          */
         void ToggleSaveOutput();
 
@@ -217,10 +217,5 @@ namespace LaneAndObjectDetection
          * @brief The VideoManagerInformation struct containing all video manager-related information.
          */
         VideoManagerInformation m_videoManagerInformation;
-
-        /**
-         * @brief Whether the output video stream should be saved locally.
-         */
-        bool m_saveOutput;
     };
 }

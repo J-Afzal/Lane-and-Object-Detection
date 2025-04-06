@@ -10,7 +10,7 @@ ignorePaths:
     - docs/html/
     - node_modules/
     - package-lock.json
-    - resources/yolo/yolov4.weights
+    - resources/yolo/yolov7.weights
 words:
     - afzal
     - bugprone
