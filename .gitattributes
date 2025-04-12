@@ -22,6 +22,7 @@ LICENSE         text
 
 # Graphics
 *.ico           binary
+*.mp4           binary
 *.png           binary
 *.svg           text
 

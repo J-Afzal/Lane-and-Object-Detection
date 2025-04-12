@@ -138,7 +138,7 @@ namespace LaneAndObjectDetection
             // Filter out vertical lines
             if (CHANGE_IN_X == 0)
             {
-                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_WHITE, cv::FILLED, cv::LINE_AA);
+                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_WHITE, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
                 continue;
             }
 
@@ -147,7 +147,7 @@ namespace LaneAndObjectDetection
             // Filter out horizontal lines
             if (std::fabs(GRADIENT) < Globals::G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD)
             {
-                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_GREY, cv::FILLED, cv::LINE_AA);
+                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_GREY, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
                 continue;
             }
 
@@ -155,7 +155,7 @@ namespace LaneAndObjectDetection
             // a bounding box, it cannot be a road marking and is ignored.
             if (IsLineWithinObjectBoundingBoxes(houghLine, p_objectDetectionInformation))
             {
-                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_YELLOW, cv::FILLED, cv::LINE_AA);
+                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_YELLOW, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
                 continue;
             }
 
@@ -184,7 +184,7 @@ namespace LaneAndObjectDetection
             const double LEFT_EDGE_Y2 = (Globals::G_LEFT_EDGE_OF_MASK_M * houghLine[Globals::G_VEC4_X2_INDEX]) + Globals::G_LEFT_EDGE_OF_MASK_C;
             if ((houghLine[Globals::G_VEC4_Y1_INDEX] <= LEFT_EDGE_Y1 + 1) && (houghLine[Globals::G_VEC4_Y2_INDEX] <= LEFT_EDGE_Y2 + 1)) // +1 for extra buffer
             {
-                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_LIGHT_RED, cv::FILLED, cv::LINE_AA);
+                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_LIGHT_RED, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
                 continue;
             }
 
@@ -198,7 +198,7 @@ namespace LaneAndObjectDetection
                 m_leftLineAverageLength += std::sqrt(
                     ((houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX]) * (houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX])) +
                     ((houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX]) * (houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX])));
-                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_RED, cv::FILLED, cv::LINE_AA);
+                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_RED, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
                 continue;
             }
 
@@ -207,7 +207,7 @@ namespace LaneAndObjectDetection
             const double RIGHT_EDGE_Y2 = (Globals::G_RIGHT_EDGE_OF_MASK_M * houghLine[Globals::G_VEC4_X2_INDEX]) + Globals::G_RIGHT_EDGE_OF_MASK_C;
             if ((houghLine[Globals::G_VEC4_Y1_INDEX] <= RIGHT_EDGE_Y1 + 1) && (houghLine[Globals::G_VEC4_Y2_INDEX] <= RIGHT_EDGE_Y2 + 1)) // +1 for extra buffer
             {
-                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_LIGHT_BLUE, cv::FILLED, cv::LINE_AA);
+                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_LIGHT_BLUE, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
                 continue;
             }
 
@@ -221,7 +221,7 @@ namespace LaneAndObjectDetection
                 m_rightLineAverageLength += std::sqrt(
                     ((houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX]) * (houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX])) +
                     ((houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX]) * (houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX])));
-                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_BLUE, cv::FILLED, cv::LINE_AA);
+                cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_BLUE, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
 
                 continue;
             }
@@ -231,7 +231,7 @@ namespace LaneAndObjectDetection
             m_middleLineAverageLength += std::sqrt(
                 ((houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX]) * (houghLine[Globals::G_VEC4_X1_INDEX] - houghLine[Globals::G_VEC4_X2_INDEX])) +
                 ((houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX]) * (houghLine[Globals::G_VEC4_Y1_INDEX] - houghLine[Globals::G_VEC4_Y2_INDEX])));
-            cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_GREEN, cv::FILLED, cv::LINE_AA);
+            cv::line(m_laneDetectionInformation.m_houghLinesFrame, POINT_ONE, POINT_TWO, Globals::G_COLOUR_GREEN, Globals::G_HOUGH_LINE_THICKNESS, cv::LINE_AA);
         }
 
         m_leftLineAverageLength /= static_cast<double>(m_leftLaneLines.size());

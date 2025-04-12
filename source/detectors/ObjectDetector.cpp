@@ -31,7 +31,7 @@ namespace LaneAndObjectDetection
             break;
 
         case Globals::ObjectDetectorTypes::STANDARD:
-            m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov7-tiny.cfg", p_yoloFolderPath + "yolov7-tiny.weights");
+            m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov7.cfg", p_yoloFolderPath + "yolov7.weights");
             break;
 
         case Globals::ObjectDetectorTypes::TINY:

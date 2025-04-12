@@ -3,8 +3,6 @@
 #include <cmath>
 #include <cstdint>
 #include <format>
-#include <iostream>
-#include <locale>
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
@@ -84,6 +82,8 @@ namespace LaneAndObjectDetection
             return;
         }
 
+        // TODO(Main): add roi frame, canny frame and hough lines frame
+
         // Add lane information title
         AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TITLE_RECT, p_laneDetectionInformation.m_laneInformationTitle);
 
@@ -149,7 +149,7 @@ namespace LaneAndObjectDetection
         }
 
         // Draw the green lane overlay to signify the area of the road which is considered the 'current lane'
-        cv::fillConvexPoly(blankFrame, p_laneDetectionInformation.m_laneOverlayCorners, Globals::G_LANE_INFORMATION_LANE_OVERLAY_COLOUR, cv::LINE_AA);
+        cv::fillConvexPoly(blankFrame, p_laneDetectionInformation.m_laneOverlayCorners, Globals::G_LANE_OVERLAY_COLOUR, cv::LINE_AA);
 
         // Using add to give a transparent overlay
         cv::add(p_frame, blankFrame, p_frame);
@@ -172,7 +172,7 @@ namespace LaneAndObjectDetection
 
     void FrameBuilder::AddVideoManagerInformation(cv::Mat& p_frame, const VideoManagerInformation& p_videoManagerInformation)
     {
-        // E.g. Thursday 01 January 1970 10:11:03
+        // UTC timestamp E.g. Thursday 01 January 1970 10:11:03
         const std::string TIMESTAMP = std::format("{:%A %d %B %Y} ", std::chrono::system_clock::now()) + std::format("{:%H:%M:%S}", std::chrono::system_clock::now()).substr(0, 8);
         AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TIMESTAMP_RECT, TIMESTAMP, Globals::G_UI_H2_FONT_SCALE);
 
@@ -186,7 +186,7 @@ namespace LaneAndObjectDetection
             // Add flashing recording dot and time spent recording
             const uint32_t SECONDS_SINCE_EPOCH = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
-            if (SECONDS_SINCE_EPOCH % 2)
+            if (static_cast<bool>(SECONDS_SINCE_EPOCH % 2))
             {
                 cv::circle(p_frame, Globals::G_UI_RECORDING_DOT_POINT, Globals::G_UI_RECORDING_DOT_RADIUS, Globals::G_COLOUR_RED, cv::FILLED, cv::LINE_AA);
             }

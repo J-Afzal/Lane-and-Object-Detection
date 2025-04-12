@@ -125,7 +125,6 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 x. Enhancements
         Press D for debug mode (non debug mode only shows dash cam output maybe with current timestamp?):
             Add the different frames at the top (ROI, Canny, Hough) (1/4 of width each)
-
             Conditionally display lane lines box information to the right of the different frames after hough transform
 
             Allow for ROI to be adjusted? And other lane detection variables? (add GUI sliders?)

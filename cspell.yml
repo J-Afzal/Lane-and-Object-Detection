@@ -19,7 +19,6 @@ words:
     - doxyfile
     - linters
     - opencv
-    - sigmas
 ignoreWords:
     - altera
     - anyofallof
@@ -28,9 +27,9 @@ ignoreWords:
     - ciou
     - colorstyle
     - contrib
-    - cutmix
     - defenses
     - diningtable
+    - diounms
     - donut
     - doxygenversion
     - figheight
@@ -38,7 +37,6 @@ ignoreWords:
     - fontdict
     - fontsize
     - fourcc
-    - greedynms
     - hicpp
     - ilammy
     - imshow
@@ -49,12 +47,13 @@ ignoreWords:
     - mathjax
     - mdfile
     - memb
-    - mish
     - nodiscard
     - noncommercially
+    - objectness
     - openmp
     - pottedplant
     - projectbrief
+    - sppcsp
     - tvmonitor
     - xaxis
     - xlabel

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <array>
+#include <chrono>
+#include <cmath>
 #include <cstdint>
 #include <exception>
 #include <map>
@@ -39,11 +41,12 @@ namespace LaneAndObjectDetection::Globals
      */
     static inline std::string GetTimeElapsed(const std::chrono::steady_clock::time_point& p_startTime)
     {
-        const uint32_t TOTAL_TIME_IN_SECONDS = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - p_startTime).count();
-
         const double MINUTES_IN_HOUR = 60;
         const double SECONDS_IN_HOUR = 3600;
         const double SECONDS_IN_MINUTE = 60;
+        const uint32_t PADDING_THRESHOLD = 10;
+
+        const uint32_t TOTAL_TIME_IN_SECONDS = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - p_startTime).count();
 
         const double TOTAL_HOURS = TOTAL_TIME_IN_SECONDS / SECONDS_IN_HOUR;
         const double TOTAL_MINUTES = (TOTAL_HOURS - std::floor(TOTAL_HOURS)) * MINUTES_IN_HOUR;
@@ -61,7 +64,7 @@ namespace LaneAndObjectDetection::Globals
             output += ":";
         }
 
-        if (MINUTES < 10)
+        if (MINUTES < PADDING_THRESHOLD)
         {
             output += "0";
             output += std::to_string(MINUTES);
@@ -74,7 +77,7 @@ namespace LaneAndObjectDetection::Globals
 
         output += ":";
 
-        if (SECONDS < 10)
+        if (SECONDS < PADDING_THRESHOLD)
         {
             output += "0";
             output += std::to_string(SECONDS);
@@ -284,9 +287,14 @@ namespace LaneAndObjectDetection::Globals
     // --------------------------------------------- TODO ---------------------------------------------
 
     /**
+     * @brief TODO
+     */
+    static inline const int32_t G_HOUGH_LINE_THICKNESS = 1;
+
+    /**
      * @brief Translucent colour of the overlay for the current lane.
      */
-    static inline const cv::Scalar G_LANE_INFORMATION_LANE_OVERLAY_COLOUR = cv::Scalar(0, 64, 0);
+    static inline const cv::Scalar G_LANE_OVERLAY_COLOUR = cv::Scalar(0, 64, 0);
 
     /**
      * @brief Default rolling average size.
