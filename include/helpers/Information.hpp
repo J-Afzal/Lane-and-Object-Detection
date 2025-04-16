@@ -1,15 +1,10 @@
 #pragma once
 
-#include <chrono>
-#include <cstdint>
-#include <deque>
 #include <string>
 #include <vector>
 
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/types.hpp>
-
-#include "helpers/Globals.hpp"
 
 /**
  * @namespace LaneAndObjectDetection

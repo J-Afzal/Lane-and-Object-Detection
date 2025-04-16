@@ -78,6 +78,32 @@ Github pages.
 
 ## General Information
 
+This program uses YOLOv7 for object detection and OpenCV for lane detection. OpenCV is also used for handling IO such as reading
+and writing video file as well as display the output to a window.
+
+The object detection is able to detect most road-related objects such as cars, buses, trucks, cyclists, pedestrians, traffic
+lights, etc. The accuracy and speed of detection is dependent upon the available GPU compute. For higher quality detection
+select a higher blob size. For more performant detection select a lower blob size, and/or select the tiny detector type and/or
+CUDA backend.
+
+The lane detection code is custom made for this program. The one sentence summary would be that it: creates an ROI frame to
+isolate the road markings immediately in front of the car, runs the Canny algorithm to retrieve the edges, runs the Hough
+transform to get the straight lines, de-noises and categorises the straight lines to determine the location of the current lane.
+
+The program has two modes:
+
+1. `Normal Mode` which only displays the current driving state and the detected left and right lane line types:
+
+    ![Normal Mode](./resources/screenshots/NormalMode.png)
+
+1. `Debug Mode` which additionally displays the current FPS, average FPS and the ROI, Canny and Hough intermediary frames.
+
+    ![Debug Mode](./resources/screenshots/DebugMode.png)
+
+Both modes support recording the output of the main frame.
+
+![Recording Mode](./resources/screenshots/RecordingMode.png)
+
 ## CI / CD
 
 [![Continuous Integration](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml)
@@ -122,21 +148,11 @@ On Windows, Visual Studio 2022 can be used by opening the folder as a CMake proj
 opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
 
 <!--
-x. Enhancements
-        Update General Information in readme
-
-        Add a sub-menu within debug mode to edit vars (GUI sliders):
-            r = ROI dimensions
-            c = canny thresholds
-            h = hough thresholds
-            o = object detection thresholds
-
 x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
         clean up tests folder
+        Test with CUDA and performance tests and optimisation
 
 x. Correct lane detection code
         Get better dash cam video. Both benchmark and all scenarios video (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
         Debug lane detection code to make sure it is correct.
-
-x. Test with CUDA and performance tests and optimisation
 -->

@@ -40,7 +40,7 @@
   <td id="projectalign">
    <div id="projectname">Lane and Object Detection
    </div>
-   <div id="projectbrief">Using OpenCV and YOLOv4</div>
+   <div id="projectbrief">Using OpenCV and YOLOv7</div>
   </td>
  </tr>
  </tbody>
@@ -148,9 +148,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad8e33a4eaf3ab1c1e16c050d10aeda09" id="r_ad8e33a4eaf3ab1c1e16c050d10aeda09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8e33a4eaf3ab1c1e16c050d10aeda09">RunLaneAndObjectDetector</a> ()</td></tr>
 <tr class="memdesc:ad8e33a4eaf3ab1c1e16c050d10aeda09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orchestration function which contains the main program loop.  <br /></td></tr>
 <tr class="separator:ad8e33a4eaf3ab1c1e16c050d10aeda09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22a557b1ce1f43e46cc32e411b937ff4" id="r_a22a557b1ce1f43e46cc32e411b937ff4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html">PerformanceInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22a557b1ce1f43e46cc32e411b937ff4">GetPerformanceInformation</a> ()</td></tr>
-<tr class="memdesc:a22a557b1ce1f43e46cc32e411b937ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the performance information. Useful for performance benchmarking.  <br /></td></tr>
-<tr class="separator:a22a557b1ce1f43e46cc32e411b937ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9bf27be9074a537d740c482b2f12fb3" id="r_af9bf27be9074a537d740c482b2f12fb3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9bf27be9074a537d740c482b2f12fb3">GetFrameTimes</a> ()</td></tr>
+<tr class="memdesc:af9bf27be9074a537d740c482b2f12fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the times to compute each and every frame.Globals.  <br /></td></tr>
+<tr class="separator:af9bf27be9074a537d740c482b2f12fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fa9483adb219fb3b7a12985bb5dc9dc" id="r_a6fa9483adb219fb3b7a12985bb5dc9dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fa9483adb219fb3b7a12985bb5dc9dc">VideoManager</a> (const <a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a> &amp;p_videoManager)=delete</td></tr>
 <tr class="memdesc:a6fa9483adb219fb3b7a12985bb5dc9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable constructing a new VideoManager object using copy constructor.  <br /></td></tr>
 <tr class="separator:a6fa9483adb219fb3b7a12985bb5dc9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,9 +166,15 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:a63fe3a97f66c90f310d64cc3029e1228" id="r_a63fe3a97f66c90f310d64cc3029e1228"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63fe3a97f66c90f310d64cc3029e1228">ToggleDebugMode</a> ()</td></tr>
+<tr class="memdesc:a63fe3a97f66c90f310d64cc3029e1228"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the debug mode and whether to destroy the debug frames.  <br /></td></tr>
+<tr class="separator:a63fe3a97f66c90f310d64cc3029e1228"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cfb42a2cfc2bf8b8c5a002887424864" id="r_a6cfb42a2cfc2bf8b8c5a002887424864"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6cfb42a2cfc2bf8b8c5a002887424864">ToggleSaveOutput</a> ()</td></tr>
-<tr class="memdesc:a6cfb42a2cfc2bf8b8c5a002887424864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles whether the output video stream should be recorded locally. If toggled on, it creates a new file in the format <code>YYYY-MM-DD-HH:mm:ss-output.mp4</code>".  <br /></td></tr>
+<tr class="memdesc:a6cfb42a2cfc2bf8b8c5a002887424864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles whether the output video stream is saved locally. If toggled on, it creates a new file in the format <code>YYYY-MM-DD-HH:mm:ss-output.mp4</code>, and if toggled off, it closes the output file.  <br /></td></tr>
 <tr class="separator:a6cfb42a2cfc2bf8b8c5a002887424864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af737feb576adb9f54a8c61070037459d" id="r_af737feb576adb9f54a8c61070037459d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af737feb576adb9f54a8c61070037459d">Quit</a> ()</td></tr>
+<tr class="memdesc:af737feb576adb9f54a8c61070037459d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys all windows and releases all input/output videos.  <br /></td></tr>
+<tr class="separator:af737feb576adb9f54a8c61070037459d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -193,14 +199,14 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a2af1562b7ef32ae8c1be2b9913917313" id="r_a2af1562b7ef32ae8c1be2b9913917313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html">VideoManagerInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2af1562b7ef32ae8c1be2b9913917313">m_videoManagerInformation</a></td></tr>
 <tr class="memdesc:a2af1562b7ef32ae8c1be2b9913917313"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html" title="The information needed by FrameBuilder to update frame with video manager information.">VideoManagerInformation</a> struct containing all video manager-related information.  <br /></td></tr>
 <tr class="separator:a2af1562b7ef32ae8c1be2b9913917313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab35fb2310d6d6164ad6c7bfd3866884c" id="r_ab35fb2310d6d6164ad6c7bfd3866884c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab35fb2310d6d6164ad6c7bfd3866884c">m_saveOutput</a></td></tr>
-<tr class="memdesc:ab35fb2310d6d6164ad6c7bfd3866884c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the output video stream should be saved locally.  <br /></td></tr>
-<tr class="separator:ab35fb2310d6d6164ad6c7bfd3866884c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f97f08a291a40a6fd862a5e1a335da3" id="r_a5f97f08a291a40a6fd862a5e1a335da3"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f97f08a291a40a6fd862a5e1a335da3">m_saveOutputStartTime</a></td></tr>
+<tr class="memdesc:a5f97f08a291a40a6fd862a5e1a335da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time that the output started to be saved locally.  <br /></td></tr>
+<tr class="separator:a5f97f08a291a40a6fd862a5e1a335da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Orchestration class which reads the input, runs the lane and object detectors, displays the detected output and saves output video stream locally. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00027">27</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00028">28</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2db959bb55b4be5ab2c492fbccf2cb55" name="a2db959bb55b4be5ab2c492fbccf2cb55"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2db959bb55b4be5ab2c492fbccf2cb55">&#9670;&#160;</a></span>VideoManager() <span class="overload">[1/6]</span></h2>
@@ -286,7 +292,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00026">26</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00031">31</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -344,7 +350,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00036">36</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00045">45</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -387,7 +393,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00046">46</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00059">59</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -408,7 +414,7 @@ Private Attributes</h2></td></tr>
 
 <p>Destructs a VideoManager object. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00145">145</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00162">162</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -525,7 +531,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00152">152</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00167">167</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -575,7 +581,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00174">174</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00189">189</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -596,18 +602,18 @@ Private Attributes</h2></td></tr>
 
 <p>Orchestration function which contains the main program loop. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00196">196</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00211">211</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a22a557b1ce1f43e46cc32e411b937ff4" name="a22a557b1ce1f43e46cc32e411b937ff4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22a557b1ce1f43e46cc32e411b937ff4">&#9670;&#160;</a></span>GetPerformanceInformation()</h2>
+<a id="af9bf27be9074a537d740c482b2f12fb3" name="af9bf27be9074a537d740c482b2f12fb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9bf27be9074a537d740c482b2f12fb3">&#9670;&#160;</a></span>GetFrameTimes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html">PerformanceInformation</a> LaneAndObjectDetection::VideoManager::GetPerformanceInformation </td>
+          <td class="memname">std::vector&lt; uint32_t &gt; LaneAndObjectDetection::VideoManager::GetFrameTimes </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -615,10 +621,10 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get the performance information. Useful for performance benchmarking. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> The <a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> struct. </dd></dl>
+<p>Get the times to compute each and every frame.Globals. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>std::vector&lt;uint32_t&gt;</code> A list of the time to compute each frame. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00238">238</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00265">265</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -688,6 +694,35 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a63fe3a97f66c90f310d64cc3029e1228" name="a63fe3a97f66c90f310d64cc3029e1228"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63fe3a97f66c90f310d64cc3029e1228">&#9670;&#160;</a></span>ToggleDebugMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::VideoManager::ToggleDebugMode </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Toggles the debug mode and whether to destroy the debug frames. </p>
+
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00270">270</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a6cfb42a2cfc2bf8b8c5a002887424864" name="a6cfb42a2cfc2bf8b8c5a002887424864"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6cfb42a2cfc2bf8b8c5a002887424864">&#9670;&#160;</a></span>ToggleSaveOutput()</h2>
 
@@ -711,9 +746,38 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Toggles whether the output video stream should be recorded locally. If toggled on, it creates a new file in the format <code>YYYY-MM-DD-HH:mm:ss-output.mp4</code>". </p>
+<p>Toggles whether the output video stream is saved locally. If toggled on, it creates a new file in the format <code>YYYY-MM-DD-HH:mm:ss-output.mp4</code>, and if toggled off, it closes the output file. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00243">243</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00283">283</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af737feb576adb9f54a8c61070037459d" name="af737feb576adb9f54a8c61070037459d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af737feb576adb9f54a8c61070037459d">&#9670;&#160;</a></span>Quit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LaneAndObjectDetection::VideoManager::Quit </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destroys all windows and releases all input/output videos. </p>
+
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00317">317</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -740,7 +804,7 @@ Private Attributes</h2></td></tr>
 
 <p>Represents the input video stream. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00189">189</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00200">200</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -766,7 +830,7 @@ Private Attributes</h2></td></tr>
 
 <p>Represents the output video stream. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00194">194</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00205">205</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -792,7 +856,7 @@ Private Attributes</h2></td></tr>
 
 <p>Represents the current frame being processed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00199">199</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00210">210</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -818,7 +882,7 @@ Private Attributes</h2></td></tr>
 
 <p>The lane detector. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00204">204</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00215">215</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -844,7 +908,7 @@ Private Attributes</h2></td></tr>
 
 <p>The object detector. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00209">209</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00220">220</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -870,7 +934,7 @@ Private Attributes</h2></td></tr>
 
 <p>The frame time and current/average frames per second performance calculator. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00214">214</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00225">225</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -896,12 +960,12 @@ Private Attributes</h2></td></tr>
 
 <p>The <a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html" title="The information needed by FrameBuilder to update frame with video manager information.">VideoManagerInformation</a> struct containing all video manager-related information. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00219">219</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00230">230</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
-<a id="ab35fb2310d6d6164ad6c7bfd3866884c" name="ab35fb2310d6d6164ad6c7bfd3866884c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab35fb2310d6d6164ad6c7bfd3866884c">&#9670;&#160;</a></span>m_saveOutput</h2>
+<a id="a5f97f08a291a40a6fd862a5e1a335da3" name="a5f97f08a291a40a6fd862a5e1a335da3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f97f08a291a40a6fd862a5e1a335da3">&#9670;&#160;</a></span>m_saveOutputStartTime</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -910,7 +974,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool LaneAndObjectDetection::VideoManager::m_saveOutput</td>
+          <td class="memname">std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt; LaneAndObjectDetection::VideoManager::m_saveOutputStartTime</td>
         </tr>
       </table>
   </td>
@@ -920,9 +984,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Whether the output video stream should be saved locally. </p>
+<p>The time that the output started to be saved locally. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00224">224</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00235">235</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -936,7 +1000,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a></li>
-    <li class="footer">Generated on Wed Apr 2 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Wed Apr 16 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

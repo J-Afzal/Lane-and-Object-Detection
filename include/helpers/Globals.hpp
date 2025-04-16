@@ -122,10 +122,6 @@ namespace LaneAndObjectDetection::Globals
      */
     ///@{
     static inline const uint32_t G_KEY_DEBUG_MODE = 'd';
-    static inline const uint32_t G_KEY_ADJUST_ROI_THRESHOLDS = 'i'; // TODO: not used
-    static inline const uint32_t G_KEY_ADJUST_CANNY_THRESHOLDS = 'c';
-    static inline const uint32_t G_KEY_ADJUST_HOUGH_THRESHOLDS = 'h';
-    static inline const uint32_t G_KEY_ADJUST_OBJECT_DETECTION_THRESHOLDS = 'o';
     static inline const uint32_t G_KEY_TOGGLE_SAVE_OUTPUT = 'r';
     static inline const uint32_t G_KEY_QUIT = 'q';
     ///@}
@@ -175,16 +171,6 @@ namespace LaneAndObjectDetection::Globals
     static inline const double G_DIVIDE_BY_TWO = 2;
 
     /**
-     * @brief Text to display when in debug mode for adjusting thresholds.
-     */
-    ///@{
-    static inline const std::string G_UI_TEXT_ADJUST_ROI_THRESHOLDS = "Press 'i' to adjust ROI";
-    static inline const std::string G_UI_TEXT_ADJUST_CANNY_THRESHOLDS = "Press 'c' to adjust Canny algorithm thresholds";
-    static inline const std::string G_UI_TEXT_ADJUST_HOUGH_THRESHOLDS = "Press 'h' to adjust Hough transform thresholds";
-    static inline const std::string G_UI_TEXT_ADJUST_OBJECT_DETECTION_THRESHOLDS = "Press 'o' to adjust object detection thresholds";
-    ///@}
-
-    /**
      * @brief Text to display whether or not recording.
      */
     ///@{
@@ -215,17 +201,6 @@ namespace LaneAndObjectDetection::Globals
     static inline const int32_t G_UI_BOTTOM_BAR_HEIGHT = 55;
     static inline const int32_t G_UI_TITLE_HEIGHT = 30;
     static inline const int32_t G_UI_SUBTITLE_HEIGHT = 25;
-    ///@}
-
-    /**
-     * @brief Threshold adjustment UI locations.
-     */
-    ///@{
-    static inline const int32_t G_VIDEO_INPUT_WIDTH_QUARTER = G_VIDEO_INPUT_WIDTH / 4.0;
-    static inline const cv::Rect G_UI_RECT_ADJUST_ROI_THRESHOLDS = cv::Rect(0, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
-    static inline const cv::Rect G_UI_RECT_ADJUST_CANNY_THRESHOLDS = cv::Rect(G_VIDEO_INPUT_WIDTH_QUARTER, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
-    static inline const cv::Rect G_UI_RECT_ADJUST_HOUGH_THRESHOLDS = cv::Rect(G_VIDEO_INPUT_WIDTH_QUARTER * 2.0, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
-    static inline const cv::Rect G_UI_RECT_ADJUST_OBJECT_DETECTION_THRESHOLDS = cv::Rect(G_VIDEO_INPUT_WIDTH_QUARTER * 3.0, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
     ///@}
 
     /**
@@ -424,16 +399,6 @@ namespace LaneAndObjectDetection::Globals
      * @brief Threshold length to decide whether a line is to be considered solid line road marking.
      */
     static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75;
-
-    /**
-     * @brief The type of lane line.
-     */
-    enum class LaneLineType : std::uint8_t
-    {
-        EMPTY = 0,
-        DASHED,
-        SOLID
-    };
 
     /**
      * @brief The different driving states supported by the lane detector.

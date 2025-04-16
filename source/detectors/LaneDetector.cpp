@@ -2,9 +2,9 @@
 #include <cmath>
 #include <cstdint>
 #include <deque>
-#include <format>
 #include <limits>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -21,6 +21,7 @@
 namespace LaneAndObjectDetection
 {
     LaneDetector::LaneDetector() :
+        m_currentDrivingState(Globals::DrivingState::NO_LANE_MARKINGS_DETECTED),
         m_changingLanesPreviousDistanceDifference(0),
         m_leftLineAverageLength(0),
         m_middleLineAverageLength(0),
@@ -103,7 +104,7 @@ namespace LaneAndObjectDetection
         return mostFrequentElement;
     }
 
-    void LaneDetector::AnalyseHoughLines(const std::vector<cv::Vec4i>& p_houghLines, const ObjectDetectionInformation& p_objectDetectionInformation, const bool& p_debugMode)
+    void LaneDetector::AnalyseHoughLines(const std::vector<cv::Vec4i>& p_houghLines, const ObjectDetectionInformation& p_objectDetectionInformation, const bool& p_debugMode) // NOLINT(readability-function-cognitive-complexity)
     {
         m_leftLaneLines.clear();
         m_middleLaneLines.clear();
@@ -276,42 +277,25 @@ namespace LaneAndObjectDetection
 
     void LaneDetector::UpdateLineTypes()
     {
-        Globals::LaneLineType leftLineType = Globals::LaneLineType::SOLID;
         m_laneDetectionInformation.m_drivingStateSubTitle = "(L = Solid )";
         if (m_leftLaneLines.empty())
         {
-            leftLineType = Globals::LaneLineType::EMPTY;
             m_laneDetectionInformation.m_drivingStateSubTitle = "(L = Empty )";
         }
 
         else if (m_leftLineAverageLength < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
         {
-            leftLineType = Globals::LaneLineType::DASHED;
             m_laneDetectionInformation.m_drivingStateSubTitle = "(L = Dashed)";
         }
 
-        Globals::LaneLineType middleLineType = Globals::LaneLineType::SOLID;
-        if (m_middleLaneLines.empty())
-        {
-            middleLineType = Globals::LaneLineType::EMPTY;
-        }
-
-        else if (m_middleLineAverageLength < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
-        {
-            middleLineType = Globals::LaneLineType::DASHED;
-        }
-
-        Globals::LaneLineType rightLineType = Globals::LaneLineType::SOLID;
         std::string rightLaneLineState = "   (R = Solid )";
         if (m_rightLaneLines.empty())
         {
-            rightLineType = Globals::LaneLineType::EMPTY;
             rightLaneLineState = "   (R = Empty )";
         }
 
         else if (m_rightLineAverageLength < Globals::G_SOLID_LINE_LENGTH_THRESHOLD)
         {
-            rightLineType = Globals::LaneLineType::DASHED;
             rightLaneLineState = "   (R = Dashed)";
         }
 
@@ -324,13 +308,13 @@ namespace LaneAndObjectDetection
         //
         // | Left Lane Lines | Middle Lane Lines | Right Lane Lines |           Driving State          |
         // | --------------- |------------------ | ---------------- | -------------------------------- |
-        // |    Detected     |      Detected     |  Detected        |            WITHIN_LANE           |
-        // |    Detected     |                   |  Detected        |            WITHIN_LANE           |
+        // |    Detected     |      Detected     |     Detected     |            WITHIN_LANE           |
+        // |    Detected     |                   |     Detected     |            WITHIN_LANE           |
         // |                 |      Detected     |                  |          CHANGING_LANES          |
         // |    Detected     |      Detected     |                  |          CHANGING_LANES          |
-        // |                 |      Detected     |  Detected        |          CHANGING_LANES          |
+        // |                 |      Detected     |     Detected     |          CHANGING_LANES          |
         // |    Detected     |                   |                  |  ONLY_LEFT_LANE_MARKING_DETECTED |
-        // |                 |                   |  Detected        | ONLY_RIGHT_LANE_MARKING_DETECTED |
+        // |                 |                   |     Detected     | ONLY_RIGHT_LANE_MARKING_DETECTED |
         // |                 |                   |                  |     NO_LANE_MARKINGS_DETECTED    |
 
         const bool LEFT_LINES_PRESENT = !m_leftLaneLines.empty();
@@ -420,22 +404,12 @@ namespace LaneAndObjectDetection
             return;
         }
 
-        double averageDistanceFromLeft = 0;
         double leftLaneLineC = 0;
         double leftLaneLineM = 0;
         double leftLaneLineMinimumY = std::numeric_limits<double>::max();
 
         for (const cv::Vec4i& leftLaneLine : m_leftLaneLines)
         {
-            // Determine X along the left/right edge of the mask using the Y co-ordinates of leftLaneLine and then use this X
-            // value to compare with the actual X co-ordinates of leftLaneLine to determine the distance.
-
-            const double LEFT_EDGE_X1 = (leftLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
-            const double LEFT_EDGE_X2 = (leftLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_LEFT_EDGE_OF_MASK_C) / Globals::G_LEFT_EDGE_OF_MASK_M;
-
-            averageDistanceFromLeft += std::fabs(leftLaneLine[Globals::G_VEC4_X1_INDEX] - LEFT_EDGE_X1);
-            averageDistanceFromLeft += std::fabs(leftLaneLine[Globals::G_VEC4_X2_INDEX] - LEFT_EDGE_X2);
-
             // Find the minimum height of a left lane line
             leftLaneLineMinimumY = std::min({static_cast<double>(leftLaneLine[Globals::G_VEC4_Y1_INDEX]),
                                              static_cast<double>(leftLaneLine[Globals::G_VEC4_Y2_INDEX]),
@@ -449,28 +423,17 @@ namespace LaneAndObjectDetection
 
         if (!m_leftLaneLines.empty())
         {
-            averageDistanceFromLeft /= static_cast<double>(m_leftLaneLines.size() * 2);
             leftLaneLineM /= static_cast<double>(m_leftLaneLines.size());
             leftLaneLineC /= static_cast<double>(m_leftLaneLines.size());
         }
 
         // The same logic as above but for m_rightLaneLines
-        double averageDistanceFromRight = 0;
         double rightLaneLineC = 0;
         double rightLaneLineM = 0;
         double rightLaneLineMinimumY = std::numeric_limits<double>::max();
 
         for (const cv::Vec4i& rightLaneLine : m_rightLaneLines)
         {
-            // Determine X along the right/right edge of the mask using the Y co-ordinates of rightLaneLine and then use this X
-            // value to compare with the actual X co-ordinates of rightLaneLine to determine the distance.
-
-            const double RIGHT_EDGE_X1 = (rightLaneLine[Globals::G_VEC4_Y1_INDEX] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
-            const double RIGHT_EDGE_X2 = (rightLaneLine[Globals::G_VEC4_Y2_INDEX] - Globals::G_RIGHT_EDGE_OF_MASK_C) / Globals::G_RIGHT_EDGE_OF_MASK_M;
-
-            averageDistanceFromRight += std::fabs(rightLaneLine[Globals::G_VEC4_X1_INDEX] - RIGHT_EDGE_X1);
-            averageDistanceFromRight += std::fabs(rightLaneLine[Globals::G_VEC4_X2_INDEX] - RIGHT_EDGE_X2);
-
             // Find the minimum height of a right lane line
             rightLaneLineMinimumY = std::min({static_cast<double>(rightLaneLine[Globals::G_VEC4_Y1_INDEX]),
                                               static_cast<double>(rightLaneLine[Globals::G_VEC4_Y2_INDEX]),
@@ -484,7 +447,6 @@ namespace LaneAndObjectDetection
 
         if (!m_rightLaneLines.empty())
         {
-            averageDistanceFromRight /= static_cast<double>(m_rightLaneLines.size() * 2);
             rightLaneLineM /= static_cast<double>(m_rightLaneLines.size());
             rightLaneLineC /= static_cast<double>(m_rightLaneLines.size());
         }
@@ -516,7 +478,7 @@ namespace LaneAndObjectDetection
         const int32_t INTERSECTION_Y0 = static_cast<int32_t>((rightLaneLineM * leftLaneLineC - leftLaneLineM * rightLaneLineC) / (rightLaneLineM - leftLaneLineM));
 
         // Only draw the lane overlay if the left and right lane lines intersect beyond the visible overlay. Otherwise they
-        // would intersect within the visible section and the overlay would turn in to an hourglass.
+        // would intersect within the visible section and the overlay would turn in to an hourglass as shown above.
         if (INTERSECTION_Y0 < LANE_LINE_MINIMUM_Y)
         {
             m_laneDetectionInformation.m_laneOverlayCorners[0] = cv::Point(static_cast<int32_t>((LANE_LINE_MINIMUM_Y - leftLaneLineC) / leftLaneLineM), static_cast<int32_t>(LANE_LINE_MINIMUM_Y));   // Top left

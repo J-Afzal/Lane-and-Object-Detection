@@ -40,7 +40,7 @@
   <td id="projectalign">
    <div id="projectname">Lane and Object Detection
    </div>
-   <div id="projectbrief">Using OpenCV and YOLOv4</div>
+   <div id="projectbrief">Using OpenCV and YOLOv7</div>
   </td>
  </tr>
  </tbody>
@@ -112,7 +112,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a></p>
-<p>Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4.</p>
+<p>Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv7.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Getting Started</h1>
 <p>Binaries can be found in <a href="https://github.com/J-Afzal/Lane-and-Object-Detection/releases">Releases</a> or, if preferred, CMake can be used to build the project from source either through the PowerShell helper function:</p>
@@ -157,12 +157,29 @@ Getting Started</h1>
 <div class="line">  -o --object-detector-type       One of: none, standard or tiny. (default = none)</div>
 <div class="line">  -b --object-detector-backend    One of: cpu or cuda (default = cpu)</div>
 <div class="line">  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+</div><!-- fragment --><dl class="section important"><dt>Important</dt><dd>The <code>yolov7.weights</code> file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded <a href="https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights">here</a> and should be copied to the <code>./resources/yolo</code> folder.</dd></dl>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Documentation</h1>
 <p>Checkout the <a href="https://J-Afzal.github.io/Lane-and-Object-Detection">documentation page</a> built using Doxygen and hosted using Github pages.</p>
 <p><img src="./resources/screenshots/DocumentationHomepage.png" alt="Documentation Homepage" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 General Information</h1>
+<p>This program uses YOLOv7 for object detection and OpenCV for lane detection. OpenCV is also used for handling IO such as reading and writing video file as well as display the output to a window.</p>
+<p>The object detection is able to detect most road-related objects such as cars, buses, trucks, cyclists, pedestrians, traffic lights, etc. The accuracy and speed of detection is dependent upon the available GPU compute. For higher quality detection select a higher blob size. For more performant detection select a lower blob size, and/or select the tiny detector type and/or CUDA backend.</p>
+<p>The lane detection code is custom made for this program. The one sentence summary would be that it: creates an ROI frame to isolate the road markings immediately in front of the car, runs the Canny algorithm to retrieve the edges, runs the Hough transform to get the straight lines, de-noises and categorises the straight lines to determine the location of the current lane.</p>
+<p>The program has two modes:</p>
+<ol type="1">
+<li><p class="startli"><code>Normal Mode</code> which only displays the current driving state and the detected left and right lane line types:</p>
+<p class="startli"><img src="./resources/screenshots/NormalMode.png" alt="Normal Mode" class="inline"/></p>
+</li>
+</ol>
+<ol type="1">
+<li><p class="startli"><code>Debug Mode</code> which additionally displays the current FPS, average FPS and the ROI, Canny and Hough intermediary frames.</p>
+<p class="startli"><img src="./resources/screenshots/DebugMode.png" alt="Debug Mode" class="inline"/></p>
+</li>
+</ol>
+<p>Both modes support recording the output of the main frame.</p>
+<p><img src="./resources/screenshots/RecordingMode.png" alt="Recording Mode" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 CI / CD</h1>
 <p><a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg" alt="Continuous Integration" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg" alt="Continuous Deployment" style="pointer-events: none;" class="inline"/></a></p>
@@ -184,7 +201,6 @@ Development Setup</h1>
 <p>All linting helper functions can be found in the <a href="https://github.com/J-Afzal/Linters"><code>Linters</code></a> submodule.</p>
 <p>Any generator can be used to build the project but to prior to running <code>clang-tidy</code>/<code>clang-format</code> CMake must be configured using a generator that creates a <code>compile_commands.json</code> file in the build directory (e.g. <code>-G "Ninja"</code>, <code>-G "NMake Makefiles"</code>, etc)</p>
 <p>On windows, clang-tidy and clang-format can be installed using the <code>LLVM-x.x.x-win64.exe</code> binary from the <a href="https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6">LLVM release page</a> or from <a href="https://community.chocolatey.org/packages/llvm">chocolatey</a> using <code>choco install llvm -y</code>.</p>
-<dl class="section important"><dt>Important</dt><dd>The <code>yolo4.weights</code> file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded <a href="https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights">here</a> and should be copied to the <code>resources/yolo</code> folder.</dd></dl>
 <h2><a class="anchor" id="autotoc_md6"></a>
 IDE</h2>
 <p>On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by opening the folder through the <code>Developer PowerShell for VS</code> (otherwise you may see errors around cl.exe not being found).</p>
@@ -195,7 +211,7 @@ IDE</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 2 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Wed Apr 16 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

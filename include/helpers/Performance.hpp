@@ -1,6 +1,8 @@
 #pragma once
 
 #include <chrono>
+#include <cstdint>
+#include <vector>
 
 #include "helpers/Information.hpp"
 

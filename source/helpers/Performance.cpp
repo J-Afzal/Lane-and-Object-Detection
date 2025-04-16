@@ -7,11 +7,9 @@
 
 namespace LaneAndObjectDetection
 {
-    Performance::Performance()
-    {
-        m_performanceInformation.m_averageFramesPerSecond = 0;
-        m_performanceInformation.m_currentFramesPerSecond = 0;
-    }
+    Performance::Performance() :
+        m_performanceInformation({.m_averageFramesPerSecond = 0, .m_currentFramesPerSecond = 0})
+    {}
 
     void Performance::StartTimer()
     {

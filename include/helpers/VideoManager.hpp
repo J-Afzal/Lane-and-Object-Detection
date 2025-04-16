@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -177,7 +178,6 @@ namespace LaneAndObjectDetection
         VideoManager& operator=(const VideoManager&& p_videoManager) = delete;
 
     private:
-
         /**
          * @brief Toggles the debug mode and whether to destroy the debug frames.
          */

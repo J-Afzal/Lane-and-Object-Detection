@@ -12,7 +12,6 @@
 #include "helpers/FrameBuilder.hpp"
 #include "helpers/Globals.hpp"
 #include "helpers/Information.hpp"
-#include <opencv2/highgui.hpp>
 
 namespace LaneAndObjectDetection
 {
@@ -38,8 +37,6 @@ namespace LaneAndObjectDetection
         {
             return;
         }
-
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_OBJECT_DETECTION_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_OBJECT_DETECTION_THRESHOLDS);
 
         for (const ObjectDetectionInformation::DetectedObjectInformation& objectInformation : p_objectDetectionInformation.m_objectInformation)
         {
@@ -84,12 +81,6 @@ namespace LaneAndObjectDetection
         {
             return;
         }
-
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_ROI_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_ROI_THRESHOLDS);
-
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_CANNY_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_CANNY_THRESHOLDS);
-
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_HOUGH_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_HOUGH_THRESHOLDS);
 
         // Draw the green translucent lane overlay to signify the area of the road which is considered the 'current lane'
         cv::Mat blankFrame = cv::Mat::zeros(Globals::G_VIDEO_INPUT_HEIGHT, Globals::G_VIDEO_INPUT_WIDTH, p_frame.type());

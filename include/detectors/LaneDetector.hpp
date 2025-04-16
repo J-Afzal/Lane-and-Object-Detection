@@ -127,16 +127,6 @@ namespace LaneAndObjectDetection
         LaneDetectionInformation m_laneDetectionInformation;
 
         /**
-         * @brief The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane
-         * lines.
-         */
-        ///@{
-        RollingAverage<uint32_t> m_leftLaneLineTypeRollingAverage;
-        RollingAverage<uint32_t> m_middleLaneLineTypeRollingAverage;
-        RollingAverage<uint32_t> m_rightLaneLineTypeRollingAverage;
-        ///@}
-
-        /**
          * @brief The rolling average to determine the driving state.
          */
         RollingAverage<Globals::DrivingState> m_drivingStateRollingAverage;
