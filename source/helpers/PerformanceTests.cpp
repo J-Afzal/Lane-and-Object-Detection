@@ -113,7 +113,7 @@ namespace LaneAndObjectDetection
                     std::exit(1);
                 }
 
-                for (const uint32_t& frameTime : videoManager.GetPerformanceInformation().m_frameTimes)
+                for (const uint32_t& frameTime : videoManager.GetFrameTimes())
                 {
                     outputFile << frameTime << '\n';
                 }

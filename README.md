@@ -123,20 +123,13 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 
 <!--
 x. Enhancements
-        Press D for debug mode (non debug mode only shows dash cam output maybe with current timestamp?):
-            Add the different frames at the top (ROI, Canny, Hough) (1/4 of width each)
-            Conditionally display lane lines box information to the right of the different frames after hough transform
-
-            Allow for ROI to be adjusted? And other lane detection variables? (add GUI sliders?)
-                The following need to be dynamic
-                    ROI dimensions and everything built on them![alt text](image-1.png)
-                    Canny algorithm thresholds
-                    Hough transform thresholds and properties
-                    object detection thresholds
-                    Any other thresholds?
-
-        Check all globals used, named correctly and organised correctly
         Update General Information in readme
+
+        Add a sub-menu within debug mode to edit vars (GUI sliders):
+            r = ROI dimensions
+            c = canny thresholds
+            h = hough thresholds
+            o = object detection thresholds
 
 x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
         clean up tests folder
@@ -145,5 +138,5 @@ x. Correct lane detection code
         Get better dash cam video. Both benchmark and all scenarios video (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
         Debug lane detection code to make sure it is correct.
 
-x. Test with CUDA? (regardless do performance heat map and optimisation)
+x. Test with CUDA and performance tests and optimisation
 -->

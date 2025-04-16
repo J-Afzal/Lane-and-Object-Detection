@@ -142,11 +142,11 @@ namespace LaneAndObjectDetection
         void RunLaneAndObjectDetector();
 
         /**
-         * @brief Get the performance information. Useful for performance benchmarking.
+         * @brief Get the times to compute each and every frame.Globals
          *
-         * @return PerformanceInformation The PerformanceInformation struct.
+         * @return `std::vector<uint32_t>` A list of the time to compute each frame.
          */
-        PerformanceInformation GetPerformanceInformation();
+        std::vector<uint32_t> GetFrameTimes();
 
         /**
          * @brief Disable constructing a new %VideoManager object using copy constructor.
@@ -177,11 +177,22 @@ namespace LaneAndObjectDetection
         VideoManager& operator=(const VideoManager&& p_videoManager) = delete;
 
     private:
+
+        /**
+         * @brief Toggles the debug mode and whether to destroy the debug frames.
+         */
+        void ToggleDebugMode();
+
         /**
          * @brief Toggles whether the output video stream is saved locally. If toggled on, it creates a new file in the format
          * `YYYY-MM-DD-HH:mm:ss-output.mp4`, and if toggled off, it closes the output file.
          */
         void ToggleSaveOutput();
+
+        /**
+         * @brief Destroys all windows and releases all input/output videos.
+         */
+        void Quit();
 
         /**
          * @brief Represents the input video stream.
@@ -217,5 +228,10 @@ namespace LaneAndObjectDetection
          * @brief The VideoManagerInformation struct containing all video manager-related information.
          */
         VideoManagerInformation m_videoManagerInformation;
+
+        /**
+         * @brief The time that the output started to be saved locally.
+         */
+        std::chrono::time_point<std::chrono::high_resolution_clock> m_saveOutputStartTime;
     };
 }

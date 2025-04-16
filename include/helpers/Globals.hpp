@@ -121,8 +121,12 @@ namespace LaneAndObjectDetection::Globals
      * @brief Keyboard values when getting user input.
      */
     ///@{
-    static inline const uint32_t G_KEY_TOGGLE_RECORDING = 'r';
     static inline const uint32_t G_KEY_DEBUG_MODE = 'd';
+    static inline const uint32_t G_KEY_ADJUST_ROI_THRESHOLDS = 'i'; // TODO: not used
+    static inline const uint32_t G_KEY_ADJUST_CANNY_THRESHOLDS = 'c';
+    static inline const uint32_t G_KEY_ADJUST_HOUGH_THRESHOLDS = 'h';
+    static inline const uint32_t G_KEY_ADJUST_OBJECT_DETECTION_THRESHOLDS = 'o';
+    static inline const uint32_t G_KEY_TOGGLE_SAVE_OUTPUT = 'r';
     static inline const uint32_t G_KEY_QUIT = 'q';
     ///@}
 
@@ -146,12 +150,12 @@ namespace LaneAndObjectDetection::Globals
     static inline const cv::Scalar G_COLOUR_GREY = cv::Scalar(128, 128, 128);
     static inline const cv::Scalar G_COLOUR_WHITE = cv::Scalar(255, 255, 255);
     static inline const cv::Scalar G_COLOUR_RED = cv::Scalar(0, 0, 192);
-    static inline const cv::Scalar G_COLOUR_LIGHT_RED = cv::Scalar(96, 96, 192);
+    static inline const cv::Scalar G_COLOUR_LIGHT_RED = cv::Scalar(128, 128, 192);
     static inline const cv::Scalar G_COLOUR_ORANGE = cv::Scalar(0, 128, 192);
     static inline const cv::Scalar G_COLOUR_YELLOW = cv::Scalar(0, 192, 192);
     static inline const cv::Scalar G_COLOUR_GREEN = cv::Scalar(0, 192, 0);
     static inline const cv::Scalar G_COLOUR_BLUE = cv::Scalar(192, 0, 0);
-    static inline const cv::Scalar G_COLOUR_LIGHT_BLUE = cv::Scalar(192, 96, 96);
+    static inline const cv::Scalar G_COLOUR_LIGHT_BLUE = cv::Scalar(192, 128, 128);
     static inline const cv::Scalar G_COLOUR_PURPLE = cv::Scalar(192, 0, 192);
     ///@}
 
@@ -169,6 +173,16 @@ namespace LaneAndObjectDetection::Globals
      * @brief Divide by two.
      */
     static inline const double G_DIVIDE_BY_TWO = 2;
+
+    /**
+     * @brief Text to display when in debug mode for adjusting thresholds.
+     */
+    ///@{
+    static inline const std::string G_UI_TEXT_ADJUST_ROI_THRESHOLDS = "Press 'i' to adjust ROI";
+    static inline const std::string G_UI_TEXT_ADJUST_CANNY_THRESHOLDS = "Press 'c' to adjust Canny algorithm thresholds";
+    static inline const std::string G_UI_TEXT_ADJUST_HOUGH_THRESHOLDS = "Press 'h' to adjust Hough transform thresholds";
+    static inline const std::string G_UI_TEXT_ADJUST_OBJECT_DETECTION_THRESHOLDS = "Press 'o' to adjust object detection thresholds";
+    ///@}
 
     /**
      * @brief Text to display whether or not recording.
@@ -195,101 +209,65 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
-     * @brief Height of the bottom bar within the UI.
+     * @brief UI heights.
      */
+    ///@{
     static inline const int32_t G_UI_BOTTOM_BAR_HEIGHT = 55;
+    static inline const int32_t G_UI_TITLE_HEIGHT = 30;
+    static inline const int32_t G_UI_SUBTITLE_HEIGHT = 25;
+    ///@}
+
+    /**
+     * @brief Threshold adjustment UI locations.
+     */
+    ///@{
+    static inline const int32_t G_VIDEO_INPUT_WIDTH_QUARTER = G_VIDEO_INPUT_WIDTH / 4.0;
+    static inline const cv::Rect G_UI_RECT_ADJUST_ROI_THRESHOLDS = cv::Rect(0, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_ADJUST_CANNY_THRESHOLDS = cv::Rect(G_VIDEO_INPUT_WIDTH_QUARTER, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_ADJUST_HOUGH_THRESHOLDS = cv::Rect(G_VIDEO_INPUT_WIDTH_QUARTER * 2.0, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_ADJUST_OBJECT_DETECTION_THRESHOLDS = cv::Rect(G_VIDEO_INPUT_WIDTH_QUARTER * 3.0, 0, G_VIDEO_INPUT_WIDTH_QUARTER, G_UI_SUBTITLE_HEIGHT);
+    ///@}
 
     /**
      * @brief Timestamp UI location.
      */
-    static inline const cv::Rect G_UI_TIMESTAMP_RECT = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_TIMESTAMP = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
 
     /**
      * @brief Performance-related information UI location.
      */
-    static inline const cv::Rect G_UI_FPS_RECT = cv::Rect(300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_FPS = cv::Rect(300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
 
     /**
      * @brief Driving state UI location (width is the entire screen for centering).
      */
-    static inline const cv::Rect G_UI_DRIVING_STATE_RECT = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, G_VIDEO_INPUT_WIDTH, 30);
+    static inline const cv::Rect G_UI_RECT_DRIVING_STATE = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, G_VIDEO_INPUT_WIDTH, G_UI_TITLE_HEIGHT);
 
     /**
-     * @brief Turning state UI location (width is the entire screen for centering).
+     * @brief Driving state sub-title UI location (width is the entire screen for centering).
      */
-    static inline const cv::Rect G_UI_TURNING_STATE_RECT = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - 25, G_VIDEO_INPUT_WIDTH, 25);
+    static inline const cv::Rect G_UI_RECT_DRIVING_STATE_SUBTITLE = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_SUBTITLE_HEIGHT, G_VIDEO_INPUT_WIDTH, G_UI_SUBTITLE_HEIGHT);
 
     /**
      * @brief Debug mode status UI location
      */
-    static inline const cv::Rect G_UI_DEBUG_MODE_STATUS_RECT = cv::Rect(G_VIDEO_INPUT_WIDTH - 600, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_DEBUG_MODE_STATUS = cv::Rect(G_VIDEO_INPUT_WIDTH - 600, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
 
     /**
      * @brief Recording status UI locations.
      */
     ///@{
-    static inline const cv::Rect G_UI_RECORDING_STATUS_RECT = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, 30);
-    static inline const cv::Rect G_UI_RECORDING_ELAPSED_TIME_RECT = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - 25, 300, 25);
-    static inline const cv::Point G_UI_RECORDING_DOT_POINT = cv::Point(Globals::G_VIDEO_INPUT_WIDTH - 190, Globals::G_VIDEO_INPUT_HEIGHT - 13);
-    static inline const uint32_t G_UI_RECORDING_DOT_RADIUS = 5;
-    static inline const cv::Rect G_UI_NOT_RECORDING_STATUS_RECT = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
-    ///@}
-
-    // --------------------------------------------- TODO ---------------------------------------------
-
-    /**
-     * @brief Generic UI element properties.
-     */
-    ///@{
-    static inline const int32_t G_UI_PADDING = 30;
-    static inline const int32_t G_UI_SUBTITLE_HEIGHT = 30;
+    static inline const cv::Rect G_UI_RECT_RECORDING_STATUS = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_TITLE_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_RECORDING_ELAPSED_TIME = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_SUBTITLE_HEIGHT, 300, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Point G_UI_POINT_RECORDING_DOT = cv::Point(G_VIDEO_INPUT_WIDTH - 190, G_VIDEO_INPUT_HEIGHT - 13);
+    static inline const uint32_t G_UI_RADIUS_RECORDING_DOT = 5;
+    static inline const cv::Rect G_UI_RECT_NOT_RECORDING_STATUS = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
     ///@}
 
     /**
-     * @brief Lane detector-related information UI widths.
+     * @brief The thickness of the hough lines drawn in debug mode.
      */
-    ///@{
-    static inline const int32_t G_UI_LANE_INFORMATION_WIDTH = 200;
-    ///@}
-
-    /**
-     * @brief TODO
-     */
-    ///@{
-    static inline const cv::Rect G_UI_LANE_INFORMATION_TITLE_RECT = cv::Rect(G_VIDEO_INPUT_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_RECT = cv::Rect(G_VIDEO_INPUT_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_LANE_INFORMATION_TITLE_RECT.y + G_UI_LANE_INFORMATION_TITLE_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, 200);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT = cv::Rect(G_VIDEO_INPUT_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_LANE_INFORMATION_RECT.y + G_UI_LANE_INFORMATION_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
-    ///@}
-
-    /**
-     * @brief Lane information-related lane state UI properties.
-     */
-    ///@{
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_PAD = 30;
-    static inline const int32_t G_LANE_INFORMATION_LEFT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_LANE_INFORMATION_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + static_cast<int32_t>(G_UI_LANE_INFORMATION_RECT.width / 2.0);
-    static inline const int32_t G_LANE_INFORMATION_RIGHT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_UI_LANE_INFORMATION_RECT.width - G_LANE_INFORMATION_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION = G_UI_LANE_INFORMATION_RECT.y + G_LANE_INFORMATION_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_WIDTH = 3;
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_HEIGHT = 15;
-    ///@}
-
-    /**
-     * @brief Lane information-related vehicle position UI properties.
-     */
-    ///@{
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH = G_UI_LANE_INFORMATION_RECT.width - (4 * G_UI_PADDING);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT = G_UI_LANE_INFORMATION_RECT.height - (3 * G_UI_PADDING);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION = G_UI_LANE_INFORMATION_RECT.x + static_cast<int32_t>((G_UI_LANE_INFORMATION_RECT.width / 2.0) - (G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH / 2.0));
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION = G_UI_LANE_INFORMATION_RECT.y + static_cast<int32_t>(1.5 * G_UI_PADDING);
-    ///@}
-
-    // --------------------------------------------- TODO ---------------------------------------------
-
-    /**
-     * @brief TODO
-     */
-    static inline const int32_t G_HOUGH_LINE_THICKNESS = 1;
+    static inline const int32_t G_HOUGH_LINE_THICKNESS = 2;
 
     /**
      * @brief Translucent colour of the overlay for the current lane.
@@ -302,43 +280,69 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_DEFAULT_ROLLING_AVERAGE_SIZE = 10;
 
     /**
-     * @brief The number of lane lines to display to the frame.
-     */
-    static inline const uint32_t G_NUMBER_OF_LANE_LINES_TO_DISPLAY = 5;
-
-    /**
-     * @brief Region of interest dimensions.
+     * @brief Region-of-interest dimensions.
      */
     ///@{
     static inline const int32_t G_ROI_TOP_HEIGHT = 660;
     static inline const int32_t G_ROI_BOTTOM_HEIGHT = 840;
     static inline const int32_t G_ROI_TOP_WIDTH = 200;
     static inline const int32_t G_ROI_BOTTOM_WIDTH = 900;
-    static inline const uint32_t G_NUMBER_OF_POINTS = 4;
     ///@}
 
     /**
-     * @brief Region of interest points. Below is how the indicies of the array map to the points.
+     * @brief Region-of-interest points. Below is how the indicies of the array map to the points.
      *
      *       Top left (0) >  ____________________  < Top right (1)
-     *                      /         / \        \
-     *                     /         /   \        \
-     *                    /         /     \        \
-     *                   /         /       \        \
-     *                  /         /         \        \
-     *                 /         /           \        \
-     *                 ---------- ----------- ----------
+     *                      /                    \
+     *                     /                      \
+     *                    /                        \
+     *                   /                          \
+     *                  /                            \
+     *                 /                              \
+     *                 --------------------------------
      * Bottom Left (3) ^                               ^ Bottom right (2)
      */
+    ///@{
+    static inline const uint32_t G_NUMBER_OF_POINTS = 4;
     static inline const std::array<cv::Point, G_NUMBER_OF_POINTS> G_ROI_MASK_POINTS = {
-        cv::Point((G_VIDEO_INPUT_WIDTH / 2) - (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
-        cv::Point((G_VIDEO_INPUT_WIDTH / 2) + (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
-        cv::Point((G_VIDEO_INPUT_WIDTH / 2) + (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
-        cv::Point((G_VIDEO_INPUT_WIDTH / 2) - (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) - (G_ROI_TOP_WIDTH / 2.0), G_ROI_TOP_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) + (G_ROI_TOP_WIDTH / 2.0), G_ROI_TOP_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) + (G_ROI_BOTTOM_WIDTH / 2.0), G_ROI_BOTTOM_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) - (G_ROI_BOTTOM_WIDTH / 2.0), G_ROI_BOTTOM_HEIGHT),
     };
+    ///@}
 
     /**
-     * @brief The index values which represent each corner of G_ROI_MASK_POINTS.
+     * @brief The bounding box of the region-of-interest which is used to crop debugging frames. The '#' characters show the
+     * bounding box with respect to the region-of-interest.
+     *
+     *                #######____________________######## < Start Y
+     *                #     /                    \      #
+     *                #    /                      \     #
+     *                #   /                        \    #
+     *                #  /                          \   #
+     *                # /                            \  #
+     *                #/                              \ #
+     *                #---------------------------------# < End Y
+     *        Start X ^                           End X ^
+     */
+    ///@{
+    static inline const uint32_t G_ROI_BOUND_BOX_PADDING = 10;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_START_X = (G_VIDEO_INPUT_WIDTH / 2.0) - (G_ROI_BOTTOM_WIDTH / 2.0) - G_ROI_BOUND_BOX_PADDING;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_END_X = (G_VIDEO_INPUT_WIDTH / 2.0) + (G_ROI_BOTTOM_WIDTH / 2.0) + G_ROI_BOUND_BOX_PADDING;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_START_Y = G_ROI_TOP_HEIGHT - G_ROI_BOUND_BOX_PADDING;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_END_Y = G_ROI_BOTTOM_HEIGHT + G_ROI_BOUND_BOX_PADDING;
+    static inline const cv::Range G_ROI_BOUNDING_BOX_X_RANGE = cv::Range(G_ROI_BOUNDING_BOX_START_X, G_ROI_BOUNDING_BOX_END_X);
+    static inline const cv::Range G_ROI_BOUNDING_BOX_Y_RANGE = cv::Range(G_ROI_BOUNDING_BOX_START_Y, G_ROI_BOUNDING_BOX_END_Y);
+    ///@}
+
+    /**
+     * @brief Scaling factor for debugging frames.
+     */
+    static inline const double G_DEBUGGING_FRAME_SCALING_FACTOR = static_cast<double>(G_VIDEO_INPUT_WIDTH / 3.0) / static_cast<double>(G_ROI_BOUNDING_BOX_END_X - G_ROI_BOUNDING_BOX_START_X);
+
+    /**
+     * @brief The index values which represent each corner of `G_ROI_MASK_POINTS`.
      */
     ///@{
     static inline const uint32_t G_ROI_TOP_LEFT_INDEX = 0;
@@ -348,16 +352,16 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
-     * @brief Region of interest sub-division line equations (y = mx + c).
+     * @brief Region-of-interest sub-division line equations (y = mx + c).
      *
      *                                   Top mid-point
      *                         __________|__________
-     *                        /         # &        \
-     *                       /         #   &        \
-     * Left edge of mask >  /         #     &        \  < Right edge of mask
-     *                     /         #       &        \
-     *                    /         #         &        \
-     *                   /         #           &        \
+     *                        /         # &         \
+     *                       /         #   &         \
+     * Left edge of mask >  /         #     &         \  < Right edge of mask
+     *                     /         #       &         \
+     *                    /         #         &         \
+     *                   /         #           &         \
      *                   ---------- ----------- ----------
      *           Bottom one third ^             ^ Bottom two thirds
      *
@@ -453,27 +457,6 @@ namespace LaneAndObjectDetection::Globals
         {DrivingState::ONLY_RIGHT_LANE_MARKING_DETECTED, "WARNING: Only right road marking detected"},
         {DrivingState::NO_LANE_MARKINGS_DETECTED,        "WARNING: No road markings detected"       },
     };
-
-    /**
-     * @brief Text to display whether recording or not recording.
-     */
-    ///@{
-    static inline const std::string G_LANE_INFORMATION_TITLE_LANE_DETECTED = "Detected Lanes";
-    static inline const std::string G_LANE_INFORMATION_TITLE_LANE_NOT_DETECTED = "No Lanes Detected";
-    ///@}
-
-    /**
-     * @brief The clamp parameters for determining the distance difference when the vehicle is within a lane.
-     */
-    ///@{
-    static inline const double G_WITHIN_LANE_MINIMUM_CLAMP_DIFFERENCE_DISTANCE = -100;
-    static inline const double G_WITHIN_LANE_MAXIMUM_CLAMP_DIFFERENCE_DISTANCE = 100;
-    ///@}
-
-    /**
-     * @brief The nearest percentage amount to round the turning required down to.
-     */
-    static inline const uint32_t G_WITHIN_LANE_TURNING_REQUIRED_ROUNDING = 10;
 
     /**
      * @brief The number of frames to wait before calculating another distance difference while the vehicle is changing lanes.
@@ -635,8 +618,8 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
-     * @brief Object names and bounding box colours. G_OPENCV_WHITE is used as the default colour while custom colours are given
-     * to object more commonly found while driving.
+     * @brief Object names and bounding box colours. `G_OPENCV_WHITE` is used as the default colour while custom colours are
+     * given to object more commonly found while driving.
      */
     static inline const std::map<std::string, cv::Scalar> G_OBJECT_DETECTOR_OBJECT_NAMES_AND_COLOURS = {
         {"aeroplane",      G_COLOUR_WHITE },

@@ -161,9 +161,7 @@ namespace LaneAndObjectDetection
 
     VideoManager::~VideoManager()
     {
-        m_inputVideo.release();
-        m_outputVideo.release();
-        cv::destroyAllWindows();
+        Quit();
     }
 
     void VideoManager::SetProperties(const int32_t& p_inputVideoCamera,
@@ -223,31 +221,37 @@ namespace LaneAndObjectDetection
 
             m_objectDetector.RunObjectDetector(m_currentFrame);
 
-            m_laneDetector.RunLaneDetector(m_currentFrame, m_objectDetector.GetInformation());
+            m_laneDetector.RunLaneDetector(m_currentFrame, m_objectDetector.GetInformation(), m_videoManagerInformation.m_debugMode);
 
             FrameBuilder::UpdateFrame(m_currentFrame, m_objectDetector.GetInformation(), m_laneDetector.GetInformation(), m_performance.GetInformation(), m_videoManagerInformation);
 
             if (m_videoManagerInformation.m_saveOutput)
             {
                 m_outputVideo.write(m_currentFrame);
-                m_videoManagerInformation.m_saveOutputElapsedTime = Globals::GetTimeElapsed(m_videoManagerInformation.m_saveOutputStartTime);
+                m_videoManagerInformation.m_saveOutputElapsedTime = Globals::GetTimeElapsed(m_saveOutputStartTime);
             }
 
-            cv::imshow("frame", m_currentFrame);
+            cv::imshow("currentFrame", m_currentFrame);
+
+            if (m_videoManagerInformation.m_debugMode)
+            {
+                cv::imshow("roiFrame", m_laneDetector.GetInformation().m_roiFrame);
+                cv::imshow("cannyFrame", m_laneDetector.GetInformation().m_cannyFrame);
+                cv::imshow("houghLinesFrame", m_laneDetector.GetInformation().m_houghLinesFrame);
+            }
 
             switch (cv::waitKey(1))
             {
-            case Globals::G_KEY_TOGGLE_RECORDING:
+            case Globals::G_KEY_DEBUG_MODE:
+                ToggleDebugMode();
+                break;
+
+            case Globals::G_KEY_TOGGLE_SAVE_OUTPUT:
                 ToggleSaveOutput();
                 break;
 
-            case Globals::G_KEY_DEBUG_MODE:
-                m_videoManagerInformation.m_debugMode = !m_videoManagerInformation.m_debugMode;
-                m_videoManagerInformation.m_debugModeText = m_videoManagerInformation.m_debugMode ? Globals::G_UI_TEXT_DEBUG_MODE : Globals::G_UI_TEXT_NOT_DEBUG_MODE;
-                break;
-
             case Globals::G_KEY_QUIT:
-                cv::destroyAllWindows();
+                Quit();
                 return;
 
             default:
@@ -258,9 +262,22 @@ namespace LaneAndObjectDetection
         }
     }
 
-    PerformanceInformation VideoManager::GetPerformanceInformation()
+    std::vector<uint32_t> VideoManager::GetFrameTimes()
     {
-        return m_performance.GetInformation();
+        return m_performance.GetFrameTimes();
+    }
+
+    void VideoManager::ToggleDebugMode()
+    {
+        m_videoManagerInformation.m_debugMode = !m_videoManagerInformation.m_debugMode;
+        m_videoManagerInformation.m_debugModeText = m_videoManagerInformation.m_debugMode ? Globals::G_UI_TEXT_DEBUG_MODE : Globals::G_UI_TEXT_NOT_DEBUG_MODE;
+
+        if (!m_videoManagerInformation.m_debugMode)
+        {
+            cv::destroyWindow("roiFrame");
+            cv::destroyWindow("cannyFrame");
+            cv::destroyWindow("houghLinesFrame");
+        }
     }
 
     void VideoManager::ToggleSaveOutput()
@@ -269,7 +286,7 @@ namespace LaneAndObjectDetection
 
         if (m_videoManagerInformation.m_saveOutput)
         {
-            m_videoManagerInformation.m_saveOutputStartTime = std::chrono::steady_clock::now();
+            m_saveOutputStartTime = std::chrono::steady_clock::now();
 
             const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now());
 
@@ -295,5 +312,12 @@ namespace LaneAndObjectDetection
             m_outputVideo.release();
             m_videoManagerInformation.m_saveOutputText = Globals::G_UI_TEXT_NOT_RECORDING;
         }
+    }
+
+    void VideoManager::Quit()
+    {
+        m_inputVideo.release();
+        m_outputVideo.release();
+        cv::destroyAllWindows();
     }
 }

@@ -12,6 +12,7 @@
 #include "helpers/FrameBuilder.hpp"
 #include "helpers/Globals.hpp"
 #include "helpers/Information.hpp"
+#include <opencv2/highgui.hpp>
 
 namespace LaneAndObjectDetection
 {
@@ -37,6 +38,8 @@ namespace LaneAndObjectDetection
         {
             return;
         }
+
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_OBJECT_DETECTION_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_OBJECT_DETECTION_THRESHOLDS);
 
         for (const ObjectDetectionInformation::DetectedObjectInformation& objectInformation : p_objectDetectionInformation.m_objectInformation)
         {
@@ -72,86 +75,25 @@ namespace LaneAndObjectDetection
     void FrameBuilder::AddLaneDetectorInformation(cv::Mat& p_frame, const LaneDetectionInformation& p_laneDetectionInformation, const bool& p_debugMode)
     {
         // Add driving state
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_DRIVING_STATE_RECT, p_laneDetectionInformation.m_drivingStateTitle, Globals::G_UI_H1_FONT_SCALE);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_DRIVING_STATE, p_laneDetectionInformation.m_drivingStateTitle, Globals::G_UI_H1_FONT_SCALE);
 
         // Add turning state
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TURNING_STATE_RECT, p_laneDetectionInformation.m_turningStateTitle, Globals::G_UI_H2_FONT_SCALE);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_DRIVING_STATE_SUBTITLE, p_laneDetectionInformation.m_drivingStateSubTitle, Globals::G_UI_H2_FONT_SCALE);
 
         if (!p_debugMode)
         {
             return;
         }
 
-        // TODO(Main): add roi frame, canny frame and hough lines frame
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_ROI_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_ROI_THRESHOLDS);
 
-        // Add lane information title
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TITLE_RECT, p_laneDetectionInformation.m_laneInformationTitle);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_CANNY_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_CANNY_THRESHOLDS);
 
-        // Add lane information lane lines states
-        cv::rectangle(p_frame, Globals::G_UI_LANE_INFORMATION_RECT, Globals::G_COLOUR_BLACK, cv::FILLED, cv::LINE_AA);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_ADJUST_HOUGH_THRESHOLDS, Globals::G_UI_TEXT_ADJUST_HOUGH_THRESHOLDS);
 
-        // Left line states
-        for (int32_t i = 0; i < p_laneDetectionInformation.m_leftLineTypesForDisplay.size(); i++)
-        {
-            cv::rectangle(p_frame,
-                          cv::Rect(Globals::G_LANE_INFORMATION_LEFT_LANE_STATE_X_LOCATION,
-                                   Globals::G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION + (i * Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * 2),
-                                   Globals::G_LANE_INFORMATION_LANE_STATE_WIDTH,
-                                   static_cast<int>(Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_leftLineTypesForDisplay[i])),
-                          Globals::G_COLOUR_WHITE,
-                          cv::FILLED,
-                          cv::LINE_AA);
-        }
-
-        // Middle line states
-        for (uint32_t i = 0; i < p_laneDetectionInformation.m_middleLineTypesForDisplay.size(); i++)
-        {
-            cv::rectangle(p_frame,
-                          cv::Rect(Globals::G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION,
-                                   Globals::G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION + static_cast<int>(i * Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * 2),
-                                   Globals::G_LANE_INFORMATION_LANE_STATE_WIDTH,
-                                   static_cast<int>(Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_middleLineTypesForDisplay[i])),
-                          Globals::G_COLOUR_WHITE,
-                          cv::FILLED,
-                          cv::LINE_AA);
-        }
-
-        // Right line states
-        for (int32_t i = 0; i < p_laneDetectionInformation.m_rightLineTypesForDisplay.size(); i++)
-        {
-            cv::rectangle(p_frame,
-                          cv::Rect(Globals::G_LANE_INFORMATION_RIGHT_LANE_STATE_X_LOCATION,
-                                   Globals::G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION + (i * Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * 2),
-                                   Globals::G_LANE_INFORMATION_LANE_STATE_WIDTH,
-                                   static_cast<int>(Globals::G_LANE_INFORMATION_LANE_STATE_HEIGHT * p_laneDetectionInformation.m_rightLineTypesForDisplay[i])),
-                          Globals::G_COLOUR_WHITE,
-                          cv::FILLED,
-                          cv::LINE_AA);
-        }
-
-        // Add turning required to return to center of the lane
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT, p_laneDetectionInformation.m_turningRequiredToReturnToCenterText);
-
-        // Used for the below overlays
+        // Draw the green translucent lane overlay to signify the area of the road which is considered the 'current lane'
         cv::Mat blankFrame = cv::Mat::zeros(Globals::G_VIDEO_INPUT_HEIGHT, Globals::G_VIDEO_INPUT_WIDTH, p_frame.type());
-
-        if (p_laneDetectionInformation.m_drivingState == Globals::DrivingState::WITHIN_LANE)
-        {
-            // Add the box overlay signifying vehicle location within the lane
-            cv::rectangle(blankFrame,
-                          cv::Rect(Globals::G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION - p_laneDetectionInformation.m_turningRequiredToReturnToCenterPercentage,
-                                   Globals::G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION,
-                                   Globals::G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH,
-                                   Globals::G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT),
-                          Globals::G_COLOUR_YELLOW,
-                          cv::FILLED,
-                          cv::LINE_AA);
-        }
-
-        // Draw the green lane overlay to signify the area of the road which is considered the 'current lane'
         cv::fillConvexPoly(blankFrame, p_laneDetectionInformation.m_laneOverlayCorners, Globals::G_LANE_OVERLAY_COLOUR, cv::LINE_AA);
-
-        // Using add to give a transparent overlay
         cv::add(p_frame, blankFrame, p_frame);
     }
 
@@ -167,34 +109,34 @@ namespace LaneAndObjectDetection
                                                     std::round(p_performanceInformation.m_currentFramesPerSecond * 100.0) / 100.0,
                                                     std::round(p_performanceInformation.m_averageFramesPerSecond));
 
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_FPS_RECT, CURRENT_FPS, Globals::G_UI_H2_FONT_SCALE);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_FPS, CURRENT_FPS, Globals::G_UI_H2_FONT_SCALE);
     }
 
     void FrameBuilder::AddVideoManagerInformation(cv::Mat& p_frame, const VideoManagerInformation& p_videoManagerInformation)
     {
         // UTC timestamp E.g. Thursday 01 January 1970 10:11:03
         const std::string TIMESTAMP = std::format("{:%A %d %B %Y} ", std::chrono::system_clock::now()) + std::format("{:%H:%M:%S}", std::chrono::system_clock::now()).substr(0, 8);
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_TIMESTAMP_RECT, TIMESTAMP, Globals::G_UI_H2_FONT_SCALE);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_TIMESTAMP, TIMESTAMP, Globals::G_UI_H2_FONT_SCALE);
 
-        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_DEBUG_MODE_STATUS_RECT, p_videoManagerInformation.m_debugModeText, Globals::G_UI_H2_FONT_SCALE);
+        AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_DEBUG_MODE_STATUS, p_videoManagerInformation.m_debugModeText, Globals::G_UI_H2_FONT_SCALE);
 
         if (p_videoManagerInformation.m_saveOutput)
         {
-            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECORDING_STATUS_RECT, p_videoManagerInformation.m_saveOutputText, Globals::G_UI_H2_FONT_SCALE);
-            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECORDING_ELAPSED_TIME_RECT, p_videoManagerInformation.m_saveOutputElapsedTime, Globals::G_UI_H2_FONT_SCALE);
+            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_RECORDING_STATUS, p_videoManagerInformation.m_saveOutputText, Globals::G_UI_H2_FONT_SCALE);
+            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_RECORDING_ELAPSED_TIME, p_videoManagerInformation.m_saveOutputElapsedTime, Globals::G_UI_H2_FONT_SCALE);
 
             // Add flashing recording dot and time spent recording
             const uint32_t SECONDS_SINCE_EPOCH = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
             if (static_cast<bool>(SECONDS_SINCE_EPOCH % 2))
             {
-                cv::circle(p_frame, Globals::G_UI_RECORDING_DOT_POINT, Globals::G_UI_RECORDING_DOT_RADIUS, Globals::G_COLOUR_RED, cv::FILLED, cv::LINE_AA);
+                cv::circle(p_frame, Globals::G_UI_POINT_RECORDING_DOT, Globals::G_UI_RADIUS_RECORDING_DOT, Globals::G_COLOUR_RED, cv::FILLED, cv::LINE_AA);
             }
         }
 
         else
         {
-            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_NOT_RECORDING_STATUS_RECT, p_videoManagerInformation.m_saveOutputText, Globals::G_UI_H2_FONT_SCALE);
+            AddBackgroundRectAndCentredText(p_frame, Globals::G_UI_RECT_NOT_RECORDING_STATUS, p_videoManagerInformation.m_saveOutputText, Globals::G_UI_H2_FONT_SCALE);
         }
     }
 
