@@ -24,7 +24,7 @@ var namespace_lane_and_object_detection_1_1_globals =
       [ "FOUR", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4a341fee9692a2ed8f09906d40d23fb1f9", null ],
       [ "FIVE", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4a180bb5e381e316e2246b88c92770ee75", null ]
     ] ],
-    [ "GetTimeElapsed", "namespace_lane_and_object_detection_1_1_globals.html#a02a02afa1cf3111bd34cf0cc73e8a31f", null ],
+    [ "GetTimeElapsed", "namespace_lane_and_object_detection_1_1_globals.html#ab4390f96a22d63be7d62b1cca558fbac", null ],
     [ "G_CLI_HELP_MESSAGE", "namespace_lane_and_object_detection_1_1_globals.html#ac19181f81ac1ed952c8846403985f5f7", null ],
     [ "G_VIDEO_INPUT_HEIGHT", "namespace_lane_and_object_detection_1_1_globals.html#a2d1f38bdf1848b837ac89933edda78a4", null ],
     [ "G_VIDEO_INPUT_WIDTH", "namespace_lane_and_object_detection_1_1_globals.html#a3496586aa1c7a4b427b682d1b9d1578c", null ],
