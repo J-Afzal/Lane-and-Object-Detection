@@ -199,9 +199,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a2af1562b7ef32ae8c1be2b9913917313" id="r_a2af1562b7ef32ae8c1be2b9913917313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html">VideoManagerInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2af1562b7ef32ae8c1be2b9913917313">m_videoManagerInformation</a></td></tr>
 <tr class="memdesc:a2af1562b7ef32ae8c1be2b9913917313"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html" title="The information needed by FrameBuilder to update frame with video manager information.">VideoManagerInformation</a> struct containing all video manager-related information.  <br /></td></tr>
 <tr class="separator:a2af1562b7ef32ae8c1be2b9913917313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08389fad35bf64b2e5e0e0b0568a1575" id="r_a08389fad35bf64b2e5e0e0b0568a1575"><td class="memItemLeft" align="right" valign="top">std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08389fad35bf64b2e5e0e0b0568a1575">m_saveOutputStartTime</a></td></tr>
-<tr class="memdesc:a08389fad35bf64b2e5e0e0b0568a1575"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time that the output started to be saved locally.  <br /></td></tr>
-<tr class="separator:a08389fad35bf64b2e5e0e0b0568a1575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f97f08a291a40a6fd862a5e1a335da3" id="r_a5f97f08a291a40a6fd862a5e1a335da3"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f97f08a291a40a6fd862a5e1a335da3">m_saveOutputStartTime</a></td></tr>
+<tr class="memdesc:a5f97f08a291a40a6fd862a5e1a335da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time that the output started to be saved locally.  <br /></td></tr>
+<tr class="separator:a5f97f08a291a40a6fd862a5e1a335da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Orchestration class which reads the input, runs the lane and object detectors, displays the detected output and saves output video stream locally. </p>
@@ -964,8 +964,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a08389fad35bf64b2e5e0e0b0568a1575" name="a08389fad35bf64b2e5e0e0b0568a1575"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08389fad35bf64b2e5e0e0b0568a1575">&#9670;&#160;</a></span>m_saveOutputStartTime</h2>
+<a id="a5f97f08a291a40a6fd862a5e1a335da3" name="a5f97f08a291a40a6fd862a5e1a335da3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f97f08a291a40a6fd862a5e1a335da3">&#9670;&#160;</a></span>m_saveOutputStartTime</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -974,7 +974,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::chrono::steady_clock::time_point LaneAndObjectDetection::VideoManager::m_saveOutputStartTime</td>
+          <td class="memname">std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt; LaneAndObjectDetection::VideoManager::m_saveOutputStartTime</td>
         </tr>
       </table>
   </td>

@@ -286,7 +286,7 @@ namespace LaneAndObjectDetection
 
         if (m_videoManagerInformation.m_saveOutput)
         {
-            m_saveOutputStartTime = std::chrono::steady_clock::now();
+            m_saveOutputStartTime = std::chrono::high_resolution_clock::now();
 
             const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now());
 

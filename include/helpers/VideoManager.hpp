@@ -232,6 +232,6 @@ namespace LaneAndObjectDetection
         /**
          * @brief The time that the output started to be saved locally.
          */
-        std::chrono::steady_clock::time_point m_saveOutputStartTime;
+        std::chrono::time_point<std::chrono::high_resolution_clock> m_saveOutputStartTime;
     };
 }
