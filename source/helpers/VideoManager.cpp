@@ -288,7 +288,7 @@ namespace LaneAndObjectDetection
         {
             m_saveOutputStartTime = std::chrono::steady_clock::now();
 
-            const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::high_resolution_clock::now());
+            const std::string OUTPUT_FILE_NAME = std::format("{:%Y-%m-%d-%H-%M-%S}-output.mp4", std::chrono::system_clock::now());
 
             m_outputVideo.open(OUTPUT_FILE_NAME,
                                cv::VideoWriter::fourcc('m', 'p', '4', 'v'),
