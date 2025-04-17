@@ -39,7 +39,7 @@ namespace LaneAndObjectDetection::Globals
      * @param p_startTime The time to compare to now.
      * @return `std::string` The elapsed time in the format `mm:ss` if less than an hour or `H:mm:ss` if more than one hour.
      */
-    static inline std::string GetTimeElapsed(const std::chrono::steady_clock::time_point& p_startTime)
+    static inline std::string GetTimeElapsed(const std::chrono::time_point<std::chrono::high_resolution_clock>& p_startTime)
     {
         const double MINUTES_IN_HOUR = 60;
         const double SECONDS_IN_HOUR = 3600;
