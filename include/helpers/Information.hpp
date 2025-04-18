@@ -1,13 +1,10 @@
 #pragma once
 
-#include <cstdint>
-#include <deque>
 #include <string>
 #include <vector>
 
+#include <opencv2/core/mat.hpp>
 #include <opencv2/core/types.hpp>
-
-#include "helpers/Globals.hpp"
 
 /**
  * @namespace LaneAndObjectDetection
@@ -53,29 +50,24 @@ namespace LaneAndObjectDetection
     struct LaneDetectionInformation
     {
         /**
+         * @brief The initial region-of-interest frame.
+         */
+        cv::Mat m_roiFrame;
+
+        /**
+         * @brief The frame containing the edges detected by the Canny algorithm.
+         */
+        cv::Mat m_cannyFrame;
+
+        /**
+         * @brief The frame contains the lines detected by the Hough transform.
+         */
+        cv::Mat m_houghLinesFrame;
+
+        /**
          * @brief The co-ordinate points that outline the current lane.
          */
         std::vector<cv::Point> m_laneOverlayCorners;
-
-        /**
-         * @brief The left-hand side road marking types to display.
-         */
-        std::deque<uint32_t> m_leftLineTypesForDisplay;
-
-        /**
-         * @brief The middle road marking types to display.
-         */
-        std::deque<uint32_t> m_middleLineTypesForDisplay;
-
-        /**
-         * @brief The right-hand side road marking types to display.
-         */
-        std::deque<uint32_t> m_rightLineTypesForDisplay;
-
-        /**
-         * @brief The current driving state.
-         */
-        Globals::DrivingState m_drivingState;
 
         /**
          * @brief The current driving state title.
@@ -83,24 +75,9 @@ namespace LaneAndObjectDetection
         std::string m_drivingStateTitle;
 
         /**
-         * @brief The current lane information title.
+         * @brief Either the lane line information or turning state depending upon the current driving state.
          */
-        std::string m_laneInformationTitle;
-
-        /**
-         * @brief The current turning state title.
-         */
-        std::string m_turningStateTitle;
-
-        /**
-         * @brief The text for the current turning required to return the vehicle to the center of the current lane.
-         */
-        std::string m_turningRequiredToReturnToCenterText;
-
-        /**
-         * @brief The number for the current turning required to return the vehicle to the center of the current lane.
-         */
-        int32_t m_turningRequiredToReturnToCenterPercentage;
+        std::string m_drivingStateSubTitle;
     };
 
     /**
@@ -108,11 +85,6 @@ namespace LaneAndObjectDetection
      */
     struct PerformanceInformation
     {
-        /**
-         * @brief The frame times that have been measured.
-         */
-        std::vector<uint32_t> m_frameTimes;
-
         /**
          * @brief The average number of frames per second.
          */
@@ -130,8 +102,28 @@ namespace LaneAndObjectDetection
     struct VideoManagerInformation
     {
         /**
+         * @brief Text to display whether or not the program is in debug mode.
+         */
+        std::string m_debugModeText;
+
+        /**
+         * @brief The time that has elapsed since starting to save the output video stream locally.
+         */
+        std::string m_saveOutputElapsedTime;
+
+        /**
          * @brief Text to display whether or not the program is recording the output.
          */
         std::string m_saveOutputText;
+
+        /**
+         * @brief Whether in debug mode.
+         */
+        bool m_debugMode;
+
+        /**
+         * @brief Whether the output video stream should be saved locally.
+         */
+        bool m_saveOutput;
     };
 }

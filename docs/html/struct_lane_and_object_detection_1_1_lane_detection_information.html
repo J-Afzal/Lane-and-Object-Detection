@@ -40,7 +40,7 @@
   <td id="projectalign">
    <div id="projectname">Lane and Object Detection
    </div>
-   <div id="projectbrief">Using OpenCV and YOLOv4</div>
+   <div id="projectbrief">Using OpenCV and YOLOv7</div>
   </td>
  </tr>
  </tbody>
@@ -122,42 +122,84 @@ $(function(){initNavTree('struct_lane_and_object_detection_1_1_lane_detection_in
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a973f4af99fc12224e7893be56a821724" id="r_a973f4af99fc12224e7893be56a821724"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a973f4af99fc12224e7893be56a821724">m_roiFrame</a></td></tr>
+<tr class="memdesc:a973f4af99fc12224e7893be56a821724"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initial region-of-interest frame.  <br /></td></tr>
+<tr class="separator:a973f4af99fc12224e7893be56a821724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ec4b38b791bbdba58ece31b06b2e354" id="r_a2ec4b38b791bbdba58ece31b06b2e354"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ec4b38b791bbdba58ece31b06b2e354">m_cannyFrame</a></td></tr>
+<tr class="memdesc:a2ec4b38b791bbdba58ece31b06b2e354"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame containing the edges detected by the Canny algorithm.  <br /></td></tr>
+<tr class="separator:a2ec4b38b791bbdba58ece31b06b2e354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa12037395c0911c893805bf88a6a5450" id="r_aa12037395c0911c893805bf88a6a5450"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa12037395c0911c893805bf88a6a5450">m_houghLinesFrame</a></td></tr>
+<tr class="memdesc:aa12037395c0911c893805bf88a6a5450"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame contains the lines detected by the Hough transform.  <br /></td></tr>
+<tr class="separator:aa12037395c0911c893805bf88a6a5450"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2e43b73d1e394b5825ae84abc5c9d18" id="r_ae2e43b73d1e394b5825ae84abc5c9d18"><td class="memItemLeft" align="right" valign="top">std::vector&lt; cv::Point &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2e43b73d1e394b5825ae84abc5c9d18">m_laneOverlayCorners</a></td></tr>
 <tr class="memdesc:ae2e43b73d1e394b5825ae84abc5c9d18"><td class="mdescLeft">&#160;</td><td class="mdescRight">The co-ordinate points that outline the current lane.  <br /></td></tr>
 <tr class="separator:ae2e43b73d1e394b5825ae84abc5c9d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75d59b3cd28b327b0686c2e3d84fe6c1" id="r_a75d59b3cd28b327b0686c2e3d84fe6c1"><td class="memItemLeft" align="right" valign="top">std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75d59b3cd28b327b0686c2e3d84fe6c1">m_leftLineTypesForDisplay</a></td></tr>
-<tr class="memdesc:a75d59b3cd28b327b0686c2e3d84fe6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The left-hand side road marking types to display.  <br /></td></tr>
-<tr class="separator:a75d59b3cd28b327b0686c2e3d84fe6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0bead15b51cfa6c20faebffa9558d0d" id="r_ad0bead15b51cfa6c20faebffa9558d0d"><td class="memItemLeft" align="right" valign="top">std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0bead15b51cfa6c20faebffa9558d0d">m_middleLineTypesForDisplay</a></td></tr>
-<tr class="memdesc:ad0bead15b51cfa6c20faebffa9558d0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The middle road marking types to display.  <br /></td></tr>
-<tr class="separator:ad0bead15b51cfa6c20faebffa9558d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2121cdc2195f9636dd703e2a41addf4d" id="r_a2121cdc2195f9636dd703e2a41addf4d"><td class="memItemLeft" align="right" valign="top">std::deque&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2121cdc2195f9636dd703e2a41addf4d">m_rightLineTypesForDisplay</a></td></tr>
-<tr class="memdesc:a2121cdc2195f9636dd703e2a41addf4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The right-hand side road marking types to display.  <br /></td></tr>
-<tr class="separator:a2121cdc2195f9636dd703e2a41addf4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62d498709ec333b5b860e4fc50ce5e14" id="r_a62d498709ec333b5b860e4fc50ce5e14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#abd235c8782d5e767fd19b1903794e0e9">Globals::DrivingState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62d498709ec333b5b860e4fc50ce5e14">m_drivingState</a></td></tr>
-<tr class="memdesc:a62d498709ec333b5b860e4fc50ce5e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current driving state.  <br /></td></tr>
-<tr class="separator:a62d498709ec333b5b860e4fc50ce5e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a552d5d86496a1b15f6bac45d6d146ccf" id="r_a552d5d86496a1b15f6bac45d6d146ccf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a552d5d86496a1b15f6bac45d6d146ccf">m_drivingStateTitle</a></td></tr>
 <tr class="memdesc:a552d5d86496a1b15f6bac45d6d146ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current driving state title.  <br /></td></tr>
 <tr class="separator:a552d5d86496a1b15f6bac45d6d146ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae63cdb38503f70eda9c7a5ac3d59327" id="r_aae63cdb38503f70eda9c7a5ac3d59327"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae63cdb38503f70eda9c7a5ac3d59327">m_laneInformationTitle</a></td></tr>
-<tr class="memdesc:aae63cdb38503f70eda9c7a5ac3d59327"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current lane information title.  <br /></td></tr>
-<tr class="separator:aae63cdb38503f70eda9c7a5ac3d59327"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af81a3f5d17ebbe6de1476d8cff4ac850" id="r_af81a3f5d17ebbe6de1476d8cff4ac850"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af81a3f5d17ebbe6de1476d8cff4ac850">m_turningStateTitle</a></td></tr>
-<tr class="memdesc:af81a3f5d17ebbe6de1476d8cff4ac850"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current turning state title.  <br /></td></tr>
-<tr class="separator:af81a3f5d17ebbe6de1476d8cff4ac850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a984373df4b109ca7b07ba70c05c62ac6" id="r_a984373df4b109ca7b07ba70c05c62ac6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a984373df4b109ca7b07ba70c05c62ac6">m_turningRequiredToReturnToCenterText</a></td></tr>
-<tr class="memdesc:a984373df4b109ca7b07ba70c05c62ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text for the current turning required to return the vehicle to the center of the current lane.  <br /></td></tr>
-<tr class="separator:a984373df4b109ca7b07ba70c05c62ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f143ead3d050b5c76f6adc9a131429" id="r_a86f143ead3d050b5c76f6adc9a131429"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86f143ead3d050b5c76f6adc9a131429">m_turningRequiredToReturnToCenterPercentage</a></td></tr>
-<tr class="memdesc:a86f143ead3d050b5c76f6adc9a131429"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number for the current turning required to return the vehicle to the center of the current lane.  <br /></td></tr>
-<tr class="separator:a86f143ead3d050b5c76f6adc9a131429"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb41ac17710919149dc71e8baa14bea5" id="r_aeb41ac17710919149dc71e8baa14bea5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb41ac17710919149dc71e8baa14bea5">m_drivingStateSubTitle</a></td></tr>
+<tr class="memdesc:aeb41ac17710919149dc71e8baa14bea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Either the lane line information or turning state depending upon the current driving state.  <br /></td></tr>
+<tr class="separator:aeb41ac17710919149dc71e8baa14bea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The information needed by <a class="el" href="class_lane_and_object_detection_1_1_frame_builder.html" title="Builds OpenCV frames to be displayed to the user.">FrameBuilder</a> to update frame with lane detection information. </p>
 
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00053">53</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00050">50</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a973f4af99fc12224e7893be56a821724" name="a973f4af99fc12224e7893be56a821724"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a973f4af99fc12224e7893be56a821724">&#9670;&#160;</a></span>m_roiFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cv::Mat LaneAndObjectDetection::LaneDetectionInformation::m_roiFrame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The initial region-of-interest frame. </p>
+
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00055">55</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a2ec4b38b791bbdba58ece31b06b2e354" name="a2ec4b38b791bbdba58ece31b06b2e354"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ec4b38b791bbdba58ece31b06b2e354">&#9670;&#160;</a></span>m_cannyFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cv::Mat LaneAndObjectDetection::LaneDetectionInformation::m_cannyFrame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The frame containing the edges detected by the Canny algorithm. </p>
+
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00060">60</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aa12037395c0911c893805bf88a6a5450" name="aa12037395c0911c893805bf88a6a5450"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa12037395c0911c893805bf88a6a5450">&#9670;&#160;</a></span>m_houghLinesFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cv::Mat LaneAndObjectDetection::LaneDetectionInformation::m_houghLinesFrame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The frame contains the lines detected by the Hough transform. </p>
+
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00065">65</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+
+</div>
+</div>
 <a id="ae2e43b73d1e394b5825ae84abc5c9d18" name="ae2e43b73d1e394b5825ae84abc5c9d18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae2e43b73d1e394b5825ae84abc5c9d18">&#9670;&#160;</a></span>m_laneOverlayCorners</h2>
 
@@ -172,79 +214,7 @@ Public Attributes</h2></td></tr>
 
 <p>The co-ordinate points that outline the current lane. </p>
 
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00058">58</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
-
-</div>
-</div>
-<a id="a75d59b3cd28b327b0686c2e3d84fe6c1" name="a75d59b3cd28b327b0686c2e3d84fe6c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75d59b3cd28b327b0686c2e3d84fe6c1">&#9670;&#160;</a></span>m_leftLineTypesForDisplay</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::deque&lt;uint32_t&gt; LaneAndObjectDetection::LaneDetectionInformation::m_leftLineTypesForDisplay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The left-hand side road marking types to display. </p>
-
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00063">63</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
-
-</div>
-</div>
-<a id="ad0bead15b51cfa6c20faebffa9558d0d" name="ad0bead15b51cfa6c20faebffa9558d0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0bead15b51cfa6c20faebffa9558d0d">&#9670;&#160;</a></span>m_middleLineTypesForDisplay</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::deque&lt;uint32_t&gt; LaneAndObjectDetection::LaneDetectionInformation::m_middleLineTypesForDisplay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The middle road marking types to display. </p>
-
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00068">68</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
-
-</div>
-</div>
-<a id="a2121cdc2195f9636dd703e2a41addf4d" name="a2121cdc2195f9636dd703e2a41addf4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2121cdc2195f9636dd703e2a41addf4d">&#9670;&#160;</a></span>m_rightLineTypesForDisplay</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::deque&lt;uint32_t&gt; LaneAndObjectDetection::LaneDetectionInformation::m_rightLineTypesForDisplay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The right-hand side road marking types to display. </p>
-
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00073">73</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
-
-</div>
-</div>
-<a id="a62d498709ec333b5b860e4fc50ce5e14" name="a62d498709ec333b5b860e4fc50ce5e14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62d498709ec333b5b860e4fc50ce5e14">&#9670;&#160;</a></span>m_drivingState</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespace_lane_and_object_detection_1_1_globals.html#abd235c8782d5e767fd19b1903794e0e9">Globals::DrivingState</a> LaneAndObjectDetection::LaneDetectionInformation::m_drivingState</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The current driving state. </p>
-
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00078">78</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00070">70</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
 
 </div>
 </div>
@@ -262,79 +232,25 @@ Public Attributes</h2></td></tr>
 
 <p>The current driving state title. </p>
 
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00083">83</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00075">75</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
 
 </div>
 </div>
-<a id="aae63cdb38503f70eda9c7a5ac3d59327" name="aae63cdb38503f70eda9c7a5ac3d59327"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae63cdb38503f70eda9c7a5ac3d59327">&#9670;&#160;</a></span>m_laneInformationTitle</h2>
+<a id="aeb41ac17710919149dc71e8baa14bea5" name="aeb41ac17710919149dc71e8baa14bea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb41ac17710919149dc71e8baa14bea5">&#9670;&#160;</a></span>m_drivingStateSubTitle</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string LaneAndObjectDetection::LaneDetectionInformation::m_laneInformationTitle</td>
+          <td class="memname">std::string LaneAndObjectDetection::LaneDetectionInformation::m_drivingStateSubTitle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The current lane information title. </p>
+<p>Either the lane line information or turning state depending upon the current driving state. </p>
 
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00088">88</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
-
-</div>
-</div>
-<a id="af81a3f5d17ebbe6de1476d8cff4ac850" name="af81a3f5d17ebbe6de1476d8cff4ac850"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af81a3f5d17ebbe6de1476d8cff4ac850">&#9670;&#160;</a></span>m_turningStateTitle</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string LaneAndObjectDetection::LaneDetectionInformation::m_turningStateTitle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The current turning state title. </p>
-
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00093">93</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
-
-</div>
-</div>
-<a id="a984373df4b109ca7b07ba70c05c62ac6" name="a984373df4b109ca7b07ba70c05c62ac6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a984373df4b109ca7b07ba70c05c62ac6">&#9670;&#160;</a></span>m_turningRequiredToReturnToCenterText</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string LaneAndObjectDetection::LaneDetectionInformation::m_turningRequiredToReturnToCenterText</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The text for the current turning required to return the vehicle to the center of the current lane. </p>
-
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00098">98</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
-
-</div>
-</div>
-<a id="a86f143ead3d050b5c76f6adc9a131429" name="a86f143ead3d050b5c76f6adc9a131429"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86f143ead3d050b5c76f6adc9a131429">&#9670;&#160;</a></span>m_turningRequiredToReturnToCenterPercentage</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int32_t LaneAndObjectDetection::LaneDetectionInformation::m_turningRequiredToReturnToCenterPercentage</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The number for the current turning required to return the vehicle to the center of the current lane. </p>
-
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00103">103</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00080">80</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
 
 </div>
 </div>
@@ -347,7 +263,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="struct_lane_and_object_detection_1_1_lane_detection_information.html">LaneDetectionInformation</a></li>
-    <li class="footer">Generated on Wed Apr 2 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Thu Apr 17 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

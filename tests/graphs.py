@@ -51,7 +51,7 @@ def generic(platform, platform_file_name, platform_directory, bar_width, title_f
         ax1.set_ylim(0, 300)
     ax1.xaxis.set_tick_params(labelsize=tick_font_size)
     ax1.yaxis.set_tick_params(labelsize=tick_font_size)
-    leg = ax1.legend(['No YOLOv4', 'YOLOv4 without CUDA', 'YOLOv4 with CUDA'], prop={'size': legend_font_size}, loc='upper right')
+    leg = ax1.legend(['No YOLOv7', 'YOLOv7 without CUDA', 'YOLOv7 with CUDA'], prop={'size': legend_font_size}, loc='upper right')
     for line in leg.get_lines():
         line.set_linewidth(2)
     ax1.grid()
@@ -68,22 +68,22 @@ def generic(platform, platform_file_name, platform_directory, bar_width, title_f
     else:
         pad = bar_width / 2
 
-    ax2.bar('No YOLOv4', fps_no_yolo, width=bar_width, color='#000000', label='No YOLOv4')
+    ax2.bar('No YOLOv7', fps_no_yolo, width=bar_width, color='#000000', label='No YOLOv7')
     ax2.text(0, fps_no_yolo, str(f'{fps_no_yolo:.1f}'), ha='center', va='bottom', fontsize=bar_font_size)
 
-    ax2.bar(yolo_types_index - pad, fps_cuda, width=bar_width, color='#00AA00', label='YOLOv4 with CUDA')
+    ax2.bar(yolo_types_index - pad, fps_cuda, width=bar_width, color='#00AA00', label='YOLOv7 with CUDA')
     for index, value in enumerate(fps_cuda):
         if index != 0:
             ax2.text(index - pad, value, str(f'{value:.1f}'), ha='center', va='bottom', fontsize=bar_font_size)
 
     if not jetson_nano:
-        ax2.bar(yolo_types_index + pad, fps_no_cuda, width=bar_width, color='#AA0000', label='YOLOv4 without CUDA')
+        ax2.bar(yolo_types_index + pad, fps_no_cuda, width=bar_width, color='#AA0000', label='YOLOv7 without CUDA')
         for index, value in enumerate(fps_no_cuda):
             if index != 0:
                 ax2.text(index + pad, value, str(f'{value:.1f}'), ha='center', va='bottom', fontsize=bar_font_size)
 
     ax2.set_title(platform + ' FPS', fontdict=title_font)
-    ax2.set_xlabel('YOLOv4 Type and Blob Size', fontdict=label_font)
+    ax2.set_xlabel('YOLOv7 Type and Blob Size', fontdict=label_font)
     ax2.set_ylabel('Frames Per Second (FPS)', fontdict=label_font)
     ax2.set_xlim(-0.5, 10.5)
     if jetson_nano:
@@ -210,7 +210,7 @@ def all_platforms(bar_width, title_font, label_font, tick_font_size, legend_font
         ax2.text(index + bar_width, value, str(f'{value:.1f}'), ha='center', va='bottom', fontsize=bar_font_size)
 
     ax2.set_title('All Platforms FPS', fontdict=title_font)
-    ax2.set_xlabel('YOLOv4 Type and Blob Size', fontdict=label_font)
+    ax2.set_xlabel('YOLOv7 Type and Blob Size', fontdict=label_font)
     ax2.set_ylabel('Frames Per Second (FPS)', fontdict=label_font)
     ax2.set_xlim(-0.5, 10.5)
     ax2.set_ylim(0, 100)
@@ -229,7 +229,7 @@ def main():
     LABEL_FONT = {'family': 'arial', 'color': 'black', 'weight': 'normal', 'size': 18}
     TICK_FONT_SIZE = 14
     LEGEND_FONT_SIZE = 14
-    YOLO_TYPES = ['No YOLOv4', 'YOLOv4-tiny 288', 'YOLOv4-tiny 320', 'YOLOv4-tiny 416', 'YOLOv4-tiny 512', 'YOLOv4-tiny 608', 'YOLOv4 288', 'YOLOv4 320', 'YOLOv4 416', 'YOLOv4 512', 'YOLOv4 608']
+    YOLO_TYPES = ['No YOLOv7', 'YOLOv7-tiny 288', 'YOLOv7-tiny 320', 'YOLOv7-tiny 416', 'YOLOv7-tiny 512', 'YOLOv7-tiny 608', 'YOLOv7 288', 'YOLOv7 320', 'YOLOv7 416', 'YOLOv7 512', 'YOLOv7 608']
     YOLO_TYPES_INDEX = numpy.arange(len(YOLO_TYPES))
     GENERIC_BAR_WIDTH = 0.4
     GENERIC_BAR_FONT_SIZE = 14

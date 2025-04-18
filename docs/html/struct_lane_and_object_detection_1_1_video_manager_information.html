@@ -40,7 +40,7 @@
   <td id="projectalign">
    <div id="projectname">Lane and Object Detection
    </div>
-   <div id="projectbrief">Using OpenCV and YOLOv4</div>
+   <div id="projectbrief">Using OpenCV and YOLOv7</div>
   </td>
  </tr>
  </tbody>
@@ -122,15 +122,63 @@ $(function(){initNavTree('struct_lane_and_object_detection_1_1_video_manager_inf
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:af2c73bd190768f17de9542a0440708ed" id="r_af2c73bd190768f17de9542a0440708ed"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2c73bd190768f17de9542a0440708ed">m_debugModeText</a></td></tr>
+<tr class="memdesc:af2c73bd190768f17de9542a0440708ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Text to display whether or not the program is in debug mode.  <br /></td></tr>
+<tr class="separator:af2c73bd190768f17de9542a0440708ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e4c1e4a363523096bd8557da351981" id="r_a14e4c1e4a363523096bd8557da351981"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14e4c1e4a363523096bd8557da351981">m_saveOutputElapsedTime</a></td></tr>
+<tr class="memdesc:a14e4c1e4a363523096bd8557da351981"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time that has elapsed since starting to save the output video stream locally.  <br /></td></tr>
+<tr class="separator:a14e4c1e4a363523096bd8557da351981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33cd57ab4df8ee77c2a76e27997416bc" id="r_a33cd57ab4df8ee77c2a76e27997416bc"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33cd57ab4df8ee77c2a76e27997416bc">m_saveOutputText</a></td></tr>
 <tr class="memdesc:a33cd57ab4df8ee77c2a76e27997416bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Text to display whether or not the program is recording the output.  <br /></td></tr>
 <tr class="separator:a33cd57ab4df8ee77c2a76e27997416bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f05ae3ac180753b804cb9c9106e2bcb" id="r_a7f05ae3ac180753b804cb9c9106e2bcb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f05ae3ac180753b804cb9c9106e2bcb">m_debugMode</a></td></tr>
+<tr class="memdesc:a7f05ae3ac180753b804cb9c9106e2bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether in debug mode.  <br /></td></tr>
+<tr class="separator:a7f05ae3ac180753b804cb9c9106e2bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48a702ae89bdac7c7083ed3f3b5f195f" id="r_a48a702ae89bdac7c7083ed3f3b5f195f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48a702ae89bdac7c7083ed3f3b5f195f">m_saveOutput</a></td></tr>
+<tr class="memdesc:a48a702ae89bdac7c7083ed3f3b5f195f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the output video stream should be saved locally.  <br /></td></tr>
+<tr class="separator:a48a702ae89bdac7c7083ed3f3b5f195f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The information needed by <a class="el" href="class_lane_and_object_detection_1_1_frame_builder.html" title="Builds OpenCV frames to be displayed to the user.">FrameBuilder</a> to update frame with video manager information. </p>
 
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00130">130</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00102">102</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="af2c73bd190768f17de9542a0440708ed" name="af2c73bd190768f17de9542a0440708ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2c73bd190768f17de9542a0440708ed">&#9670;&#160;</a></span>m_debugModeText</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string LaneAndObjectDetection::VideoManagerInformation::m_debugModeText</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Text to display whether or not the program is in debug mode. </p>
+
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00107">107</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a14e4c1e4a363523096bd8557da351981" name="a14e4c1e4a363523096bd8557da351981"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e4c1e4a363523096bd8557da351981">&#9670;&#160;</a></span>m_saveOutputElapsedTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string LaneAndObjectDetection::VideoManagerInformation::m_saveOutputElapsedTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The time that has elapsed since starting to save the output video stream locally. </p>
+
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00112">112</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a33cd57ab4df8ee77c2a76e27997416bc" name="a33cd57ab4df8ee77c2a76e27997416bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a33cd57ab4df8ee77c2a76e27997416bc">&#9670;&#160;</a></span>m_saveOutputText</h2>
 
@@ -145,7 +193,43 @@ Public Attributes</h2></td></tr>
 
 <p>Text to display whether or not the program is recording the output. </p>
 
-<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00135">135</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00117">117</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a7f05ae3ac180753b804cb9c9106e2bcb" name="a7f05ae3ac180753b804cb9c9106e2bcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f05ae3ac180753b804cb9c9106e2bcb">&#9670;&#160;</a></span>m_debugMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LaneAndObjectDetection::VideoManagerInformation::m_debugMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether in debug mode. </p>
+
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00122">122</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a48a702ae89bdac7c7083ed3f3b5f195f" name="a48a702ae89bdac7c7083ed3f3b5f195f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48a702ae89bdac7c7083ed3f3b5f195f">&#9670;&#160;</a></span>m_saveOutput</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LaneAndObjectDetection::VideoManagerInformation::m_saveOutput</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether the output video stream should be saved locally. </p>
+
+<p class="definition">Definition at line <a class="el" href="_information_8hpp_source.html#l00127">127</a> of file <a class="el" href="_information_8hpp_source.html">Information.hpp</a>.</p>
 
 </div>
 </div>
@@ -158,7 +242,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html">VideoManagerInformation</a></li>
-    <li class="footer">Generated on Wed Apr 2 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Thu Apr 17 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

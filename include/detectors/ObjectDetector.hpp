@@ -18,7 +18,7 @@ namespace LaneAndObjectDetection
 {
     /**
      * @class ObjectDetector
-     * @brief YOLOv4 based object detector.
+     * @brief YOLOv7 based object detector.
      */
     class ObjectDetector
     {

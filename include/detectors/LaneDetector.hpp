@@ -34,8 +34,9 @@ namespace LaneAndObjectDetection
          * @param p_frame The frame to run the lane detector against.
          * @param p_objectDetectionInformation The ObjectDetectionInformation struct containing all object detection-related
          * information.
+         * @param p_debugMode Whether in debug mode.
          */
-        void RunLaneDetector(const cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation);
+        void RunLaneDetector(const cv::Mat& p_frame, const ObjectDetectionInformation& p_objectDetectionInformation, const bool& p_debugMode);
 
         /**
          * @brief Get the LaneDetectionInformation struct.
@@ -51,8 +52,9 @@ namespace LaneAndObjectDetection
          *
          * @param p_houghLines The hough lines that have been detected.
          * @param p_objectDetectionInformation The ObjectDetectionInformation struct containing the object bounding boxes.
+         * @param p_debugMode Whether in debug mode.
          */
-        void AnalyseHoughLines(const std::vector<cv::Vec4i>& p_houghLines, const ObjectDetectionInformation& p_objectDetectionInformation);
+        void AnalyseHoughLines(const std::vector<cv::Vec4i>& p_houghLines, const ObjectDetectionInformation& p_objectDetectionInformation, const bool& p_debugMode);
 
         /**
          * @brief Determines whether `p_houghLine` is within any one of the `p_objectDetectionInformation` object bounding boxes.
@@ -75,15 +77,19 @@ namespace LaneAndObjectDetection
         void UpdateDrivingState();
 
         /**
-         * @brief Determines the vehicles position within the current lane, the turning required to return to the centre of the
-         * lane and the lane overlay.
+         * @brief Execute logic based on the current driving state.
+         */
+        void ExecuteDrivingState();
+
+        /**
+         * @brief Determines the lane overlay for the current lane.
          */
         void CalculateLanePosition();
 
         /**
          * @brief Determines the direction (left, right or neither) that the vehicle is turning while changing lanes.
          */
-        void CalculateTurningDirection();
+        void CalculateChangingLanesTurningDirection();
 
         /**
          * @class RollingAverage
@@ -121,19 +127,14 @@ namespace LaneAndObjectDetection
         LaneDetectionInformation m_laneDetectionInformation;
 
         /**
-         * @brief The rolling averages to determine the line types (solid, dashed or empty) for the left, middle and right lane
-         * lines.
-         */
-        ///@{
-        RollingAverage<uint32_t> m_leftLaneLineTypeRollingAverage;
-        RollingAverage<uint32_t> m_middleLaneLineTypeRollingAverage;
-        RollingAverage<uint32_t> m_rightLaneLineTypeRollingAverage;
-        ///@}
-
-        /**
          * @brief The rolling average to determine the driving state.
          */
         RollingAverage<Globals::DrivingState> m_drivingStateRollingAverage;
+
+        /**
+         * @brief The current driving state.
+         */
+        Globals::DrivingState m_currentDrivingState;
 
         /**
          * @brief The left, middle and right lane lines that have been detected for the current frame.

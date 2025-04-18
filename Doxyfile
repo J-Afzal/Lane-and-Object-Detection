@@ -6,7 +6,7 @@ DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = Lane and Object Detection
 
-PROJECT_BRIEF          = Using OpenCV and YOLOv4
+PROJECT_BRIEF          = Using OpenCV and YOLOv7
 
 PROJECT_LOGO           = ./resources/icons/LaneAndObjectDetection.ico
 
@@ -50,7 +50,7 @@ INPUT                  = ./README.md ./include/ ./source/
 
 RECURSIVE              = YES
 
-IMAGE_PATH             = 
+IMAGE_PATH             =
 
 USE_MDFILE_AS_MAINPAGE = README.md
 

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <array>
+#include <chrono>
+#include <cmath>
 #include <cstdint>
 #include <exception>
 #include <map>
@@ -32,6 +34,64 @@ namespace LaneAndObjectDetection::Globals
     }
 
     /**
+     * @brief Gets the elapsed time from `p_startTime` to now.
+     *
+     * @param p_startTime The time to compare to now.
+     * @return `std::string` The elapsed time in the format `mm:ss` if less than an hour or `H:mm:ss` if more than one hour.
+     */
+    static inline std::string GetTimeElapsed(const std::chrono::time_point<std::chrono::high_resolution_clock>& p_startTime)
+    {
+        const double MINUTES_IN_HOUR = 60;
+        const double SECONDS_IN_HOUR = 3600;
+        const double SECONDS_IN_MINUTE = 60;
+        const uint32_t PADDING_THRESHOLD = 10;
+
+        const uint32_t TOTAL_TIME_IN_SECONDS = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - p_startTime).count();
+
+        const double TOTAL_HOURS = TOTAL_TIME_IN_SECONDS / SECONDS_IN_HOUR;
+        const double TOTAL_MINUTES = (TOTAL_HOURS - std::floor(TOTAL_HOURS)) * MINUTES_IN_HOUR;
+        const double TOTAL_SECONDS = (TOTAL_MINUTES - std::floor(TOTAL_MINUTES)) * SECONDS_IN_MINUTE;
+
+        const uint32_t HOURS = std::floor(TOTAL_HOURS);
+        const uint32_t MINUTES = std::floor(TOTAL_MINUTES);
+        const uint32_t SECONDS = std::floor(TOTAL_SECONDS);
+
+        std::string output;
+
+        if (HOURS > 0)
+        {
+            output += std::to_string(HOURS);
+            output += ":";
+        }
+
+        if (MINUTES < PADDING_THRESHOLD)
+        {
+            output += "0";
+            output += std::to_string(MINUTES);
+        }
+
+        else
+        {
+            output += std::to_string(MINUTES);
+        }
+
+        output += ":";
+
+        if (SECONDS < PADDING_THRESHOLD)
+        {
+            output += "0";
+            output += std::to_string(SECONDS);
+        }
+
+        else
+        {
+            output += std::to_string(SECONDS);
+        }
+
+        return output;
+    }
+
+    /**
      * @brief CLI help message for the video manager.
      */
     static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
@@ -40,41 +100,42 @@ namespace LaneAndObjectDetection::Globals
      * @brief Input video dimensions.
      */
     ///@{
-    static inline const uint32_t G_INPUT_VIDEO_HEIGHT = 1080;
-    static inline const uint32_t G_INPUT_VIDEO_WIDTH = 1920;
+    static inline const uint32_t G_VIDEO_INPUT_HEIGHT = 1080;
+    static inline const uint32_t G_VIDEO_INPUT_WIDTH = 1920;
     ///@}
 
     /**
      * @brief Output video dimensions.
      */
     ///@{
-    static inline const uint32_t G_OUTPUT_VIDEO_HEIGHT = 1080;
-    static inline const uint32_t G_OUTPUT_VIDEO_WIDTH = 1920;
+    static inline const uint32_t G_VIDEO_OUTPUT_HEIGHT = 1080;
+    static inline const uint32_t G_VIDEO_OUTPUT_WIDTH = 1920;
     ///@}
 
     /**
      * @brief Output video FPS
      */
-    static inline const uint32_t G_OUTPUT_VIDEO_FPS = 30;
+    static inline const uint32_t G_VIDEO_OUTPUT_FPS = 30;
 
     /**
      * @brief Keyboard values when getting user input.
      */
     ///@{
-    static inline const uint32_t G_TOGGLE_RECORDING_KEY = 'r';
-    static inline const uint32_t G_QUIT_KEY = 'q';
+    static inline const uint32_t G_KEY_DEBUG_MODE = 'd';
+    static inline const uint32_t G_KEY_TOGGLE_SAVE_OUTPUT = 'r';
+    static inline const uint32_t G_KEY_QUIT = 'q';
     ///@}
 
     /**
      * @brief Font settings.
      */
     ///@{
-    static inline const uint32_t G_DEFAULT_FONT_FACE = cv::FONT_HERSHEY_DUPLEX;
-    static inline const uint32_t G_DEFAULT_FONT_THICKNESS = 1;
-    static inline const int32_t G_DEFAULT_HORIZONTAL_PADDING = 10;
-    static inline const int32_t G_DEFAULT_VERTICAL_PADDING = 15;
-    static inline const double G_DEFAULT_FONT_DECREMENT = 0.1;
-    static inline const double G_DEFAULT_FONT_SCALE = 1;
+    static inline const uint32_t G_FONT_DEFAULT_FACE = cv::FONT_HERSHEY_DUPLEX;
+    static inline const uint32_t G_FONT_DEFAULT_THICKNESS = 1;
+    static inline const int32_t G_FONT_DEFAULT_HORIZONTAL_PADDING = 10;
+    static inline const int32_t G_FONT_DEFAULT_VERTICAL_PADDING = 15;
+    static inline const double G_FONT_DEFAULT_DECREMENT = 0.1;
+    static inline const double G_FONT_DEFAULT_SCALE = 1;
     ///@}
 
     /**
@@ -85,22 +146,19 @@ namespace LaneAndObjectDetection::Globals
     static inline const cv::Scalar G_COLOUR_GREY = cv::Scalar(128, 128, 128);
     static inline const cv::Scalar G_COLOUR_WHITE = cv::Scalar(255, 255, 255);
     static inline const cv::Scalar G_COLOUR_RED = cv::Scalar(0, 0, 192);
+    static inline const cv::Scalar G_COLOUR_LIGHT_RED = cv::Scalar(128, 128, 192);
     static inline const cv::Scalar G_COLOUR_ORANGE = cv::Scalar(0, 128, 192);
     static inline const cv::Scalar G_COLOUR_YELLOW = cv::Scalar(0, 192, 192);
     static inline const cv::Scalar G_COLOUR_GREEN = cv::Scalar(0, 192, 0);
     static inline const cv::Scalar G_COLOUR_BLUE = cv::Scalar(192, 0, 0);
+    static inline const cv::Scalar G_COLOUR_LIGHT_BLUE = cv::Scalar(192, 128, 128);
     static inline const cv::Scalar G_COLOUR_PURPLE = cv::Scalar(192, 0, 192);
     ///@}
 
     /**
      * @brief Conversion between time units.
      */
-    ///@{
-    static inline const double G_MINUTES_IN_HOUR = 60;
-    static inline const double G_SECONDS_IN_HOUR = 3600;
-    static inline const double G_SECONDS_IN_MINUTE = 60;
     static inline const double G_MILLISECONDS_IN_SECOND = 1000;
-    ///@}
 
     /**
      * @brief Convert a decimal value to a percentage.
@@ -113,74 +171,83 @@ namespace LaneAndObjectDetection::Globals
     static inline const double G_DIVIDE_BY_TWO = 2;
 
     /**
-     * @brief Text to display whether recording or not recording.
+     * @brief Text to display whether or not recording.
      */
     ///@{
-    static inline const std::string G_UI_TEXT_RECORDING = "Recording Output";
-    static inline const std::string G_UI_TEXT_NOT_RECORDING = "Press 'r' to start recording";
+    static inline const std::string G_UI_TEXT_RECORDING = "Output Recording Enabled";
+    static inline const std::string G_UI_TEXT_NOT_RECORDING = "Press 'r' to record output";
     ///@}
 
     /**
-     * @brief Generic UI element properties.
+     * @brief Text to display whether or not in debug mode.
      */
     ///@{
-    static inline const int32_t G_UI_PADDING = 30;
-    static inline const int32_t G_UI_TITLE_HEIGHT = 50;
-    static inline const int32_t G_UI_SUBTITLE_HEIGHT = 30;
+    static inline const std::string G_UI_TEXT_DEBUG_MODE = "Debug Mode Enabled";
+    static inline const std::string G_UI_TEXT_NOT_DEBUG_MODE = "Press 'd' to enter debug mode";
     ///@}
 
     /**
-     * @brief Lane detector-related information UI widths.
+     * @brief Font scales for different heading sizes.
      */
     ///@{
-    static inline const int32_t G_UI_DRIVING_STATE_WIDTH = 500;
-    static inline const int32_t G_UI_TURNING_STATE_WIDTH = 300;
-    static inline const int32_t G_UI_LANE_INFORMATION_WIDTH = 200;
+    static inline const double G_UI_H1_FONT_SCALE = 0.6;
+    static inline const double G_UI_H2_FONT_SCALE = 0.4;
     ///@}
 
     /**
-     * @brief Lane detector-related information UI locations.
+     * @brief UI heights.
      */
     ///@{
-    static inline const cv::Rect G_UI_DRIVING_STATE_RECT = cv::Rect((Globals::G_INPUT_VIDEO_WIDTH / 2.0) - (G_UI_DRIVING_STATE_WIDTH / 2.0), G_UI_PADDING, G_UI_DRIVING_STATE_WIDTH, G_UI_TITLE_HEIGHT);
-    static inline const cv::Rect G_UI_TURNING_STATE_RECT = cv::Rect((Globals::G_INPUT_VIDEO_WIDTH / 2.0) - (G_UI_TURNING_STATE_WIDTH / 2.0), G_UI_DRIVING_STATE_RECT.y + G_UI_DRIVING_STATE_RECT.height + G_UI_PADDING, G_UI_TURNING_STATE_WIDTH, G_UI_SUBTITLE_HEIGHT);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_TITLE_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_LANE_INFORMATION_TITLE_RECT.y + G_UI_LANE_INFORMATION_TITLE_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, 200);
-    static inline const cv::Rect G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_PADDING - G_UI_LANE_INFORMATION_WIDTH, G_UI_LANE_INFORMATION_RECT.y + G_UI_LANE_INFORMATION_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
+    static inline const int32_t G_UI_BOTTOM_BAR_HEIGHT = 55;
+    static inline const int32_t G_UI_TITLE_HEIGHT = 30;
+    static inline const int32_t G_UI_SUBTITLE_HEIGHT = 25;
     ///@}
 
     /**
-     * @brief Recording status UI location.
+     * @brief Timestamp UI location.
      */
-    static inline const cv::Rect G_RECORDING_STATUS_RECT = cv::Rect(G_INPUT_VIDEO_WIDTH - G_UI_LANE_INFORMATION_WIDTH - G_UI_PADDING, G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT.y + G_UI_LANE_INFORMATION_TURNING_REQUIRED_RECT.height + G_UI_PADDING, G_UI_LANE_INFORMATION_WIDTH, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_TIMESTAMP = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
 
     /**
-     * @brief Lane information-related lane state UI properties.
+     * @brief Performance-related information UI location.
+     */
+    static inline const cv::Rect G_UI_RECT_FPS = cv::Rect(300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
+
+    /**
+     * @brief Driving state UI location (width is the entire screen for centering).
+     */
+    static inline const cv::Rect G_UI_RECT_DRIVING_STATE = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, G_VIDEO_INPUT_WIDTH, G_UI_TITLE_HEIGHT);
+
+    /**
+     * @brief Driving state sub-title UI location (width is the entire screen for centering).
+     */
+    static inline const cv::Rect G_UI_RECT_DRIVING_STATE_SUBTITLE = cv::Rect(0, G_VIDEO_INPUT_HEIGHT - G_UI_SUBTITLE_HEIGHT, G_VIDEO_INPUT_WIDTH, G_UI_SUBTITLE_HEIGHT);
+
+    /**
+     * @brief Debug mode status UI location
+     */
+    static inline const cv::Rect G_UI_RECT_DEBUG_MODE_STATUS = cv::Rect(G_VIDEO_INPUT_WIDTH - 600, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
+
+    /**
+     * @brief Recording status UI locations.
      */
     ///@{
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_PAD = 30;
-    static inline const int32_t G_LANE_INFORMATION_LEFT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_LANE_INFORMATION_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_MIDDLE_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + static_cast<int32_t>(G_UI_LANE_INFORMATION_RECT.width / 2.0);
-    static inline const int32_t G_LANE_INFORMATION_RIGHT_LANE_STATE_X_LOCATION = G_UI_LANE_INFORMATION_RECT.x + G_UI_LANE_INFORMATION_RECT.width - G_LANE_INFORMATION_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_Y_START_LOCATION = G_UI_LANE_INFORMATION_RECT.y + G_LANE_INFORMATION_LANE_STATE_PAD;
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_WIDTH = 3;
-    static inline const int32_t G_LANE_INFORMATION_LANE_STATE_HEIGHT = 15;
+    static inline const cv::Rect G_UI_RECT_RECORDING_STATUS = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_TITLE_HEIGHT);
+    static inline const cv::Rect G_UI_RECT_RECORDING_ELAPSED_TIME = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_SUBTITLE_HEIGHT, 300, G_UI_SUBTITLE_HEIGHT);
+    static inline const cv::Point G_UI_POINT_RECORDING_DOT = cv::Point(G_VIDEO_INPUT_WIDTH - 190, G_VIDEO_INPUT_HEIGHT - 13);
+    static inline const uint32_t G_UI_RADIUS_RECORDING_DOT = 5;
+    static inline const cv::Rect G_UI_RECT_NOT_RECORDING_STATUS = cv::Rect(G_VIDEO_INPUT_WIDTH - 300, G_VIDEO_INPUT_HEIGHT - G_UI_BOTTOM_BAR_HEIGHT, 300, G_UI_BOTTOM_BAR_HEIGHT);
     ///@}
 
     /**
-     * @brief Lane information-related vehicle position UI properties.
+     * @brief The thickness of the hough lines drawn in debug mode.
      */
-    ///@{
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH = G_UI_LANE_INFORMATION_RECT.width - (4 * G_UI_PADDING);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_HEIGHT = G_UI_LANE_INFORMATION_RECT.height - (3 * G_UI_PADDING);
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_X_MIDDLE_LOCATION = G_UI_LANE_INFORMATION_RECT.x + static_cast<int32_t>((G_UI_LANE_INFORMATION_RECT.width / 2.0) - (G_LANE_INFORMATION_VEHICLE_POSITION_WIDTH / 2.0));
-    static inline const int32_t G_LANE_INFORMATION_VEHICLE_POSITION_Y_LOCATION = G_UI_LANE_INFORMATION_RECT.y + static_cast<int32_t>(1.5 * G_UI_PADDING);
-    ///@}
+    static inline const int32_t G_HOUGH_LINE_THICKNESS = 2;
 
     /**
      * @brief Translucent colour of the overlay for the current lane.
      */
-    static inline const cv::Scalar G_LANE_INFORMATION_LANE_OVERLAY_COLOUR = cv::Scalar(0, 64, 0);
+    static inline const cv::Scalar G_LANE_OVERLAY_COLOUR = cv::Scalar(0, 64, 0);
 
     /**
      * @brief Default rolling average size.
@@ -188,43 +255,69 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_DEFAULT_ROLLING_AVERAGE_SIZE = 10;
 
     /**
-     * @brief The number of lane lines to display to the frame.
-     */
-    static inline const uint32_t G_NUMBER_OF_LANE_LINES_TO_DISPLAY = 5;
-
-    /**
-     * @brief Region of interest dimensions.
+     * @brief Region-of-interest dimensions.
      */
     ///@{
     static inline const int32_t G_ROI_TOP_HEIGHT = 660;
     static inline const int32_t G_ROI_BOTTOM_HEIGHT = 840;
     static inline const int32_t G_ROI_TOP_WIDTH = 200;
     static inline const int32_t G_ROI_BOTTOM_WIDTH = 900;
-    static inline const uint32_t G_NUMBER_OF_POINTS = 4;
     ///@}
 
     /**
-     * @brief Region of interest points. Below is how the indicies of the array map to the points.
+     * @brief Region-of-interest points. Below is how the indicies of the array map to the points.
      *
      *       Top left (0) >  ____________________  < Top right (1)
-     *                      /         / \        \
-     *                     /         /   \        \
-     *                    /         /     \        \
-     *                   /         /       \        \
-     *                  /         /         \        \
-     *                 /         /           \        \
-     *                 ---------- ----------- ----------
+     *                      /                    \
+     *                     /                      \
+     *                    /                        \
+     *                   /                          \
+     *                  /                            \
+     *                 /                              \
+     *                 --------------------------------
      * Bottom Left (3) ^                               ^ Bottom right (2)
      */
+    ///@{
+    static inline const uint32_t G_NUMBER_OF_POINTS = 4;
     static inline const std::array<cv::Point, G_NUMBER_OF_POINTS> G_ROI_MASK_POINTS = {
-        cv::Point((G_INPUT_VIDEO_WIDTH / 2) - (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
-        cv::Point((G_INPUT_VIDEO_WIDTH / 2) + (G_ROI_TOP_WIDTH / 2), G_ROI_TOP_HEIGHT),
-        cv::Point((G_INPUT_VIDEO_WIDTH / 2) + (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
-        cv::Point((G_INPUT_VIDEO_WIDTH / 2) - (G_ROI_BOTTOM_WIDTH / 2), G_ROI_BOTTOM_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) - (G_ROI_TOP_WIDTH / 2.0), G_ROI_TOP_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) + (G_ROI_TOP_WIDTH / 2.0), G_ROI_TOP_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) + (G_ROI_BOTTOM_WIDTH / 2.0), G_ROI_BOTTOM_HEIGHT),
+        cv::Point((G_VIDEO_INPUT_WIDTH / 2.0) - (G_ROI_BOTTOM_WIDTH / 2.0), G_ROI_BOTTOM_HEIGHT),
     };
+    ///@}
 
     /**
-     * @brief The index values which represent each corner of G_ROI_MASK_POINTS.
+     * @brief The bounding box of the region-of-interest which is used to crop debugging frames. The '#' characters show the
+     * bounding box with respect to the region-of-interest.
+     *
+     *                #######____________________######## < Start Y
+     *                #     /                    \      #
+     *                #    /                      \     #
+     *                #   /                        \    #
+     *                #  /                          \   #
+     *                # /                            \  #
+     *                #/                              \ #
+     *                #---------------------------------# < End Y
+     *        Start X ^                           End X ^
+     */
+    ///@{
+    static inline const uint32_t G_ROI_BOUND_BOX_PADDING = 10;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_START_X = (G_VIDEO_INPUT_WIDTH / 2.0) - (G_ROI_BOTTOM_WIDTH / 2.0) - G_ROI_BOUND_BOX_PADDING;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_END_X = (G_VIDEO_INPUT_WIDTH / 2.0) + (G_ROI_BOTTOM_WIDTH / 2.0) + G_ROI_BOUND_BOX_PADDING;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_START_Y = G_ROI_TOP_HEIGHT - G_ROI_BOUND_BOX_PADDING;
+    static inline const uint32_t G_ROI_BOUNDING_BOX_END_Y = G_ROI_BOTTOM_HEIGHT + G_ROI_BOUND_BOX_PADDING;
+    static inline const cv::Range G_ROI_BOUNDING_BOX_X_RANGE = cv::Range(G_ROI_BOUNDING_BOX_START_X, G_ROI_BOUNDING_BOX_END_X);
+    static inline const cv::Range G_ROI_BOUNDING_BOX_Y_RANGE = cv::Range(G_ROI_BOUNDING_BOX_START_Y, G_ROI_BOUNDING_BOX_END_Y);
+    ///@}
+
+    /**
+     * @brief Scaling factor for debugging frames.
+     */
+    static inline const double G_DEBUGGING_FRAME_SCALING_FACTOR = static_cast<double>(G_VIDEO_INPUT_WIDTH / 3.0) / static_cast<double>(G_ROI_BOUNDING_BOX_END_X - G_ROI_BOUNDING_BOX_START_X);
+
+    /**
+     * @brief The index values which represent each corner of `G_ROI_MASK_POINTS`.
      */
     ///@{
     static inline const uint32_t G_ROI_TOP_LEFT_INDEX = 0;
@@ -234,16 +327,16 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
-     * @brief Region of interest sub-division line equations (y = mx + c).
+     * @brief Region-of-interest sub-division line equations (y = mx + c).
      *
      *                                   Top mid-point
      *                         __________|__________
-     *                        /         # &        \
-     *                       /         #   &        \
-     * Left edge of mask >  /         #     &        \  < Right edge of mask
-     *                     /         #       &        \
-     *                    /         #         &        \
-     *                   /         #           &        \
+     *                        /         # &         \
+     *                       /         #   &         \
+     * Left edge of mask >  /         #     &         \  < Right edge of mask
+     *                     /         #       &         \
+     *                    /         #         &         \
+     *                   /         #           &         \
      *                   ---------- ----------- ----------
      *           Bottom one third ^             ^ Bottom two thirds
      *
@@ -308,16 +401,6 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75;
 
     /**
-     * @brief The type of lane line.
-     */
-    enum class LaneLineType : std::uint8_t
-    {
-        EMPTY = 0,
-        DASHED,
-        SOLID
-    };
-
-    /**
      * @brief The different driving states supported by the lane detector.
      */
     enum class DrivingState : std::uint8_t
@@ -339,27 +422,6 @@ namespace LaneAndObjectDetection::Globals
         {DrivingState::ONLY_RIGHT_LANE_MARKING_DETECTED, "WARNING: Only right road marking detected"},
         {DrivingState::NO_LANE_MARKINGS_DETECTED,        "WARNING: No road markings detected"       },
     };
-
-    /**
-     * @brief Text to display whether recording or not recording.
-     */
-    ///@{
-    static inline const std::string G_LANE_INFORMATION_TITLE_LANE_DETECTED = "Detected Lanes";
-    static inline const std::string G_LANE_INFORMATION_TITLE_LANE_NOT_DETECTED = "No Lanes Detected";
-    ///@}
-
-    /**
-     * @brief The clamp parameters for determining the distance difference when the vehicle is within a lane.
-     */
-    ///@{
-    static inline const double G_WITHIN_LANE_MINIMUM_CLAMP_DIFFERENCE_DISTANCE = -100;
-    static inline const double G_WITHIN_LANE_MAXIMUM_CLAMP_DIFFERENCE_DISTANCE = 100;
-    ///@}
-
-    /**
-     * @brief The nearest percentage amount to round the turning required down to.
-     */
-    static inline const uint32_t G_WITHIN_LANE_TURNING_REQUIRED_ROUNDING = 10;
 
     /**
      * @brief The number of frames to wait before calculating another distance difference while the vehicle is changing lanes.
@@ -521,8 +583,8 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
-     * @brief Object names and bounding box colours. G_OPENCV_WHITE is used as the default colour while custom colours are given
-     * to object more commonly found while driving.
+     * @brief Object names and bounding box colours. `G_OPENCV_WHITE` is used as the default colour while custom colours are
+     * given to object more commonly found while driving.
      */
     static inline const std::map<std::string, cv::Scalar> G_OBJECT_DETECTOR_OBJECT_NAMES_AND_COLOURS = {
         {"aeroplane",      G_COLOUR_WHITE },
@@ -608,14 +670,6 @@ namespace LaneAndObjectDetection::Globals
     };
 
     /**
-     * @brief Performance-related information UI location.
-     */
-    ///@{
-    static inline const cv::Rect G_PERFORMANCE_AVERAGE_FPS_BACKGROUND_RECT = cv::Rect(30, 30, 250, 30);
-    static inline const cv::Rect G_PERFORMANCE_CURRENT_FPS_BACKGROUND_RECT = cv::Rect(30, 90, 250, 30);
-    ///@}
-
-    /**
      * @brief CLI help message for the performance tests.
      */
     static inline const std::string G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE = "Usage: lane-and-object-detection-performance-tests --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help              Display available options\n\nRequired Options:\n\n-i --input             Benchmark video file path\n-y --yolo-folder-path  Path to the yolo folder\n-r --repetitions       Number of repetitions for each test";
@@ -626,99 +680,99 @@ namespace LaneAndObjectDetection::Globals
     ///@{
     static inline const uint32_t G_PERFORMANCE_TESTS_NUMBER_OF_TESTS = 21;
 
-    static inline const std::array<Globals::ObjectDetectorTypes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES = {
-        Globals::ObjectDetectorTypes::NONE,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::TINY,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD,
-        Globals::ObjectDetectorTypes::STANDARD};
+    static inline const std::array<ObjectDetectorTypes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES = {
+        ObjectDetectorTypes::NONE,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD};
 
-    static inline const std::array<Globals::ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CUDA,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
-        Globals::ObjectDetectorBackEnds::CPU,
+    static inline const std::array<ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CPU,
     };
 
-    static inline const std::array<Globals::ObjectDetectorBlobSizes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BLOB_SIZES = {
-        Globals::ObjectDetectorBlobSizes::ONE,
-        Globals::ObjectDetectorBlobSizes::ONE,
-        Globals::ObjectDetectorBlobSizes::TWO,
-        Globals::ObjectDetectorBlobSizes::THREE,
-        Globals::ObjectDetectorBlobSizes::FOUR,
-        Globals::ObjectDetectorBlobSizes::FIVE,
-        Globals::ObjectDetectorBlobSizes::ONE,
-        Globals::ObjectDetectorBlobSizes::TWO,
-        Globals::ObjectDetectorBlobSizes::THREE,
-        Globals::ObjectDetectorBlobSizes::FOUR,
-        Globals::ObjectDetectorBlobSizes::FIVE,
-        Globals::ObjectDetectorBlobSizes::ONE,
-        Globals::ObjectDetectorBlobSizes::TWO,
-        Globals::ObjectDetectorBlobSizes::THREE,
-        Globals::ObjectDetectorBlobSizes::FOUR,
-        Globals::ObjectDetectorBlobSizes::FIVE,
-        Globals::ObjectDetectorBlobSizes::ONE,
-        Globals::ObjectDetectorBlobSizes::TWO,
-        Globals::ObjectDetectorBlobSizes::THREE,
-        Globals::ObjectDetectorBlobSizes::FOUR,
-        Globals::ObjectDetectorBlobSizes::FIVE,
+    static inline const std::array<ObjectDetectorBlobSizes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BLOB_SIZES = {
+        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::FOUR,
+        ObjectDetectorBlobSizes::FIVE,
+        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::FOUR,
+        ObjectDetectorBlobSizes::FIVE,
+        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::FOUR,
+        ObjectDetectorBlobSizes::FIVE,
+        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::FOUR,
+        ObjectDetectorBlobSizes::FIVE,
     };
 
     static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES = {
-        "no_yolov4",
-        "yolov4-tiny_288_cuda",
-        "yolov4-tiny_320_cuda",
-        "yolov4-tiny_416_cuda",
-        "yolov4-tiny_512_cuda",
-        "yolov4-tiny_608_cuda",
-        "yolov4_288_cuda",
-        "yolov4_320_cuda",
-        "yolov4_416_cuda",
-        "yolov4_512_cuda",
-        "yolov4_608_cuda",
-        "yolov4-tiny_288",
-        "yolov4-tiny_320",
-        "yolov4-tiny_416",
-        "yolov4-tiny_512",
-        "yolov4-tiny_608",
-        "yolov4_288",
-        "yolov4_320",
-        "yolov4_416",
-        "yolov4_512",
-        "yolov4_608",
+        "no_yolov7",
+        "yolov7-tiny_288_cuda",
+        "yolov7-tiny_320_cuda",
+        "yolov7-tiny_416_cuda",
+        "yolov7-tiny_512_cuda",
+        "yolov7-tiny_608_cuda",
+        "yolov7_288_cuda",
+        "yolov7_320_cuda",
+        "yolov7_416_cuda",
+        "yolov7_512_cuda",
+        "yolov7_608_cuda",
+        "yolov7-tiny_288",
+        "yolov7-tiny_320",
+        "yolov7-tiny_416",
+        "yolov7-tiny_512",
+        "yolov7-tiny_608",
+        "yolov7_288",
+        "yolov7_320",
+        "yolov7_416",
+        "yolov7_512",
+        "yolov7_608",
     };
     ///@}
 }

@@ -40,7 +40,7 @@
   <td id="projectalign">
    <div id="projectname">Lane and Object Detection
    </div>
-   <div id="projectbrief">Using OpenCV and YOLOv4</div>
+   <div id="projectbrief">Using OpenCV and YOLOv7</div>
   </td>
  </tr>
  </tbody>
@@ -135,12 +135,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0f8c6a86c3234e548b1575b6c4927fd8" id="r_a0f8c6a86c3234e548b1575b6c4927fd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html">PerformanceInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f8c6a86c3234e548b1575b6c4927fd8">GetInformation</a> ()</td></tr>
 <tr class="memdesc:a0f8c6a86c3234e548b1575b6c4927fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> struct.  <br /></td></tr>
 <tr class="separator:a0f8c6a86c3234e548b1575b6c4927fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a419ff42d7848d98329e88301fff24d19" id="r_a419ff42d7848d98329e88301fff24d19"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a419ff42d7848d98329e88301fff24d19">GetFrameTimes</a> ()</td></tr>
+<tr class="memdesc:a419ff42d7848d98329e88301fff24d19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the times to compute each and every frame.Globals.  <br /></td></tr>
+<tr class="separator:a419ff42d7848d98329e88301fff24d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a7cc8f19440b7948fe187635adbf82bc5" id="r_a7cc8f19440b7948fe187635adbf82bc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html">PerformanceInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7cc8f19440b7948fe187635adbf82bc5">m_performanceInformation</a></td></tr>
 <tr class="memdesc:a7cc8f19440b7948fe187635adbf82bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> struct containing all performance-related information.  <br /></td></tr>
 <tr class="separator:a7cc8f19440b7948fe187635adbf82bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4961c13a59ea9e4c977ff47012111e2" id="r_af4961c13a59ea9e4c977ff47012111e2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4961c13a59ea9e4c977ff47012111e2">m_frameTimes</a></td></tr>
+<tr class="memdesc:af4961c13a59ea9e4c977ff47012111e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame times that have been measured.  <br /></td></tr>
+<tr class="separator:af4961c13a59ea9e4c977ff47012111e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5568a9f5a93878c5e03a2f44f8fb72e1" id="r_a5568a9f5a93878c5e03a2f44f8fb72e1"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5568a9f5a93878c5e03a2f44f8fb72e1">m_startTime</a></td></tr>
 <tr class="memdesc:a5568a9f5a93878c5e03a2f44f8fb72e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time the internal timer was started within <code><a class="el" href="#ad0bc629413e0f6d9c2fd7293050e8cfb" title="Start the internal timer.">StartTimer()</a></code>.  <br /></td></tr>
 <tr class="separator:a5568a9f5a93878c5e03a2f44f8fb72e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,7 +154,7 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Calculates the frame times and current/average frames per second for real-time performance tracking. </p>
 
-<p class="definition">Definition at line <a class="el" href="_performance_8hpp_source.html#l00017">17</a> of file <a class="el" href="_performance_8hpp_source.html">Performance.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_performance_8hpp_source.html#l00019">19</a> of file <a class="el" href="_performance_8hpp_source.html">Performance.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3bc9e108e69ca90718a19779ad1e87e4" name="a3bc9e108e69ca90718a19779ad1e87e4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bc9e108e69ca90718a19779ad1e87e4">&#9670;&#160;</a></span>Performance()</h2>
@@ -197,7 +203,7 @@ Private Attributes</h2></td></tr>
 
 <p>Start the internal timer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_performance_8cpp_source.html#l00016">16</a> of file <a class="el" href="_performance_8cpp_source.html">Performance.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_performance_8cpp_source.html#l00014">14</a> of file <a class="el" href="_performance_8cpp_source.html">Performance.cpp</a>.</p>
 
 </div>
 </div>
@@ -218,7 +224,7 @@ Private Attributes</h2></td></tr>
 
 <p>End the internal timer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_performance_8cpp_source.html#l00021">21</a> of file <a class="el" href="_performance_8cpp_source.html">Performance.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_performance_8cpp_source.html#l00019">19</a> of file <a class="el" href="_performance_8cpp_source.html">Performance.cpp</a>.</p>
 
 </div>
 </div>
@@ -240,7 +246,29 @@ Private Attributes</h2></td></tr>
 <p>Get the <a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> struct. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> The <a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> struct. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_performance_8cpp_source.html#l00034">34</a> of file <a class="el" href="_performance_8cpp_source.html">Performance.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_performance_8cpp_source.html#l00032">32</a> of file <a class="el" href="_performance_8cpp_source.html">Performance.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a419ff42d7848d98329e88301fff24d19" name="a419ff42d7848d98329e88301fff24d19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a419ff42d7848d98329e88301fff24d19">&#9670;&#160;</a></span>GetFrameTimes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; uint32_t &gt; LaneAndObjectDetection::Performance::GetFrameTimes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the times to compute each and every frame.Globals. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>std::vector&lt;uint32_t&gt;</code> A list of the time to compute each frame. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_performance_8cpp_source.html#l00037">37</a> of file <a class="el" href="_performance_8cpp_source.html">Performance.cpp</a>.</p>
 
 </div>
 </div>
@@ -267,7 +295,33 @@ Private Attributes</h2></td></tr>
 
 <p>The <a class="el" href="struct_lane_and_object_detection_1_1_performance_information.html" title="The information needed by FrameBuilder to update frame with performance information.">PerformanceInformation</a> struct containing all performance-related information. </p>
 
-<p class="definition">Definition at line <a class="el" href="_performance_8hpp_source.html#l00046">46</a> of file <a class="el" href="_performance_8hpp_source.html">Performance.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_performance_8hpp_source.html#l00055">55</a> of file <a class="el" href="_performance_8hpp_source.html">Performance.hpp</a>.</p>
+
+</div>
+</div>
+<a id="af4961c13a59ea9e4c977ff47012111e2" name="af4961c13a59ea9e4c977ff47012111e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4961c13a59ea9e4c977ff47012111e2">&#9670;&#160;</a></span>m_frameTimes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;uint32_t&gt; LaneAndObjectDetection::Performance::m_frameTimes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The frame times that have been measured. </p>
+
+<p class="definition">Definition at line <a class="el" href="_performance_8hpp_source.html#l00060">60</a> of file <a class="el" href="_performance_8hpp_source.html">Performance.hpp</a>.</p>
 
 </div>
 </div>
@@ -293,7 +347,7 @@ Private Attributes</h2></td></tr>
 
 <p>The time the internal timer was started within <code><a class="el" href="#ad0bc629413e0f6d9c2fd7293050e8cfb" title="Start the internal timer.">StartTimer()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="_performance_8hpp_source.html#l00051">51</a> of file <a class="el" href="_performance_8hpp_source.html">Performance.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_performance_8hpp_source.html#l00065">65</a> of file <a class="el" href="_performance_8hpp_source.html">Performance.hpp</a>.</p>
 
 </div>
 </div>
@@ -307,7 +361,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_performance.html">Performance</a></li>
-    <li class="footer">Generated on Wed Apr 2 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Thu Apr 17 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>
