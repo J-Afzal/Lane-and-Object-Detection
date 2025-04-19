@@ -1,6 +1,9 @@
 #include <cstdint>
 #include <string>
+#include <unordered_map>
 #include <vector>
+
+#include <sqlite3.h>
 
 /**
  * @namespace LaneAndObjectDetection
@@ -50,7 +53,98 @@ namespace LaneAndObjectDetection
          */
         void RunPerformanceTest();
 
+        /**
+         * @brief TODO
+         */
+        void GeneratePerformanceGraphs();
+
     private:
+        /**
+         * @class SQLiteDatabase
+         * @brief TODO (mention it is performance test specific hence why in private scope)
+         */
+        class SQLiteDatabase
+        {
+        public:
+            /**
+             * @brief Construct a new %SQLiteDatabase object.
+             */
+            SQLiteDatabase();
+
+            /**
+             * @brief Destructs a %SQLiteDatabase object.
+             */
+            ~SQLiteDatabase();
+
+            /**
+             * @brief TODO
+             */
+            void TruncateFrameTimesTable();
+
+            /**
+             * @brief TODO
+             *
+             * @param p_testName TODO
+             * @param p_repetitionNumber TODO
+             * @param p_frameTimes TODO
+             */
+            void InsertFrameTimes(const std::string& p_testName, const uint32_t& p_repetitionNumber, const std::vector<uint32_t>& p_frameTimes);
+
+            /**
+             * @brief TODO
+             *
+             * @param p_testName TODO
+             * @return `std::vector<std::vector<uint32_t>>`
+             */
+            std::vector<std::vector<uint32_t>> GetFrameTimes(const std::string& p_testName);
+
+        private:
+            /**
+             * @brief TODO
+             *
+             * @param p_sqlStatement TODO
+             */
+            void ExecuteSQLStatement(const std::string& p_sqlStatement);
+
+            /**
+             * @brief TODO
+             *
+             * @param p_sqlStatement TODO
+             * @return `std::vector<std::unordered_map<std::string, std::string>>` TODO
+             */
+            std::vector<std::unordered_map<std::string, std::string>> ExecuteSelectSQLStatement(const std::string& p_sqlStatement);
+
+            /**
+             * @brief TODO
+             *
+             * @tparam T TODO
+             * @param p_sqlStatementOutput TODO
+             * @param p_columnName TODO
+             * @return `std::vector<T>` TODO
+             */
+            template<typename T>
+            std::vector<T> GetSQLStatementOutputColumnValues(const std::vector<std::unordered_map<std::string, std::string>>& p_sqlStatementOutput, const std::string& p_columnName);
+
+            /**
+             * @brief TODO
+             *
+             * @param p_resultCode TODO
+             * @param p_errorMessage TODO
+             * @exception SQLiteDatabaseError TODO
+             */
+            void CheckResultCode(const int32_t& p_resultCode);
+
+            /**
+             * @brief TODO (smart pointer?)
+             */
+            sqlite3* m_database;
+        };
+
+        /**
+         * @brief TODO
+         */
+        SQLiteDatabase m_sqlLiteDatabase;
+
         /**
          * @brief The file path of the video file to use as the benchmark input.
          */

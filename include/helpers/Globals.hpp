@@ -31,6 +31,13 @@ namespace LaneAndObjectDetection::Globals
         class NotImplementedError : public std::exception
         {
         };
+
+        /**
+         * @brief Used for SQLite errors.
+         */
+        class SQLiteDatabaseError : public std::exception
+        {
+        };
     }
 
     /**
@@ -158,7 +165,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief Conversion between time units.
      */
-    static inline const double G_MILLISECONDS_IN_SECOND = 1000;
+    static inline const double G_MICROSECONDS_IN_SECOND = 1000000;
 
     /**
      * @brief Convert a decimal value to a percentage.
@@ -751,28 +758,28 @@ namespace LaneAndObjectDetection::Globals
         ObjectDetectorBlobSizes::FIVE,
     };
 
-    static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES = {
-        "no_yolov7",
-        "yolov7-tiny_288_cuda",
-        "yolov7-tiny_320_cuda",
-        "yolov7-tiny_416_cuda",
-        "yolov7-tiny_512_cuda",
-        "yolov7-tiny_608_cuda",
-        "yolov7_288_cuda",
-        "yolov7_320_cuda",
-        "yolov7_416_cuda",
-        "yolov7_512_cuda",
-        "yolov7_608_cuda",
-        "yolov7-tiny_288",
-        "yolov7-tiny_320",
-        "yolov7-tiny_416",
-        "yolov7-tiny_512",
-        "yolov7-tiny_608",
-        "yolov7_288",
-        "yolov7_320",
-        "yolov7_416",
-        "yolov7_512",
-        "yolov7_608",
+    static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_NAMES = {
+        "No yolov7",
+        "yolov7-tiny blob size 288 (with cuda)",
+        "yolov7-tiny blob size 320 (with cuda)",
+        "yolov7-tiny blob size 416 (with cuda)",
+        "yolov7-tiny blob size 512 (with cuda)",
+        "yolov7-tiny blob size 608 (with cuda)",
+        "yolov7_288 blob size (with cuda)",
+        "yolov7_320 blob size (with cuda)",
+        "yolov7_416 blob size (with cuda)",
+        "yolov7_512 blob size (with cuda)",
+        "yolov7_608 blob size (with cuda)",
+        "yolov7-tiny blob size 288",
+        "yolov7-tiny blob size 320",
+        "yolov7-tiny blob size 416",
+        "yolov7-tiny blob size 512",
+        "yolov7-tiny blob size 608",
+        "yolov7 blob size 288",
+        "yolov7 blob size 320",
+        "yolov7 blob size 416",
+        "yolov7 blob size 512",
+        "yolov7 blob size 608",
     };
     ///@}
 }

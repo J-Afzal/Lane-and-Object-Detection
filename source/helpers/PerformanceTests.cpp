@@ -81,6 +81,9 @@ namespace LaneAndObjectDetection
         std::cout << "\n    Number of tests: " << Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS;
         std::cout << "\n    Number of repetitions: " << m_numberOfRepetitions;
 
+        std::cout << "\nTruncating output table...";
+        m_sqlLiteDatabase.TruncateFrameTimesTable();
+
         VideoManager videoManager;
 
         const std::chrono::time_point<std::chrono::high_resolution_clock> START_TIME = std::chrono::high_resolution_clock::now();
@@ -88,7 +91,7 @@ namespace LaneAndObjectDetection
         for (uint32_t currentTestNumber = 0; currentTestNumber < Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS; currentTestNumber++)
         {
             std::cout << std::format("\n\n######## {} ({}/{}) ########",
-                                     Globals::G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES.at(currentTestNumber),
+                                     Globals::G_PERFORMANCE_TESTS_NAMES.at(currentTestNumber),
                                      currentTestNumber,
                                      Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS);
 
@@ -102,25 +105,157 @@ namespace LaneAndObjectDetection
 
                 videoManager.RunLaneAndObjectDetector();
 
+                m_sqlLiteDatabase.InsertFrameTimes(Globals::G_PERFORMANCE_TESTS_NAMES.at(currentTestNumber), currentRepetition, videoManager.GetFrameTimes());
+
                 std::cout << std::format("\n    Finished repetition {}/{}!", currentRepetition + 1, m_numberOfRepetitions);
+            }
+        }
 
-                const std::string OUTPUT_FILE_NAME = Globals::G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES.at(currentTestNumber) + "-" + std::to_string(currentRepetition) + ".txt";
-                std::ofstream outputFile(OUTPUT_FILE_NAME);
+        std::cout << "\nGenerating performance graphs...";
+        GeneratePerformanceGraphs();
 
-                if (!outputFile.is_open())
+        std::cout << std::format("\n\nTotal elapsed time = {} (H?:mm:ss)", Globals::GetTimeElapsed(START_TIME));
+        std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n\n";
+    }
+
+    void PerformanceTest::GeneratePerformanceGraphs()
+    {
+        // TODO 2
+    }
+
+    PerformanceTest::SQLiteDatabase::SQLiteDatabase()
+    {
+        int32_t resultCode = sqlite3_open("performance_tests_sqlite.db", &m_database);
+
+        CheckResultCode(resultCode);
+    }
+
+    PerformanceTest::SQLiteDatabase::~SQLiteDatabase()
+    {
+        sqlite3_close(m_database);
+    }
+
+    void PerformanceTest::SQLiteDatabase::TruncateFrameTimesTable()
+    {
+        const std::string DROP_TABLE_SQL_STATEMENT = "DROP TABLE IF EXISTS FrameTimes;";
+        const std::string CREATE_TABLE_SQL_STATEMENT = "CREATE TABLE FrameTimes"
+                                                       "("
+                                                       "    Id          INTEGER PRIMARY KEY NOT NULL"
+                                                       "    TestName    TEXT                NOT NULL"
+                                                       "    Repetition  INTEGER             NOT NULL"
+                                                       "    FrameNumber INTEGER             NOT NULL"
+                                                       "    FrameTime   INTEGER             NOT NULL"
+                                                       ");";
+
+        ExecuteSQLStatement(DROP_TABLE_SQL_STATEMENT);
+        ExecuteSQLStatement(CREATE_TABLE_SQL_STATEMENT);
+    }
+
+    void PerformanceTest::SQLiteDatabase::InsertFrameTimes(const std::string& p_testName, const uint32_t& p_repetitionNumber, const std::vector<uint32_t>& p_frameTimes)
+    {
+        for (uint32_t i = 0; i < p_frameTimes.size(); i++)
+        {
+            ExecuteSQLStatement(std::format("INSERT INTO FrameTimes(TestName, Repetition, FrameNumber, FrameTime) VALUES({}, {}, {}, {});", p_testName, p_repetitionNumber, i + 1, p_frameTimes[i]));
+        }
+    }
+
+    std::vector<std::vector<uint32_t>> PerformanceTest::SQLiteDatabase::GetFrameTimes(const std::string& p_testName)
+    {
+        const std::vector<uint32_t> DISTINCT_REPETITIONS = GetSQLStatementOutputColumnValues<uint32_t>(
+            ExecuteSelectSQLStatement(std::format("SELECT DISTINCT Repetition FROM FrameTimes WHERE TestName = '{}' ORDER BY Repetition ASC;", p_testName)),
+            "Repetition");
+
+        std::vector<std::vector<uint32_t>> frameTimes;
+        for (const uint32_t& currentRepetition : DISTINCT_REPETITIONS)
+        {
+            frameTimes.push_back(GetSQLStatementOutputColumnValues<uint32_t>(
+                ExecuteSelectSQLStatement(std::format("SELECT FrameTime FROM FrameTimes WHERE TestName = '{}' AND Repetition = {} ORDER BY FrameNumber ASC;", p_testName, currentRepetition)),
+                "FrameTime"));
+        }
+
+        return frameTimes;
+    }
+
+    void PerformanceTest::SQLiteDatabase::ExecuteSQLStatement(const std::string& p_sqlStatement)
+    {
+        const int32_t RESULT_CODE = sqlite3_exec(m_database, p_sqlStatement.c_str(), nullptr, nullptr, nullptr);
+        CheckResultCode(RESULT_CODE);
+    }
+
+    std::vector<std::unordered_map<std::string, std::string>> PerformanceTest::SQLiteDatabase::ExecuteSelectSQLStatement(const std::string& p_sqlStatement)
+    {
+        sqlite3_stmt* statementHandle;
+        std::vector<std::unordered_map<std::string, std::string>> output;
+
+        try
+        {
+            const int32_t RESULT_CODE = sqlite3_prepare_v2(m_database, p_sqlStatement.c_str(), -1, &statementHandle, nullptr);
+            CheckResultCode(RESULT_CODE);
+
+            const int32_t NUMBER_OF_COLUMNS = sqlite3_column_count(statementHandle);
+
+            while (true)
+            {
+                if (sqlite3_step(statementHandle) == SQLITE_DONE)
                 {
-                    std::cout << "\nERROR: Output file '" + OUTPUT_FILE_NAME + "' failed to open!\n";
-                    std::exit(1);
+                    break;
                 }
 
-                for (const uint32_t& frameTime : videoManager.GetFrameTimes())
+                std::unordered_map<std::string, std::string> row;
+
+                for (int32_t i = 0; i < NUMBER_OF_COLUMNS; i++)
                 {
-                    outputFile << frameTime << '\n';
+                    const std::string COLUMN_NAME = std::string(sqlite3_column_name(statementHandle, i));
+                    const std::string COLUMN_VALUE = std::string(reinterpret_cast<const char*>(sqlite3_column_text(statementHandle, i)));
+                    row.insert({COLUMN_NAME, COLUMN_VALUE});
+                }
+
+                output.push_back(row);
+            }
+        }
+
+        catch (const std::exception& e)
+        {
+            sqlite3_finalize(statementHandle);
+            throw e;
+        }
+
+        sqlite3_finalize(statementHandle);
+
+        return output;
+    }
+
+    template<typename T>
+    std::vector<T> PerformanceTest::SQLiteDatabase::GetSQLStatementOutputColumnValues(const std::vector<std::unordered_map<std::string, std::string>>& p_sqlStatementOutput, const std::string& p_columnName)
+    {
+        std::vector<T> output;
+
+        for (const std::unordered_map<std::string, std::string>& row : p_sqlStatementOutput)
+        {
+            for (const std::pair<std::string, std::string>& columnNameValuePair : row)
+            {
+                if (columnNameValuePair.first == p_columnName)
+                {
+                    T value;
+                    std::istringstream(columnNameValuePair.second) >> value;
+                    output.push_back(value);
+                    break;
                 }
             }
         }
 
-        std::cout << std::format("\n\nTotal elapsed time = {} (H?:mm:ss)", Globals::GetTimeElapsed(START_TIME));
-        std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n\n";
+        return output;
+    }
+
+    void PerformanceTest::SQLiteDatabase::CheckResultCode(const int32_t& p_resultCode)
+    {
+        if (p_resultCode == SQLITE_OK)
+        {
+            return;
+        }
+
+        std::cout << "\nERROR: SQLite operation outputted following error message: " + std::string(sqlite3_errmsg(m_database));
+
+        throw Globals::Exceptions::SQLiteDatabaseError();
     }
 }

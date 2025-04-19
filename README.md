@@ -149,10 +149,11 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 
 <!--
 x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
-        clean up tests folder
-        Test with CUDA and performance tests and optimisation
+    Maybe save data to SQL-lite temp db - with option to create graphs from it
+    replace graph creation with c++ code that runs immediately after run or can be ran ad-hoc (either way reads from sqllite db)
+    Get better dash cam video. Both benchmark and all scenarios video (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
+    test with CUDA and performance tests and maybe do optimisation
 
 x. Correct lane detection code
-        Get better dash cam video. Both benchmark and all scenarios video (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
         Debug lane detection code to make sure it is correct.
 -->

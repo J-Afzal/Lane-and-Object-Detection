@@ -6,10 +6,11 @@ SET(CMAKE_CXX_STANDARD 23)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 SET(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/)
 FIND_PACKAGE(OpenCV REQUIRED)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/submodules/sqlite3)
 
 # Executable names used by the CI/CD workflows
 SET(executable_name "lane-and-object-detection")
@@ -23,7 +24,6 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/Performance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/PerformanceTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 
@@ -47,6 +47,7 @@ ADD_EXECUTABLE(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/ObjectDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/detectors/LaneDetector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/helpers/PerformanceTests.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/submodules/sqlite3/sqlite3.c
     ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/LaneAndObjectDetection.rc
 )
 

@@ -18,11 +18,11 @@ namespace LaneAndObjectDetection
 
     void Performance::EndTimer()
     {
-        const uint32_t FRAME_TIME = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_startTime).count();
+        const uint32_t FRAME_TIME = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - m_startTime).count();
 
         m_frameTimes.push_back(FRAME_TIME);
 
-        m_performanceInformation.m_currentFramesPerSecond = Globals::G_MILLISECONDS_IN_SECOND / FRAME_TIME;
+        m_performanceInformation.m_currentFramesPerSecond = Globals::G_MICROSECONDS_IN_SECOND / FRAME_TIME;
 
         // Calculate the average FPS as a running average
         const double FRAME_COUNT = static_cast<double>(m_frameTimes.size());
