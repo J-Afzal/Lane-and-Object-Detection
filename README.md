@@ -104,6 +104,17 @@ Both modes support recording the output of the main frame.
 
 ![Recording Mode](./resources/screenshots/RecordingMode.png)
 
+### Performance Tests
+
+<!-- TODO: some info on tests and some screenshots -->
+<!-- TODO: dependencies = python and pip install  -->
+
+<!--
+python -m venv .venv/
+.\.venv\Scripts\activate
+pip install -r ./requirements.txt
+ -->
+
 ## CI / CD
 
 [![Continuous Integration](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml)
@@ -148,12 +159,24 @@ On Windows, Visual Studio 2022 can be used by opening the folder as a CMake proj
 opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
 
 <!--
-x. Clean up performance test code (replace with python C++ https://alandefreitas.github.io/matplotplusplus/ ) or delete
-    Maybe save data to SQL-lite temp db - with option to create graphs from it
-    replace graph creation with c++ code that runs immediately after run or can be ran ad-hoc (either way reads from sqllite db)
-    Get better dash cam video. Both benchmark and all scenarios video (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
-    test with CUDA and performance tests and maybe do optimisation
+x. Performance Tests
+  - Add docs to python code
+  - How to run above python code after performance tests
+  - Move all performance test consts out of globals to remove dependency on globals.hpp
+  - Add black formatting linting check in Linters
+
+  - Get better dash cam video.
+    - Both benchmark and all scenarios video
+    - (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
+  - Test performance tests and graph generation (update readme docs on process)
+    - Test on windows and also ubuntu and jetson nano? (update installation instructions)
+  - Performance heat map and any optimisations?
+  - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?
 
 x. Correct lane detection code
-        Debug lane detection code to make sure it is correct.
+  - Debug lane detection code to make sure it is correct.
+
+
+
+
 -->

@@ -18,6 +18,7 @@ words:
     - darkmode
     - doxyfile
     - linters
+    - matplotlib
     - opencv
 ignoreWords:
     - altera

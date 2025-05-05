@@ -66,8 +66,8 @@ namespace LaneAndObjectDetection
         std::string parsedInputVideoFilePath;
         std::string parsedYoloFolderPath;
         Globals::ObjectDetectorTypes parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::NONE;
-        Globals::ObjectDetectorBackEnds parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
-        Globals::ObjectDetectorBlobSizes parsedObjectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::ONE;
+        Globals::ObjectDetectorBackEnds parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::NONE;
+        Globals::ObjectDetectorBlobSizes parsedObjectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::NONE;
 
         uint32_t index = 0;
 
@@ -150,7 +150,9 @@ namespace LaneAndObjectDetection
         }
 
         // Check that the required arguments have been provided
-        if (parsedInputVideoFilePath.empty() || parsedYoloFolderPath.empty())
+        if (parsedInputVideoFilePath.empty() ||
+            parsedYoloFolderPath.empty() ||
+            (parsedObjectDetectorTypes != Globals::ObjectDetectorTypes::NONE && (parsedObjectDetectorBackEnds == Globals::ObjectDetectorBackEnds::NONE || parsedObjectDetectorBlobSizes == Globals::ObjectDetectorBlobSizes::NONE)))
         {
             std::cout << Globals::G_CLI_HELP_MESSAGE;
             std::exit(1);

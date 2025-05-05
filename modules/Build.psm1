@@ -150,6 +150,15 @@ function Build-CppCodeUsingCMake {
             Write-Information "##[warning]The './submodules/opencv/build/' directory does not exist"
         }
 
+        if (Test-Path -LiteralPath ./submodules/opencv/install/) {
+            Write-Information "##[command]Deleting the './submodules/opencv/install/' directory..."
+            Remove-Item -LiteralPath "./submodules/opencv/install/" -Force -Recurse
+        }
+
+        else {
+            Write-Information "##[warning]The './submodules/opencv/install/' directory does not exist"
+        }
+
         if (Test-Path -LiteralPath ./submodules/opencv/.cache/) {
             Write-Information "##[command]Deleting the './submodules/opencv/.cache/' directory..."
             Remove-Item -LiteralPath "./submodules/opencv/.cache/" -Force -Recurse
@@ -167,12 +176,22 @@ function Build-CppCodeUsingCMake {
 
     try {
         Write-Information "##[command]Configuring OpenCV..."
-        cmake -S . -B ./$BuildDirectory -D "CMAKE_BUILD_TYPE=$BuildType" -D "BUILD_opencv_world=ON" -D "CONFIGURE_ONLY=$ConfigureOnly"
+        if ($Platform -eq "windows-latest") {
+            cmake -S . -B ./build -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=$BuildType" -D "BUILD_opencv_world=ON"
+        }
+
+        else {
+            cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=$BuildType" -D "BUILD_opencv_world=ON"
+        }
         Assert-ExternalCommandError -ThrowError
 
         if (-Not $ConfigureOnly) {
             Write-Information "##[command]Building OpenCV..."
-            cmake --build ./$BuildDirectory --config $BuildType --parallel $Parallel
+            cmake --build ./build --config $BuildType --parallel $Parallel
+            Assert-ExternalCommandError -ThrowError
+
+            Write-Information "##[command]Installing OpenCV..."
+            cmake --install ./build --prefix ./build/install --config $BuildType --parallel $Parallel
             Assert-ExternalCommandError -ThrowError
         }
     }
@@ -186,21 +205,22 @@ function Build-CppCodeUsingCMake {
         Set-Location -LiteralPath ../..
     }
 
+    Write-Information "##[section]Building Lane and Object Detection..."
+
     Write-Information "##[command]Configuring Lane and Object Detection..."
 
     if ($Platform -eq "windows-latest") {
-        cmake -S . -B ./$BuildDirectory -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=$BuildType" -D "CONFIGURE_ONLY=$ConfigureOnly"
+        cmake -S . -B ./$BuildDirectory -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=$BuildType"
     }
 
     else {
-        cmake -S . -B ./$BuildDirectory -D "CMAKE_BUILD_TYPE=$BuildType" -D "CONFIGURE_ONLY=$ConfigureOnly"
+        cmake -S . -B ./$BuildDirectory -D "CMAKE_BUILD_TYPE=$BuildType"
     }
 
     Assert-ExternalCommandError -ThrowError
 
-    Write-Information "##[command]Building Lane and Object Detection..."
-
     if (-Not $ConfigureOnly) {
+        Write-Information "##[command]Building Lane and Object Detection..."
         cmake --build ./$BuildDirectory --config $BuildType --parallel $Parallel
         Assert-ExternalCommandError -ThrowError
     }

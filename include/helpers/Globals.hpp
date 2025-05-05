@@ -451,7 +451,8 @@ namespace LaneAndObjectDetection::Globals
      */
     enum class ObjectDetectorBackEnds : std::uint8_t
     {
-        CPU = 0,
+        NONE = 0,
+        CPU,
         CUDA
     };
 
@@ -461,6 +462,7 @@ namespace LaneAndObjectDetection::Globals
      */
     enum class ObjectDetectorBlobSizes : std::int16_t
     {
+        NONE = 0,
         ONE = 288,
         TWO = 320,
         THREE = 416,
@@ -679,7 +681,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief CLI help message for the performance tests.
      */
-    static inline const std::string G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE = "Usage: lane-and-object-detection-performance-tests --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help              Display available options\n\nRequired Options:\n\n-i --input             Benchmark video file path\n-y --yolo-folder-path  Path to the yolo folder\n-r --repetitions       Number of repetitions for each test";
+    static inline const std::string G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE = "Usage: lane-and-object-detection-performance-tests --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help              Display available options\n\nRequired Options:\n\n-p --platform          The current platform being tested\n-d --database-path     Path to SQLite database file\n-i --input             Benchmark video file path\n-y --yolo-folder-path  Path to the yolo folder\n-r --repetitions       Number of repetitions for each test";
 
     /**
      * @brief Performance tests settings.
@@ -711,75 +713,75 @@ namespace LaneAndObjectDetection::Globals
         ObjectDetectorTypes::STANDARD};
 
     static inline const std::array<ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::NONE,
+        ObjectDetectorBackEnds::CPU,
         ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::CUDA,
     };
 
     static inline const std::array<ObjectDetectorBlobSizes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BLOB_SIZES = {
+        ObjectDetectorBlobSizes::NONE,
+        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::ONE,
         ObjectDetectorBlobSizes::ONE,
         ObjectDetectorBlobSizes::ONE,
         ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::TWO,
         ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::FOUR,
+        ObjectDetectorBlobSizes::FOUR,
+        ObjectDetectorBlobSizes::FOUR,
         ObjectDetectorBlobSizes::FOUR,
         ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
         ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
         ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
         ObjectDetectorBlobSizes::FIVE,
     };
 
     static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_NAMES = {
-        "No yolov7",
-        "yolov7-tiny blob size 288 (with cuda)",
-        "yolov7-tiny blob size 320 (with cuda)",
-        "yolov7-tiny blob size 416 (with cuda)",
-        "yolov7-tiny blob size 512 (with cuda)",
-        "yolov7-tiny blob size 608 (with cuda)",
-        "yolov7_288 blob size (with cuda)",
-        "yolov7_320 blob size (with cuda)",
-        "yolov7_416 blob size (with cuda)",
-        "yolov7_512 blob size (with cuda)",
-        "yolov7_608 blob size (with cuda)",
-        "yolov7-tiny blob size 288",
-        "yolov7-tiny blob size 320",
-        "yolov7-tiny blob size 416",
-        "yolov7-tiny blob size 512",
-        "yolov7-tiny blob size 608",
-        "yolov7 blob size 288",
-        "yolov7 blob size 320",
-        "yolov7 blob size 416",
-        "yolov7 blob size 512",
-        "yolov7 blob size 608",
+        "No YOLOv7",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7",
+        "YOLOv7",
+        "YOLOv7",
+        "YOLOv7",
+        "YOLOv7",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7-tiny",
+        "YOLOv7",
+        "YOLOv7",
+        "YOLOv7",
+        "YOLOv7",
+        "YOLOv7",
     };
     ///@}
 }
