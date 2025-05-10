@@ -442,8 +442,8 @@ namespace LaneAndObjectDetection::Globals
     enum class ObjectDetectorTypes : std::uint8_t
     {
         NONE = 0,
-        STANDARD,
-        TINY
+        TINY,
+        STANDARD
     };
 
     /**
@@ -693,24 +693,25 @@ namespace LaneAndObjectDetection::Globals
         ObjectDetectorTypes::NONE,
         ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD};
+    };
 
     static inline const std::array<ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
         ObjectDetectorBackEnds::NONE,
@@ -758,30 +759,6 @@ namespace LaneAndObjectDetection::Globals
         ObjectDetectorBlobSizes::FIVE,
         ObjectDetectorBlobSizes::FIVE,
         ObjectDetectorBlobSizes::FIVE,
-    };
-
-    static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_NAMES = {
-        "No YOLOv7",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7",
-        "YOLOv7",
-        "YOLOv7",
-        "YOLOv7",
-        "YOLOv7",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7-tiny",
-        "YOLOv7",
-        "YOLOv7",
-        "YOLOv7",
-        "YOLOv7",
-        "YOLOv7",
     };
     ///@}
 }

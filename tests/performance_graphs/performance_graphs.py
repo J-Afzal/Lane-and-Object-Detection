@@ -4,8 +4,6 @@ import numpy
 import os
 import sqlite3
 
-from typing import Any
-
 
 @dataclasses.dataclass
 class FrameTimeData:
@@ -57,9 +55,9 @@ class PerformanceGraphs:
         self.sqlite_database = self.SQLiteDatabase(self.database_file_path)
 
     def generate_performance_graphs(self):
-        # Line graph
-        frame_time_data: FrameTimeData = self.sqlite_database.get_frame_time_data(self.platform_name)
+        frame_time_data, frames_per_second_data = self.sqlite_database.get_frame_time_data(self.platform_name)
 
+        # Line graph
         figure_line, axes_line = matplotlib.pyplot.subplots()
         figure_line.set_figwidth(self.FIGURE_WIDTH)
         figure_line.set_figheight(self.FIGURE_HEIGHT)
@@ -99,8 +97,6 @@ class PerformanceGraphs:
         )
 
         # Bar chart
-        frames_per_second_data: FramesPerSecondData = self.sqlite_database.get_frames_per_second_data(self.platform_name)
-
         figure_bar, axes_bar = matplotlib.pyplot.subplots()
         figure_bar.set_figwidth(self.FIGURE_WIDTH)
         figure_bar.set_figheight(self.FIGURE_HEIGHT)
@@ -172,52 +168,170 @@ class PerformanceGraphs:
         class DatabaseFileNotFoundError(Exception):
             pass
 
-        def __get_table_data(self, platform_name) -> list[Any]:
-            try:
-                sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_path)
-                sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
+        class InvalidDataError(Exception):
+            pass
 
-                if platform_name == "all":
-                    sqlite_cursor.execute("SELECT * FROM FrameTimes")
-                else:
-                    sqlite_cursor.execute(f"SELECT * FROM FrameTimes WHERE Platform = '{platform_name}'")
+        def __validate_data(self, platform_name) -> None:
+            sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_path)
+            sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
 
-                return sqlite_cursor.fetchall()
+            # Error checking logic
+            error_message: str = ""
 
-            except sqlite3.Error as e:
-                print(e)
-                raise e
+            # Confirm only a single YOLO name exists across tests
+            sqlite_cursor.execute(
+                """
+                SELECT DISTINCT
+                    YoloName
+                FROM
+                    FrameTimes
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 1:
+                error_message += "\nExpected identical YOLO names across all tests but found different YOLO names!"
 
-            finally:
-                if sqlite_connection:
-                    sqlite_connection.close()
+            # Confirm only a single time unit exists across tests
+            sqlite_cursor.execute(
+                """
+                SELECT DISTINCT
+                    TimeUnit
+                FROM
+                    FrameTimes
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 1:
+                error_message += "\nExpected identical time units across all tests but found different time units!"
 
-        def get_frame_time_data(self, platform_name: str) -> FrameTimeData:
-            table_data: list[Any] = self.__get_table_data(platform_name)
+            # Confirm frame counts match across all tests
+            sqlite_cursor.execute(
+                """
+                SELECT DISTINCT
+                    COUNT(*)
+                FROM
+                    FrameTimes
+                GROUP BY
+                    Platform,
+                    ObjectDetectorType,
+                    ObjectDetectorBackEnd,
+                    ObjectDetectorBlobSize,
+                    Repetition
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 1:
+                error_message += "\nExpected identical frame counts across all tests but found different frame counts!"
 
-            # "CREATE TABLE IF NOT EXISTS FrameTimes"
-            # "("
-            # "    Id                      INTEGER PRIMARY KEY NOT NULL"
-            # "    Platform                TEXT                NOT NULL"
-            # "    YoloType                INTEGER             NOT NULL"
-            # "    ObjectDetectorType      INTEGER             NOT NULL"
-            # "    ObjectDetectorBackEnd   INTEGER             NOT NULL"
-            # "    ObjectDetectorBlobSize  INTEGER             NOT NULL"
-            # "    Repetition              INTEGER             NOT NULL"
-            # "    FrameNumber             INTEGER             NOT NULL"
-            # "    FrameTime               INTEGER             NOT NULL"
-            # "    Unit                    TEXT                NOT NULL"
-            # ");"
+            # Confirm tests match across all platforms
+            sqlite_cursor.execute(
+                """
+                WITH Cte AS
+                (
+                    SELECT DISTINCT
+                        Platform,
+                        ObjectDetectorType,
+                        ObjectDetectorBackEnd,
+                        ObjectDetectorBlobSize
+                    FROM
+                        FrameTimes
+                )
+                SELECT DISTINCT COUNT(*) FROM Cte GROUP BY Platform
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 1:
+                error_message += "\nExpected identical tests across all platform but found different tests!"
 
-            # TODO:
-            # - query for data
-            #
-            #
-            # TODO: get all frame time info for all
-            return FrameTimeData()
+            # Confirm enums are between the expected range
+            sqlite_cursor.execute(
+                """
+                SELECT
+                    *
+                FROM
+                    FrameTimes
+                WHERE
+                    ObjectDetectorType NOT IN (0, 1, 2)
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 0:
+                error_message += "\nExpected a values between 0, 1, and 2 for ObjectDetectorType but got other values!"
 
-        def get_frames_per_second_data(self, platform_name: str) -> FramesPerSecondData:
-            table_data: list[Any] = self.__get_table_data(platform_name)
+            sqlite_cursor.execute(
+                """
+                SELECT
+                    *
+                FROM
+                    FrameTimes
+                WHERE
+                    ObjectDetectorBackEnd NOT IN (0, 1, 2)
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 0:
+                error_message += "\nExpected a values between 0, 1, and 2 for ObjectDetectorBackEnd but got other values!"
 
-            # TODO: get the highest fps value for each test for each platform
-            return FramesPerSecondData()
+            sqlite_cursor.execute(
+                """
+                SELECT
+                    *
+                FROM
+                    FrameTimes
+                WHERE
+                    ObjectDetectorBlobSize NOT IN (0, 288, 320, 416, 512, 608)
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 0:
+                error_message += "\nExpected a values between 0, 288, 320, 416, 512, and 608 for ObjectDetectorBlobSize but got other values!"
+
+            # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are non-zero if ObjectDetectorType is non-zero
+            sqlite_cursor.execute(
+                """
+                SELECT
+                    *
+                FROM
+                    FrameTimes
+                WHERE
+                    ObjectDetectorType = 0
+                AND (ObjectDetectorBackEnd != 0 OR ObjectDetectorBlobSize != 0)
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 0:
+                error_message += "\nExpected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be zero when ObjectDetectorType is zero but found them to be non-zero!"
+
+            # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are zero if ObjectDetectorType is zero
+            sqlite_cursor.execute(
+                """
+                SELECT
+                    *
+                FROM
+                    FrameTimes
+                WHERE
+                    ObjectDetectorType != 0
+                AND (ObjectDetectorBackEnd = 0 OR ObjectDetectorBlobSize = 0)
+                """
+            )
+            if len(sqlite_cursor.fetchall()) > 0:
+                error_message += "\nExpected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be non-zero when ObjectDetectorType is non-zero but found them to be zero!"
+
+            if platform_name != "all":
+                # Confirm the current platform is found within the data
+                sqlite_cursor.execute(
+                    f"""
+                    SELECT
+                        *
+                    FROM
+                        FrameTimes
+                    WHERE
+                        Platform = '{platform_name}'
+                    """
+                )
+                if len(sqlite_cursor.fetchall()) > 0:
+                    error_message += (
+                        f"\nExpected the platform '{platform_name}' to be found in the database but it was not found!"
+                    )
+
+            if error_message:
+                raise self.InvalidDataError("The following violations have been found in the data:" + error_message)
+
+        def __get_table_data(self, platform_name: str) -> tuple[FrameTimeData, FramesPerSecondData]:
+            pass
+
+        def get_frame_time_data(self, platform_name: str) -> tuple[FrameTimeData, FramesPerSecondData]:
+            self.__validate_data(platform_name)
+            return self.__get_table_data(platform_name)

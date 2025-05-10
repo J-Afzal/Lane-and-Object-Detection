@@ -158,7 +158,7 @@ namespace LaneAndObjectDetection
                                                        "    Repetition              INTEGER             NOT NULL,"
                                                        "    FrameNumber             INTEGER             NOT NULL,"
                                                        "    FrameTime               INTEGER             NOT NULL,"
-                                                       "    Unit                    TEXT                NOT NULL"
+                                                       "    TimeUnit                TEXT                NOT NULL"
                                                        ");";
         ExecuteSQLStatement(CREATE_TABLE_SQL_STATEMENT);
     }
@@ -181,7 +181,7 @@ namespace LaneAndObjectDetection
             ExecuteSQLStatement(
                 std::format(
                     "INSERT INTO"
-                    "FrameTimes(Platform, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, Unit)"
+                    "FrameTimes(Platform, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, TimeUnit)"
                     "VALUES({}, {}, {}, {}, {}, {}, {}, {}, {});",
                     p_currentPlatform,
                     "YOLOv7", // TODO: global?

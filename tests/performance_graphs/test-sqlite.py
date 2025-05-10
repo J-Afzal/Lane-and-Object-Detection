@@ -21,6 +21,7 @@ class FramesPerSecondData:
 
 
 try:
+    platform_name: str = "all"
     database_file_path: str = "sqlite.db"
 
     if os.path.isfile(database_file_path):
@@ -42,7 +43,7 @@ try:
             Repetition              INTEGER             NOT NULL,
             FrameNumber             INTEGER             NOT NULL,
             FrameTime               INTEGER             NOT NULL,
-            Unit                    TEXT                NOT NULL
+            TimeUnit                TEXT                NOT NULL
         );
         """
     )
@@ -50,7 +51,7 @@ try:
     sqlite_cursor.execute(
         """
         INSERT INTO
-        FrameTimes(Platform, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, Unit)
+        FrameTimes(Platform, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, TimeUnit)
         VALUES
             ("Windows Desktop", "YOLOv7", 0                 , 0                   , 0                    , 0        , 1         , 10      , "ms"),
             ("Windows Desktop", "YOLOv7", 0                 , 0                   , 0                    , 0        , 2         , 20      , "ms"),
@@ -228,63 +229,246 @@ try:
     error_message: str = ""
 
     # Confirm only a single YOLO name exists across tests
-    sqlite_cursor.execute("SELECT DISTINCT YoloName FROM FrameTimes")
+    sqlite_cursor.execute(
+        """
+        SELECT DISTINCT
+            YoloName
+        FROM
+            FrameTimes
+        """
+    )
     if len(sqlite_cursor.fetchall()) > 1:
-        error_message += "More than one YOLO name exists in given tests!\n"
+        error_message += "\nExpected identical YOLO names across all tests but found different YOLO names!"
 
     # Confirm only a single time unit exists across tests
-    sqlite_cursor.execute("SELECT DISTINCT Unit FROM FrameTimes")
+    sqlite_cursor.execute(
+        """
+        SELECT DISTINCT
+            TimeUnit
+        FROM
+            FrameTimes
+        """
+    )
     if len(sqlite_cursor.fetchall()) > 1:
-        error_message += "More than one time unit exists in given tests!\n"
+        error_message += "\nExpected identical time units across all tests but found different time units!"
+
+    # Confirm frame counts match across all tests
+    sqlite_cursor.execute(
+        """
+        SELECT DISTINCT
+            COUNT(*)
+        FROM
+            FrameTimes
+        GROUP BY
+            Platform,
+            ObjectDetectorType,
+            ObjectDetectorBackEnd,
+            ObjectDetectorBlobSize,
+            Repetition
+        """
+    )
+    if len(sqlite_cursor.fetchall()) > 1:
+        error_message += "\nExpected identical frame counts across all tests but found different frame counts!"
+
+    # Confirm tests match across all platforms
+    sqlite_cursor.execute(
+        """
+        WITH Cte AS
+        (
+            SELECT DISTINCT
+                Platform,
+                ObjectDetectorType,
+                ObjectDetectorBackEnd,
+                ObjectDetectorBlobSize
+            FROM
+                FrameTimes
+        )
+        SELECT DISTINCT COUNT(*) FROM Cte GROUP BY Platform
+        """
+    )
+    if len(sqlite_cursor.fetchall()) > 1:
+        error_message += "\nExpected identical tests across all platform but found different tests!"
+
+    # Confirm enums are between the expected range
+    sqlite_cursor.execute(
+        """
+        SELECT
+            *
+        FROM
+            FrameTimes
+        WHERE
+            ObjectDetectorType NOT IN (0, 1, 2)
+        """
+    )
+    if len(sqlite_cursor.fetchall()) > 0:
+        error_message += "\nExpected a values between 0, 1, and 2 for ObjectDetectorType but got other values!"
+
+    sqlite_cursor.execute(
+        """
+        SELECT
+            *
+        FROM
+            FrameTimes
+        WHERE
+            ObjectDetectorBackEnd NOT IN (0, 1, 2)
+        """
+    )
+    if len(sqlite_cursor.fetchall()) > 0:
+        error_message += "\nExpected a values between 0, 1, and 2 for ObjectDetectorBackEnd but got other values!"
+
+    sqlite_cursor.execute(
+        """
+        SELECT
+            *
+        FROM
+            FrameTimes
+        WHERE
+            ObjectDetectorBlobSize NOT IN (0, 288, 320, 416, 512, 608)
+        """
+    )
+    if len(sqlite_cursor.fetchall()) > 0:
+        error_message += (
+            "\nExpected a values between 0, 288, 320, 416, 512, and 608 for ObjectDetectorBlobSize but got other values!"
+        )
 
     # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are non-zero if ObjectDetectorType is non-zero
     sqlite_cursor.execute(
-        "SELECT * FROM FrameTimes WHERE ObjectDetectorType = 0 AND (ObjectDetectorBackEnd != 0 OR ObjectDetectorBlobSize != 0)"
+        """
+        SELECT
+            *
+        FROM
+            FrameTimes
+        WHERE
+            ObjectDetectorType = 0
+        AND (ObjectDetectorBackEnd != 0 OR ObjectDetectorBlobSize != 0)
+        """
     )
     if len(sqlite_cursor.fetchall()) > 0:
-        error_message += (
-            "ObjectDetectorBackEnd and ObjectDetectorBlobSize are non-zero when ObjectDetectorType is zero in given tests!\n"
-        )
+        error_message += "\nExpected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be zero when ObjectDetectorType is zero but found them to be non-zero!"
 
     # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are zero if ObjectDetectorType is zero
     sqlite_cursor.execute(
-        "SELECT * FROM FrameTimes WHERE ObjectDetectorType != 0 AND (ObjectDetectorBackEnd = 0 OR ObjectDetectorBlobSize = 0)"
+        """
+        SELECT
+            *
+        FROM
+            FrameTimes
+        WHERE
+            ObjectDetectorType != 0
+        AND (ObjectDetectorBackEnd = 0 OR ObjectDetectorBlobSize = 0)
+        """
     )
     if len(sqlite_cursor.fetchall()) > 0:
-        error_message += (
-            "ObjectDetectorBackEnd and ObjectDetectorBlobSize are zero when ObjectDetectorType is non-zero in given tests!\n"
+        error_message += "\nExpected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be non-zero when ObjectDetectorType is non-zero but found them to be zero!"
+
+    if platform_name != "all":
+        # Confirm the current platform is found within the data
+        sqlite_cursor.execute(
+            f"""
+            SELECT
+                *
+            FROM
+                FrameTimes
+            WHERE
+                Platform = '{platform_name}'
+            """
         )
-
-    # Confirm enums between expected range
-    sqlite_cursor.execute("SELECT DISTINCT ObjectDetectorType FROM FrameTimes EXCEPT SELECT 0, 1, 2")
-    if len(sqlite_cursor.fetchall()) > 0:
-        error_message += f"Expected a values between 0, 1, and 2 for ObjectDetectorType but got other values!\n"
-
-    sqlite_cursor.execute("SELECT DISTINCT ObjectDetectorBackEnds FROM FrameTimes EXCEPT SELECT 0, 1, 2")
-    if len(sqlite_cursor.fetchall()) > 0:
-        error_message += f"Expected a values between 0, 1, and 2 for ObjectDetectorBackEnds but got other values!\n"
-
-    sqlite_cursor.execute("SELECT DISTINCT ObjectDetectorBlobSizes FROM FrameTimes EXCEPT SELECT 0, 288, 320, 416, 512, 608")
-    if len(sqlite_cursor.fetchall()) > 0:
-        error_message += (
-            f"Expected a values between 0, 288, 320, 416, 512, and 608 for ObjectDetectorBlobSizes but got other values!\n"
-        )
-
-    # TODO: Check all tests have the same number_of_frames
+        if len(sqlite_cursor.fetchall()) > 0:
+            error_message += f"\nExpected the platform '{platform_name}' to be found in the database but it was not found!"
 
     if error_message:
-        raise Exception(error_message)
+        raise Exception("The following violations have been found in the data:" + error_message)
 
     # Get data logic
-    platform_name: str = "all"
-
     platform_display_name: str = "All Platforms" if platform_name == "all" else platform_name
-    number_of_frames: int =
-    frame_times: dict[str, list[list[float]]] =
-    unit: str =
 
-    test_names: str =
-    average_frames_per_second: dict[str, list[float]] =
+    sqlite_cursor.execute(
+        """
+        SELECT DISTINCT
+            COUNT(*)
+        FROM
+            FrameTimes
+        GROUP BY
+            Platform,
+            ObjectDetectorType,
+            ObjectDetectorBackEnd,
+            ObjectDetectorBlobSize,
+            Repetition
+        """
+    )
+    number_of_frames: int = int(sqlite_cursor.fetchall()[0][0])
+
+    frame_times: dict[str, list[list[float]]] = {}
+    # need to think above averages for each test
+    # # TODO 1: Get all platforms
+    # # Get all tests (platform-agnostic)
+    # # For each platform
+    #     # For each test
+    #         # Get all frame times for test and average it
+    #         # Append the averaged frame time list to the list within the dictionary key for current platform
+
+    sqlite_cursor.execute(
+        """
+        SELECT DISTINCT
+            TimeUnit
+        FROM
+            FrameTimes
+        """
+    )
+    unit: str = sqlite_cursor.fetchall()[0][0]
+
+    sqlite_cursor.execute(
+        """
+        SELECT DISTINCT
+            YoloName
+        FROM
+            FrameTimes
+        """
+    )
+    yolo_name: str = sqlite_cursor.fetchall()[0][0]
+
+    sqlite_cursor.execute(
+        """
+        SELECT DISTINCT
+            ObjectDetectorType,
+            ObjectDetectorBlobSize
+        FROM
+            FrameTimes
+        ORDER BY
+            ObjectDetectorType     ASC,
+            ObjectDetectorBlobSize ASC
+        """
+    )
+    test_names: list[str] = []
+    for row in sqlite_cursor.fetchall():
+        test_name: str = ""
+
+        if row[0] == 0:
+            test_names.append(f"No {yolo_name}")
+            continue
+        elif row[0] == 1:
+            test_name += f"{yolo_name}-tiny "
+        else:  # 2
+            test_name += f"{yolo_name} "
+
+        test_name += str(row[1])
+        test_names.append(test_name)
+
+    # average_frames_per_second: dict[str, list[float]] =
+    # *****just use frame time data******
+    # # TODO 2: if all platforms:
+    #     # Get all platforms
+    #     # Get all tests (platform-agnostic and without backend preference)
+    #         # Order them based on ObjectDetectorType and ObjectDetectorBlobSize
+    #     # For each platform
+    #         # For each test
+    #             # calculate the average FPS between each backend preference
+    #             # append highest fps average to list within the dictionary key for current platform
+    # # else:
+    #     # Get all tests (platform-agnostic and with backend preference)
+    #     # for each test
+    #         # calculate average FPS between repetitions
+    #         # Add average fps to one of three dictionary keys "No YOLOv7", "YOLOv7 with CUDA" or "YOLOv7 without CUDA"
 
 except sqlite3.Error as e:
     print(e)
