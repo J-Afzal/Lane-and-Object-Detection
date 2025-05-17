@@ -38,4 +38,14 @@ namespace LaneAndObjectDetection
     {
         return m_frameTimes;
     }
+
+    std::string Performance::GetTimeUnit()
+    {
+        return "us";
+    }
+
+    uint32_t Performance::GetTimeUnitConversion()
+    {
+        return 1000000;
+    }
 }

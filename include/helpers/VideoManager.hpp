@@ -143,11 +143,11 @@ namespace LaneAndObjectDetection
         void RunLaneAndObjectDetector();
 
         /**
-         * @brief Get the times to compute each and every frame.Globals
+         * @brief Get the performance object to extract performance-related information.
          *
-         * @return `std::vector<uint32_t>` A list of the time to compute each frame.
+         * @return `Performance` The performance object containing performance-related information.
          */
-        std::vector<uint32_t> GetFrameTimes();
+        Performance GetPerformance();
 
         /**
          * @brief Disable constructing a new %VideoManager object using copy constructor.

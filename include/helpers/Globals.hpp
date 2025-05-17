@@ -436,6 +436,11 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_CHANGING_LANES_DISTANCE_DIFFERENCE_FRAME_COUNT_THRESHOLD = 10;
 
     /**
+     * @brief The name of the YOLO version being used.
+     */
+    static inline const std::string G_YOLO_NAME = "YOLOv7";
+
+    /**
      * @brief The type of object detector to use with an option to disable object detection. The tiny version is more performant
      * at the cost of accuracy.
      */
@@ -688,6 +693,30 @@ namespace LaneAndObjectDetection::Globals
      */
     ///@{
     static inline const uint32_t G_PERFORMANCE_TESTS_NUMBER_OF_TESTS = 21;
+
+    static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_NAMES = {
+        "No YOLO",
+        "YOLO-tiny 288 (CPU)",
+        "YOLO-tiny 288 (CUDA)",
+        "YOLO 288 (CPU)",
+        "YOLO 288 (CUDA)",
+        "YOLO-tiny 320 (CPU)",
+        "YOLO-tiny 320 (CUDA)",
+        "YOLO 320 (CPU)",
+        "YOLO 320 (CUDA)",
+        "YOLO-tiny 416 (CPU)",
+        "YOLO-tiny 416 (CUDA)",
+        "YOLO 416 (CPU)",
+        "YOLO 416 (CUDA)",
+        "YOLO-tiny 512 (CPU)",
+        "YOLO-tiny 512 (CUDA)",
+        "YOLO 512 (CPU)",
+        "YOLO 512 (CUDA)",
+        "YOLO-tiny 608 (CPU)",
+        "YOLO-tiny 608 (CUDA)",
+        "YOLO 608 (CPU)",
+        "YOLO 608 (CUDA)",
+    };
 
     static inline const std::array<ObjectDetectorTypes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES = {
         ObjectDetectorTypes::NONE,

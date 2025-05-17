@@ -57,7 +57,7 @@ namespace LaneAndObjectDetection
     private:
         /**
          * @class SQLiteDatabase
-         * @brief TODO (mention it is performance test specific hence why in private scope)
+         * @brief SQLite wrapper class. This class is in the private scope as the implementation is PerformanceTests-specific.
          */
         class SQLiteDatabase
         {
@@ -72,8 +72,6 @@ namespace LaneAndObjectDetection
              */
             ~SQLiteDatabase();
 
-            //*@param p_databasePath The path to the SQLite database file.
-
             /**
              * @brief Opens the provided database file.
              *
@@ -82,22 +80,25 @@ namespace LaneAndObjectDetection
             void OpenDatabase(const std::string& p_databasePath);
 
             /**
-             * @brief TODO
+             * @brief Drops all rows for the specified platform.
              *
-             * @param p_currentPlatform TODO
+             * @param p_currentPlatform The platform name whose rows should be dropped.
+             * @warning This function should only be called after `OpenDatabase()` has been successfully called.
              */
             void ClearPlatformFrameTimes(const std::string& p_currentPlatform);
 
             /**
-             * @brief TODO
+             * @brief Inserts rows in to the FrameTimes table for every frame time in `p_frameTimes`.
              *
-             * @param p_currentPlatform TODO
-             * @param p_objectDetectorTypes TODO
-             * @param p_objectDetectorBackEnds TODO
-             * @param p_objectDetectorBlobSize TODO
-             * @param p_repetitionNumber TODO
-             * @param p_frameTimes TODO
-             * @param p_unit TODO
+             * @param p_currentPlatform The platform the frame times are associated with.
+             * @param p_objectDetectorTypes The type of object detector used.Globals
+             * @param p_objectDetectorBackEnds The backend used by the object detector.
+             * @param p_objectDetectorBlobSize The object detector blob size.
+             * @param p_repetitionNumber The repetition number of the current test
+             * @param p_frameTimes The frame times.
+             * @param p_timeUnit The time unit that the frame times are measured in.
+             * @param p_timeUnitConversion The divisor needed to convert the frame times to seconds.
+             * @warning This function should only be called after `OpenDatabase()` has been successfully called.
              */
             void InsertFrameTimes(const std::string& p_currentPlatform,
                                   const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
@@ -105,43 +106,44 @@ namespace LaneAndObjectDetection
                                   const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSize,
                                   const uint32_t& p_repetitionNumber,
                                   const std::vector<uint32_t>& p_frameTimes,
-                                  const std::string& p_unit);
+                                  const std::string& p_timeUnit,
+                                  const uint32_t& p_timeUnitConversion);
 
         private:
             /**
-             * @brief TODO
+             * @brief Executes `p_sqlStatement` against the SQLite database.
              *
-             * @param p_sqlStatement TODO
+             * @param p_sqlStatement The SQL statement to execute against the SQLite database.
+             * @warning This function should only be called after `OpenDatabase()` has been successfully called.
              */
             void ExecuteSQLStatement(const std::string& p_sqlStatement);
 
             /**
-             * @brief TODO
+             * @brief Checks that `p_resultCode` is `SQLITE_OK`. If not then raises SQLiteDatabaseError.
              *
-             * @param p_resultCode TODO
-             * @param p_errorMessage TODO
-             * @exception SQLiteDatabaseError TODO
+             * @param p_resultCode The returned result code from the SQLite database.
+             * @exception `SQLiteDatabaseError` Raised when `p_resultCode` is not `SQLITE_OK`.
              */
             void CheckResultCode(const int32_t& p_resultCode);
 
             /**
-             * @brief TODO (smart pointer?)
+             * @brief SQLite database connection handle.
              */
             sqlite3* m_database;
         };
 
         /**
-         * @brief TODO
+         * @brief The SQLite database which will store the measure frame times.
          */
         SQLiteDatabase m_sqlLiteDatabase;
 
         /**
-         * @brief TODO
+         * @brief The platform that the performance tests will be ran against.
          */
         std::string m_currentPlatform;
 
         /**
-         * @brief TODO
+         * @brief The path to the SQLite database file.
          */
         std::string m_databasePath;
 

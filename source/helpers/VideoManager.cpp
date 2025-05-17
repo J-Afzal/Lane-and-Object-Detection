@@ -264,9 +264,9 @@ namespace LaneAndObjectDetection
         }
     }
 
-    std::vector<uint32_t> VideoManager::GetFrameTimes()
+    Performance VideoManager::GetPerformance()
     {
-        return m_performance.GetFrameTimes();
+        return m_performance;
     }
 
     void VideoManager::ToggleDebugMode()

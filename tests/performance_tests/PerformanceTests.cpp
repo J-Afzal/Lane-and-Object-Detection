@@ -124,22 +124,23 @@ namespace LaneAndObjectDetection
                                                    Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
                                                    Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber),
                                                    currentRepetition,
-                                                   videoManager.GetFrameTimes(),
-                                                   "us"); // TODO: use GetUnit() function from performance class
+                                                   videoManager.GetPerformance().GetFrameTimes(),
+                                                   videoManager.GetPerformance().GetTimeUnit(),
+                                                   videoManager.GetPerformance().GetTimeUnitConversion());
 
                 std::cout << std::format("\n        Finished repetition {}/{}", currentRepetition + 1, m_numberOfRepetitions);
             }
         }
 
         std::cout << std::format("\n\nTotal elapsed time = {} (H?:mm:ss)", Globals::GetTimeElapsed(START_TIME));
+        std::cout << "\n\nRun './tests/main.py' with appropriate CLI args to generate performance graphs";
         std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n";
-
-        // TODO: add output to run performance graphs python script to generate performance metrics
     }
 
     PerformanceTests::SQLiteDatabase::~SQLiteDatabase()
     {
         sqlite3_close(m_database);
+        delete m_database;
     }
 
     void PerformanceTests::SQLiteDatabase::OpenDatabase(const std::string& p_databasePath)
@@ -159,6 +160,7 @@ namespace LaneAndObjectDetection
                                                        "    FrameNumber             INTEGER             NOT NULL,"
                                                        "    FrameTime               INTEGER             NOT NULL,"
                                                        "    TimeUnit                TEXT                NOT NULL"
+                                                       "    TimeUnitConversion      INTEGER             NOT NULL"
                                                        ");";
         ExecuteSQLStatement(CREATE_TABLE_SQL_STATEMENT);
     }
@@ -174,24 +176,26 @@ namespace LaneAndObjectDetection
                                                             const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSize,
                                                             const uint32_t& p_repetitionNumber,
                                                             const std::vector<uint32_t>& p_frameTimes,
-                                                            const std::string& p_unit)
+                                                            const std::string& p_unit,
+                                                            const uint32_t& p_unitConversion)
     {
         for (uint32_t i = 0; i < p_frameTimes.size(); i++)
         {
             ExecuteSQLStatement(
                 std::format(
                     "INSERT INTO"
-                    "FrameTimes(Platform, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, TimeUnit)"
-                    "VALUES({}, {}, {}, {}, {}, {}, {}, {}, {});",
+                    "FrameTimes(Platform, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, TimeUnit, TimeUnitConversion)"
+                    "VALUES({}, {}, {}, {}, {}, {}, {}, {}, {}, {});",
                     p_currentPlatform,
-                    "YOLOv7", // TODO: global?
+                    Globals::G_YOLO_NAME,
                     p_objectDetectorTypes,
                     p_objectDetectorBackEnds,
                     p_objectDetectorBlobSize,
                     p_repetitionNumber,
                     i,
                     p_frameTimes[i],
-                    p_unit));
+                    p_unit,
+                    p_unitConversion));
         }
     }
 
