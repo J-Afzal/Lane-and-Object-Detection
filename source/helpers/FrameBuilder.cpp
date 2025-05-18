@@ -9,9 +9,10 @@
 #include <opencv2/core/types.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include "helpers/FrameBuilder.hpp"
 #include "helpers/Globals.hpp"
 #include "helpers/Information.hpp"
+
+#include "helpers/FrameBuilder.hpp"
 
 namespace LaneAndObjectDetection
 {

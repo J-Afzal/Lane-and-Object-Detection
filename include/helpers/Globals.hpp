@@ -163,6 +163,11 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
+     * @brief Time unit for performance-related frame times.
+     */
+    static inline const std::string G_TIME_UNIT = "us";
+
+    /**
      * @brief Conversion between time units.
      */
     static inline const double G_MICROSECONDS_IN_SECOND = 1000000;

@@ -1,6 +1,5 @@
 #include <cstdint>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 #include <sqlite3.h>
@@ -27,7 +26,7 @@ namespace LaneAndObjectDetection
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_numberOfRepetitions The number of times to repeat each test.
          */
-        explicit PerformanceTests(const std::string& p_currentPlatform, const std::string& p_inputVideoFilePath, const std::string& p_yoloFolderPath, const uint32_t& p_numberOfRepetitions);
+        explicit PerformanceTests(std::string p_currentPlatform, std::string p_inputVideoFilePath, std::string p_yoloFolderPath, const uint32_t& p_numberOfRepetitions);
 
         /**
          * @brief Constructs a new %PerformanceTests object (for CLI use).
@@ -93,8 +92,8 @@ namespace LaneAndObjectDetection
              * @brief Inserts rows in to the FrameTimes table for every frame time in `p_frameTimes`.
              *
              * @param p_currentPlatform The platform the frame times are associated with.
-             * @param p_objectDetectorTypes The type of object detector used.Globals
-             * @param p_objectDetectorBackEnds The backend used by the object detector.
+             * @param p_objectDetectorType The type of object detector used.Globals
+             * @param p_objectDetectorBackEnd The backend used by the object detector.
              * @param p_objectDetectorBlobSize The object detector blob size.
              * @param p_repetitionNumber The repetition number of the current test
              * @param p_frameTimes The frame times.
@@ -103,13 +102,41 @@ namespace LaneAndObjectDetection
              * @warning This function should only be called after `OpenDatabase()` has been successfully called.
              */
             void InsertFrameTimes(const std::string& p_currentPlatform,
-                                  const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
-                                  const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                                  const Globals::ObjectDetectorTypes& p_objectDetectorType,
+                                  const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnd,
                                   const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSize,
                                   const uint32_t& p_repetitionNumber,
                                   const std::vector<uint32_t>& p_frameTimes,
                                   const std::string& p_timeUnit,
                                   const uint32_t& p_timeUnitConversion);
+
+            /**
+             * @brief Disable constructing a new %SQLiteDatabase object using copy constructor.
+             *
+             * @param p_sqliteDatabase The %SQLiteDatabase to copy.
+             */
+            SQLiteDatabase(const SQLiteDatabase& p_sqliteDatabase) = delete;
+
+            /**
+             * @brief Disable constructing a new %SQLiteDatabase object using move constructor.
+             *
+             * @param p_sqliteDatabase The %SQLiteDatabase to copy.
+             */
+            SQLiteDatabase(const SQLiteDatabase&& p_sqliteDatabase) = delete;
+
+            /**
+             * @brief Disable constructing a new %SQLiteDatabase object using copy assignment operator.
+             *
+             * @param p_sqliteDatabase The %SQLiteDatabase to copy.
+             */
+            SQLiteDatabase& operator=(const SQLiteDatabase& p_sqliteDatabase) = delete;
+
+            /**
+             * @brief Disable constructing a new %SQLiteDatabase object using move assignment operator.
+             *
+             * @param p_sqliteDatabase The %SQLiteDatabase to copy.
+             */
+            SQLiteDatabase& operator=(const SQLiteDatabase&& p_sqliteDatabase) = delete;
 
         private:
             /**
@@ -137,7 +164,7 @@ namespace LaneAndObjectDetection
         /**
          * @brief The SQLite database which will store the measure frame times.
          */
-        SQLiteDatabase m_sqlLiteDatabase;
+        SQLiteDatabase m_sqliteDatabase {};
 
         /**
          * @brief The platform that the performance tests will be ran against.

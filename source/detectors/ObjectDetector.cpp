@@ -9,8 +9,9 @@
 #include <opencv2/core/types.hpp>
 #include <opencv2/dnn/dnn.hpp>
 
-#include "detectors/ObjectDetector.hpp"
 #include "helpers/Globals.hpp"
+
+#include "detectors/ObjectDetector.hpp"
 
 namespace LaneAndObjectDetection
 {

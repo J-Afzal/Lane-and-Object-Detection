@@ -2,14 +2,16 @@
 #include <cstdint>
 #include <cstdlib>
 #include <format>
-#include <fstream>
 #include <iostream>
 #include <string>
 #include <utility>
 #include <vector>
 
+#include <sqlite3.h>
+
 #include "helpers/Globals.hpp"
 #include "helpers/VideoManager.hpp"
+
 #include "PerformanceTests.hpp"
 
 /**
@@ -18,7 +20,7 @@
  */
 namespace LaneAndObjectDetection
 {
-    PerformanceTests::PerformanceTests(const std::string& p_currentPlatform, const std::string& p_inputVideoFilePath, const std::string& p_yoloFolderPath, const uint32_t& p_numberOfRepetitions) :
+    PerformanceTests::PerformanceTests(std::string p_currentPlatform, std::string p_inputVideoFilePath, std::string p_yoloFolderPath, const uint32_t& p_numberOfRepetitions) :
         m_currentPlatform(std::move(p_currentPlatform)),
         m_inputVideoFilePath(std::move(p_inputVideoFilePath)),
         m_yoloFolderPath(std::move(p_yoloFolderPath)),
@@ -93,10 +95,10 @@ namespace LaneAndObjectDetection
         std::cout << "\n    Number of repetitions: " << m_numberOfRepetitions;
 
         std::cout << "\nOpening the database path...";
-        m_sqlLiteDatabase.OpenDatabase(m_databasePath);
+        m_sqliteDatabase.OpenDatabase(m_databasePath);
 
         std::cout << "\nClearing current platform frame times from output table...";
-        m_sqlLiteDatabase.ClearPlatformFrameTimes(m_currentPlatform);
+        m_sqliteDatabase.ClearPlatformFrameTimes(m_currentPlatform);
 
         VideoManager videoManager;
 
@@ -119,14 +121,14 @@ namespace LaneAndObjectDetection
 
                 videoManager.RunLaneAndObjectDetector();
 
-                m_sqlLiteDatabase.InsertFrameTimes(m_currentPlatform,
-                                                   Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
-                                                   Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
-                                                   Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber),
-                                                   currentRepetition,
-                                                   videoManager.GetPerformance().GetFrameTimes(),
-                                                   videoManager.GetPerformance().GetTimeUnit(),
-                                                   videoManager.GetPerformance().GetTimeUnitConversion());
+                m_sqliteDatabase.InsertFrameTimes(m_currentPlatform,
+                                                  Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
+                                                  Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
+                                                  Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber),
+                                                  currentRepetition,
+                                                  videoManager.GetPerformance().GetFrameTimes(),
+                                                  Performance::GetTimeUnit(),
+                                                  Performance::GetTimeUnitConversion());
 
                 std::cout << std::format("\n        Finished repetition {}/{}", currentRepetition + 1, m_numberOfRepetitions);
             }
@@ -140,13 +142,11 @@ namespace LaneAndObjectDetection
     PerformanceTests::SQLiteDatabase::~SQLiteDatabase()
     {
         sqlite3_close(m_database);
-        delete m_database; // TODO: undefined behaviour?
     }
 
     void PerformanceTests::SQLiteDatabase::OpenDatabase(const std::string& p_databasePath)
     {
-        int32_t resultCode = sqlite3_open(p_databasePath.c_str(), &m_database);
-        CheckResultCode(resultCode);
+        CheckResultCode(sqlite3_open(p_databasePath.c_str(), &m_database));
 
         const std::string CREATE_TABLE_SQL_STATEMENT = "CREATE TABLE IF NOT EXISTS FrameTimes"
                                                        "("
@@ -171,13 +171,13 @@ namespace LaneAndObjectDetection
     }
 
     void PerformanceTests::SQLiteDatabase::InsertFrameTimes(const std::string& p_currentPlatform,
-                                                            const Globals::ObjectDetectorTypes& p_objectDetectorTypes,
-                                                            const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnds,
+                                                            const Globals::ObjectDetectorTypes& p_objectDetectorType,
+                                                            const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnd,
                                                             const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSize,
                                                             const uint32_t& p_repetitionNumber,
                                                             const std::vector<uint32_t>& p_frameTimes,
-                                                            const std::string& p_unit,
-                                                            const uint32_t& p_unitConversion)
+                                                            const std::string& p_timeUnit,
+                                                            const uint32_t& p_timeUnitConversion)
     {
         for (uint32_t i = 0; i < p_frameTimes.size(); i++)
         {
@@ -188,14 +188,14 @@ namespace LaneAndObjectDetection
                     "VALUES({}, {}, {}, {}, {}, {}, {}, {}, {}, {});",
                     p_currentPlatform,
                     Globals::G_YOLO_NAME,
-                    static_cast<uint8_t>(p_objectDetectorTypes),
-                    static_cast<uint8_t>(p_objectDetectorBackEnds),
+                    static_cast<uint8_t>(p_objectDetectorType),
+                    static_cast<uint8_t>(p_objectDetectorBackEnd),
                     static_cast<uint16_t>(p_objectDetectorBlobSize),
                     p_repetitionNumber,
                     i,
                     p_frameTimes[i],
-                    p_unit,
-                    p_unitConversion));
+                    p_timeUnit,
+                    p_timeUnitConversion));
         }
     }
 

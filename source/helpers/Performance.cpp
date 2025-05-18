@@ -1,8 +1,10 @@
 #include <chrono>
 #include <cstdint>
+#include <string>
 #include <vector>
 
 #include "helpers/Globals.hpp"
+
 #include "helpers/Performance.hpp"
 
 namespace LaneAndObjectDetection
@@ -41,11 +43,11 @@ namespace LaneAndObjectDetection
 
     std::string Performance::GetTimeUnit()
     {
-        return "us";
+        return Globals::G_TIME_UNIT;
     }
 
     uint32_t Performance::GetTimeUnitConversion()
     {
-        return 1000000;
+        return static_cast<uint32_t>(Globals::G_MICROSECONDS_IN_SECOND);
     }
 }

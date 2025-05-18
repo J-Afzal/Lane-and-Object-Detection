@@ -16,6 +16,7 @@
 #include "helpers/Globals.hpp"
 #include "helpers/Information.hpp"
 #include "helpers/Performance.hpp"
+
 #include "helpers/VideoManager.hpp"
 
 namespace LaneAndObjectDetection

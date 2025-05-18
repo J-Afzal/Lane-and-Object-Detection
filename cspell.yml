@@ -4,8 +4,9 @@ dictionaries:
     - cpp
     - powershell
 ignorePaths:
-    - .vs/
+    - .venv/
     - .vscode/
+    - "*.db"
     - build/
     - docs/html/
     - node_modules/
@@ -36,7 +37,6 @@ ignoreWords:
     - figheight
     - figwidth
     - fontdict
-    - fontsize
     - fourcc
     - hicpp
     - ilammy
@@ -62,5 +62,4 @@ ignoreWords:
     - xticks
     - yaxis
     - ylabel
-    - ylim
     - yolov

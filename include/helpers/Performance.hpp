@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <cstdint>
+#include <string>
 #include <vector>
 
 #include "helpers/Information.hpp"
@@ -53,14 +54,14 @@ namespace LaneAndObjectDetection
          *
          * @return `std::string` The time unit for the frame times.
          */
-        std::string GetTimeUnit();
+        static std::string GetTimeUnit();
 
         /**
          * @brief Get the divisor needed to convert the frame times to seconds.
          *
          * @return `uint32_t` The divisor needed to convert the frame times to seconds.
          */
-        uint32_t GetTimeUnitConversion();
+        static uint32_t GetTimeUnitConversion();
 
     private:
         /**
