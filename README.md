@@ -155,11 +155,11 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 <!--
 x. Performance Tests
   - Add docs to python code
-  - Move all performance test consts out of globals to remove dependency on globals.hpp
   - Add black formatting linting check in Linters (any other checks for python code?)
 
   - Test performance tests and graph generation (update readme docs on process)
     - Test on windows and also ubuntu and jetson nano? (update installation instructions)
+    - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?
     - Add below section after general information
         ### Performance Tests
 
@@ -172,8 +172,6 @@ x. Performance Tests
 
         cli call to performance tests
         cli call to performance graphs
-
-  - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?
 
   - Performance heat map and any optimisations?
 -->

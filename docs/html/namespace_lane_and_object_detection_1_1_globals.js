@@ -10,14 +10,16 @@ var namespace_lane_and_object_detection_1_1_globals =
     ] ],
     [ "ObjectDetectorTypes", "namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6b", [
       [ "NONE", "namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6bab50339a10e1de285ac99d4c3990b8693", null ],
-      [ "STANDARD", "namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6ba94e94133f4bdc1794c6b647b8ea134d0", null ],
-      [ "TINY", "namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6ba6dd4ee07e7811f17d2b1b33bf3b6f0c1", null ]
+      [ "TINY", "namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6ba6dd4ee07e7811f17d2b1b33bf3b6f0c1", null ],
+      [ "STANDARD", "namespace_lane_and_object_detection_1_1_globals.html#a8332ca3fcf9241fd6d7f32edd2f9cb6ba94e94133f4bdc1794c6b647b8ea134d0", null ]
     ] ],
     [ "ObjectDetectorBackEnds", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0", [
+      [ "NONE", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0ab50339a10e1de285ac99d4c3990b8693", null ],
       [ "CPU", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0a2b55387dd066c5bac646ac61543d152d", null ],
       [ "CUDA", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0aa33b7755e5f9b504d2d038eaca4ff28d", null ]
     ] ],
     [ "ObjectDetectorBlobSizes", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4", [
+      [ "NONE", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4ab50339a10e1de285ac99d4c3990b8693", null ],
       [ "ONE", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4abc21e6484530fc9d0313cb816b733396", null ],
       [ "TWO", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4a0f82d86afa0f5dc965c5c15aca58dcfb", null ],
       [ "THREE", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4a413af0de1f97a2155acf2b8b26ab36e2", null ],
@@ -51,7 +53,8 @@ var namespace_lane_and_object_detection_1_1_globals =
     [ "G_COLOUR_BLUE", "namespace_lane_and_object_detection_1_1_globals.html#ad3c4df1e2511943897f73e4c119ebe62", null ],
     [ "G_COLOUR_LIGHT_BLUE", "namespace_lane_and_object_detection_1_1_globals.html#a0e112e5e3238a4aa33c9b8cab30c6632", null ],
     [ "G_COLOUR_PURPLE", "namespace_lane_and_object_detection_1_1_globals.html#a9f8dedb7a3bdacc5b1d9d2bf5e557833", null ],
-    [ "G_MILLISECONDS_IN_SECOND", "namespace_lane_and_object_detection_1_1_globals.html#a246fcf9edb439a96ac178a3685d6c023", null ],
+    [ "G_TIME_UNIT", "namespace_lane_and_object_detection_1_1_globals.html#a8b4f23a092245e1b1cd6f0b743cb78b2", null ],
+    [ "G_MICROSECONDS_IN_SECOND", "namespace_lane_and_object_detection_1_1_globals.html#a023174ef68e6f830a07069667aaca16c", null ],
     [ "G_CONVERT_DECIMAL_TO_PERCENTAGE", "namespace_lane_and_object_detection_1_1_globals.html#afbf925d87747cff8f2b56615f4c8b62c", null ],
     [ "G_DIVIDE_BY_TWO", "namespace_lane_and_object_detection_1_1_globals.html#a48282688796adf05e4a30f81d0220f5f", null ],
     [ "G_UI_TEXT_RECORDING", "namespace_lane_and_object_detection_1_1_globals.html#a1914d6abace5f38d4be236226f202e73", null ],
@@ -120,6 +123,7 @@ var namespace_lane_and_object_detection_1_1_globals =
     [ "G_SOLID_LINE_LENGTH_THRESHOLD", "namespace_lane_and_object_detection_1_1_globals.html#a0237f868039b6350cb33d2d082b99fd1", null ],
     [ "G_DRIVING_STATE_TITLES", "namespace_lane_and_object_detection_1_1_globals.html#a0692f81ec17394b3d2c8204864c85b28", null ],
     [ "G_CHANGING_LANES_DISTANCE_DIFFERENCE_FRAME_COUNT_THRESHOLD", "namespace_lane_and_object_detection_1_1_globals.html#a0d040ef44914d1452293107da471d4e7", null ],
+    [ "G_YOLO_NAME", "namespace_lane_and_object_detection_1_1_globals.html#a7589bf9b6ac387dee752030ff02b817d", null ],
     [ "G_OBJECT_DETECTOR_SCALE_FACTOR", "namespace_lane_and_object_detection_1_1_globals.html#abaffb46b1751901bdfd0d79449d44185", null ],
     [ "G_OBJECT_DETECTOR_CONFIDENCE_THRESHOLD", "namespace_lane_and_object_detection_1_1_globals.html#a364f54a6a78e5af8beeb65637ec5c26e", null ],
     [ "G_OBJECT_DETECTOR_NMS_THRESHOLD", "namespace_lane_and_object_detection_1_1_globals.html#a3e6aed2d6373693084aea4b8480bfe48", null ],
@@ -139,8 +143,8 @@ var namespace_lane_and_object_detection_1_1_globals =
     [ "G_OBJECT_DETECTOR_OBJECT_NAMES_AND_COLOURS", "namespace_lane_and_object_detection_1_1_globals.html#aafd82fe8785ff670e2a0ed90df1198da", null ],
     [ "G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE", "namespace_lane_and_object_detection_1_1_globals.html#a51ffe6f3282f924fd7ba500d7aacf449", null ],
     [ "G_PERFORMANCE_TESTS_NUMBER_OF_TESTS", "namespace_lane_and_object_detection_1_1_globals.html#ac134e7d3bd92f42288873047e4ab7b29", null ],
+    [ "G_PERFORMANCE_TESTS_NAMES", "namespace_lane_and_object_detection_1_1_globals.html#ac866b555ebb26ae188f7818269f7b102", null ],
     [ "G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES", "namespace_lane_and_object_detection_1_1_globals.html#ad06dd89f2f769b5c0ac668b2d5c0bbc4", null ],
     [ "G_PERFORMANCE_TESTS_BACK_END_TYPES", "namespace_lane_and_object_detection_1_1_globals.html#a90765da63a4130b6befff8d1264b3980", null ],
-    [ "G_PERFORMANCE_TESTS_BLOB_SIZES", "namespace_lane_and_object_detection_1_1_globals.html#a2b6216da1d79bb63a6667f9fd24b5282", null ],
-    [ "G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES", "namespace_lane_and_object_detection_1_1_globals.html#a5ee4c9437aa336b279c536cbb0bb18de", null ]
+    [ "G_PERFORMANCE_TESTS_BLOB_SIZES", "namespace_lane_and_object_detection_1_1_globals.html#a2b6216da1d79bb63a6667f9fd24b5282", null ]
 ];

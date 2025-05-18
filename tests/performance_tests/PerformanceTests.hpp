@@ -92,7 +92,7 @@ namespace LaneAndObjectDetection
              * @brief Inserts rows in to the FrameTimes table for every frame time in `p_frameTimes`.
              *
              * @param p_currentPlatform The platform the frame times are associated with.
-             * @param p_objectDetectorType The type of object detector used.Globals
+             * @param p_objectDetectorType The type of object detector used.
              * @param p_objectDetectorBackEnd The backend used by the object detector.
              * @param p_objectDetectorBlobSize The object detector blob size.
              * @param p_repetitionNumber The repetition number of the current test
