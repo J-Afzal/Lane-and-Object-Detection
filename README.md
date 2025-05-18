@@ -7,6 +7,9 @@ Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv7
 Binaries can be found in [Releases](https://github.com/J-Afzal/Lane-and-Object-Detection/releases) or, if preferred, CMake can
 be used to build the project from source either through the PowerShell helper function:
 
+> [!IMPORTANT]
+> Included in the repository is a `benchmark.mp4` file which can be used to run the program against.
+
 ```text
 Import-Module ./modules/Build.psd1
 
@@ -44,7 +47,7 @@ cmake --build ./build --config Release
 Here are the full list of options for Lane and Object Detection:
 
 ```text
-Usage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]
+Usage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]
 
 OPTIONS:
 
@@ -104,6 +107,8 @@ Both modes support recording the output of the main frame.
 
 ![Recording Mode](./resources/screenshots/RecordingMode.png)
 
+Pressing `q` will quit the program.
+
 ## CI / CD
 
 [![Continuous Integration](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml)
@@ -151,11 +156,7 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 x. Performance Tests
   - Add docs to python code
   - Move all performance test consts out of globals to remove dependency on globals.hpp
-  - Add black formatting linting check in Linters
-
-  - Get better dash cam video.
-    - Both benchmark and all scenarios video
-    - (https://www.youtube.com/watch?v=TUgfiNg06GQ and https://www.youtube.com/watch?v=-F-hrZKXM-k)
+  - Add black formatting linting check in Linters (any other checks for python code?)
 
   - Test performance tests and graph generation (update readme docs on process)
     - Test on windows and also ubuntu and jetson nano? (update installation instructions)
@@ -172,10 +173,7 @@ x. Performance Tests
         cli call to performance tests
         cli call to performance graphs
 
-  - Performance heat map and any optimisations?
   - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?
 
-x. Correct lane detection code
-  - Debug lane detection code to make sure it is correct.
-
+  - Performance heat map and any optimisations?
 -->

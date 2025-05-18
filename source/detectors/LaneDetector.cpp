@@ -369,6 +369,13 @@ namespace LaneAndObjectDetection
         // Set titles based on driving state
         m_laneDetectionInformation.m_drivingStateTitle = Globals::G_DRIVING_STATE_TITLES.find(m_currentDrivingState)->second;
 
+        m_laneDetectionInformation.m_laneOverlayCorners = {
+            {0, 0},
+            {0, 0},
+            {0, 0},
+            {0, 0}
+        };
+
         switch (m_currentDrivingState)
         {
         case Globals::DrivingState::WITHIN_LANE:
@@ -391,13 +398,6 @@ namespace LaneAndObjectDetection
 
     void LaneDetector::CalculateLanePosition()
     {
-        m_laneDetectionInformation.m_laneOverlayCorners = {
-            {0, 0},
-            {0, 0},
-            {0, 0},
-            {0, 0}
-        };
-
         // Skip if either no left or right lane lines detected
         if (m_leftLaneLines.empty() || m_rightLaneLines.empty())
         {

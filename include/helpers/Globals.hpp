@@ -101,7 +101,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief CLI help message for the video manager.
      */
-    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
+    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
 
     /**
      * @brief Input video dimensions.
@@ -265,10 +265,10 @@ namespace LaneAndObjectDetection::Globals
      * @brief Region-of-interest dimensions.
      */
     ///@{
-    static inline const int32_t G_ROI_TOP_HEIGHT = 660;
-    static inline const int32_t G_ROI_BOTTOM_HEIGHT = 840;
-    static inline const int32_t G_ROI_TOP_WIDTH = 200;
-    static inline const int32_t G_ROI_BOTTOM_WIDTH = 900;
+    static inline const int32_t G_ROI_TOP_HEIGHT = 800;
+    static inline const int32_t G_ROI_BOTTOM_HEIGHT = 1025;
+    static inline const int32_t G_ROI_TOP_WIDTH = 250;
+    static inline const int32_t G_ROI_BOTTOM_WIDTH = 850;
     ///@}
 
     /**
@@ -383,7 +383,7 @@ namespace LaneAndObjectDetection::Globals
     static inline const double G_HOUGH_RHO = 1;
     static inline const double G_HOUGH_THETA = CV_PI / 180.0;
     static inline const uint32_t G_HOUGH_THRESHOLD = 32;
-    static inline const uint32_t G_HOUGH_MIN_LINE_LENGTH = 16;
+    static inline const uint32_t G_HOUGH_MIN_LINE_LENGTH = 8;
     static inline const uint32_t G_HOUGH_MAX_LINE_GAP = 8;
     ///@}
 
@@ -400,12 +400,12 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief Threshold gradient to decide whether a line is to be considered horizontal.
      */
-    static inline const double G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD = 0.15;
+    static inline const double G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD = 0.5;
 
     /**
      * @brief Threshold length to decide whether a line is to be considered solid line road marking.
      */
-    static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75;
+    static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 175;
 
     /**
      * @brief The different driving states supported by the lane detector.

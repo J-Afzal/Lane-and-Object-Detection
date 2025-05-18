@@ -5,6 +5,8 @@
 
 #include <sqlite3.h>
 
+#include "helpers/Globals.hpp"
+
 /**
  * @namespace LaneAndObjectDetection
  * @brief Contains all Lane-and-Object-Detection objects.

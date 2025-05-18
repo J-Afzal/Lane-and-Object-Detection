@@ -11,7 +11,7 @@ SET(executable_name "lane-and-object-detection")
 SET(performance_tests_executable_name ${executable_name}-performance-tests)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/tests/performance_tests/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/tests/performance_tests)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/install/include)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/submodules/sqlite3)
 

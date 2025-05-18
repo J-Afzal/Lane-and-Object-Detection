@@ -140,12 +140,12 @@ namespace LaneAndObjectDetection
     PerformanceTests::SQLiteDatabase::~SQLiteDatabase()
     {
         sqlite3_close(m_database);
-        delete m_database;
+        delete m_database; // TODO: undefined behaviour?
     }
 
     void PerformanceTests::SQLiteDatabase::OpenDatabase(const std::string& p_databasePath)
     {
-        int32_t resultCode = sqlite3_open(p_databasePath, &m_database);
+        int32_t resultCode = sqlite3_open(p_databasePath.c_str(), &m_database);
         CheckResultCode(resultCode);
 
         const std::string CREATE_TABLE_SQL_STATEMENT = "CREATE TABLE IF NOT EXISTS FrameTimes"
@@ -188,9 +188,9 @@ namespace LaneAndObjectDetection
                     "VALUES({}, {}, {}, {}, {}, {}, {}, {}, {}, {});",
                     p_currentPlatform,
                     Globals::G_YOLO_NAME,
-                    p_objectDetectorTypes,
-                    p_objectDetectorBackEnds,
-                    p_objectDetectorBlobSize,
+                    static_cast<uint8_t>(p_objectDetectorTypes),
+                    static_cast<uint8_t>(p_objectDetectorBackEnds),
+                    static_cast<uint16_t>(p_objectDetectorBlobSize),
                     p_repetitionNumber,
                     i,
                     p_frameTimes[i],
