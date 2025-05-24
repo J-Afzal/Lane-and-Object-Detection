@@ -155,20 +155,23 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 <!--
 x. Performance Tests
   - Test performance tests and graph generation (update readme docs on process)
-    - Test on windows and also ubuntu and jetson nano? (update installation instructions)
-    - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?
-    - Add below section after general information
-        ### Performance Tests
 
-        some info on tests and some screenshots
-        dependencies = python and pip install
+  - Test on windows and also ubuntu and jetson nano? (update installation instructions)
 
-        python -m venv .venv/
-        .\.venv\Scripts\activate
-        pip install -r ./requirements.txt
+  - Add below section after general information
+      ### Performance Tests
 
-        cli call to performance tests
-        cli call to performance graphs
+      some info on tests and some screenshots
+      dependencies = python and pip install
+
+      python -m venv .venv/
+      .\.venv\Scripts\activate
+      pip install -r ./requirements.txt
+
+      cli call to performance tests
+      cli call to performance graphs
+
+  - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?
 
   - Performance heat map and any optimisations?
 -->
