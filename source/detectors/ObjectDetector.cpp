@@ -51,6 +51,11 @@ namespace LaneAndObjectDetection
             m_net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
             break;
 
+        case Globals::ObjectDetectorBackEnds::GPU:
+            m_net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
+            m_net.setPreferableTarget(cv::dnn::DNN_TARGET_OPENCL);
+            break;
+
         case Globals::ObjectDetectorBackEnds::CUDA:
             m_net.setPreferableBackend(cv::dnn::DNN_BACKEND_CUDA);
             m_net.setPreferableTarget(cv::dnn::DNN_TARGET_CUDA);

@@ -527,8 +527,8 @@ class PerformanceGraphs:
 
                 else:
                     frame_times[f"No {yolo_name}"] = []
-                    frame_times[f"{yolo_name} with CUDA"] = []
-                    frame_times[f"{yolo_name} without CUDA"] = []
+                    frame_times[f"{yolo_name} (GPU)"] = []
+                    frame_times[f"{yolo_name} (CPU)"] = []
 
                     for test in all_tests:
                         sqlite_cursor.execute(
@@ -550,9 +550,9 @@ class PerformanceGraphs:
                         if test[0] == 0:
                             frame_times[f"No {yolo_name}"].append([row[0] for row in sqlite_cursor.fetchall()])
                         elif test[1] == 1:
-                            frame_times[f"{yolo_name} with CUDA"].append([row[0] for row in sqlite_cursor.fetchall()])
+                            frame_times[f"{yolo_name} (GPU)"].append([row[0] for row in sqlite_cursor.fetchall()])
                         elif test[1] == 2:
-                            frame_times[f"{yolo_name} without CUDA"].append([row[0] for row in sqlite_cursor.fetchall()])
+                            frame_times[f"{yolo_name} (CPU)"].append([row[0] for row in sqlite_cursor.fetchall()])
 
                 average_frames_per_second: dict[str, list[float]] = {}
 

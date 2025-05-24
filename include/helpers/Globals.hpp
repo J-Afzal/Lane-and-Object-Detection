@@ -101,7 +101,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief CLI help message for the video manager.
      */
-    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
+    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu, gpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
 
     /**
      * @brief Input video dimensions.
@@ -457,12 +457,15 @@ namespace LaneAndObjectDetection::Globals
     };
 
     /**
-     * @brief The supported backends for the object detector to run on. CUDA is significantly more performant.
+     * @brief The supported backends for the object detector to run on. In theory, GPU should be significantly more performant.
+     * For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not
+     * supported with this projects built-in installation script.
      */
     enum class ObjectDetectorBackEnds : std::uint8_t
     {
         NONE = 0,
         CPU,
+        GPU,
         CUDA
     };
 
@@ -702,25 +705,25 @@ namespace LaneAndObjectDetection::Globals
     static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_NAMES = {
         "No YOLO",
         "YOLO-tiny 288 (CPU)",
-        "YOLO-tiny 288 (CUDA)",
+        "YOLO-tiny 288 (GPU)",
         "YOLO 288 (CPU)",
-        "YOLO 288 (CUDA)",
+        "YOLO 288 (GPU)",
         "YOLO-tiny 320 (CPU)",
-        "YOLO-tiny 320 (CUDA)",
+        "YOLO-tiny 320 (GPU)",
         "YOLO 320 (CPU)",
-        "YOLO 320 (CUDA)",
+        "YOLO 320 (GPU)",
         "YOLO-tiny 416 (CPU)",
-        "YOLO-tiny 416 (CUDA)",
+        "YOLO-tiny 416 (GPU)",
         "YOLO 416 (CPU)",
-        "YOLO 416 (CUDA)",
+        "YOLO 416 (GPU)",
         "YOLO-tiny 512 (CPU)",
-        "YOLO-tiny 512 (CUDA)",
+        "YOLO-tiny 512 (GPU)",
         "YOLO 512 (CPU)",
-        "YOLO 512 (CUDA)",
+        "YOLO 512 (GPU)",
         "YOLO-tiny 608 (CPU)",
-        "YOLO-tiny 608 (CUDA)",
+        "YOLO-tiny 608 (GPU)",
         "YOLO 608 (CPU)",
-        "YOLO 608 (CUDA)",
+        "YOLO 608 (GPU)",
     };
 
     static inline const std::array<ObjectDetectorTypes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES = {
@@ -750,25 +753,25 @@ namespace LaneAndObjectDetection::Globals
     static inline const std::array<ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
         ObjectDetectorBackEnds::NONE,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::GPU,
     };
 
     static inline const std::array<ObjectDetectorBlobSizes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BLOB_SIZES = {

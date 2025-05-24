@@ -1,4 +1,5 @@
 .venv/
+.vs/
 .vscode/
 *.db
 build/

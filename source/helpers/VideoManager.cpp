@@ -123,6 +123,11 @@ namespace LaneAndObjectDetection
                         parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
                     }
 
+                    else if (p_commandLineArguments.at(index + 1) == "gpu")
+                    {
+                        parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::GPU;
+                    }
+
                     else if (p_commandLineArguments.at(index + 1) == "cuda")
                     {
                         parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CUDA;

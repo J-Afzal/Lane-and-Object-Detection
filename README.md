@@ -63,7 +63,7 @@ Required Options:
 Optional options:
 
   -o --object-detector-type       One of: none, standard or tiny. (default = none)
-  -b --object-detector-backend    One of: cpu or cuda (default = cpu)
+  -b --object-detector-backend    One of: cpu, gpu or cuda (default = cpu)
   -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)
 ```
 
@@ -87,7 +87,8 @@ and writing video file as well as display the output to a window.
 The object detection is able to detect most road-related objects such as cars, buses, trucks, cyclists, pedestrians, traffic
 lights, etc. The accuracy and speed of detection is dependent upon the available GPU compute. For higher quality detection
 select a higher blob size. For more performant detection select a lower blob size, and/or select the tiny detector type and/or
-CUDA backend.
+GPU backend. For maximum performance the CUDA backend should be used, however, this requires building OpenCV with CUDA which is
+not supported with this projects built-in installation script.
 
 The lane detection code is custom made for this program. The one sentence summary would be that it: creates an ROI frame to
 isolate the road markings immediately in front of the car, runs the Canny algorithm to retrieve the edges, runs the Hough
@@ -154,9 +155,6 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 
 <!--
 x. Performance Tests
-  - Test performance tests and graph generation (update readme docs on process)
-
-  - Test on windows and also ubuntu and jetson nano? (update installation instructions)
 
   - Add below section after general information
       ### Performance Tests
@@ -171,7 +169,15 @@ x. Performance Tests
       cli call to performance tests
       cli call to performance graphs
 
-  - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?
+  - Redo debug mode screenshot to include object detection
 
-  - Performance heat map and any optimisations?
+  - Test performance tests and graph generation (update readme docs on process)
+
+  - Maybe have CI which does perf tests???
+    - Each one uploads the database file as downloadable artifact
+    - Download artifacts
+    - Runs ad-hoc
+  -  How to combine all platforms in to one db/graph?) Upload artifacts?
+     - And then commit graphs to performance test section
+
 -->

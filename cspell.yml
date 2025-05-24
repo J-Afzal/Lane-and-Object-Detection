@@ -5,6 +5,7 @@ dictionaries:
     - powershell
 ignorePaths:
     - .venv/
+    - .vs/
     - .vscode/
     - "*.db"
     - build/
