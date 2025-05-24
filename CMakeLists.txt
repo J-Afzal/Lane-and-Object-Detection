@@ -15,7 +15,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/tests/performance_tests)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/install/include)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/submodules/sqlite3)
 
-SET(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/install)
+SET(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/)
 FIND_PACKAGE(OpenCV REQUIRED)
 
 ADD_EXECUTABLE(
@@ -32,7 +32,7 @@ TARGET_LINK_LIBRARIES(${executable_name} ${OpenCV_LIBS})
 
 # Place the exe and opencv_world4110.dll in to the same folder
 SET_TARGET_PROPERTIES(${executable_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${executable_name}/)
-IF (WIN32)
+IF (WIN32 AND NOT ${CONFIGURE_ONLY})
     IF(${CMAKE_BUILD_TYPE} STREQUAL Release)
         CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110.dll COPYONLY)
     ELSE()
@@ -56,7 +56,7 @@ TARGET_LINK_LIBRARIES(${performance_tests_executable_name} ${OpenCV_LIBS})
 
 # Place the exe and opencv_world4110.dll in to the same folder
 SET_TARGET_PROPERTIES(${performance_tests_executable_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/)
-IF(WIN32)
+IF(WIN32 AND NOT ${CONFIGURE_ONLY})
     IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
         CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/opencv_world4110.dll COPYONLY)
     ELSE()

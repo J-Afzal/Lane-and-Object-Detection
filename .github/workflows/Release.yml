@@ -33,7 +33,11 @@ jobs:
                   Rename-Item -LiteralPath ./$sharedName-ubuntu-latest/$sharedName -NewName $sharedName-ubuntu-latest
                   Rename-Item -LiteralPath ./$sharedName-windows-latest/$sharedName.exe -NewName $sharedName-windows-latest.exe
 
-                  gh release create $tagName ./$sharedName-macos-latest/$sharedName-macos-latest ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest ./$sharedName-windows-latest/$sharedName-windows-latest.exe ./$sharedName-windows-latest/$openCvDllName --generate-notes --latest --title $releaseTitle
+                  gh release create $tagName `
+                    ./$sharedName-macos-latest/$sharedName-macos-latest `
+                    ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest `
+                    ./$sharedName-windows-latest/$sharedName-windows-latest.exe `
+                    ./$sharedName-windows-latest/$openCvDllName --generate-notes --latest --title $releaseTitle
               env:
                   GH_TOKEN: ${{ github.token }}
 

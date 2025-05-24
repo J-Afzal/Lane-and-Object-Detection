@@ -5,6 +5,11 @@ from performance_graphs.performance_graphs import PerformanceGraphs
 
 
 def parse_cli_args() -> Namespace:
+    """Parses CLI arguments and returns them within a `Namespace` object.
+
+    Returns:
+        Namespace: The parsed CLI arguments.
+    """
     parser: ArgumentParser = argparse.ArgumentParser(description="Generates graphs based on performance tests data")
 
     parser.add_argument(

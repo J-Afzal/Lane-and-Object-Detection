@@ -154,9 +154,6 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 
 <!--
 x. Performance Tests
-  - Add docs to python code
-  - Add black formatting linting check in Linters (any other checks for python code?)
-
   - Test performance tests and graph generation (update readme docs on process)
     - Test on windows and also ubuntu and jetson nano? (update installation instructions)
     - Maybe have CI which does perf tests??? How to combine all platforms in to one db/graph?) Upload artifacts?

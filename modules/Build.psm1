@@ -150,15 +150,6 @@ function Build-CppCodeUsingCMake {
             Write-Information "##[warning]The './submodules/opencv/build/' directory does not exist"
         }
 
-        if (Test-Path -LiteralPath ./submodules/opencv/install/) {
-            Write-Information "##[command]Deleting the './submodules/opencv/install/' directory..."
-            Remove-Item -LiteralPath "./submodules/opencv/install/" -Force -Recurse
-        }
-
-        else {
-            Write-Information "##[warning]The './submodules/opencv/install/' directory does not exist"
-        }
-
         if (Test-Path -LiteralPath ./submodules/opencv/.cache/) {
             Write-Information "##[command]Deleting the './submodules/opencv/.cache/' directory..."
             Remove-Item -LiteralPath "./submodules/opencv/.cache/" -Force -Recurse
@@ -189,10 +180,6 @@ function Build-CppCodeUsingCMake {
             Write-Information "##[command]Building OpenCV..."
             cmake --build ./build --config $BuildType --parallel $Parallel
             Assert-ExternalCommandError -ThrowError
-
-            Write-Information "##[command]Installing OpenCV..."
-            cmake --install ./build --prefix ./build/install --config $BuildType --parallel $Parallel
-            Assert-ExternalCommandError -ThrowError
         }
     }
 
@@ -210,11 +197,11 @@ function Build-CppCodeUsingCMake {
     Write-Information "##[command]Configuring Lane and Object Detection..."
 
     if ($Platform -eq "windows-latest") {
-        cmake -S . -B ./$BuildDirectory -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=$BuildType"
+        cmake -S . -B ./$BuildDirectory -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=$BuildType" -D "CONFIGURE_ONLY=$ConfigureOnly"
     }
 
     else {
-        cmake -S . -B ./$BuildDirectory -D "CMAKE_BUILD_TYPE=$BuildType"
+        cmake -S . -B ./$BuildDirectory -D "CMAKE_BUILD_TYPE=$BuildType" -D "CONFIGURE_ONLY=$ConfigureOnly"
     }
 
     Assert-ExternalCommandError -ThrowError

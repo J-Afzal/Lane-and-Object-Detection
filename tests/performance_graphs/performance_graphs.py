@@ -8,6 +8,15 @@ import statistics
 
 @dataclasses.dataclass
 class FrameTimeData:
+    """Frame time data to generate frame time graphs.
+
+    Attributes:
+        platform_name (str): The name of the platform.
+        number_of_frames (int): The number of frames present in each frame time list.
+        frame_times (dict[str, list[list[float]]]): A dictionary where keys are the either the platform name or the test type name and the values are a list of the frame times.
+        unit (str): The unit of the frame times to be used for y-axis display purposes.
+    """
+
     platform_name: str
     number_of_frames: int
     frame_times: dict[str, list[list[float]]]
@@ -16,13 +25,37 @@ class FrameTimeData:
 
 @dataclasses.dataclass
 class FramesPerSecondData:
+    """FPS data to generate FPS graphs.
+
+    Attributes:
+        platform_name (str): The name of the platform.
+        test_names (str): The name of the tests.
+        average_frames_per_second (dict[str, list[float]]): A dictionary where keys are the either the platform name or the test type and the values are a list of the FPS values.
+    """
+
     platform_name: str
     test_names: list[str]
     average_frames_per_second: dict[str, list[float]]
 
 
 class PerformanceGraphs:
+    """Generates performance graphs based on performance test data stored within the SQLite database.
+
+    Attributes:
+        platform_name (str): The name of the platform.
+        database_file_path (str): The path to the SQLite database file.
+        graph_output_directory (str): The path to the directory in which to save the performance graphs.
+        is_multi_platform (bool): Whether the PerformanceGraphs class is configured for multiple platforms.
+    """
+
     def __init__(self, platform_name: str, database_file_path: str, graph_output_directory: str):
+        """Constructs the class and initialise the SQLite database.
+
+        Args:
+            platform_name (str): The name of the platform.
+            database_file_path (str): The path to the SQLite database file.
+            graph_output_directory (str): The path to the directory in which to save the performance graphs.
+        """
         self.platform_name: str = platform_name
         self.database_file_path: str = database_file_path
         self.graph_output_directory: str = graph_output_directory
@@ -44,6 +77,7 @@ class PerformanceGraphs:
         self.sqlite_database = self.SQLiteDatabase(self.database_file_path)
 
     def generate_performance_graphs(self) -> None:
+        """Generates the performance graphs."""
         frame_time_data, frames_per_second_data = self.sqlite_database.get_frame_time_data(self.platform_name)
 
         # Line graph
@@ -136,23 +170,39 @@ class PerformanceGraphs:
             f"{self.graph_output_directory}/{frames_per_second_data.platform_name.lower().replace(' ', '_')}_fps_graph.png"
         )
 
-    class InvalidArgumentsError(Exception):
-        pass
-
     class SQLiteDatabase:
+        """SQLite wrapper class. This class is in the private scope as the implementation is PerformanceGraphs-specific."""
+
         def __init__(self, database_file_path: str):
+            """Constructs the class.
+
+            Raises:
+                DatabaseFileNotFoundError: If the SQLite database file is not found.
+            """
             if not os.path.isfile(database_file_path):
                 raise self.DatabaseFileNotFoundError(f"SQLite database file '{database_file_path}' not found!")
 
             self.database_file_path: str = database_file_path
 
         class DatabaseFileNotFoundError(Exception):
+            """Thrown when the SQLite database file is not found."""
+
             pass
 
-        class InvalidDataError(Exception):
+        class DataQualityError(Exception):
+            """Thrown when there are data quality errors in the SQLite database."""
+
             pass
 
         def __validate_data(self, platform_name: str) -> None:
+            """Opens/closes a connection to the SQLite database and performs data quality tests.
+
+            Args:
+                platform_name (str): The name of the platform.
+
+            Raises:
+                DataQualityError: If there are data quality violations.
+            """
             try:
                 sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_path)
                 sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
@@ -322,7 +372,7 @@ class PerformanceGraphs:
                         )
 
                 if error_message:
-                    raise Exception("The following violations have been found in the data:" + error_message)
+                    raise self.DataQualityError("The following violations have been found in the data:" + error_message)
 
             except sqlite3.Error as e:
                 raise e
@@ -332,7 +382,16 @@ class PerformanceGraphs:
                     sqlite_cursor.close()
                     sqlite_connection.close()
 
-        def __get_table_data(self, platform_name: str) -> tuple[FrameTimeData, FramesPerSecondData]:
+        def __get_data(self, platform_name: str) -> tuple[FrameTimeData, FramesPerSecondData]:
+            """Gets the data needed to generate performance graphs.
+
+            Args:
+                platform_name (str): The name of the platform.
+
+            Returns:
+                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance
+                graphs.
+            """
             try:
                 sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_path)
                 sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
@@ -500,10 +559,14 @@ class PerformanceGraphs:
                 for key, value in frame_times.items():
                     average_frames_per_second[key] = []
                     for frame_time in value:
-                        average_frames_per_second[key].append(round(1 / (statistics.mean(frame_time) / time_unit_conversion), 1))
+                        average_frames_per_second[key].append(
+                            round(1 / (statistics.mean(frame_time) / time_unit_conversion), 1)
+                        )
 
                 frame_time_data: FrameTimeData = FrameTimeData(platform_display_name, number_of_frames, frame_times, time_unit)
-                frames_per_second_data: FramesPerSecondData = FramesPerSecondData(platform_display_name, test_names, average_frames_per_second)
+                frames_per_second_data: FramesPerSecondData = FramesPerSecondData(
+                    platform_display_name, test_names, average_frames_per_second
+                )
 
                 return frame_time_data, frames_per_second_data
 
@@ -516,5 +579,15 @@ class PerformanceGraphs:
                     sqlite_connection.close()
 
         def get_frame_time_data(self, platform_name: str) -> tuple[FrameTimeData, FramesPerSecondData]:
+            """Opens/closes a connection to the SQLite database, performs data quality tests, and if data quality tests pass
+            then it gets the the data needed to generate performance graphs.
+
+            Args:
+                platform_name (str): The name of the platform.
+
+            Returns:
+                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance
+                graphs.
+            """
             self.__validate_data(platform_name)
-            return self.__get_table_data(platform_name)
+            return self.__get_data(platform_name)
