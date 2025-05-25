@@ -32,9 +32,22 @@ jobs:
                   Import-Module ./modules/Build.psd1
                   Build-CppCodeUsingCMake -Platform ${{ matrix.os }} -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
-            - name: Upload executable as artifact
+                  Get-ChildItem -Path . -Recurse -File -Filter *.dll
+                  Get-ChildItem -Path . -Recurse -File -Filter *.so
+                  Get-ChildItem -Path . -Recurse -File -Filter *.lib
+
+# TODO: clean up above
+
+            - name: Upload lane and object detection executable as an artifact
               uses: actions/upload-artifact@v4
               with:
                   name: lane-and-object-detection-${{ matrix.os }}
                   path: ./build/lane-and-object-detection/
+                  if-no-files-found: error
+
+            - name: Upload performance test executable as an artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: lane-and-object-detection-performance-tests-${{ matrix.os }}
+                  path: ./build/lane-and-object-detection-performance-tests/
                   if-no-files-found: error
