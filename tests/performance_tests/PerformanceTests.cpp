@@ -20,8 +20,9 @@
  */
 namespace LaneAndObjectDetection
 {
-    PerformanceTests::PerformanceTests(std::string p_currentPlatform, std::string p_inputVideoFilePath, std::string p_yoloFolderPath, const uint32_t& p_numberOfRepetitions) :
+    PerformanceTests::PerformanceTests(std::string p_currentPlatform, std::string p_databasePath, std::string p_inputVideoFilePath, std::string p_yoloFolderPath, const uint32_t& p_numberOfRepetitions) :
         m_currentPlatform(std::move(p_currentPlatform)),
+        m_databasePath(std::move(p_databasePath)),
         m_inputVideoFilePath(std::move(p_inputVideoFilePath)),
         m_yoloFolderPath(std::move(p_yoloFolderPath)),
         m_numberOfRepetitions(p_numberOfRepetitions)

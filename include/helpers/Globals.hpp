@@ -694,7 +694,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief CLI help message for the performance tests.
      */
-    static inline const std::string G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE = "Usage: lane-and-object-detection-performance-tests --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help              Display available options\n\nRequired Options:\n\n-p --platform          The current platform being tested\n-d --database-path     Path to SQLite database file\n-i --input             Benchmark video file path\n-y --yolo-folder-path  Path to the yolo folder\n-r --repetitions       Number of repetitions for each test";
+    static inline const std::string G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE = "Usage: lane-and-object-detection-performance-tests --platform ... --database-path ... --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help              Display available options\n\nRequired Options:\n\n-p --platform          The current platform being tested\n-d --database-path     Path to SQLite database file\n-i --input             Benchmark video file path\n-y --yolo-folder-path  Path to the yolo configuration folder\n-r --repetitions       Number of repetitions for each test";
 
     /**
      * @brief Performance tests settings.
