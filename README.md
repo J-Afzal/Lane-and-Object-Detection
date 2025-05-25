@@ -171,13 +171,13 @@ x. Performance Tests
 
   - Redo debug mode screenshot to include object detection
 
-  - Test performance tests and graph generation (update readme docs on process)
-
   - Maybe have CI which does perf tests???
-    - Each one uploads the database file as downloadable artifact
-    - Download artifacts
     - Runs ad-hoc
-  -  How to combine all platforms in to one db/graph?) Upload artifacts?
-     - And then commit graphs to performance test section
+    - Build code
+    - Run exe
+    - Publish database as artifact
+    - Then run script for all platforms + multiple platforms and publish graphs as artifacts
+      - How to combine all platforms in to one db/graph?) Upload artifacts?
+    - After final commit successful run, commit graphs to performance test section of readme
 
 -->
