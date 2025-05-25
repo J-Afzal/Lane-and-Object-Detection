@@ -223,7 +223,7 @@ Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
     <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
-    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. In theory, GPU should be significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script. </td></tr>
     <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
   </table>
   </dd>
@@ -256,7 +256,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00069">69</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00074">74</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
 
 </div>
 </div>
@@ -278,7 +278,7 @@ Private Attributes</h2></td></tr>
 <p>Get the <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00131">131</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_object_detector_8cpp_source.html#l00136">136</a> of file <a class="el" href="_object_detector_8cpp_source.html">ObjectDetector.cpp</a>.</p>
 
 </div>
 </div>
@@ -305,7 +305,7 @@ Private Attributes</h2></td></tr>
 
 <p>OpenCV object which allows the use of pre-trained neural networks. </p>
 
-<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00065">65</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00066">66</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
 
 </div>
 </div>
@@ -331,7 +331,7 @@ Private Attributes</h2></td></tr>
 
 <p>The <a class="el" href="struct_lane_and_object_detection_1_1_object_detection_information.html" title="The information needed by FrameBuilder to update frame with object detection information.">ObjectDetectionInformation</a> struct containing all object detection-related information. </p>
 
-<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00070">70</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00071">71</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
 
 </div>
 </div>
@@ -357,7 +357,7 @@ Private Attributes</h2></td></tr>
 
 <p>The names of layers with unconnected outputs. </p>
 
-<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00075">75</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00076">76</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
 
 </div>
 </div>
@@ -383,7 +383,7 @@ Private Attributes</h2></td></tr>
 
 <p>The spatial size for the output image used by the <code>cv::dnn::blobFromImage</code> function. </p>
 
-<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00080">80</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00081">81</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
 
 </div>
 </div>
@@ -409,7 +409,7 @@ Private Attributes</h2></td></tr>
 
 <p>Whether to skip object detection. </p>
 
-<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00085">85</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_object_detector_8hpp_source.html#l00086">86</a> of file <a class="el" href="_object_detector_8hpp_source.html">ObjectDetector.hpp</a>.</p>
 
 </div>
 </div>
@@ -423,7 +423,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_object_detector.html">ObjectDetector</a></li>
-    <li class="footer">Generated on Sat May 24 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun May 25 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

@@ -144,9 +144,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:a8332ca3fcf9241fd6d7f32edd2f9cb6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a967b4a04bb0ec82f500114b9ae9124e0" id="r_a967b4a04bb0ec82f500114b9ae9124e0"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a967b4a04bb0ec82f500114b9ae9124e0">ObjectDetectorBackEnds</a> : std::uint8_t { <b>NONE</b> = 0
 , <b>CPU</b>
+, <b>GPU</b>
 , <b>CUDA</b>
  }</td></tr>
-<tr class="memdesc:a967b4a04bb0ec82f500114b9ae9124e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The supported backends for the object detector to run on. CUDA is significantly more performant.  <a href="#a967b4a04bb0ec82f500114b9ae9124e0">More...</a><br /></td></tr>
+<tr class="memdesc:a967b4a04bb0ec82f500114b9ae9124e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The supported backends for the object detector to run on. In theory, GPU should be significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script.  <a href="#a967b4a04bb0ec82f500114b9ae9124e0">More...</a><br /></td></tr>
 <tr class="separator:a967b4a04bb0ec82f500114b9ae9124e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebd707c6a2d36cf5b6d5c5bbe7bd5cf4" id="r_aebd707c6a2d36cf5b6d5c5bbe7bd5cf4"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4">ObjectDetectorBlobSizes</a> : std::int16_t { <b>NONE</b> = 0
 , <b>ONE</b> = 288
@@ -166,7 +167,7 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac19181f81ac1ed952c8846403985f5f7" id="r_ac19181f81ac1ed952c8846403985f5f7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac19181f81ac1ed952c8846403985f5f7">G_CLI_HELP_MESSAGE</a> = &quot;\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n -h --help Display available options\n\nRequired Options:\n\n -i --input File path or camera ID\n -y --yolo-folder-path Path to the yolo folder\n\nOptional options:\n\n -o --object-detector-type One of: none, standard or tiny (default = none)\n -b --object-detector-backend One of: cpu or cuda (default = cpu)\n -s --object-detector-blob-size One of: 208, 320, 416, 512 or 608 (default = 208)\n\n&quot;</td></tr>
+<tr class="memitem:ac19181f81ac1ed952c8846403985f5f7" id="r_ac19181f81ac1ed952c8846403985f5f7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac19181f81ac1ed952c8846403985f5f7">G_CLI_HELP_MESSAGE</a> = &quot;\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n -h --help Display available options\n\nRequired Options:\n\n -i --input File path or camera ID\n -y --yolo-folder-path Path to the yolo folder\n\nOptional options:\n\n -o --object-detector-type One of: none, standard or tiny (default = none)\n -b --object-detector-backend One of: cpu, gpu or cuda (default = cpu)\n -s --object-detector-blob-size One of: 208, 320, 416, 512 or 608 (default = 208)\n\n&quot;</td></tr>
 <tr class="memdesc:ac19181f81ac1ed952c8846403985f5f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLI help message for the video manager.  <br /></td></tr>
 <tr class="separator:ac19181f81ac1ed952c8846403985f5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a116293904e4b17af294989bcaafe9dab" id="r_a116293904e4b17af294989bcaafe9dab"><td class="memItemLeft" align="right" valign="top">static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a116293904e4b17af294989bcaafe9dab">G_VIDEO_OUTPUT_FPS</a> = 30</td></tr>
@@ -625,9 +626,9 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The supported backends for the object detector to run on. CUDA is significantly more performant. </p>
+<p>The supported backends for the object detector to run on. In theory, GPU should be significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00462">462</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00464">464</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -653,7 +654,7 @@ Variables</h2></td></tr>
 
 <p>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00473">473</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00476">476</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -705,7 +706,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string LaneAndObjectDetection::Globals::G_CLI_HELP_MESSAGE = &quot;\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n -h --help Display available options\n\nRequired Options:\n\n -i --input File path or camera ID\n -y --yolo-folder-path Path to the yolo folder\n\nOptional options:\n\n -o --object-detector-type One of: none, standard or tiny (default = none)\n -b --object-detector-backend One of: cpu or cuda (default = cpu)\n -s --object-detector-blob-size One of: 208, 320, 416, 512 or 608 (default = 208)\n\n&quot;</td>
+          <td class="memname">const std::string LaneAndObjectDetection::Globals::G_CLI_HELP_MESSAGE = &quot;\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n -h --help Display available options\n\nRequired Options:\n\n -i --input File path or camera ID\n -y --yolo-folder-path Path to the yolo folder\n\nOptional options:\n\n -o --object-detector-type One of: none, standard or tiny (default = none)\n -b --object-detector-backend One of: cpu, gpu or cuda (default = cpu)\n -s --object-detector-blob-size One of: 208, 320, 416, 512 or 608 (default = 208)\n\n&quot;</td>
         </tr>
       </table>
   </td>
@@ -3415,7 +3416,7 @@ Variables</h2></td></tr>
 
 <p>Object detection threshold and properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00487">487</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00490">490</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3441,7 +3442,7 @@ Variables</h2></td></tr>
 
 <p>Object detection threshold and properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00488">488</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00491">491</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3467,7 +3468,7 @@ Variables</h2></td></tr>
 
 <p>Object detection threshold and properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00489">489</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00492">492</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3493,7 +3494,7 @@ Variables</h2></td></tr>
 
 <p>Object detection bounding box properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00496">496</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00499">499</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3519,7 +3520,7 @@ Variables</h2></td></tr>
 
 <p>Object detection bounding box properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00497">497</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00500">500</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3545,7 +3546,7 @@ Variables</h2></td></tr>
 
 <p>Object detection bounding box properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00498">498</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00501">501</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3571,7 +3572,7 @@ Variables</h2></td></tr>
 
 <p>Object detection bounding box properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00499">499</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00502">502</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3597,7 +3598,7 @@ Variables</h2></td></tr>
 
 <p>Object detection bounding box properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00500">500</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00503">503</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3623,7 +3624,7 @@ Variables</h2></td></tr>
 
 <p>Object detection bounding box properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00501">501</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00504">504</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3649,7 +3650,7 @@ Variables</h2></td></tr>
 
 <p>The indicies representing various values in the output blobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00508">508</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00511">511</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3675,7 +3676,7 @@ Variables</h2></td></tr>
 
 <p>The indicies representing various values in the output blobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00509">509</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00512">512</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3701,7 +3702,7 @@ Variables</h2></td></tr>
 
 <p>The indicies representing various values in the output blobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00510">510</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00513">513</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3727,7 +3728,7 @@ Variables</h2></td></tr>
 
 <p>The indicies representing various values in the output blobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00511">511</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00514">514</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3753,7 +3754,7 @@ Variables</h2></td></tr>
 
 <p>The indicies representing various values in the output blobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00512">512</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00515">515</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3779,7 +3780,7 @@ Variables</h2></td></tr>
 
 <p>Names of detectable objects. The order is significant and should not be changed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00519">519</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00522">522</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3805,7 +3806,7 @@ Variables</h2></td></tr>
 
 <p>Names of detectable objects. The order is significant and should not be changed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00520">520</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00523">523</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3831,7 +3832,7 @@ Variables</h2></td></tr>
 
 <p>Object names and bounding box colours. <code>G_OPENCV_WHITE</code> is used as the default colour while custom colours are given to object more commonly found while driving. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00608">608</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00611">611</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3857,7 +3858,7 @@ Variables</h2></td></tr>
 
 <p>CLI help message for the performance tests. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00694">694</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00697">697</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3883,7 +3884,7 @@ Variables</h2></td></tr>
 
 <p><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00700">700</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00704">704</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3909,30 +3910,30 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
 <div class="line">        <span class="stringliteral">&quot;No YOLO&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO-tiny 288 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 288 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 288 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO 288 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO 288 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO 288 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO-tiny 320 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 320 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 320 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO 320 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO 320 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO 320 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO-tiny 416 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 416 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 416 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO 416 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO 416 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO 416 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO-tiny 512 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 512 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 512 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO 512 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO 512 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO 512 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO-tiny 608 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 608 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO-tiny 608 (GPU)&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;YOLO 608 (CPU)&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;YOLO 608 (CUDA)&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;YOLO 608 (GPU)&quot;</span>,</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
 <p><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00702">702</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00706">706</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -3981,7 +3982,7 @@ Variables</h2></td></tr>
 </div><!-- fragment -->
 <p><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00726">726</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00730">730</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -4007,30 +4008,30 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
 <div class="line">        ObjectDetectorBackEnds::NONE,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">        ObjectDetectorBackEnds::CPU,</div>
-<div class="line">        ObjectDetectorBackEnds::CUDA,</div>
+<div class="line">        ObjectDetectorBackEnds::GPU,</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
 <p><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00750">750</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00754">754</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -4079,7 +4080,7 @@ Variables</h2></td></tr>
 </div><!-- fragment -->
 <p><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a> tests settings. </p>
 
-<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00774">774</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_globals_8hpp_source.html#l00778">778</a> of file <a class="el" href="_globals_8hpp_source.html">Globals.hpp</a>.</p>
 
 </div>
 </div>
@@ -4089,7 +4090,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="namespace_lane_and_object_detection_1_1_globals.html">Globals</a></li>
-    <li class="footer">Generated on Sat May 24 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun May 25 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

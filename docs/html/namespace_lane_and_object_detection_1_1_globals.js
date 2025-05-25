@@ -16,6 +16,7 @@ var namespace_lane_and_object_detection_1_1_globals =
     [ "ObjectDetectorBackEnds", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0", [
       [ "NONE", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0ab50339a10e1de285ac99d4c3990b8693", null ],
       [ "CPU", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0a2b55387dd066c5bac646ac61543d152d", null ],
+      [ "GPU", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0a52f9ec21735243ad9917cda3ca077d32", null ],
       [ "CUDA", "namespace_lane_and_object_detection_1_1_globals.html#a967b4a04bb0ec82f500114b9ae9124e0aa33b7755e5f9b504d2d038eaca4ff28d", null ]
     ] ],
     [ "ObjectDetectorBlobSizes", "namespace_lane_and_object_detection_1_1_globals.html#aebd707c6a2d36cf5b6d5c5bbe7bd5cf4", [

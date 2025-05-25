@@ -286,7 +286,7 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">p_inputVideoCamera</td><td>Camera Id of the video capturing device to open using the OpenCV <code>VideoCapture</code> class. </td></tr>
     <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
     <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
-    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. In theory, GPU should be significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script. </td></tr>
     <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
   </table>
   </dd>
@@ -344,7 +344,7 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">p_inputVideoFilePath</td><td>The file path of the video file to open using the OpenCV <code>VideoCapture</code> class. </td></tr>
     <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
     <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
-    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. In theory, GPU should be significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script. </td></tr>
     <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
   </table>
   </dd>
@@ -414,7 +414,7 @@ Private Attributes</h2></td></tr>
 
 <p>Destructs a VideoManager object. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00165">165</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00170">170</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -525,13 +525,13 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">p_inputVideoCamera</td><td>Camera ID of the video capturing device to open using the OpenCV <code>VideoCapture</code> class. </td></tr>
     <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
     <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
-    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. In theory, GPU should be significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script. </td></tr>
     <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00170">170</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00175">175</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -575,13 +575,13 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">p_inputVideoFilePath</td><td>The file path of the video file to open using the OpenCV <code>VideoCapture</code> class. </td></tr>
     <tr><td class="paramname">p_yoloFolderPath</td><td>The folder containing the <code>.cfg</code> and <code>.weights</code> YOLO files. </td></tr>
     <tr><td class="paramname">p_objectDetectorTypes</td><td>The type of object detector to use with an option to disable object detection. The tiny version is more performant at the cost of accuracy. </td></tr>
-    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. CUDA is significantly more performant. </td></tr>
+    <tr><td class="paramname">p_objectDetectorBackEnds</td><td>The supported backends for the object detector to run on. In theory, GPU should be significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script. </td></tr>
     <tr><td class="paramname">p_objectDetectorBlobSizes</td><td>The supported blob sizes for the object detector to run with. The larger the blob size the more performant the detector at the cost of performance. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00192">192</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00197">197</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -602,7 +602,7 @@ Private Attributes</h2></td></tr>
 
 <p>Orchestration function which contains the main program loop. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00214">214</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00219">219</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -624,7 +624,7 @@ Private Attributes</h2></td></tr>
 <p>Get the performance object to extract performance-related information. </p>
 <dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="class_lane_and_object_detection_1_1_performance.html" title="Calculates the frame times and current/average frames per second for real-time performance tracking.">Performance</a></code> The performance object containing performance-related information. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00268">268</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00273">273</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -719,7 +719,7 @@ Private Attributes</h2></td></tr>
 
 <p>Toggles the debug mode and whether to destroy the debug frames. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00273">273</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00278">278</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -748,7 +748,7 @@ Private Attributes</h2></td></tr>
 
 <p>Toggles whether the output video stream is saved locally. If toggled on, it creates a new file in the format <code>YYYY-MM-DD-HH:mm:ss-output.mp4</code>, and if toggled off, it closes the output file. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00286">286</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00291">291</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -777,7 +777,7 @@ Private Attributes</h2></td></tr>
 
 <p>Destroys all windows and releases all input/output videos. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00320">320</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8cpp_source.html#l00325">325</a> of file <a class="el" href="_video_manager_8cpp_source.html">VideoManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -804,7 +804,7 @@ Private Attributes</h2></td></tr>
 
 <p>Represents the input video stream. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00200">200</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00204">204</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -830,7 +830,7 @@ Private Attributes</h2></td></tr>
 
 <p>Represents the output video stream. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00205">205</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00209">209</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -856,7 +856,7 @@ Private Attributes</h2></td></tr>
 
 <p>Represents the current frame being processed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00210">210</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00214">214</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -882,7 +882,7 @@ Private Attributes</h2></td></tr>
 
 <p>The lane detector. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00215">215</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00219">219</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -908,7 +908,7 @@ Private Attributes</h2></td></tr>
 
 <p>The object detector. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00220">220</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00224">224</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -934,7 +934,7 @@ Private Attributes</h2></td></tr>
 
 <p>The frame time and current/average frames per second performance calculator. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00225">225</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00229">229</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -960,7 +960,7 @@ Private Attributes</h2></td></tr>
 
 <p>The <a class="el" href="struct_lane_and_object_detection_1_1_video_manager_information.html" title="The information needed by FrameBuilder to update frame with video manager information.">VideoManagerInformation</a> struct containing all video manager-related information. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00230">230</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00234">234</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -986,7 +986,7 @@ Private Attributes</h2></td></tr>
 
 <p>The time that the output started to be saved locally. </p>
 
-<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00235">235</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_video_manager_8hpp_source.html#l00239">239</a> of file <a class="el" href="_video_manager_8hpp_source.html">VideoManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1000,7 +1000,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_lane_and_object_detection.html">LaneAndObjectDetection</a></li><li class="navelem"><a class="el" href="class_lane_and_object_detection_1_1_video_manager.html">VideoManager</a></li>
-    <li class="footer">Generated on Sat May 24 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun May 25 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

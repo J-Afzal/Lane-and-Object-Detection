@@ -156,7 +156,7 @@ Getting Started</h1>
 <div class="line">Optional options:</div>
 <div class="line"> </div>
 <div class="line">  -o --object-detector-type       One of: none, standard or tiny. (default = none)</div>
-<div class="line">  -b --object-detector-backend    One of: cpu or cuda (default = cpu)</div>
+<div class="line">  -b --object-detector-backend    One of: cpu, gpu or cuda (default = cpu)</div>
 <div class="line">  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)</div>
 </div><!-- fragment --><dl class="section important"><dt>Important</dt><dd>The <code>yolov7.weights</code> file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded <a href="https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights">here</a> and should be copied to the <code>./resources/yolo</code> folder.</dd></dl>
 <h1><a class="anchor" id="autotoc_md2"></a>
@@ -166,7 +166,7 @@ Documentation</h1>
 <h1><a class="anchor" id="autotoc_md3"></a>
 General Information</h1>
 <p>This program uses YOLOv7 for object detection and OpenCV for lane detection. OpenCV is also used for handling IO such as reading and writing video file as well as display the output to a window.</p>
-<p>The object detection is able to detect most road-related objects such as cars, buses, trucks, cyclists, pedestrians, traffic lights, etc. The accuracy and speed of detection is dependent upon the available GPU compute. For higher quality detection select a higher blob size. For more performant detection select a lower blob size, and/or select the tiny detector type and/or CUDA backend.</p>
+<p>The object detection is able to detect most road-related objects such as cars, buses, trucks, cyclists, pedestrians, traffic lights, etc. The accuracy and speed of detection is dependent upon the available GPU compute. For higher quality detection select a higher blob size. For more performant detection select a lower blob size, and/or select the tiny detector type and/or GPU backend. For maximum performance the CUDA backend should be used, however, this requires building OpenCV with CUDA which is not supported with this projects built-in installation script.</p>
 <p>The lane detection code is custom made for this program. The one sentence summary would be that it: creates an ROI frame to isolate the road markings immediately in front of the car, runs the Canny algorithm to retrieve the edges, runs the Hough transform to get the straight lines, de-noises and categorises the straight lines to determine the location of the current lane.</p>
 <p>The program has two modes:</p>
 <ol type="1">
@@ -213,7 +213,7 @@ IDE</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat May 24 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Generated on Sun May 25 2025 for Lane and Object Detection by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>
