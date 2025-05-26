@@ -2,7 +2,11 @@ name: Performance Tests
 
 run-name: Performance Tests - ${{ github.run_number }} - ${{ github.head_ref }}
 
-on: workflow_dispatch # TODO: for testing
+# on: workflow_dispatch # TODO: for testing
+on:
+    pull_request:
+        branches:
+            - main
 
 jobs:
     build:
