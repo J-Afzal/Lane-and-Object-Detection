@@ -1,0 +1,81 @@
+name: Performance Tests
+
+on: workflow_dispatch
+
+jobs:
+    build:
+        uses: ./.github/workflows/Build.yml
+
+    performance_tests:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            fail-fast: false
+            matrix:
+                os:
+                    - macos-latest
+                    - ubuntu-latest
+                    - windows-latest
+        defaults:
+            run:
+                shell: pwsh
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  submodules: true
+
+            - name: Download performance test build
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: lane-and-object-detection-performance-tests-${{ matrix.os }}
+
+            - name: Run performance tests
+              run: |
+                  lane-and-object-detection-performance-tests-${{ matrix.os }}/lane-and-object-detection-performance-tests `
+                      -p ${{ matrix.os }} `
+                      -d sqlite-${{ matrix.os }}.db `
+                      -i ./tests/performance_tests/benchmark.mp4 `
+                      -y ./resources/yolo/ `
+                      -r 1
+
+            - name: Upload sqlite database
+              uses: actions/upload-artifact@v4
+              with:
+                  name: sqlite-${{ matrix.os }}
+                  path: ./sqlite-${{ matrix.os }}.db
+                  if-no-files-found: error
+
+    performance_graphs:
+        runs-on: ubuntu-latest
+
+        defaults:
+            run:
+                shell: pwsh
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  submodules: true
+
+            - name: Download sqlite databases
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: sqlite-*
+
+            - name: Run performance tests
+              run: |
+                  pip install -r ./requirements.txt
+
+                  python -m ./tests/main.py `
+                      -d ./sqlite-macos-latest/sqlite-macos-latest.db,./sqlite-ubuntu-latest/sqlite-ubuntu-latest.db,./sqlite-windows-latest/sqlite-windows-latest.db `
+                      -o ./tests/performance_graphs/output/
+
+            - name: Upload performance graphs
+              uses: actions/upload-artifact@v4
+              with:
+                  name: performance-graphs
+                  path: ./tests/performance_graphs/output/
+                  if-no-files-found: error
