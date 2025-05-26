@@ -1,6 +1,10 @@
 name: Performance Tests
 
-on: workflow_dispatch
+# on: workflow_dispatch # TODO: for testing
+on:
+    pull_request:
+        branches:
+            - main
 
 jobs:
     build:
