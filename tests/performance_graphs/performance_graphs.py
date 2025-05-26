@@ -12,12 +12,14 @@ class FrameTimeData:
 
     Attributes:
         platform_name (str): The name of the platform.
+        is_multi_platform (bool): Whether the current data is from multiple platforms.
         number_of_frames (int): The number of frames present in each frame time list.
         frame_times (dict[str, list[list[float]]]): A dictionary where keys are the either the platform name or the test type name and the values are a list of the frame times.
         unit (str): The unit of the frame times to be used for y-axis display purposes.
     """
 
     platform_name: str
+    is_multi_platform: bool
     number_of_frames: int
     frame_times: dict[str, list[list[float]]]
     unit: str
@@ -29,11 +31,13 @@ class FramesPerSecondData:
 
     Attributes:
         platform_name (str): The name of the platform.
+        is_multi_platform (bool): Whether the current data is from multiple platforms.
         test_names (str): The name of the tests.
         average_frames_per_second (dict[str, list[float]]): A dictionary where keys are the either the platform name or the test type and the values are a list of the FPS values.
     """
 
     platform_name: str
+    is_multi_platform: bool
     test_names: list[str]
     average_frames_per_second: dict[str, list[float]]
 
@@ -42,26 +46,17 @@ class PerformanceGraphs:
     """Generates performance graphs based on performance test data stored within the SQLite database.
 
     Attributes:
-        platform_name (str): The name of the platform.
-        database_file_path (str): The path to the SQLite database file.
         graph_output_directory (str): The path to the directory in which to save the performance graphs.
-        is_multi_platform (bool): Whether the PerformanceGraphs class is configured for multiple platforms.
+        sqlite_database (str): SQLite wrapper class for all the SQLite databases.
     """
 
-    def __init__(self, platform_name: str, database_file_path: str, graph_output_directory: str):
+    def __init__(self, database_file_path: str, graph_output_directory: str):
         """Constructs the class and initialise the SQLite database.
 
         Args:
-            platform_name (str): The name of the platform.
-            database_file_path (str): The path to the SQLite database file.
+            database_file_paths (str): A comma separated list to the SQLite database file paths for each platform.
             graph_output_directory (str): The path to the directory in which to save the performance graphs.
         """
-        self.platform_name: str = platform_name
-        self.database_file_path: str = database_file_path
-        self.graph_output_directory: str = graph_output_directory
-
-        self.is_multi_platform: bool = True if self.platform_name == "all" else False
-
         # Constants
         self.TITLE_FONT: dict = {"family": "arial", "color": "black", "weight": "bold", "size": 24}
         self.LABEL_FONT: dict = {"family": "arial", "color": "black", "weight": "normal", "size": 18}
@@ -73,19 +68,37 @@ class PerformanceGraphs:
         self.FIGURE_WIDTH: int = 16
         self.FIGURE_HEIGHT: int = 9
 
+        # Attributes
+        self.__graph_output_directory: str = graph_output_directory
+
         # Setup database connection
-        self.sqlite_database = self.SQLiteDatabase(self.database_file_path)
+        self.__sqlite_database = self.SQLiteDatabase(database_file_path)
 
     def generate_performance_graphs(self) -> None:
-        """Generates the performance graphs."""
-        frame_time_data, frames_per_second_data = self.sqlite_database.get_frame_time_data(self.platform_name)
+        """Generates all the performance graphs."""
+        all_platforms_database_data: list[tuple[FrameTimeData, FramesPerSecondData]] = (
+            self.__sqlite_database.get_frame_time_data()
+        )
+
+        for platform_database_data in all_platforms_database_data:
+            self.__generate_platform_performance_graphs(platform_database_data[0], platform_database_data[1])
+
+    def __generate_platform_performance_graphs(
+        self, frame_time_data: FrameTimeData, frames_per_second_data: FramesPerSecondData
+    ):
+        """Generates the performance graphs for a specific platform.
+
+        Args:
+            frame_time_data (FrameTimeData): Frame time data to generate frame time graphs.
+            frames_per_second_data (FramesPerSecondData): FPS data to generate FPS graphs.
+        """
 
         # Line graph
         figure_line, axes_line = matplotlib.pyplot.subplots()
         figure_line.set_figwidth(self.FIGURE_WIDTH)
         figure_line.set_figheight(self.FIGURE_HEIGHT)
 
-        if self.is_multi_platform:
+        if frame_time_data.is_multi_platform:
             axes_line.set_prop_cycle(color=["#888888", "#0000AA", "#00AA00"])
         else:
             axes_line.set_prop_cycle(color=["#000000", "#00AA00", "#AA0000"])
@@ -124,7 +137,7 @@ class PerformanceGraphs:
         figure_bar.set_figwidth(self.FIGURE_WIDTH)
         figure_bar.set_figheight(self.FIGURE_HEIGHT)
 
-        if self.is_multi_platform:
+        if frames_per_second_data.is_multi_platform:
             x_axis = numpy.arange(len(frames_per_second_data.test_names))
             x_ticks = numpy.arange(len(frames_per_second_data.test_names))
             multiplier = -1
@@ -167,22 +180,29 @@ class PerformanceGraphs:
         figure_bar.tight_layout()
 
         figure_bar.savefig(
-            f"{self.graph_output_directory}/{frames_per_second_data.platform_name.lower().replace(' ', '_')}_fps_graph.png"
+            f"{self.__graph_output_directory}/{frames_per_second_data.platform_name.lower().replace(' ', '_')}_fps_graph.png"
         )
 
     class SQLiteDatabase:
         """SQLite wrapper class. This class is in the private scope as the implementation is PerformanceGraphs-specific."""
 
-        def __init__(self, database_file_path: str):
+        def __init__(self, is_multi_platform: bool, database_file_path: str):
             """Constructs the class.
 
             Raises:
                 DatabaseFileNotFoundError: If the SQLite database file is not found.
             """
-            if not os.path.isfile(database_file_path):
+            if is_multi_platform:
+                pass
+
+            elif not os.path.isfile(database_file_path):
                 raise self.DatabaseFileNotFoundError(f"SQLite database file '{database_file_path}' not found!")
 
-            self.database_file_path: str = database_file_path
+            else:
+                self.database_file_path: str = database_file_path
+
+            self.is_multi_platform: bool = is_multi_platform
+            # TODO: make self.database_file_path a list of strings and all the other changes need to this class
 
         class DatabaseFileNotFoundError(Exception):
             """Thrown when the SQLite database file is not found."""
@@ -382,7 +402,7 @@ class PerformanceGraphs:
                     sqlite_cursor.close()
                     sqlite_connection.close()
 
-        def __get_data(self, platform_name: str) -> tuple[FrameTimeData, FramesPerSecondData]:
+        def __get_data(self, platform_name: str) -> list[tuple[FrameTimeData, FramesPerSecondData]]: # TODO: make changes for list[]
             """Gets the data needed to generate performance graphs.
 
             Args:
@@ -578,7 +598,7 @@ class PerformanceGraphs:
                     sqlite_cursor.close()
                     sqlite_connection.close()
 
-        def get_frame_time_data(self, platform_name: str) -> tuple[FrameTimeData, FramesPerSecondData]:
+        def get_frame_time_data(self, platform_name: str) -> list[tuple[FrameTimeData, FramesPerSecondData]]: # TODO: make changes for list[]
             """Opens/closes a connection to the SQLite database, performs data quality tests, and if data quality tests pass
             then it gets the the data needed to generate performance graphs.
 

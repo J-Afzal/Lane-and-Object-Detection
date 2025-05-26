@@ -30,16 +30,6 @@ ADD_EXECUTABLE(
 )
 TARGET_LINK_LIBRARIES(${executable_name} ${OpenCV_LIBS})
 
-# Place the exe and opencv_world4110.dll in to the same folder
-SET_TARGET_PROPERTIES(${executable_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${executable_name}/)
-IF (WIN32 AND NOT ${CONFIGURE_ONLY})
-    IF(${CMAKE_BUILD_TYPE} STREQUAL Release)
-        CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110.dll COPYONLY)
-    ELSE()
-        CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110d.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110d.dll COPYONLY)
-    ENDIF()
-ENDIF()
-
 ADD_EXECUTABLE(
     ${performance_tests_executable_name}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/main.cpp
@@ -54,12 +44,38 @@ ADD_EXECUTABLE(
 )
 TARGET_LINK_LIBRARIES(${performance_tests_executable_name} ${OpenCV_LIBS})
 
-# Place the exe and opencv_world4110.dll in to the same folder
+# Place the executable and opencv_world library into the same folder
+SET_TARGET_PROPERTIES(${executable_name}                   PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${executable_name}/)
 SET_TARGET_PROPERTIES(${performance_tests_executable_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/)
-IF(WIN32 AND NOT ${CONFIGURE_ONLY})
-    IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
-        CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/opencv_world4110.dll COPYONLY)
-    ELSE()
-        CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110d.dll ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/opencv_world4110d.dll COPYONLY)
+
+IF(NOT ${CONFIGURE_ONLY})
+    IF(UNIX AND APPLE)
+        IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.4.11.0.dylib ${CMAKE_BINARY_DIR}/${executable_name}/libopencv_world.4.11.0.dylib                   COPYONLY)
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.4.11.0.dylib ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/libopencv_world.4.11.0.dylib COPYONLY)
+        ELSE()
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.4.11.0.dylib ${CMAKE_BINARY_DIR}/${executable_name}/libopencv_world.4.11.0.dylib                   COPYONLY)  # TODO: test
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.4.11.0.dylib ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/libopencv_world.4.11.0.dylib COPYONLY)
+        ENDIF()
+    ENDIF()
+
+    IF(UNIX AND NOT APPLE)
+        IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.so.4.11.0 ${CMAKE_BINARY_DIR}/${executable_name}/libopencv_world.so.4.11.0                   COPYONLY)
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.so.4.11.0 ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/libopencv_world.so.4.11.0 COPYONLY)
+        ELSE()
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.so.4.11.0 ${CMAKE_BINARY_DIR}/${executable_name}/libopencv_world.so.4.11.0                   COPYONLY) # TODO: test
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/lib/libopencv_world.so.4.11.0 ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/libopencv_world.so.4.11.0 COPYONLY)
+        ENDIF()
+    ENDIF()
+
+    IF(WIN32)
+        IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110.dll                   COPYONLY)
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110.dll ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/opencv_world4110.dll COPYONLY)
+        ELSE()
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110d.dll ${CMAKE_BINARY_DIR}/${executable_name}/opencv_world4110d.dll                  COPYONLY)
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/submodules/opencv/build/bin/opencv_world4110d.dll ${CMAKE_BINARY_DIR}/${performance_tests_executable_name}/opencv_world4110d.dll COPYONLY)
+        ENDIF()
     ENDIF()
 ENDIF()

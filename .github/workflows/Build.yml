@@ -32,9 +32,6 @@ jobs:
                   Import-Module ./modules/Build.psd1
                   Build-CppCodeUsingCMake -Platform ${{ matrix.os }} -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
 
-                  # TODO: clean up
-                  Get-ChildItem -Path . -Recurse -File -Filter *opencv_world*
-
             - name: Upload lane and object detection executable as an artifact
               uses: actions/upload-artifact@v4
               with:
