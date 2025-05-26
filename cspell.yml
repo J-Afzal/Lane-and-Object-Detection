@@ -43,6 +43,7 @@ ignoreWords:
     - ilammy
     - imshow
     - labelsize
+    - libopencv
     - linuxkernel
     - llvmlibc
     - logosize

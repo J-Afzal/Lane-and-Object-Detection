@@ -402,7 +402,9 @@ class PerformanceGraphs:
                     sqlite_cursor.close()
                     sqlite_connection.close()
 
-        def __get_data(self, platform_name: str) -> list[tuple[FrameTimeData, FramesPerSecondData]]: # TODO: make changes for list[]
+        def __get_data(
+            self, platform_name: str
+        ) -> list[tuple[FrameTimeData, FramesPerSecondData]]:  # TODO: make changes for list[]
             """Gets the data needed to generate performance graphs.
 
             Args:
@@ -598,7 +600,9 @@ class PerformanceGraphs:
                     sqlite_cursor.close()
                     sqlite_connection.close()
 
-        def get_frame_time_data(self, platform_name: str) -> list[tuple[FrameTimeData, FramesPerSecondData]]: # TODO: make changes for list[]
+        def get_frame_time_data(
+            self, platform_name: str
+        ) -> list[tuple[FrameTimeData, FramesPerSecondData]]:  # TODO: make changes for list[]
             """Opens/closes a connection to the SQLite database, performs data quality tests, and if data quality tests pass
             then it gets the the data needed to generate performance graphs.
 
