@@ -160,7 +160,7 @@ namespace LaneAndObjectDetection
                                                        "    Repetition              INTEGER             NOT NULL,"
                                                        "    FrameNumber             INTEGER             NOT NULL,"
                                                        "    FrameTime               INTEGER             NOT NULL,"
-                                                       "    TimeUnit                TEXT                NOT NULL"
+                                                       "    TimeUnit                TEXT                NOT NULL,"
                                                        "    TimeUnitConversion      INTEGER             NOT NULL"
                                                        ");";
         ExecuteSQLStatement(CREATE_TABLE_SQL_STATEMENT);
