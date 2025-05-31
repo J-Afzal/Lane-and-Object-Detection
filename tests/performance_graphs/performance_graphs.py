@@ -670,6 +670,3 @@ class PerformanceGraphs:
             """
             self.__validate_data()
             return self.__get_data()
-
-# TODO: Platform to PlatformName
-# TODO: if list of dbs given then also does platform specific graphs and all platform graph. Maybe it always does all and platform specific?

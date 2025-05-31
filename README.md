@@ -156,6 +156,12 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 <!--
 x. Performance Tests
 
+  - Maybe have CI which does perf tests???
+    - local run successful
+    - CI run successful
+    - if list of dbs given then also does platform specific graphs and all platform graph. Maybe it always does all and platform specific?
+    - Runs ad-hoc
+
   - Add below section after general information
       ### Performance Tests
 
@@ -170,14 +176,5 @@ x. Performance Tests
       cli call to performance graphs
 
   - Redo debug mode screenshot to include object detection
-
-  - Maybe have CI which does perf tests???
-    - Runs ad-hoc
-    - Build code
-    - Run exe
-    - Publish database as artifact
-    - Then run script for all platforms + multiple platforms and publish graphs as artifacts
-      - How to combine all platforms in to one db/graph?) Upload artifacts?
-    - After final commit successful run, commit graphs to performance test section of readme
 
 -->
