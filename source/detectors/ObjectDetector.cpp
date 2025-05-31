@@ -41,11 +41,12 @@ namespace LaneAndObjectDetection
 
         default:
             throw Globals::Exceptions::NotImplementedError();
-            break;
         }
 
         switch (p_objectDetectorBackEnds)
         {
+        case Globals::ObjectDetectorBackEnds::NONE:
+            break;
         case Globals::ObjectDetectorBackEnds::CPU:
             m_net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
             m_net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
@@ -63,7 +64,6 @@ namespace LaneAndObjectDetection
 
         default:
             throw Globals::Exceptions::NotImplementedError();
-            break;
         }
 
         m_blobSize = static_cast<int32_t>(p_objectDetectorBlobSizes);

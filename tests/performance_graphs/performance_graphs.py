@@ -50,7 +50,7 @@ class PerformanceGraphs:
         sqlite_database (str): SQLite wrapper class for all the SQLite databases.
     """
 
-    def __init__(self, database_file_path: str, graph_output_directory: str):
+    def __init__(self, database_file_paths: str, graph_output_directory: str):
         """Constructs the class and initialise the SQLite database.
 
         Args:
@@ -72,7 +72,7 @@ class PerformanceGraphs:
         self.__graph_output_directory: str = graph_output_directory
 
         # Setup database connection
-        self.__sqlite_database = self.SQLiteDatabase(database_file_path)
+        self.__sqlite_database = self.SQLiteDatabase(database_file_paths)
 
     def generate_performance_graphs(self) -> None:
         """Generates all the performance graphs."""
@@ -184,25 +184,27 @@ class PerformanceGraphs:
         )
 
     class SQLiteDatabase:
-        """SQLite wrapper class. This class is in the private scope as the implementation is PerformanceGraphs-specific."""
+        """SQLite wrapper class. This class is in the private scope as the implementation is PerformanceGraphs-specific.
 
-        def __init__(self, is_multi_platform: bool, database_file_path: str):
+        Attributes:
+            database_file_paths (list[str]): The SQLite database file paths for each platform.
+        """
+
+        def __init__(self, database_file_paths: str):
             """Constructs the class.
+
+            Args:
+                database_file_paths (str): A comma separated list to the SQLite database file paths for each platform.
 
             Raises:
                 DatabaseFileNotFoundError: If the SQLite database file is not found.
             """
-            if is_multi_platform:
-                pass
 
-            elif not os.path.isfile(database_file_path):
-                raise self.DatabaseFileNotFoundError(f"SQLite database file '{database_file_path}' not found!")
+            self.database_file_paths: list[str] = database_file_paths.split(",")
 
-            else:
-                self.database_file_path: str = database_file_path
-
-            self.is_multi_platform: bool = is_multi_platform
-            # TODO: make self.database_file_path a list of strings and all the other changes need to this class
+            for database_file_path in self.database_file_paths:
+                if not os.path.isfile(database_file_path):
+                    raise self.DatabaseFileNotFoundError(f"SQLite database file '{database_file_path}' not found!")
 
         class DatabaseFileNotFoundError(Exception):
             """Thrown when the SQLite database file is not found."""
@@ -214,211 +216,250 @@ class PerformanceGraphs:
 
             pass
 
-        def __validate_data(self, platform_name: str) -> None:
-            """Opens/closes a connection to the SQLite database and performs data quality tests.
-
-            Args:
-                platform_name (str): The name of the platform.
+        def __validate_data(self) -> None:
+            """Opens/closes a connection to all SQLite databases and performs data quality tests.
 
             Raises:
                 DataQualityError: If there are data quality violations.
             """
-            try:
-                sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_path)
-                sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
 
-                error_message: str = ""
+            yolo_names: list[str] = []
+            time_units: list[str] = []
+            time_unit_conversions: list[int] = []
+            frame_counts: list[int] = []
+            tests_names: list[list[str]] = []
 
-                # Confirm only a single YOLO name exists across tests
-                sqlite_cursor.execute(
-                    """
-                    SELECT DISTINCT
-                        YoloName
-                    FROM
-                        FrameTimes
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 1:
-                    error_message += "\nExpected identical YOLO names across all tests but found different YOLO names!"
+            error_message: str = ""
 
-                # Confirm only a single time unit exists across tests
-                sqlite_cursor.execute(
-                    """
-                    SELECT DISTINCT
-                        TimeUnit
-                    FROM
-                        FrameTimes
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 1:
-                    error_message += "\nExpected identical time units across all tests but found different time units!"
+            for database_file_path in self.database_file_paths:
+                try:
+                    sqlite_connection: sqlite3.Connection = sqlite3.connect(database=database_file_path)
+                    sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
 
-                # Confirm only a single time unit conversion exists across tests
-                sqlite_cursor.execute(
-                    """
-                    SELECT DISTINCT
-                        TimeUnitConversion
-                    FROM
-                        FrameTimes
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 1:
-                    error_message += (
-                        "\nExpected identical time unit conversions across all tests but found different time unit conversions!"
-                    )
-
-                # Confirm frame counts match across all tests
-                sqlite_cursor.execute(
-                    """
-                    SELECT DISTINCT
-                        COUNT(*)
-                    FROM
-                        FrameTimes
-                    GROUP BY
-                        Platform,
-                        ObjectDetectorType,
-                        ObjectDetectorBackEnd,
-                        ObjectDetectorBlobSize,
-                        Repetition
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 1:
-                    error_message += "\nExpected identical frame counts across all tests but found different frame counts!"
-
-                # Confirm tests match across all platforms
-                sqlite_cursor.execute(
-                    """
-                    WITH Cte AS
-                    (
+                    # Confirm only a single platform name exists across tests
+                    sqlite_cursor.execute(
+                        """
                         SELECT DISTINCT
-                            Platform,
+                            PlatformName
+                        FROM
+                            FrameTimes
+                        """
+                    )
+                    returned_platform_names: list[str] = sqlite_cursor.fetchall()
+                    if len(returned_platform_names) > 1:
+                        error_message += f"\n{database_file_path}: Expected identical platform names across all tests but found {len(returned_platform_names)} platform names!"
+
+                    # Confirm only a single YOLO name exists across tests
+                    sqlite_cursor.execute(
+                        """
+                        SELECT DISTINCT
+                            YoloName
+                        FROM
+                            FrameTimes
+                        """
+                    )
+                    returned_yolo_names: list[str] = sqlite_cursor.fetchall()
+                    if len(returned_yolo_names) > 1:
+                        error_message += f"\n{database_file_path}: Expected identical YOLO names across all tests but found {len(returned_yolo_names)} YOLO names!"
+
+                    yolo_names += returned_yolo_names
+
+                    # Confirm only a single time unit exists across tests
+                    sqlite_cursor.execute(
+                        """
+                        SELECT DISTINCT
+                            TimeUnit
+                        FROM
+                            FrameTimes
+                        """
+                    )
+                    returned_time_units: list[str] = sqlite_cursor.fetchall()
+                    if len(returned_time_units) > 1:
+                        error_message += f"\n{database_file_path}: Expected identical time units across all tests but found {len(returned_time_units)} time units!"
+
+                    time_units += returned_time_units
+
+                    # Confirm only a single time unit conversion exists across tests
+                    sqlite_cursor.execute(
+                        """
+                        SELECT DISTINCT
+                            TimeUnitConversion
+                        FROM
+                            FrameTimes
+                        """
+                    )
+                    returned_time_unit_conversions: list[str] = sqlite_cursor.fetchall()
+                    if len(returned_time_unit_conversions) > 1:
+                        error_message += f"\n{database_file_path}: Expected identical time unit conversions across all tests but found {len(returned_time_unit_conversions)} time unit conversions!"
+
+                    time_unit_conversions += returned_time_unit_conversions
+
+                    # Confirm frame counts match across all tests
+                    sqlite_cursor.execute(
+                        """
+                        SELECT DISTINCT
+                            COUNT(*)
+                        FROM
+                            FrameTimes
+                        GROUP BY
+                            ObjectDetectorType,
+                            ObjectDetectorBackEnd,
+                            ObjectDetectorBlobSize,
+                            Repetition
+                        """
+                    )
+                    returned_frame_counts: list[str] = sqlite_cursor.fetchall()
+                    if len(returned_frame_counts) > 1:
+                        error_message += f"\n{database_file_path}: Expected identical frame counts across all tests but found {len(returned_frame_counts)} frame counts!"
+
+                    frame_counts += returned_frame_counts
+
+                    # Confirm tests match across all platforms
+                    sqlite_cursor.execute(
+                        """
+                        SELECT DISTINCT
                             ObjectDetectorType,
                             ObjectDetectorBackEnd,
                             ObjectDetectorBlobSize
                         FROM
                             FrameTimes
+                        """
                     )
-                    SELECT DISTINCT COUNT(*) FROM Cte GROUP BY Platform
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 1:
-                    error_message += "\nExpected identical tests across all platform but found different tests!"
+                    tests_names += sqlite_cursor.fetchall()
 
-                # Confirm enums are between the expected range
-                sqlite_cursor.execute(
-                    """
-                    SELECT
-                        *
-                    FROM
-                        FrameTimes
-                    WHERE
-                        ObjectDetectorType NOT IN (0, 1, 2)
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 0:
-                    error_message += "\nExpected a values between 0, 1, and 2 for ObjectDetectorType but got other values!"
-
-                sqlite_cursor.execute(
-                    """
-                    SELECT
-                        *
-                    FROM
-                        FrameTimes
-                    WHERE
-                        ObjectDetectorBackEnd NOT IN (0, 1, 2)
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 0:
-                    error_message += "\nExpected a values between 0, 1, and 2 for ObjectDetectorBackEnd but got other values!"
-
-                sqlite_cursor.execute(
-                    """
-                    SELECT
-                        *
-                    FROM
-                        FrameTimes
-                    WHERE
-                        ObjectDetectorBlobSize NOT IN (0, 288, 320, 416, 512, 608)
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 0:
-                    error_message += "\nExpected a values between 0, 288, 320, 416, 512, and 608 for ObjectDetectorBlobSize but got other values!"
-
-                # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are non-zero if ObjectDetectorType is non-zero
-                sqlite_cursor.execute(
-                    """
-                    SELECT
-                        *
-                    FROM
-                        FrameTimes
-                    WHERE
-                        ObjectDetectorType = 0
-                    AND (ObjectDetectorBackEnd != 0 OR ObjectDetectorBlobSize != 0)
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 0:
-                    error_message += "\nExpected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be zero when ObjectDetectorType is zero but found them to be non-zero!"
-
-                # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are zero if ObjectDetectorType is zero
-                sqlite_cursor.execute(
-                    """
-                    SELECT
-                        *
-                    FROM
-                        FrameTimes
-                    WHERE
-                        ObjectDetectorType != 0
-                    AND (ObjectDetectorBackEnd = 0 OR ObjectDetectorBlobSize = 0)
-                    """
-                )
-                if len(sqlite_cursor.fetchall()) > 0:
-                    error_message += "\nExpected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be non-zero when ObjectDetectorType is non-zero but found them to be zero!"
-
-                if platform_name != "all":
-                    # Confirm the current platform is found within the data
+                    # Confirm enums are between the expected range
                     sqlite_cursor.execute(
-                        f"""
+                        """
                         SELECT
                             *
                         FROM
                             FrameTimes
                         WHERE
-                            Platform = '{platform_name}'
+                            ObjectDetectorType NOT IN (0, 1, 2)
                         """
                     )
-                    if len(sqlite_cursor.fetchall()) == 0:
-                        error_message += (
-                            f"\nExpected the platform '{platform_name}' to be found in the database but it was not found!"
-                        )
+                    if len(sqlite_cursor.fetchall()) > 0:
+                        error_message += f"\n{database_file_path}: Expected a values between 0, 1, and 2 for ObjectDetectorType but got other values!"
 
-                if error_message:
-                    raise self.DataQualityError("The following violations have been found in the data:" + error_message)
+                    sqlite_cursor.execute(
+                        """
+                        SELECT
+                            *
+                        FROM
+                            FrameTimes
+                        WHERE
+                            ObjectDetectorBackEnd NOT IN (0, 1, 2)
+                        """
+                    )
+                    if len(sqlite_cursor.fetchall()) > 0:
+                        error_message += f"\n{database_file_path}: Expected a values between 0, 1, and 2 for ObjectDetectorBackEnd but got other values!"
 
-            except sqlite3.Error as e:
-                raise e
+                    sqlite_cursor.execute(
+                        """
+                        SELECT
+                            *
+                        FROM
+                            FrameTimes
+                        WHERE
+                            ObjectDetectorBlobSize NOT IN (0, 288, 320, 416, 512, 608)
+                        """
+                    )
+                    if len(sqlite_cursor.fetchall()) > 0:
+                        error_message += f"\n{database_file_path}: Expected a values between 0, 288, 320, 416, 512, and 608 for ObjectDetectorBlobSize but got other values!"
 
-            finally:
-                if sqlite_connection:
-                    sqlite_cursor.close()
-                    sqlite_connection.close()
+                    # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are non-zero if ObjectDetectorType is non-zero
+                    sqlite_cursor.execute(
+                        """
+                        SELECT
+                            *
+                        FROM
+                            FrameTimes
+                        WHERE
+                            ObjectDetectorType = 0
+                        AND (ObjectDetectorBackEnd != 0 OR ObjectDetectorBlobSize != 0)
+                        """
+                    )
+                    if len(sqlite_cursor.fetchall()) > 0:
+                        error_message += f"\n{database_file_path}: Expected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be zero when ObjectDetectorType is zero but found them to be non-zero!"
 
-        def __get_data(
-            self, platform_name: str
-        ) -> list[tuple[FrameTimeData, FramesPerSecondData]]:  # TODO: make changes for list[]
+                    # Confirm ObjectDetectorBackEnd and ObjectDetectorBlobSize are zero if ObjectDetectorType is zero
+                    sqlite_cursor.execute(
+                        """
+                        SELECT
+                            *
+                        FROM
+                            FrameTimes
+                        WHERE
+                            ObjectDetectorType != 0
+                        AND (ObjectDetectorBackEnd = 0 OR ObjectDetectorBlobSize = 0)
+                        """
+                    )
+                    if len(sqlite_cursor.fetchall()) > 0:
+                        error_message += f"\n{database_file_path}: Expected ObjectDetectorBackEnd and ObjectDetectorBlobSize to be non-zero when ObjectDetectorType is non-zero but found them to be zero!"
+
+                except sqlite3.Error as e:
+                    raise e
+
+                finally:
+                    if sqlite_connection:
+                        sqlite_cursor.close()
+                        sqlite_connection.close()
+
+            # Multi-platform checks
+            if len(set(yolo_names)) > 1:
+                error_message += (
+                    f"\nAll: Expected identical YOLO names across all platforms but found {len(set(yolo_names))} YOLO names!"
+                )
+
+            if len(set(time_units)) > 1:
+                error_message += (
+                    f"\nAll: Expected identical time units across all platforms but found {len(set(time_units))} time units!"
+                )
+
+            if len(set(time_unit_conversions)) > 1:
+                error_message += f"\nAll: Expected identical time unit conversions across all platforms but found {len(set(time_unit_conversions))} time unit conversions!"
+
+            if len(set(frame_counts)) > 1:
+                error_message += f"\nAll: Expected identical frame counts across all platforms but found {len(set(frame_counts))} frame counts!"
+
+            for i in range(0, len(tests_names) - 1):
+                if sorted(tests_names[i]) != sorted(tests_names[i + 1]):
+                    print(tests_names)
+                    error_message += (
+                        f"\nAll: Expected identical test names across all platforms but found different test names!"
+                    )
+                    break
+
+            if error_message:
+                raise self.DataQualityError("The following violations have been found in the data:" + error_message)
+
+        def __get_data(self) -> list[tuple[FrameTimeData, FramesPerSecondData]]:
             """Gets the data needed to generate performance graphs.
 
-            Args:
-                platform_name (str): The name of the platform.
-
             Returns:
-                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance
-                graphs.
+                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance graphs.
             """
+
+            # Get platform agnostic data
             try:
-                sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_path)
+                sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_paths[0])
                 sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
 
-                platform_display_name: str = "All Platforms" if platform_name == "all" else platform_name
+                if len(self.database_file_paths) > 1:
+                    platform_display_name: str = "All Platforms"
+                    is_multi_platform: bool = True
+
+                else:
+                    sqlite_cursor.execute(
+                        """
+                        SELECT DISTINCT
+                            PlatformName
+                        FROM
+                            FrameTimes
+                        """
+                    )
+                    platform_display_name: str = sqlite_cursor.fetchall()[0][0]
+                    is_multi_platform: bool = False
 
                 sqlite_cursor.execute(
                     """
@@ -457,7 +498,6 @@ class PerformanceGraphs:
                     FROM
                         FrameTimes
                     GROUP BY
-                        Platform,
                         ObjectDetectorType,
                         ObjectDetectorBackEnd,
                         ObjectDetectorBlobSize,
@@ -509,22 +549,33 @@ class PerformanceGraphs:
                 )
                 all_tests: list[str] = sqlite_cursor.fetchall()
 
-                sqlite_cursor.execute(
-                    """
-                    SELECT DISTINCT
-                        Platform
-                    FROM
-                        FrameTimes
-                    ORDER BY
-                        Platform
-                    """
-                )
-                all_platforms: list[str] = [row[0] for row in sqlite_cursor.fetchall()]
+            except sqlite3.Error as e:
+                raise e
 
-                frame_times: dict[str, list[list[float]]] = {}
+            finally:
+                if sqlite_connection:
+                    sqlite_cursor.close()
+                    sqlite_connection.close()
 
-                if platform_name == "all":
-                    for platform in all_platforms:
+            # Get platform specific data
+            frame_times: dict[str, list[list[float]]] = {}
+
+            if is_multi_platform:
+                for database_file_path in self.database_file_paths:
+                    try:
+                        sqlite_connection: sqlite3.Connection = sqlite3.connect(database=database_file_path)
+                        sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
+
+                        sqlite_cursor.execute(
+                            """
+                            SELECT DISTINCT
+                                PlatformName
+                            FROM
+                                FrameTimes
+                            """
+                        )
+                        platform_name: str = sqlite_cursor.fetchall()[0]
+
                         current_platform_frame_times: list[list[float]] = []
 
                         for test in all_tests:
@@ -535,8 +586,7 @@ class PerformanceGraphs:
                                 FROM
                                     FrameTimes
                                 WHERE
-                                    Platform               = '{platform}'
-                                AND ObjectDetectorType     = {test[0]}
+                                    ObjectDetectorType     = {test[0]}
                                 AND ObjectDetectorBackEnd  = {test[1]}
                                 AND ObjectDetectorBlobSize = {test[2]}
                                 GROUP BY
@@ -545,9 +595,21 @@ class PerformanceGraphs:
                             )
                             current_platform_frame_times.append([row[0] for row in sqlite_cursor.fetchall()])
 
-                        frame_times[platform] = current_platform_frame_times
+                    except sqlite3.Error as e:
+                        raise e
 
-                else:
+                    finally:
+                        if sqlite_connection:
+                            sqlite_cursor.close()
+                            sqlite_connection.close()
+
+                    frame_times[platform_name] = current_platform_frame_times
+
+            else:
+                try:
+                    sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_paths[0])
+                    sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
+
                     frame_times[f"No {yolo_name}"] = []
                     frame_times[f"{yolo_name} (GPU)"] = []
                     frame_times[f"{yolo_name} (CPU)"] = []
@@ -560,8 +622,7 @@ class PerformanceGraphs:
                             FROM
                                 FrameTimes
                             WHERE
-                                Platform               = '{platform_name}'
-                            AND ObjectDetectorType     = {test[0]}
+                                ObjectDetectorType     = {test[0]}
                             AND ObjectDetectorBackEnd  = {test[1]}
                             AND ObjectDetectorBlobSize = {test[2]}
                             GROUP BY
@@ -576,42 +637,39 @@ class PerformanceGraphs:
                         elif test[1] == 2:
                             frame_times[f"{yolo_name} (CPU)"].append([row[0] for row in sqlite_cursor.fetchall()])
 
-                average_frames_per_second: dict[str, list[float]] = {}
+                except sqlite3.Error as e:
+                    raise e
 
-                for key, value in frame_times.items():
-                    average_frames_per_second[key] = []
-                    for frame_time in value:
-                        average_frames_per_second[key].append(
-                            round(1 / (statistics.mean(frame_time) / time_unit_conversion), 1)
-                        )
+                finally:
+                    if sqlite_connection:
+                        sqlite_cursor.close()
+                        sqlite_connection.close()
 
-                frame_time_data: FrameTimeData = FrameTimeData(platform_display_name, number_of_frames, frame_times, time_unit)
-                frames_per_second_data: FramesPerSecondData = FramesPerSecondData(
-                    platform_display_name, test_names, average_frames_per_second
-                )
+            average_frames_per_second: dict[str, list[float]] = {}
 
-                return frame_time_data, frames_per_second_data
+            for key, value in frame_times.items():
+                average_frames_per_second[key] = []
+                for frame_time in value:
+                    average_frames_per_second[key].append(round(1 / (statistics.mean(frame_time) / time_unit_conversion), 1))
 
-            except sqlite3.Error as e:
-                raise e
+            frame_time_data: FrameTimeData = FrameTimeData(
+                platform_display_name, is_multi_platform, number_of_frames, frame_times, time_unit
+            )
+            frames_per_second_data: FramesPerSecondData = FramesPerSecondData(
+                platform_display_name, is_multi_platform, test_names, average_frames_per_second
+            )
 
-            finally:
-                if sqlite_connection:
-                    sqlite_cursor.close()
-                    sqlite_connection.close()
+            return frame_time_data, frames_per_second_data
 
-        def get_frame_time_data(
-            self, platform_name: str
-        ) -> list[tuple[FrameTimeData, FramesPerSecondData]]:  # TODO: make changes for list[]
+        def get_frame_time_data(self) -> list[tuple[FrameTimeData, FramesPerSecondData]]:
             """Opens/closes a connection to the SQLite database, performs data quality tests, and if data quality tests pass
             then it gets the the data needed to generate performance graphs.
 
-            Args:
-                platform_name (str): The name of the platform.
-
             Returns:
-                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance
-                graphs.
+                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance graphs.
             """
-            self.__validate_data(platform_name)
-            return self.__get_data(platform_name)
+            self.__validate_data()
+            return self.__get_data()
+
+# TODO: Platform to PlatformName
+# TODO: if list of dbs given then also does platform specific graphs and all platform graph. Maybe it always does all and platform specific?

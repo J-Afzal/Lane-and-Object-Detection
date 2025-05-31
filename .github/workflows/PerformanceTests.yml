@@ -41,9 +41,12 @@ jobs:
 
             - name: Run performance tests
               run: |
-                  ls;
-                  ls lane-and-object-detection-performance-tests-${{ matrix.os }};
-                  lane-and-object-detection-performance-tests-${{ matrix.os }}/lane-and-object-detection-performance-tests -p ${{ matrix.os }} -d sqlite-${{ matrix.os }}.db -i ./tests/performance_tests/benchmark.mp4 -y ./resources/yolo/ -r 1;
+                  lane-and-object-detection-performance-tests-${{ matrix.os }}/lane-and-object-detection-performance-tests `
+                        -p ${{ matrix.os }} `
+                        -d sqlite-${{ matrix.os }}.db `
+                        -i ./tests/performance_tests/benchmark.mp4 `
+                        -y ./resources/yolo/ `
+                        -r 1;
 
             - name: Upload sqlite database
               uses: actions/upload-artifact@v4

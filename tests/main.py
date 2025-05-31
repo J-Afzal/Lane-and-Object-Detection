@@ -17,7 +17,7 @@ def parse_cli_args() -> Namespace:
         "--database",
         type=str,
         metavar="",
-        help="a comma separated list to the SQLite database file paths for each platform",
+        help="a comma separated list to the SQLite database file paths for each platform, if single file given then graphs are generated for a single platform",
     )
     parser.add_argument(
         "-o", "--output", type=str, metavar="", help="the path to the directory in which to save the performance graphs"
@@ -28,5 +28,5 @@ def parse_cli_args() -> Namespace:
 
 if __name__ == "__main__":
     cli_args: Namespace = parse_cli_args()
-    performance_graphs: PerformanceGraphs = PerformanceGraphs(cli_args.platform, cli_args.database, cli_args.output)
+    performance_graphs: PerformanceGraphs = PerformanceGraphs(cli_args.database, cli_args.output)
     performance_graphs.generate_performance_graphs()

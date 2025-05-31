@@ -77,24 +77,17 @@ namespace LaneAndObjectDetection
             ~SQLiteDatabase();
 
             /**
-             * @brief Opens the provided database file.
+             * @brief Opens the provided database file and truncates the FrameTimes table by dropping and re-creating it.
              *
              * @param p_databasePath The path to the SQLite database file.
              */
             void OpenDatabase(const std::string& p_databasePath);
 
             /**
-             * @brief Drops all rows for the specified platform.
-             *
-             * @param p_currentPlatform The platform name whose rows should be dropped.
-             * @warning This function should only be called after `OpenDatabase()` has been successfully called.
-             */
-            void ClearPlatformFrameTimes(const std::string& p_currentPlatform);
-
-            /**
              * @brief Inserts rows in to the FrameTimes table for every frame time in `p_frameTimes`.
              *
              * @param p_currentPlatform The platform the frame times are associated with.
+             * @param p_currentYoloName The name of the YOLO version being used.
              * @param p_objectDetectorType The type of object detector used.
              * @param p_objectDetectorBackEnd The backend used by the object detector.
              * @param p_objectDetectorBlobSize The object detector blob size.
@@ -105,6 +98,7 @@ namespace LaneAndObjectDetection
              * @warning This function should only be called after `OpenDatabase()` has been successfully called.
              */
             void InsertFrameTimes(const std::string& p_currentPlatform,
+                                  const std::string& p_currentYoloName,
                                   const Globals::ObjectDetectorTypes& p_objectDetectorType,
                                   const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnd,
                                   const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSize,

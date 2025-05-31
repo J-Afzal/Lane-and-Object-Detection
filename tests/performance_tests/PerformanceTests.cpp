@@ -95,26 +95,21 @@ namespace LaneAndObjectDetection
         std::cout << "\n    Number of tests: " << Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS;
         std::cout << "\n    Number of repetitions: " << m_numberOfRepetitions;
 
-        std::cout << "\nOpening the database path...";
+        std::cout << "\nOpening the database...";
         m_sqliteDatabase.OpenDatabase(m_databasePath);
-
-        std::cout << "\nClearing current platform frame times from output table...";
-        m_sqliteDatabase.ClearPlatformFrameTimes(m_currentPlatform);
-
-        VideoManager videoManager;
 
         const std::chrono::time_point<std::chrono::high_resolution_clock> START_TIME = std::chrono::high_resolution_clock::now();
 
         for (uint32_t currentTestNumber = 0; currentTestNumber < Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS; currentTestNumber++)
         {
-            std::cout << std::format("\n\n    ######## {} ({}/{}) ########",
+            std::cout << std::format("\n\n    ######## {} ({}/{}) ########\n",
                                      Globals::G_PERFORMANCE_TESTS_NAMES.at(currentTestNumber),
                                      currentTestNumber,
                                      Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS);
 
             for (uint32_t currentRepetition = 0; currentRepetition < m_numberOfRepetitions; currentRepetition++)
             {
-                videoManager.SetProperties(m_inputVideoFilePath,
+                VideoManager videoManager(m_inputVideoFilePath,
                                            m_yoloFolderPath,
                                            Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
                                            Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
@@ -123,6 +118,7 @@ namespace LaneAndObjectDetection
                 videoManager.RunLaneAndObjectDetector();
 
                 m_sqliteDatabase.InsertFrameTimes(m_currentPlatform,
+                                                  Globals::G_YOLO_NAME,
                                                   Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
                                                   Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
                                                   Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber),
@@ -135,8 +131,8 @@ namespace LaneAndObjectDetection
             }
         }
 
-        std::cout << std::format("\n\nTotal elapsed time = {} (H?:mm:ss)", Globals::GetTimeElapsed(START_TIME));
-        std::cout << "\n\nRun './tests/main.py' with appropriate CLI args to generate performance graphs";
+        std::cout << std::format("\n\nTotal elapsed time = {} (HH:mm:ss)", Globals::GetTimeElapsed(START_TIME));
+        std::cout << std::format("\n\nRun './tests/main.py -p {} -o ./tests/performance_graphs/' to generate the performance graphs", m_databasePath);
         std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n";
     }
 
@@ -149,10 +145,12 @@ namespace LaneAndObjectDetection
     {
         CheckResultCode(sqlite3_open(p_databasePath.c_str(), &m_database));
 
+        const std::string DROP_TABLE_SQL_STATEMENT = "DROP TABLE IF EXISTS FrameTimes;";
+
         const std::string CREATE_TABLE_SQL_STATEMENT = "CREATE TABLE IF NOT EXISTS FrameTimes"
                                                        "("
                                                        "    Id                      INTEGER PRIMARY KEY NOT NULL,"
-                                                       "    Platform                TEXT                NOT NULL,"
+                                                       "    PlatformName            TEXT                NOT NULL,"
                                                        "    YoloName                TEXT                NOT NULL,"
                                                        "    ObjectDetectorType      INTEGER             NOT NULL,"
                                                        "    ObjectDetectorBackEnd   INTEGER             NOT NULL,"
@@ -163,15 +161,14 @@ namespace LaneAndObjectDetection
                                                        "    TimeUnit                TEXT                NOT NULL,"
                                                        "    TimeUnitConversion      INTEGER             NOT NULL"
                                                        ");";
+
+        ExecuteSQLStatement(DROP_TABLE_SQL_STATEMENT);
+
         ExecuteSQLStatement(CREATE_TABLE_SQL_STATEMENT);
     }
 
-    void PerformanceTests::SQLiteDatabase::ClearPlatformFrameTimes(const std::string& p_currentPlatform)
-    {
-        ExecuteSQLStatement(std::format("DELETE FROM FrameTimes WHERE Platform = '{}'", p_currentPlatform));
-    }
-
     void PerformanceTests::SQLiteDatabase::InsertFrameTimes(const std::string& p_currentPlatform,
+                                                            const std::string& p_currentYoloName,
                                                             const Globals::ObjectDetectorTypes& p_objectDetectorType,
                                                             const Globals::ObjectDetectorBackEnds& p_objectDetectorBackEnd,
                                                             const Globals::ObjectDetectorBlobSizes& p_objectDetectorBlobSize,
@@ -184,11 +181,11 @@ namespace LaneAndObjectDetection
         {
             ExecuteSQLStatement(
                 std::format(
-                    "INSERT INTO"
-                    "FrameTimes(Platform, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, TimeUnit, TimeUnitConversion)"
-                    "VALUES({}, {}, {}, {}, {}, {}, {}, {}, {}, {});",
+                    "INSERT INTO "
+                    "FrameTimes(PlatformName, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, TimeUnit, TimeUnitConversion) "
+                    "VALUES('{}', '{}', {}, {}, {}, {}, {}, {}, '{}', {});",
                     p_currentPlatform,
-                    Globals::G_YOLO_NAME,
+                    p_currentYoloName,
                     static_cast<uint8_t>(p_objectDetectorType),
                     static_cast<uint8_t>(p_objectDetectorBackEnd),
                     static_cast<uint16_t>(p_objectDetectorBlobSize),

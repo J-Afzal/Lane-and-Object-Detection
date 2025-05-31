@@ -44,7 +44,7 @@ namespace LaneAndObjectDetection::Globals
      * @brief Gets the elapsed time from `p_startTime` to now.
      *
      * @param p_startTime The time to compare to now.
-     * @return `std::string` The elapsed time in the format `mm:ss` if less than an hour or `H:mm:ss` if more than one hour.
+     * @return `std::string` The elapsed time in the format `HH:mm:ss`.
      */
     static inline std::string GetTimeElapsed(const std::chrono::time_point<std::chrono::high_resolution_clock>& p_startTime)
     {
@@ -65,35 +65,28 @@ namespace LaneAndObjectDetection::Globals
 
         std::string output;
 
-        if (HOURS > 0)
+        if (HOURS < PADDING_THRESHOLD)
         {
-            output += std::to_string(HOURS);
-            output += ":";
+            output += "0";
         }
+
+        output += std::to_string(HOURS);
+        output += ":";
 
         if (MINUTES < PADDING_THRESHOLD)
         {
             output += "0";
-            output += std::to_string(MINUTES);
         }
 
-        else
-        {
-            output += std::to_string(MINUTES);
-        }
-
+        output += std::to_string(MINUTES);
         output += ":";
 
         if (SECONDS < PADDING_THRESHOLD)
         {
             output += "0";
-            output += std::to_string(SECONDS);
         }
 
-        else
-        {
-            output += std::to_string(SECONDS);
-        }
+        output += std::to_string(SECONDS);
 
         return output;
     }
