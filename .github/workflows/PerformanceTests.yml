@@ -37,10 +37,10 @@ jobs:
               with:
                   pattern: lane-and-object-detection-performance-tests-${{ matrix.os }}
 
-            # TODO: download https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights
-
             - name: Run performance tests
               run: |
+                  curl -o .\resources\yolo\yolov7.weights "https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights"
+
                   ./lane-and-object-detection-performance-tests-${{ matrix.os }}/lane-and-object-detection-performance-tests `
                       -p ${{ matrix.os }} `
                       -d sqlite-${{ matrix.os }}.db `
