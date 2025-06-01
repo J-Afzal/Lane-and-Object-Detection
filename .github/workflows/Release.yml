@@ -35,6 +35,14 @@ jobs:
                   $sharedName = "lane-and-object-detection"
                   $sharedPerformanceTestsName = "lane-and-object-detection-performance-tests"
 
+                  Rename-Item -LiteralPath ./$sharedName-macos-latest/$sharedName -NewName $sharedName-macos-latest
+                  Rename-Item -LiteralPath ./$sharedName-ubuntu-latest/$sharedName -NewName $sharedName-ubuntu-latest
+                  Rename-Item -LiteralPath ./$sharedName-windows-latest/$sharedName.exe -NewName $sharedName-windows-latest.exe
+
+                  Rename-Item -LiteralPath ./$sharedPerformanceTestsName-macos-latest/$sharedPerformanceTestsName -NewName $sharedPerformanceTestsName-macos-latest
+                  Rename-Item -LiteralPath ./$sharedPerformanceTestsName-ubuntu-latest/$sharedPerformanceTestsName -NewName $sharedPerformanceTestsName-ubuntu-latest
+                  Rename-Item -LiteralPath ./$sharedPerformanceTestsName-windows-latest/$sharedPerformanceTestsName.exe -NewName $sharedPerformanceTestsName-windows-latest.exe
+
                   # Create draft release if performing a CI check
                   if ($${{ inputs.ci_check }}) {
                     gh release create $tagName `

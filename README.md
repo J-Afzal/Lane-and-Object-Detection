@@ -197,7 +197,5 @@ opening the folder through the `Developer PowerShell for VS` (otherwise you may 
 [cd-page]: https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml
 [linters-repo]: https://github.com/J-Afzal/Linters
 [opencv-repo]: https://github.com/opencv/opencv
-[llvm-release-page]: https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6
+[llvm-release-page]: https://github.com/llvm/llvm-project/releases
 [llvm-chocolatey]: https://community.chocolatey.org/packages/llvm
-
-<!-- Add release checks to terminal games -->

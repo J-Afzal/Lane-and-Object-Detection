@@ -11,7 +11,7 @@ jobs:
     build:
         uses: ./.github/workflows/Build.yml
 
-    release:
+    release_test:
         needs: build
         uses: ./.github/workflows/Release.yml
         with:
@@ -21,5 +21,6 @@ jobs:
         uses: J-Afzal/Linters/.github/workflows/Linting.yml@main
         with:
             path_to_linters_submodule_root: ./submodules/Linters
+            run_python_linters: true
             run_powershell_linters: true
             run_cpp_linters: true
