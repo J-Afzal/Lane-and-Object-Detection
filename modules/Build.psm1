@@ -212,5 +212,8 @@ function Build-CppCodeUsingCMake {
         Assert-ExternalCommandError -ThrowError
     }
 
+    Write-Information "##[command]Downloading the required .weights file which..."
+    curl -o .\resources\yolo\yolov7.weights "https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights"
+
     Write-Information "##[section]Lane and Object Detection has been successfully built!"
 }

@@ -5,22 +5,18 @@ Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv7
 ## Getting Started
 
 Binaries can be found in [Releases](https://github.com/J-Afzal/Lane-and-Object-Detection/releases) or, if preferred, CMake can
-be used to build the project from source either through the PowerShell helper function:
+be used to build the project from source either through the PowerShell helper module:
 
 > [!IMPORTANT]
 > Included in the repository is a `benchmark.mp4` file which can be used to run the program against.
 
 ```text
-Import-Module ./modules/Build.psd1
+Import-Module ./modules/Build.psd1;
 
-Build-CppCodeUsingCMake -Platform windows-latest -BuildType Release -BuildDirectory build -Parallel 8 -Verbose
+Build-CppCodeUsingCMake -Platform windows-latest -BuildType Release -BuildDirectory build -Parallel 8 -Verbose;
 
-./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
+./build/lane-and-object-detection/lane-and-object-detection -i ./tests/performance_tests/benchmark.mp4 -y ./resources/yolo/
 ```
-
-> [!WARNING]
-> If on Windows make sure to run the above within a Visual Studio Developer Command Prompt otherwise you may see errors around
-> `cl.exe` not being found.
 
 or manually:
 
@@ -36,13 +32,20 @@ cd ../..
 
 # Build Lane and Object Detection
 cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release"
-cmake --build ./build --config Release
+cmake --build ./build --config Release --parallel 8
 
-./build/lane-and-object-detection/lane-and-object-detection OR ./build/lane-and-object-detection/lane-and-object-detection.exe
+curl -o .\resources\yolo\yolov7.weights https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights
+
+./build/lane-and-object-detection/lane-and-object-detection -i ./tests/performance_tests/benchmark.mp4 -y ./resources/yolo/
 ```
 
+CUDA is supported by OpenCV but would require a CUDA enabled OpenCV installation which both the PowerShell helper module and the
+manual instructions don't do.
+
 > [!WARNING]
-> If on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in the correct location.
+> If on Windows make sure to run the above within a Visual Studio Developer Command Prompt otherwise you may see errors around
+> `cl.exe` not being found. Also, if on Windows make sure to add -G "NMake Makefiles" otherwise the required dlls may not be in
+> the expected locations for the above instructions.
 
 Here are the full list of options for Lane and Object Detection:
 
@@ -68,9 +71,8 @@ Optional options:
 ```
 
 > [!IMPORTANT]
-> The `yolov7.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but can be downloaded
-> [here](https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights) and should be copied to the
-> `./resources/yolo` folder.
+> The `yolov7.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but is included as a download step for
+> both the PowerShell helper module and the manual instructions above.
 
 ## Documentation
 
@@ -159,7 +161,8 @@ x. Performance Tests
   - Maybe have CI which does perf tests???
     - local run successful
     - CI run successful
-    - if list of dbs given then also does platform specific graphs and all platform graph. Maybe it always does all and platform specific?
+    - if list of dbs given then also does platform specific graphs and all platform graph. Maybe it always does all and platform
+      specific?
     - Runs ad-hoc
 
   - Add below section after general information
