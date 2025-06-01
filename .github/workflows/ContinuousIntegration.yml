@@ -11,6 +11,12 @@ jobs:
     build:
         uses: ./.github/workflows/Build.yml
 
+    release:
+        needs: build
+        uses: ./.github/workflows/Release.yml
+        with:
+            ci_check: true
+
     lint:
         uses: J-Afzal/Linters/.github/workflows/Linting.yml@main
         with:

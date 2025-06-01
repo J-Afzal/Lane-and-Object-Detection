@@ -112,10 +112,10 @@ namespace LaneAndObjectDetection
             for (uint32_t currentRepetition = 0; currentRepetition < m_numberOfRepetitions; currentRepetition++)
             {
                 videoManager.SetProperties(m_inputVideoFilePath,
-                                          m_yoloFolderPath,
-                                          Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
-                                          Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
-                                          Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber));
+                                           m_yoloFolderPath,
+                                           Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
+                                           Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
+                                           Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber));
 
                 videoManager.RunLaneAndObjectDetector();
 

@@ -1,6 +1,12 @@
 name: Release
 
-on: workflow_call
+on:
+    workflow_call:
+        inputs:
+            ci_check:
+                required: false
+                type: boolean
+                default: false
 
 jobs:
     release:
@@ -17,7 +23,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Download built artifacts
+            - name: Download lane and object detection build
               uses: actions/download-artifact@v4
               with:
                   pattern: lane-and-object-detection-*
@@ -27,21 +33,40 @@ jobs:
                   $releaseTitle = "Lane and Object Detection $(Get-Date -Format 'yyyy-MM-dd HH-mm-ss')"
                   $tagName = "lane-and-object-detection-$(Get-Date -Format 'yyyy-MM-dd-HH-mm-ss')"
                   $sharedName = "lane-and-object-detection"
-                  $openCvDllName = "opencv_world4110.dll"
+                  $sharedPerformanceTestsName = "lane-and-object-detection-performance-tests"
 
-                  Rename-Item -LiteralPath ./$sharedName-macos-latest/$sharedName -NewName $sharedName-macos-latest
-                  Rename-Item -LiteralPath ./$sharedName-ubuntu-latest/$sharedName -NewName $sharedName-ubuntu-latest
-                  Rename-Item -LiteralPath ./$sharedName-windows-latest/$sharedName.exe -NewName $sharedName-windows-latest.exe
+                  # Create draft release if performing a CI check
+                  if ($${{ inputs.ci_check }}) {
+                    gh release create $tagName `
+                      ./$sharedName-macos-latest/$sharedName-macos-latest `
+                      ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest `
+                      ./$sharedName-windows-latest/$sharedName-windows-latest.exe `
+                      ./$sharedPerformanceTestsName-macos-latest/$sharedPerformanceTestsName-macos-latest `
+                      ./$sharedPerformanceTestsName-ubuntu-latest/$sharedPerformanceTestsName-ubuntu-latest `
+                      ./$sharedPerformanceTestsName-windows-latest/$sharedPerformanceTestsName-windows-latest.exe `
+                      ./$sharedName-macos-latest/libopencv_world.4.11.0.dylib `
+                      ./$sharedName-ubuntu-latest/libopencv_world.so.4.11.0 `
+                      ./$sharedName-windows-latest/opencv_world4110.dll `
+                      --title $releaseTitle --generate-notes --latest --draft
+                  }
 
-                  gh release create $tagName `
-                    ./$sharedName-macos-latest/$sharedName-macos-latest `
-                    ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest `
-                    ./$sharedName-windows-latest/$sharedName-windows-latest.exe `
-                    ./$sharedName-windows-latest/$openCvDllName --generate-notes --latest --title $releaseTitle
+                  else {
+                    gh release create $tagName `
+                      ./$sharedName-macos-latest/$sharedName-macos-latest `
+                      ./$sharedName-ubuntu-latest/$sharedName-ubuntu-latest `
+                      ./$sharedName-windows-latest/$sharedName-windows-latest.exe `
+                      ./$sharedPerformanceTestsName-macos-latest/$sharedPerformanceTestsName-macos-latest `
+                      ./$sharedPerformanceTestsName-ubuntu-latest/$sharedPerformanceTestsName-ubuntu-latest `
+                      ./$sharedPerformanceTestsName-windows-latest/$sharedPerformanceTestsName-windows-latest.exe `
+                      ./$sharedName-macos-latest/libopencv_world.4.11.0.dylib `
+                      ./$sharedName-ubuntu-latest/libopencv_world.so.4.11.0 `
+                      ./$sharedName-windows-latest/opencv_world4110.dll `
+                      --title $releaseTitle --generate-notes --latest
+                  }
               env:
                   GH_TOKEN: ${{ github.token }}
 
-            - name: Upload doxygen documentation artifacts
+            - name: Upload doxygen documentation as an artifact
               uses: actions/upload-pages-artifact@v3
               with:
                   name: doxygen-docs

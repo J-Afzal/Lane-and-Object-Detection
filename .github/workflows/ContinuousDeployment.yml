@@ -12,5 +12,5 @@ jobs:
         uses: ./.github/workflows/Build.yml
 
     release:
-        uses: ./.github/workflows/Release.yml
         needs: build
+        uses: ./.github/workflows/Release.yml

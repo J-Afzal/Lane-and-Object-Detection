@@ -4,11 +4,12 @@ Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv7
 
 ## Getting Started
 
-Binaries can be found in [Releases](https://github.com/J-Afzal/Lane-and-Object-Detection/releases) or, if preferred, CMake can
-be used to build the project from source either through the PowerShell helper module:
+Binaries can be found in [Releases][releases] or, if preferred, CMake can be used to build the project from source either
+through the PowerShell helper module:
 
 > [!IMPORTANT]
-> Included in the repository is a `benchmark.mp4` file which can be used to run the program against.
+> Make sure to download the [`yolov7.weights`][yolov7-weights] file into the `./resources/yolo/` folder and included in the
+> repository is a `benchmark.mp4` file which can be used to run the program against.
 
 ```text
 Import-Module ./modules/Build.psd1;
@@ -34,13 +35,12 @@ cd ../..
 cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=Release"
 cmake --build ./build --config Release --parallel 8
 
-curl -o .\resources\yolo\yolov7.weights https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights
+# The `yolov7.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but is included as a download step for
+# both the PowerShell helper module and these manual instructions
+curl -L -o .\resources\yolo\yolov7.weights "https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights"
 
 ./build/lane-and-object-detection/lane-and-object-detection -i ./tests/performance_tests/benchmark.mp4 -y ./resources/yolo/
 ```
-
-CUDA is supported by OpenCV but would require a CUDA enabled OpenCV installation which both the PowerShell helper module and the
-manual instructions don't do.
 
 > [!WARNING]
 > If on Windows make sure to run the above within a Visual Studio Developer Command Prompt otherwise you may see errors around
@@ -49,7 +49,7 @@ manual instructions don't do.
 
 Here are the full list of options for Lane and Object Detection:
 
-```text
+```plain
 Usage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]
 
 OPTIONS:
@@ -70,14 +70,13 @@ Optional options:
   -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)
 ```
 
-> [!IMPORTANT]
-> The `yolov7.weights` file could not be uploaded due to GitHub's 100 MB upload limit, but is included as a download step for
-> both the PowerShell helper module and the manual instructions above.
+> [!NOTE]
+> CUDA is supported by OpenCV but would require a CUDA enabled OpenCV installation which both the PowerShell helper module and
+> the manual instructions don't do.
 
 ## Documentation
 
-Checkout the [documentation page](https://J-Afzal.github.io/Lane-and-Object-Detection) built using Doxygen and hosted using
-Github pages.
+Checkout the [documentation page][docs] built using Doxygen and hosted using Github pages.
 
 ![Documentation Homepage](./resources/screenshots/DocumentationHomepage.png)
 
@@ -112,10 +111,43 @@ Both modes support recording the output of the main frame.
 
 Pressing `q` will quit the program.
 
+### Performance Tests
+
+The project includes performance testing and graphing capability to test the FPS across the blob sizes and yolo types.
+
+Build the C++ code as mentioned in [Getting Started](./#getting-started) and run the performance tests (replace
+`<<platform name>>`) which will output their results into a SQLite database file:
+
+```plain
+./build/lane-and-object-detection-performance-tests `
+    -p <<platform name>> `
+    -d sqlite-<<platform name>>.db `
+    -i ./tests/performance_tests/benchmark.mp4 `
+    -y ./resources/yolo/ `
+    -r 1;
+```
+
+Install the python dependencies and run the performance graph generation:
+
+```plain
+python -m venv .venv/
+.\.venv\Scripts\activate
+pip install -r ./requirements.txt
+
+python -m ./tests/main.py `
+    -d ./sqlite-<<platform name>>.db `
+    -o ./tests/performance_graphs/output/
+```
+
+> [!NOTE]
+> Creating comparison graphs between platforms is supported by passing a comma separated list of SQLite database file paths.
+
+<!-- TODO: example screenshot of graphs for both single platform and multiple platform-->
+<!-- TODO: test CD before merging (edit to be draft release) -->
+
 ## CI / CD
 
-[![Continuous Integration](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml)
-[![Continuous Deployment](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg)](https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml)
+[![Continuous Integration][ci-badge]][ci-page] [![Continuous Deployment][cd-badge]][cd-page]
 
 The continuous integration workflow runs against all commits on pull requests, builds the code, runs unit tests and performs
 linting checks.
@@ -124,8 +156,8 @@ The continuous deployment workflow runs against all commits to main, builds the 
 
 ## Development Setup
 
-For development a few extra tools are needed to check for linting issues locally which include the
-[`Linters`](https://github.com/J-Afzal/Linters) and [`OpenCV`](https://github.com/opencv/opencv) submodules:
+For development a few extra tools are needed to check for linting issues locally which include the [Linters][linters-repo] and
+[OpenCV][opencv-repo] submodules:
 
 ```text
 git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git
@@ -140,44 +172,32 @@ The development dependencies are:
 - CMake >= 3.20
 - Ninja >= 1.12.1
 
-All linting helper functions can be found in the [`Linters`](https://github.com/J-Afzal/Linters) submodule.
+All linting helper functions can be found in the [Linters][linters-repo] submodule.
 
 Any generator can be used to build the project but to prior to running `clang-tidy`/`clang-format` CMake must be configured
 using a generator that creates a `compile_commands.json` file in the build directory (e.g. `-G "Ninja"`, `-G "NMake Makefiles"`,
 etc)
 
 On windows, clang-tidy and clang-format can be installed using the `LLVM-x.x.x-win64.exe` binary from the
-[LLVM release page](https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6) or from
-[chocolatey](https://community.chocolatey.org/packages/llvm) using `choco install llvm -y`.
+[LLVM release page][llvm-release-page] or from [chocolatey][llvm-chocolatey] using `choco install llvm -y`.
 
 ### IDE
 
 On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by
 opening the folder through the `Developer PowerShell for VS` (otherwise you may see errors around cl.exe not being found).
 
-<!--
-x. Performance Tests
+<!-- Link References -->
 
-  - Maybe have CI which does perf tests???
-    - local run successful
-    - CI run successful
-    - if list of dbs given then also does platform specific graphs and all platform graph. Maybe it always does all and platform
-      specific?
-    - Runs ad-hoc
+[releases]: https://github.com/J-Afzal/Lane-and-Object-Detection/releases
+[yolov7-weights]: https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights
+[docs]: https://J-Afzal.github.io/Lane-and-Object-Detection
+[ci-badge]: https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg
+[ci-page]: https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml
+[cd-badge]: https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg
+[cd-page]: https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml
+[linters-repo]: https://github.com/J-Afzal/Linters
+[opencv-repo]: https://github.com/opencv/opencv
+[llvm-release-page]: https://github.com/llvm/llvm-project/releases/tag/llvmorg-19.1.6
+[llvm-chocolatey]: https://community.chocolatey.org/packages/llvm
 
-  - Add below section after general information
-      ### Performance Tests
-
-      some info on tests and some screenshots
-      dependencies = python and pip install
-
-      python -m venv .venv/
-      .\.venv\Scripts\activate
-      pip install -r ./requirements.txt
-
-      cli call to performance tests
-      cli call to performance graphs
-
-  - Redo debug mode screenshot to include object detection
-
--->
+<!-- Add release checks to terminal games -->
