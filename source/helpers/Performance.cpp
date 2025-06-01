@@ -50,4 +50,10 @@ namespace LaneAndObjectDetection
     {
         return static_cast<uint32_t>(Globals::G_MICROSECONDS_IN_SECOND);
     }
+
+    void Performance::ClearPerformanceInformation()
+    {
+        m_frameTimes.clear();
+        m_performanceInformation = {.m_averageFramesPerSecond = 0, .m_currentFramesPerSecond = 0};
+    }
 }

@@ -192,6 +192,8 @@ namespace LaneAndObjectDetection
         m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
         m_videoManagerInformation.m_saveOutput = false;
+
+        m_performance.ClearPerformanceInformation();
     }
 
     void VideoManager::SetProperties(const std::string& p_inputVideoFilePath,
@@ -214,6 +216,8 @@ namespace LaneAndObjectDetection
         m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
         m_videoManagerInformation.m_saveOutput = false;
+
+        m_performance.ClearPerformanceInformation();
     }
 
     void VideoManager::RunLaneAndObjectDetector()

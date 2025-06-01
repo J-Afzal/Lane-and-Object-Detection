@@ -100,6 +100,8 @@ namespace LaneAndObjectDetection
 
         const std::chrono::time_point<std::chrono::high_resolution_clock> START_TIME = std::chrono::high_resolution_clock::now();
 
+        VideoManager videoManager;
+
         for (uint32_t currentTestNumber = 0; currentTestNumber < Globals::G_PERFORMANCE_TESTS_NUMBER_OF_TESTS; currentTestNumber++)
         {
             std::cout << std::format("\n\n    ######## {} ({}/{}) ########\n",
@@ -109,11 +111,11 @@ namespace LaneAndObjectDetection
 
             for (uint32_t currentRepetition = 0; currentRepetition < m_numberOfRepetitions; currentRepetition++)
             {
-                VideoManager videoManager(m_inputVideoFilePath,
-                                           m_yoloFolderPath,
-                                           Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
-                                           Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
-                                           Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber));
+                videoManager.SetProperties(m_inputVideoFilePath,
+                                          m_yoloFolderPath,
+                                          Globals::G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES.at(currentTestNumber),
+                                          Globals::G_PERFORMANCE_TESTS_BACK_END_TYPES.at(currentTestNumber),
+                                          Globals::G_PERFORMANCE_TESTS_BLOB_SIZES.at(currentTestNumber));
 
                 videoManager.RunLaneAndObjectDetector();
 

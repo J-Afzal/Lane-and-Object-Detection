@@ -63,6 +63,11 @@ namespace LaneAndObjectDetection
          */
         static uint32_t GetTimeUnitConversion();
 
+        /**
+         * @brief Clears all performance-related information.
+         */
+        void ClearPerformanceInformation();
+
     private:
         /**
          * @brief The PerformanceInformation struct containing all performance-related information.
