@@ -93,7 +93,8 @@ namespace LaneAndObjectDetection
 
         /**
          * @class RollingAverage
-         * @brief Calculates a rolling average to provide a smoothed view of state trends over time.
+         * @brief Calculates a rolling average to provide a smoothed view of state trends over time. This class is in the
+         * private scope as the implementation is LaneDetector-specific.
          * @tparam T The type of value to be stored in the rolling average buffer.
          */
         template<typename T>

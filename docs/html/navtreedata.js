@@ -27,10 +27,12 @@ var NAVTREE =
   [ "Lane and Object Detection", "index.html", [
     [ "Getting Started", "index.html#autotoc_md1", null ],
     [ "Documentation", "index.html#autotoc_md2", null ],
-    [ "General Information", "index.html#autotoc_md3", null ],
-    [ "CI / CD", "index.html#autotoc_md4", null ],
-    [ "Development Setup", "index.html#autotoc_md5", [
-      [ "IDE", "index.html#autotoc_md6", null ]
+    [ "General Information", "index.html#autotoc_md3", [
+      [ "Performance Tests", "index.html#autotoc_md4", null ]
+    ] ],
+    [ "CI / CD", "index.html#autotoc_md5", null ],
+    [ "Development Setup", "index.html#autotoc_md6", [
+      [ "IDE", "index.html#autotoc_md7", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -60,8 +62,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_frame_builder_8cpp_source.html",
-"namespace_lane_and_object_detection_1_1_globals.html#a51ffe6f3282f924fd7ba500d7aacf449"
+"namespace_lane_and_object_detection_1_1_globals.html#a5992877a16ebf40cb8b2001a98b461c3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';
 var SYNCOFFMSG = 'click to enable panel synchronization';
+var LISTOFALLMEMBERS = 'List of all members';

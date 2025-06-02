@@ -6,7 +6,7 @@ rules:
     braces:
         forbid: true
     brackets:
-        forbid: true
+        forbid: false
     colons:
         max-spaces-before: 0
         max-spaces-after: 1
@@ -54,12 +54,14 @@ rules:
         forbid-implicit-octal: true
         forbid-explicit-octal: true
     quoted-strings:
-        quote-type: single
+        quote-type: double
         required: only-when-needed
         extra-required: []
         extra-allowed: []
         allow-quoted-quotes: false
         check-keys: false
     truthy:
-        allowed-values: ["true", "false"]
+        allowed-values:
+            - "true"
+            - "false"
         check-keys: false

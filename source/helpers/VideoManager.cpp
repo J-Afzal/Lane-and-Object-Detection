@@ -16,6 +16,7 @@
 #include "helpers/Globals.hpp"
 #include "helpers/Information.hpp"
 #include "helpers/Performance.hpp"
+
 #include "helpers/VideoManager.hpp"
 
 namespace LaneAndObjectDetection
@@ -66,8 +67,8 @@ namespace LaneAndObjectDetection
         std::string parsedInputVideoFilePath;
         std::string parsedYoloFolderPath;
         Globals::ObjectDetectorTypes parsedObjectDetectorTypes = Globals::ObjectDetectorTypes::NONE;
-        Globals::ObjectDetectorBackEnds parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
-        Globals::ObjectDetectorBlobSizes parsedObjectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::ONE;
+        Globals::ObjectDetectorBackEnds parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::NONE;
+        Globals::ObjectDetectorBlobSizes parsedObjectDetectorBlobSizes = Globals::ObjectDetectorBlobSizes::NONE;
 
         uint32_t index = 0;
 
@@ -122,6 +123,11 @@ namespace LaneAndObjectDetection
                         parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CPU;
                     }
 
+                    else if (p_commandLineArguments.at(index + 1) == "gpu")
+                    {
+                        parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::GPU;
+                    }
+
                     else if (p_commandLineArguments.at(index + 1) == "cuda")
                     {
                         parsedObjectDetectorBackEnds = Globals::ObjectDetectorBackEnds::CUDA;
@@ -150,7 +156,9 @@ namespace LaneAndObjectDetection
         }
 
         // Check that the required arguments have been provided
-        if (parsedInputVideoFilePath.empty() || parsedYoloFolderPath.empty())
+        if (parsedInputVideoFilePath.empty() ||
+            parsedYoloFolderPath.empty() ||
+            (parsedObjectDetectorTypes != Globals::ObjectDetectorTypes::NONE && (parsedObjectDetectorBackEnds == Globals::ObjectDetectorBackEnds::NONE || parsedObjectDetectorBlobSizes == Globals::ObjectDetectorBlobSizes::NONE)))
         {
             std::cout << Globals::G_CLI_HELP_MESSAGE;
             std::exit(1);
@@ -184,6 +192,8 @@ namespace LaneAndObjectDetection
         m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
         m_videoManagerInformation.m_saveOutput = false;
+
+        m_performance.ClearPerformanceInformation();
     }
 
     void VideoManager::SetProperties(const std::string& p_inputVideoFilePath,
@@ -206,6 +216,8 @@ namespace LaneAndObjectDetection
         m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
         m_videoManagerInformation.m_saveOutput = false;
+
+        m_performance.ClearPerformanceInformation();
     }
 
     void VideoManager::RunLaneAndObjectDetector()
@@ -262,9 +274,9 @@ namespace LaneAndObjectDetection
         }
     }
 
-    std::vector<uint32_t> VideoManager::GetFrameTimes()
+    Performance VideoManager::GetPerformance()
     {
-        return m_performance.GetFrameTimes();
+        return m_performance;
     }
 
     void VideoManager::ToggleDebugMode()

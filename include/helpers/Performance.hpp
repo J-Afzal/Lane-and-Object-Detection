@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <cstdint>
+#include <string>
 #include <vector>
 
 #include "helpers/Information.hpp"
@@ -42,11 +43,30 @@ namespace LaneAndObjectDetection
         PerformanceInformation GetInformation();
 
         /**
-         * @brief Get the times to compute each and every frame.Globals
+         * @brief Get the times to compute each and every frame.
          *
          * @return `std::vector<uint32_t>` A list of the time to compute each frame.
          */
         std::vector<uint32_t> GetFrameTimes();
+
+        /**
+         * @brief Get the time unit for the frame times.
+         *
+         * @return `std::string` The time unit for the frame times.
+         */
+        static std::string GetTimeUnit();
+
+        /**
+         * @brief Get the divisor needed to convert the frame times to seconds.
+         *
+         * @return `uint32_t` The divisor needed to convert the frame times to seconds.
+         */
+        static uint32_t GetTimeUnitConversion();
+
+        /**
+         * @brief Clears all performance-related information.
+         */
+        void ClearPerformanceInformation();
 
     private:
         /**

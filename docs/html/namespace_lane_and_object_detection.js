@@ -8,7 +8,6 @@ var namespace_lane_and_object_detection =
     [ "ObjectDetector", "class_lane_and_object_detection_1_1_object_detector.html", "class_lane_and_object_detection_1_1_object_detector" ],
     [ "Performance", "class_lane_and_object_detection_1_1_performance.html", "class_lane_and_object_detection_1_1_performance" ],
     [ "PerformanceInformation", "struct_lane_and_object_detection_1_1_performance_information.html", "struct_lane_and_object_detection_1_1_performance_information" ],
-    [ "PerformanceTest", "class_lane_and_object_detection_1_1_performance_test.html", "class_lane_and_object_detection_1_1_performance_test" ],
     [ "VideoManager", "class_lane_and_object_detection_1_1_video_manager.html", "class_lane_and_object_detection_1_1_video_manager" ],
     [ "VideoManagerInformation", "struct_lane_and_object_detection_1_1_video_manager_information.html", "struct_lane_and_object_detection_1_1_video_manager_information" ]
 ];

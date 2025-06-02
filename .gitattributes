@@ -12,6 +12,7 @@
 .gitattributes  text
 .gitignore      text
 .gitmodules     text
+.toml           text
 Doxyfile        text
 
 # Documents
@@ -22,6 +23,7 @@ LICENSE         text
 
 # Graphics
 *.ico           binary
+*.mp4           binary
 *.png           binary
 *.svg           text
 

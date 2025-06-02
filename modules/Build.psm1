@@ -167,12 +167,18 @@ function Build-CppCodeUsingCMake {
 
     try {
         Write-Information "##[command]Configuring OpenCV..."
-        cmake -S . -B ./$BuildDirectory -D "CMAKE_BUILD_TYPE=$BuildType" -D "BUILD_opencv_world=ON" -D "CONFIGURE_ONLY=$ConfigureOnly"
+        if ($Platform -eq "windows-latest") {
+            cmake -S . -B ./build -G "NMake Makefiles" -D "CMAKE_BUILD_TYPE=$BuildType" -D "BUILD_opencv_world=ON"
+        }
+
+        else {
+            cmake -S . -B ./build -D "CMAKE_BUILD_TYPE=$BuildType" -D "BUILD_opencv_world=ON"
+        }
         Assert-ExternalCommandError -ThrowError
 
         if (-Not $ConfigureOnly) {
             Write-Information "##[command]Building OpenCV..."
-            cmake --build ./$BuildDirectory --config $BuildType --parallel $Parallel
+            cmake --build ./build --config $BuildType --parallel $Parallel
             Assert-ExternalCommandError -ThrowError
         }
     }
@@ -186,6 +192,8 @@ function Build-CppCodeUsingCMake {
         Set-Location -LiteralPath ../..
     }
 
+    Write-Information "##[section]Building Lane and Object Detection..."
+
     Write-Information "##[command]Configuring Lane and Object Detection..."
 
     if ($Platform -eq "windows-latest") {
@@ -198,12 +206,14 @@ function Build-CppCodeUsingCMake {
 
     Assert-ExternalCommandError -ThrowError
 
-    Write-Information "##[command]Building Lane and Object Detection..."
-
     if (-Not $ConfigureOnly) {
+        Write-Information "##[command]Building Lane and Object Detection..."
         cmake --build ./$BuildDirectory --config $BuildType --parallel $Parallel
         Assert-ExternalCommandError -ThrowError
     }
+
+    Write-Information "##[command]Downloading the required .weights file which..."
+    curl -L -o .\resources\yolo\yolov7.weights "https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov7.weights"
 
     Write-Information "##[section]Lane and Object Detection has been successfully built!"
 }

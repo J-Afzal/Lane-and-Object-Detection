@@ -4,8 +4,10 @@ dictionaries:
     - cpp
     - powershell
 ignorePaths:
+    - .venv/
     - .vs/
     - .vscode/
+    - "*.db"
     - build/
     - docs/html/
     - node_modules/
@@ -18,6 +20,7 @@ words:
     - darkmode
     - doxyfile
     - linters
+    - matplotlib
     - opencv
 ignoreWords:
     - altera
@@ -35,12 +38,12 @@ ignoreWords:
     - figheight
     - figwidth
     - fontdict
-    - fontsize
     - fourcc
     - hicpp
     - ilammy
     - imshow
     - labelsize
+    - libopencv
     - linuxkernel
     - llvmlibc
     - logosize
@@ -61,5 +64,4 @@ ignoreWords:
     - xticks
     - yaxis
     - ylabel
-    - ylim
     - yolov

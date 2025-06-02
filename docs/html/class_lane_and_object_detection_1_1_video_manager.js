@@ -10,7 +10,7 @@ var class_lane_and_object_detection_1_1_video_manager =
     [ "SetProperties", "class_lane_and_object_detection_1_1_video_manager.html#a27ba360450d9e95c0786a93f26d94cef", null ],
     [ "SetProperties", "class_lane_and_object_detection_1_1_video_manager.html#a8dc86f335046bbbd737f5d9dd2cd1f3b", null ],
     [ "RunLaneAndObjectDetector", "class_lane_and_object_detection_1_1_video_manager.html#ad8e33a4eaf3ab1c1e16c050d10aeda09", null ],
-    [ "GetFrameTimes", "class_lane_and_object_detection_1_1_video_manager.html#af9bf27be9074a537d740c482b2f12fb3", null ],
+    [ "GetPerformance", "class_lane_and_object_detection_1_1_video_manager.html#af21620e14b70c00e075ef173ccd94ef1", null ],
     [ "operator=", "class_lane_and_object_detection_1_1_video_manager.html#ab799c79cf1d8ba6953ef78b2cb72750f", null ],
     [ "operator=", "class_lane_and_object_detection_1_1_video_manager.html#a3ff59acd7dbec04b823f30f4e7e04a8e", null ],
     [ "ToggleDebugMode", "class_lane_and_object_detection_1_1_video_manager.html#a63fe3a97f66c90f310d64cc3029e1228", null ],

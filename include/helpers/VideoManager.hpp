@@ -41,8 +41,9 @@ namespace LaneAndObjectDetection
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
-         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. CUDA is significantly more
-         * performant.
+         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. In theory, GPU should be
+         * significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires
+         * building OpenCV with CUDA which is not supported with this projects built-in installation script.
          * @param p_objectDetectorBlobSizes The supported blob sizes for the object detector to run with. The larger the blob
          * size the more performant the detector at the cost of performance.
          */
@@ -59,8 +60,9 @@ namespace LaneAndObjectDetection
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
-         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. CUDA is significantly more
-         * performant.
+         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. In theory, GPU should be
+         * significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires
+         * building OpenCV with CUDA which is not supported with this projects built-in installation script.
          * @param p_objectDetectorBlobSizes The supported blob sizes for the object detector to run with. The larger the blob
          * size the more performant the detector at the cost of performance.
          */
@@ -108,8 +110,9 @@ namespace LaneAndObjectDetection
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
-         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. CUDA is significantly more
-         * performant.
+         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. In theory, GPU should be
+         * significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires
+         * building OpenCV with CUDA which is not supported with this projects built-in installation script.
          * @param p_objectDetectorBlobSizes The supported blob sizes for the object detector to run with. The larger the blob
          * size the more performant the detector at the cost of performance.
          */
@@ -126,8 +129,9 @@ namespace LaneAndObjectDetection
          * @param p_yoloFolderPath The folder containing the `.cfg` and `.weights` YOLO files.
          * @param p_objectDetectorTypes The type of object detector to use with an option to disable object detection. The tiny
          * version is more performant at the cost of accuracy.
-         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. CUDA is significantly more
-         * performant.
+         * @param p_objectDetectorBackEnds The supported backends for the object detector to run on. In theory, GPU should be
+         * significantly more performant. For maximum performance CUDA should be used as the backend, however, this requires
+         * building OpenCV with CUDA which is not supported with this projects built-in installation script.
          * @param p_objectDetectorBlobSizes The supported blob sizes for the object detector to run with. The larger the blob
          * size the more performant the detector at the cost of performance.
          */
@@ -143,11 +147,11 @@ namespace LaneAndObjectDetection
         void RunLaneAndObjectDetector();
 
         /**
-         * @brief Get the times to compute each and every frame.Globals
+         * @brief Get the performance object to extract performance-related information.
          *
-         * @return `std::vector<uint32_t>` A list of the time to compute each frame.
+         * @return `Performance` The performance object containing performance-related information.
          */
-        std::vector<uint32_t> GetFrameTimes();
+        Performance GetPerformance();
 
         /**
          * @brief Disable constructing a new %VideoManager object using copy constructor.

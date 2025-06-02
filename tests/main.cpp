@@ -1,10 +1,10 @@
 #include <string>
 #include <vector>
 
-#include "helpers/PerformanceTest.hpp"
+#include "PerformanceTests.hpp"
 
 int main(int argc, char* argv[])
 {
-    LaneAndObjectDetection::PerformanceTest performanceTests(std::vector<std::string>(argv, argv + argc));
-    performanceTests.RunPerformanceTest();
+    LaneAndObjectDetection::PerformanceTests performanceTests(std::vector<std::string>(argv, argv + argc));
+    performanceTests.RunPerformanceTests();
 }

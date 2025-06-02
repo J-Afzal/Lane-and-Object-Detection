@@ -31,13 +31,20 @@ namespace LaneAndObjectDetection::Globals
         class NotImplementedError : public std::exception
         {
         };
+
+        /**
+         * @brief Used for SQLite errors.
+         */
+        class SQLiteDatabaseError : public std::exception
+        {
+        };
     }
 
     /**
      * @brief Gets the elapsed time from `p_startTime` to now.
      *
      * @param p_startTime The time to compare to now.
-     * @return `std::string` The elapsed time in the format `mm:ss` if less than an hour or `H:mm:ss` if more than one hour.
+     * @return `std::string` The elapsed time in the format `HH:mm:ss`.
      */
     static inline std::string GetTimeElapsed(const std::chrono::time_point<std::chrono::high_resolution_clock>& p_startTime)
     {
@@ -58,35 +65,28 @@ namespace LaneAndObjectDetection::Globals
 
         std::string output;
 
-        if (HOURS > 0)
+        if (HOURS < PADDING_THRESHOLD)
         {
-            output += std::to_string(HOURS);
-            output += ":";
+            output += "0";
         }
+
+        output += std::to_string(HOURS);
+        output += ":";
 
         if (MINUTES < PADDING_THRESHOLD)
         {
             output += "0";
-            output += std::to_string(MINUTES);
         }
 
-        else
-        {
-            output += std::to_string(MINUTES);
-        }
-
+        output += std::to_string(MINUTES);
         output += ":";
 
         if (SECONDS < PADDING_THRESHOLD)
         {
             output += "0";
-            output += std::to_string(SECONDS);
         }
 
-        else
-        {
-            output += std::to_string(SECONDS);
-        }
+        output += std::to_string(SECONDS);
 
         return output;
     }
@@ -94,7 +94,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief CLI help message for the video manager.
      */
-    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... --object-detector-type ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
+    static inline const std::string G_CLI_HELP_MESSAGE = "\nUsage: lane-and-object-detection --input ... --yolo-folder-path ... [optional]\n\nOPTIONS:\n\nGeneric Options:\n\n  -h --help                       Display available options\n\nRequired Options:\n\n  -i --input                      File path or camera ID\n  -y --yolo-folder-path           Path to the yolo folder\n\nOptional options:\n\n  -o --object-detector-type       One of: none, standard or tiny (default = none)\n  -b --object-detector-backend    One of: cpu, gpu or cuda (default = cpu)\n  -s --object-detector-blob-size  One of: 208, 320, 416, 512 or 608 (default = 208)\n\n";
 
     /**
      * @brief Input video dimensions.
@@ -156,9 +156,14 @@ namespace LaneAndObjectDetection::Globals
     ///@}
 
     /**
+     * @brief Time unit for performance-related frame times.
+     */
+    static inline const std::string G_TIME_UNIT = "us";
+
+    /**
      * @brief Conversion between time units.
      */
-    static inline const double G_MILLISECONDS_IN_SECOND = 1000;
+    static inline const double G_MICROSECONDS_IN_SECOND = 1000000;
 
     /**
      * @brief Convert a decimal value to a percentage.
@@ -258,10 +263,10 @@ namespace LaneAndObjectDetection::Globals
      * @brief Region-of-interest dimensions.
      */
     ///@{
-    static inline const int32_t G_ROI_TOP_HEIGHT = 660;
-    static inline const int32_t G_ROI_BOTTOM_HEIGHT = 840;
-    static inline const int32_t G_ROI_TOP_WIDTH = 200;
-    static inline const int32_t G_ROI_BOTTOM_WIDTH = 900;
+    static inline const int32_t G_ROI_TOP_HEIGHT = 800;
+    static inline const int32_t G_ROI_BOTTOM_HEIGHT = 1025;
+    static inline const int32_t G_ROI_TOP_WIDTH = 250;
+    static inline const int32_t G_ROI_BOTTOM_WIDTH = 850;
     ///@}
 
     /**
@@ -376,7 +381,7 @@ namespace LaneAndObjectDetection::Globals
     static inline const double G_HOUGH_RHO = 1;
     static inline const double G_HOUGH_THETA = CV_PI / 180.0;
     static inline const uint32_t G_HOUGH_THRESHOLD = 32;
-    static inline const uint32_t G_HOUGH_MIN_LINE_LENGTH = 16;
+    static inline const uint32_t G_HOUGH_MIN_LINE_LENGTH = 8;
     static inline const uint32_t G_HOUGH_MAX_LINE_GAP = 8;
     ///@}
 
@@ -393,12 +398,12 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief Threshold gradient to decide whether a line is to be considered horizontal.
      */
-    static inline const double G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD = 0.15;
+    static inline const double G_HOUGH_LINE_HORIZONTAL_GRADIENT_THRESHOLD = 0.5;
 
     /**
      * @brief Threshold length to decide whether a line is to be considered solid line road marking.
      */
-    static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 75;
+    static inline const uint32_t G_SOLID_LINE_LENGTH_THRESHOLD = 175;
 
     /**
      * @brief The different driving states supported by the lane detector.
@@ -429,22 +434,31 @@ namespace LaneAndObjectDetection::Globals
     static inline const uint32_t G_CHANGING_LANES_DISTANCE_DIFFERENCE_FRAME_COUNT_THRESHOLD = 10;
 
     /**
+     * @brief The name of the YOLO version being used.
+     */
+    static inline const std::string G_YOLO_NAME = "YOLOv7";
+
+    /**
      * @brief The type of object detector to use with an option to disable object detection. The tiny version is more performant
      * at the cost of accuracy.
      */
     enum class ObjectDetectorTypes : std::uint8_t
     {
         NONE = 0,
-        STANDARD,
-        TINY
+        TINY,
+        STANDARD
     };
 
     /**
-     * @brief The supported backends for the object detector to run on. CUDA is significantly more performant.
+     * @brief The supported backends for the object detector to run on. In theory, GPU should be significantly more performant.
+     * For maximum performance CUDA should be used as the backend, however, this requires building OpenCV with CUDA which is not
+     * supported with this projects built-in installation script.
      */
     enum class ObjectDetectorBackEnds : std::uint8_t
     {
-        CPU = 0,
+        NONE = 0,
+        CPU,
+        GPU,
         CUDA
     };
 
@@ -454,6 +468,7 @@ namespace LaneAndObjectDetection::Globals
      */
     enum class ObjectDetectorBlobSizes : std::int16_t
     {
+        NONE = 0,
         ONE = 288,
         TWO = 320,
         THREE = 416,
@@ -672,7 +687,7 @@ namespace LaneAndObjectDetection::Globals
     /**
      * @brief CLI help message for the performance tests.
      */
-    static inline const std::string G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE = "Usage: lane-and-object-detection-performance-tests --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help              Display available options\n\nRequired Options:\n\n-i --input             Benchmark video file path\n-y --yolo-folder-path  Path to the yolo folder\n-r --repetitions       Number of repetitions for each test";
+    static inline const std::string G_PERFORMANCE_TESTS_CLI_HELP_MESSAGE = "Usage: lane-and-object-detection-performance-tests --platform ... --database-path ... --input ... --yolo-folder-path ... --repetitions ...\n\nOPTIONS:\n\nGeneric Options:\n\n-h --help              Display available options\n\nRequired Options:\n\n-p --platform          The current platform being tested\n-d --database-path     Path to SQLite database file\n-i --input             Benchmark video file path\n-y --yolo-folder-path  Path to the yolo configuration folder\n-r --repetitions       Number of repetitions for each test";
 
     /**
      * @brief Performance tests settings.
@@ -680,99 +695,100 @@ namespace LaneAndObjectDetection::Globals
     ///@{
     static inline const uint32_t G_PERFORMANCE_TESTS_NUMBER_OF_TESTS = 21;
 
+    static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_NAMES = {
+        "No YOLO",
+        "YOLO-tiny 288 (CPU)",
+        "YOLO-tiny 288 (GPU)",
+        "YOLO 288 (CPU)",
+        "YOLO 288 (GPU)",
+        "YOLO-tiny 320 (CPU)",
+        "YOLO-tiny 320 (GPU)",
+        "YOLO 320 (CPU)",
+        "YOLO 320 (GPU)",
+        "YOLO-tiny 416 (CPU)",
+        "YOLO-tiny 416 (GPU)",
+        "YOLO 416 (CPU)",
+        "YOLO 416 (GPU)",
+        "YOLO-tiny 512 (CPU)",
+        "YOLO-tiny 512 (GPU)",
+        "YOLO 512 (CPU)",
+        "YOLO 512 (GPU)",
+        "YOLO-tiny 608 (CPU)",
+        "YOLO-tiny 608 (GPU)",
+        "YOLO 608 (CPU)",
+        "YOLO 608 (GPU)",
+    };
+
     static inline const std::array<ObjectDetectorTypes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OBJECT_DETECTOR_TYPES = {
         ObjectDetectorTypes::NONE,
         ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
-        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
+        ObjectDetectorTypes::TINY,
+        ObjectDetectorTypes::TINY,
         ObjectDetectorTypes::STANDARD,
         ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD,
-        ObjectDetectorTypes::STANDARD};
+    };
 
     static inline const std::array<ObjectDetectorBackEnds, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BACK_END_TYPES = {
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
-        ObjectDetectorBackEnds::CUDA,
+        ObjectDetectorBackEnds::NONE,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
         ObjectDetectorBackEnds::CPU,
+        ObjectDetectorBackEnds::GPU,
     };
 
     static inline const std::array<ObjectDetectorBlobSizes, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_BLOB_SIZES = {
+        ObjectDetectorBlobSizes::NONE,
+        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::ONE,
         ObjectDetectorBlobSizes::ONE,
         ObjectDetectorBlobSizes::ONE,
         ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
-        ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
+        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::TWO,
         ObjectDetectorBlobSizes::TWO,
         ObjectDetectorBlobSizes::THREE,
-        ObjectDetectorBlobSizes::FOUR,
-        ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
+        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::THREE,
         ObjectDetectorBlobSizes::THREE,
         ObjectDetectorBlobSizes::FOUR,
-        ObjectDetectorBlobSizes::FIVE,
-        ObjectDetectorBlobSizes::ONE,
-        ObjectDetectorBlobSizes::TWO,
-        ObjectDetectorBlobSizes::THREE,
+        ObjectDetectorBlobSizes::FOUR,
+        ObjectDetectorBlobSizes::FOUR,
         ObjectDetectorBlobSizes::FOUR,
         ObjectDetectorBlobSizes::FIVE,
-    };
-
-    static inline const std::array<std::string, G_PERFORMANCE_TESTS_NUMBER_OF_TESTS> G_PERFORMANCE_TESTS_OUTPUT_FILE_BASE_NAMES = {
-        "no_yolov7",
-        "yolov7-tiny_288_cuda",
-        "yolov7-tiny_320_cuda",
-        "yolov7-tiny_416_cuda",
-        "yolov7-tiny_512_cuda",
-        "yolov7-tiny_608_cuda",
-        "yolov7_288_cuda",
-        "yolov7_320_cuda",
-        "yolov7_416_cuda",
-        "yolov7_512_cuda",
-        "yolov7_608_cuda",
-        "yolov7-tiny_288",
-        "yolov7-tiny_320",
-        "yolov7-tiny_416",
-        "yolov7-tiny_512",
-        "yolov7-tiny_608",
-        "yolov7_288",
-        "yolov7_320",
-        "yolov7_416",
-        "yolov7_512",
-        "yolov7_608",
+        ObjectDetectorBlobSizes::FIVE,
+        ObjectDetectorBlobSizes::FIVE,
+        ObjectDetectorBlobSizes::FIVE,
     };
     ///@}
 }
