@@ -134,7 +134,7 @@ namespace LaneAndObjectDetection
         }
 
         std::cout << std::format("\n\nTotal elapsed time = {} (HH:mm:ss)", Globals::GetTimeElapsed(START_TIME));
-        std::cout << std::format("\n\nRun './tests/main.py -p {} -o ./tests/performance_graphs/' to generate the performance graphs", m_databasePath);
+        std::cout << std::format("\n\nRun './tests/main.py -p {} -o ./tests/output/' to generate the performance graphs", m_databasePath);
         std::cout << "\n\n################ Lane and Object Detection Performance Tests ################\n";
     }
 
@@ -183,9 +183,11 @@ namespace LaneAndObjectDetection
         {
             ExecuteSQLStatement(
                 std::format(
+                    "BEGIN TRANSACTION;"
                     "INSERT INTO "
                     "FrameTimes(PlatformName, YoloName, ObjectDetectorType, ObjectDetectorBackEnd, ObjectDetectorBlobSize, Repetition, FrameNumber, FrameTime, TimeUnit, TimeUnitConversion) "
-                    "VALUES('{}', '{}', {}, {}, {}, {}, {}, {}, '{}', {});",
+                    "VALUES('{}', '{}', {}, {}, {}, {}, {}, {}, '{}', {});"
+                    "END TRANSACTION;",
                     p_currentPlatform,
                     p_currentYoloName,
                     static_cast<uint8_t>(p_objectDetectorType),

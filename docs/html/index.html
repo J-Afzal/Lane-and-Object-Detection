@@ -183,25 +183,42 @@ Performance Tests</h2>
 <p>Build the C++ code as mentioned in <a href="./#getting-started">Getting Started</a> and run the performance tests (replace <span class="tt">&lt;&lt;platform name&gt;&gt;</span>) which will output their results into a SQLite database file:</p>
 <div class="fragment"><div class="line">./build/lane-and-object-detection-performance-tests `</div>
 <div class="line">    -p &lt;&lt;platform name&gt;&gt; `</div>
-<div class="line">    -d sqlite-&lt;&lt;platform name&gt;&gt;.db `</div>
+<div class="line">    -d ./tests/output/sqlite-&lt;&lt;platform name&gt;&gt;.db `</div>
 <div class="line">    -i ./tests/performance_tests/benchmark.mp4 `</div>
 <div class="line">    -y ./resources/yolo/ `</div>
 <div class="line">    -r 1;</div>
-</div><!-- fragment --><p>Install the python dependencies and run the performance graph generation:</p>
+</div><!-- fragment --><p>Install the python dependencies:</p>
 <div class="fragment"><div class="line">python -m venv .venv/</div>
 <div class="line">.\.venv\Scripts\activate</div>
 <div class="line">pip install -r ./requirements.txt</div>
-<div class="line"> </div>
-<div class="line">python -m ./tests/main.py `</div>
-<div class="line">    -d ./sqlite-&lt;&lt;platform name&gt;&gt;.db `</div>
-<div class="line">    -o ./tests/performance_graphs/output/</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Creating comparison graphs between platforms is supported by passing a comma separated list of SQLite database file paths.</dd></dl>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><p>Run the performance graph generation (single platform):</p>
+<div class="fragment"><div class="line">python -m ./tests/main.py `</div>
+<div class="line">    -d ./tests/output/sqlite-&lt;&lt;platform name&gt;&gt;.db  `</div>
+<div class="line">    -o ./tests/output/</div>
+</div><!-- fragment --><p>or for multiple platforms (this will generate individual platform and multi-platform graphs):</p>
+<div class="fragment"><div class="line">python -m ./tests/main.py `</div>
+<div class="line">    -d ./tests/output/sqlite-&lt;&lt;platform name&gt;&gt;.db,./tests/output/sqlite-&lt;&lt;platform name&gt;&gt;.db,./tests/output/sqlite-&lt;&lt;platform name&gt;&gt;.db `</div>
+<div class="line">    -o ./tests/output/</div>
+</div><!-- fragment --><p>The following are some example graph outputs based on the following invocation:</p>
+<div class="fragment"><div class="line">python -m ./tests/main.py -d ./tests/output/ubuntu_20.04.db,./tests/output/windows_10.db -o ./tests/output/</div>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+Ubuntu 20.04</h3>
+<p><img src="./tests/output/ubuntu_20_04_frame_time_graph.png" alt="Ubuntu 20.04 Frame Time Graph" class="inline"/></p>
+<p><img src="./tests/output/ubuntu_20_04_fps_graph.png" alt="Ubuntu 20.04 FPS Graph" class="inline"/></p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+Windows 10</h3>
+<p><img src="./tests/output/windows_10_frame_time_graph.png" alt="Windows 10 Frame Time Graph" class="inline"/></p>
+<p><img src="./tests/output/windows_10_fps_graph.png" alt="Windows 10 FPS Graph" class="inline"/></p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+All Platforms</h3>
+<p><img src="./tests/output/all_platforms_frame_time_graph.png" alt="All Platforms Frame Time Graph" class="inline"/></p>
+<p><img src="./tests/output/all_platforms_fps_graph.png" alt="All Platforms FPS Graph" class="inline"/></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 CI / CD</h1>
 <p><a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousIntegration.yml/badge.svg" alt="Continuous Integration" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml"><img src="https://github.com/J-Afzal/Lane-and-Object-Detection/actions/workflows/ContinuousDeployment.yml/badge.svg" alt="Continuous Deployment" style="pointer-events: none;" class="inline"/></a></p>
 <p>The continuous integration workflow runs against all commits on pull requests, builds the code, runs unit tests and performs linting checks.</p>
 <p>The continuous deployment workflow runs against all commits to main, builds the code and deploys the executables as a release.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 Development Setup</h1>
 <p>For development a few extra tools are needed to check for linting issues locally which include the <a href="https://github.com/J-Afzal/Linters">Linters</a> and <a href="https://github.com/opencv/opencv">OpenCV</a> submodules:</p>
 <div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/J-Afzal/Lane-and-Object-Detection.git</div>
@@ -217,7 +234,7 @@ Development Setup</h1>
 <p>All linting helper functions can be found in the <a href="https://github.com/J-Afzal/Linters">Linters</a> submodule.</p>
 <p>Any generator can be used to build the project but to prior to running <span class="tt">clang-tidy</span>/<span class="tt">clang-format</span> CMake must be configured using a generator that creates a <span class="tt">compile_commands.json</span> file in the build directory (e.g. <span class="tt">-G "Ninja"</span>, <span class="tt">-G "NMake Makefiles"</span>, etc)</p>
 <p>On windows, clang-tidy and clang-format can be installed using the <span class="tt">LLVM-x.x.x-win64.exe</span> binary from the <a href="https://github.com/llvm/llvm-project/releases">LLVM release page</a> or from <a href="https://community.chocolatey.org/packages/llvm">chocolatey</a> using <span class="tt">choco install llvm -y</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 IDE</h2>
 <p>On Windows, Visual Studio 2022 can be used by opening the folder as a CMake project and Visual Studio Code can be used by opening the folder through the <span class="tt">Developer PowerShell for VS</span> (otherwise you may see errors around cl.exe not being found). </p>
 </div></div><!-- PageDoc -->

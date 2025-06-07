@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['setproperties_0',['SetProperties',['../class_lane_and_object_detection_1_1_object_detector.html#a2c02b779dab3a00fbe39fffcfac9164a',1,'LaneAndObjectDetection::ObjectDetector::SetProperties()'],['../class_lane_and_object_detection_1_1_video_manager.html#a27ba360450d9e95c0786a93f26d94cef',1,'LaneAndObjectDetection::VideoManager::SetProperties(const int32_t &amp;p_inputVideoCamera, const std::string &amp;p_yoloFolderPath, const Globals::ObjectDetectorTypes &amp;p_objectDetectorTypes, const Globals::ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const Globals::ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)'],['../class_lane_and_object_detection_1_1_video_manager.html#a8dc86f335046bbbd737f5d9dd2cd1f3b',1,'LaneAndObjectDetection::VideoManager::SetProperties(const std::string &amp;p_inputVideoFilePath, const std::string &amp;p_yoloFolderPath, const Globals::ObjectDetectorTypes &amp;p_objectDetectorTypes, const Globals::ObjectDetectorBackEnds &amp;p_objectDetectorBackEnds, const Globals::ObjectDetectorBlobSizes &amp;p_objectDetectorBlobSizes)']]],
-  ['setup_1',['Development Setup',['../index.html#autotoc_md6',1,'']]],
-  ['sqlitedatabaseerror_2',['SQLiteDatabaseError',['../class_lane_and_object_detection_1_1_globals_1_1_exceptions_1_1_s_q_lite_database_error.html',1,'LaneAndObjectDetection::Globals::Exceptions']]],
-  ['started_3',['Getting Started',['../index.html#autotoc_md1',1,'']]],
-  ['starttimer_4',['StartTimer',['../class_lane_and_object_detection_1_1_performance.html#ad0bc629413e0f6d9c2fd7293050e8cfb',1,'LaneAndObjectDetection::Performance']]]
+  ['performance_0',['Performance',['../class_lane_and_object_detection_1_1_performance.html',1,'LaneAndObjectDetection::Performance'],['../class_lane_and_object_detection_1_1_performance.html#a3bc9e108e69ca90718a19779ad1e87e4',1,'LaneAndObjectDetection::Performance::Performance()']]],
+  ['performance_20tests_1',['Performance Tests',['../index.html#autotoc_md4',1,'']]],
+  ['performanceinformation_2',['PerformanceInformation',['../struct_lane_and_object_detection_1_1_performance_information.html',1,'LaneAndObjectDetection']]],
+  ['platforms_3',['All Platforms',['../index.html#autotoc_md7',1,'']]]
 ];

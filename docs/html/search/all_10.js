@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['updatedrivingstate_0',['UpdateDrivingState',['../class_lane_and_object_detection_1_1_lane_detector.html#ad55171af84b8e6be46db828b3f59de05',1,'LaneAndObjectDetection::LaneDetector']]],
-  ['updateframe_1',['UpdateFrame',['../class_lane_and_object_detection_1_1_frame_builder.html#aba8c7e43ea81837617ae55ff35beb81b',1,'LaneAndObjectDetection::FrameBuilder']]],
-  ['updatelinetypes_2',['UpdateLineTypes',['../class_lane_and_object_detection_1_1_lane_detector.html#ae3476f8bd2c53a6853b3378c526147c6',1,'LaneAndObjectDetection::LaneDetector']]]
+  ['rollingaverage_0',['RollingAverage',['../class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html',1,'LaneAndObjectDetection::LaneDetector::RollingAverage&lt; T &gt;'],['../class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html#a4eb456b42bf691586858c2242d234128',1,'LaneAndObjectDetection::LaneDetector::RollingAverage::RollingAverage()']]],
+  ['rollingaverage_3c_20globals_3a_3adrivingstate_20_3e_1',['RollingAverage&lt; Globals::DrivingState &gt;',['../class_lane_and_object_detection_1_1_lane_detector_1_1_rolling_average.html',1,'LaneAndObjectDetection::LaneDetector']]],
+  ['runlaneandobjectdetector_2',['RunLaneAndObjectDetector',['../class_lane_and_object_detection_1_1_video_manager.html#ad8e33a4eaf3ab1c1e16c050d10aeda09',1,'LaneAndObjectDetection::VideoManager']]],
+  ['runlanedetector_3',['RunLaneDetector',['../class_lane_and_object_detection_1_1_lane_detector.html#aea7c0bacf83681ae9ad4f0f04a935bf9',1,'LaneAndObjectDetection::LaneDetector']]],
+  ['runobjectdetector_4',['RunObjectDetector',['../class_lane_and_object_detection_1_1_object_detector.html#a980d69bf2a1a51f4e0c1770251bea075',1,'LaneAndObjectDetection::ObjectDetector']]]
 ];

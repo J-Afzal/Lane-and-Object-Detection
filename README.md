@@ -121,29 +121,59 @@ Build the C++ code as mentioned in [Getting Started](./#getting-started) and run
 ```plain
 ./build/lane-and-object-detection-performance-tests `
     -p <<platform name>> `
-    -d sqlite-<<platform name>>.db `
+    -d ./tests/output/sqlite-<<platform name>>.db `
     -i ./tests/performance_tests/benchmark.mp4 `
     -y ./resources/yolo/ `
     -r 1;
 ```
 
-Install the python dependencies and run the performance graph generation:
+Install the python dependencies:
 
 ```plain
 python -m venv .venv/
 .\.venv\Scripts\activate
 pip install -r ./requirements.txt
-
-python -m ./tests/main.py `
-    -d ./sqlite-<<platform name>>.db `
-    -o ./tests/performance_graphs/output/
 ```
 
-> [!NOTE]
-> Creating comparison graphs between platforms is supported by passing a comma separated list of SQLite database file paths.
+Run the performance graph generation (single platform):
 
-<!-- TODO: example screenshot of graphs for both single platform and multiple platform-->
-<!-- TODO: test CD before merging (edit to be draft release) -->
+```plain
+python -m ./tests/main.py `
+    -d ./tests/output/sqlite-<<platform name>>.db  `
+    -o ./tests/output/
+```
+
+or for multiple platforms (this will generate individual platform and multi-platform graphs):
+
+```plain
+python -m ./tests/main.py `
+    -d ./tests/output/sqlite-<<platform name>>.db,./tests/output/sqlite-<<platform name>>.db,./tests/output/sqlite-<<platform name>>.db `
+    -o ./tests/output/
+```
+
+The following are some example graph outputs based on the following invocation:
+
+```plain
+python -m ./tests/main.py -d ./tests/output/ubuntu_20.04.db,./tests/output/windows_10.db -o ./tests/output/
+```
+
+#### Ubuntu 20.04
+
+![Ubuntu 20.04 Frame Time Graph](./tests/output/ubuntu_20_04_frame_time_graph.png)
+
+![Ubuntu 20.04 FPS Graph](./tests/output/ubuntu_20_04_fps_graph.png)
+
+#### Windows 10
+
+![Windows 10 Frame Time Graph](./tests/output/windows_10_frame_time_graph.png)
+
+![Windows 10 FPS Graph](./tests/output/windows_10_fps_graph.png)
+
+#### All Platforms
+
+![All Platforms Frame Time Graph](./tests/output/all_platforms_frame_time_graph.png)
+
+![All Platforms FPS Graph](./tests/output/all_platforms_fps_graph.png)
 
 ## CI / CD
 

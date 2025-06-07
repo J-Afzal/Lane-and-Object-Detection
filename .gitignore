@@ -1,7 +1,6 @@
 .venv/
 .vs/
 .vscode/
-*.db
 build/
 node_modules/
 resources/yolo/yolov7.weights

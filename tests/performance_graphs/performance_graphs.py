@@ -81,27 +81,21 @@ class PerformanceGraphs:
         )
 
         for platform_database_data in all_platforms_database_data:
-            self.__generate_platform_performance_graphs(platform_database_data[0], platform_database_data[1])
+            self.__generate_platform_performance_graphs(platform_database_data)
 
-    def __generate_platform_performance_graphs(
-        self, frame_time_data: FrameTimeData, frames_per_second_data: FramesPerSecondData
-    ):
+    def __generate_platform_performance_graphs(self, database_data: tuple[FrameTimeData, FramesPerSecondData]):
         """Generates the performance graphs for a specific platform.
 
         Args:
-            frame_time_data (FrameTimeData): Frame time data to generate frame time graphs.
-            frames_per_second_data (FramesPerSecondData): FPS data to generate FPS graphs.
+            database_data (tuple[FrameTimeData, FramesPerSecondData]): A tuple containing the frame time and FPS data needed to generate FPS graphs.
         """
+
+        (frame_time_data, frames_per_second_data) = database_data
 
         # Line graph
         figure_line, axes_line = matplotlib.pyplot.subplots()
         figure_line.set_figwidth(self.FIGURE_WIDTH)
         figure_line.set_figheight(self.FIGURE_HEIGHT)
-
-        if frame_time_data.is_multi_platform:
-            axes_line.set_prop_cycle(color=["#888888", "#0000AA", "#00AA00"])
-        else:
-            axes_line.set_prop_cycle(color=["#000000", "#00AA00", "#AA0000"])
 
         x = numpy.arange(frame_time_data.number_of_frames)
 
@@ -129,7 +123,7 @@ class PerformanceGraphs:
         figure_line.tight_layout()
 
         figure_line.savefig(
-            f"{self.graph_output_directory}/{frame_time_data.platform_name.lower().replace(' ', '_')}_frame_time_graph.png"
+            f"{self.__graph_output_directory}/{frame_time_data.platform_name.lower().replace(' ', '_').replace('.', '_')}_frame_time_graph.png"
         )
 
         # Bar chart
@@ -142,13 +136,11 @@ class PerformanceGraphs:
             x_ticks = numpy.arange(len(frames_per_second_data.test_names))
             multiplier = -1
             fps_data = frames_per_second_data.average_frames_per_second
-            axes_bar.set_prop_cycle(color=["#888888", "#0000AA", "#00AA00"])
         else:
             x_axis = numpy.arange(len(frames_per_second_data.test_names))[1:]
             x_ticks = numpy.arange(len(frames_per_second_data.test_names))
             multiplier = -0.5
             fps_data = dict(list(frames_per_second_data.average_frames_per_second.items())[1:])
-            axes_bar.set_prop_cycle(color=["#000000", "#00AA00", "#AA0000"])
 
             rects = axes_bar.bar(
                 x=frames_per_second_data.test_names[0],
@@ -180,7 +172,7 @@ class PerformanceGraphs:
         figure_bar.tight_layout()
 
         figure_bar.savefig(
-            f"{self.__graph_output_directory}/{frames_per_second_data.platform_name.lower().replace(' ', '_')}_fps_graph.png"
+            f"{self.__graph_output_directory}/{frames_per_second_data.platform_name.lower().replace(' ', '_').replace('.', '_')}_fps_graph.png"
         )
 
     class SQLiteDatabase:
@@ -206,15 +198,15 @@ class PerformanceGraphs:
                 if not os.path.isfile(database_file_path):
                     raise self.DatabaseFileNotFoundError(f"SQLite database file '{database_file_path}' not found!")
 
-        class DatabaseFileNotFoundError(Exception):
-            """Thrown when the SQLite database file is not found."""
+        def get_frame_time_data(self) -> list[tuple[FrameTimeData, FramesPerSecondData]]:
+            """Opens/closes a connection to the SQLite database, performs data quality tests, and if data quality tests pass
+            then it gets the the data needed to generate performance graphs.
 
-            pass
-
-        class DataQualityError(Exception):
-            """Thrown when there are data quality errors in the SQLite database."""
-
-            pass
+            Returns:
+                list[tuple[FrameTimeData, FramesPerSecondData]]: The data needed to generate the frame times and FPS performance graphs.
+            """
+            self.__validate_data()
+            return self.__get_data()
 
         def __validate_data(self) -> None:
             """Opens/closes a connection to all SQLite databases and performs data quality tests.
@@ -231,6 +223,7 @@ class PerformanceGraphs:
 
             error_message: str = ""
 
+            # Platform agnostic checks
             for database_file_path in self.database_file_paths:
                 try:
                     sqlite_connection: sqlite3.Connection = sqlite3.connect(database=database_file_path)
@@ -325,7 +318,7 @@ class PerformanceGraphs:
                             FrameTimes
                         """
                     )
-                    tests_names += sqlite_cursor.fetchall()
+                    tests_names.append(sqlite_cursor.fetchall())
 
                     # Confirm enums are between the expected range
                     sqlite_cursor.execute(
@@ -348,7 +341,7 @@ class PerformanceGraphs:
                         FROM
                             FrameTimes
                         WHERE
-                            ObjectDetectorBackEnd NOT IN (0, 1, 2)
+                            ObjectDetectorBackEnd NOT IN (0, 1, 2, 3)
                         """
                     )
                     if len(sqlite_cursor.fetchall()) > 0:
@@ -424,42 +417,25 @@ class PerformanceGraphs:
 
             for i in range(0, len(tests_names) - 1):
                 if sorted(tests_names[i]) != sorted(tests_names[i + 1]):
-                    print(tests_names)
                     error_message += (
                         f"\nAll: Expected identical test names across all platforms but found different test names!"
                     )
                     break
 
             if error_message:
-                raise self.DataQualityError("The following violations have been found in the data:" + error_message)
+                raise self.DataQualityError("The following violations have been found in the database data:" + error_message)
 
         def __get_data(self) -> list[tuple[FrameTimeData, FramesPerSecondData]]:
             """Gets the data needed to generate performance graphs.
 
             Returns:
-                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance graphs.
+                list[tuple[FrameTimeData, FramesPerSecondData]]: The data needed to generate the frame times and FPS performance graphs.
             """
 
             # Get platform agnostic data
             try:
                 sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_paths[0])
                 sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
-
-                if len(self.database_file_paths) > 1:
-                    platform_display_name: str = "All Platforms"
-                    is_multi_platform: bool = True
-
-                else:
-                    sqlite_cursor.execute(
-                        """
-                        SELECT DISTINCT
-                            PlatformName
-                        FROM
-                            FrameTimes
-                        """
-                    )
-                    platform_display_name: str = sqlite_cursor.fetchall()[0][0]
-                    is_multi_platform: bool = False
 
                 sqlite_cursor.execute(
                     """
@@ -547,7 +523,7 @@ class PerformanceGraphs:
                         ObjectDetectorBlobSize ASC
                     """
                 )
-                all_tests: list[str] = sqlite_cursor.fetchall()
+                all_tests: list[tuple[int]] = sqlite_cursor.fetchall()
 
             except sqlite3.Error as e:
                 raise e
@@ -558,61 +534,172 @@ class PerformanceGraphs:
                     sqlite_connection.close()
 
             # Get platform specific data
+            all_platforms_database_data: list[tuple[FrameTimeData, FramesPerSecondData]] = []
+
+            for database_file_path in self.database_file_paths:
+                all_platforms_database_data.append(
+                    self.__get_platform_specific_data(
+                        database_file_path, yolo_name, time_unit, time_unit_conversion, number_of_frames, test_names, all_tests
+                    )
+                )
+
+            if len(self.database_file_paths) > 1:
+                all_platforms_database_data.append(
+                    self.__get_all_platform_data(
+                        self.database_file_paths,
+                        time_unit,
+                        time_unit_conversion,
+                        number_of_frames,
+                        test_names,
+                        all_tests,
+                    )
+                )
+
+            return all_platforms_database_data
+
+        def __get_platform_specific_data(
+            self,
+            database_file_path: str,
+            yolo_name: str,
+            time_unit: str,
+            time_unit_conversion: int,
+            number_of_frames: int,
+            test_names: list[str],
+            all_tests: list[tuple[int]],
+        ) -> tuple[FrameTimeData, FramesPerSecondData]:
+            """Gets the platform specific data needed to generate performance graphs for a specific platform.
+
+            Args:
+                database_file_path (str): The SQLite database path for the current platform.
+                yolo_name (str): The name of the current YOLO version (e.g. YOLOv7)
+                time_unit (str): The unit of the frame times (e.g. ms)
+                time_unit_conversion (int): The conversion factor from time_unit to seconds (e.g. 1000)
+                number_of_frames (int): The number of frames within a single test
+                test_names (list[str]): The name of all tests
+                all_tests (list[tuple[int]]): The properties of all tests
+
+            Returns:
+                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance graphs for a specific platform.
+            """
+
             frame_times: dict[str, list[list[float]]] = {}
+            average_frames_per_second: dict[str, list[float]] = {}
 
-            if is_multi_platform:
-                for database_file_path in self.database_file_paths:
-                    try:
-                        sqlite_connection: sqlite3.Connection = sqlite3.connect(database=database_file_path)
-                        sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
+            try:
+                sqlite_connection: sqlite3.Connection = sqlite3.connect(database=database_file_path)
+                sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
 
-                        sqlite_cursor.execute(
-                            """
-                            SELECT DISTINCT
-                                PlatformName
-                            FROM
-                                FrameTimes
-                            """
-                        )
-                        platform_name: str = sqlite_cursor.fetchall()[0]
+                sqlite_cursor.execute(
+                    """
+                    SELECT DISTINCT
+                        PlatformName
+                    FROM
+                        FrameTimes
+                    """
+                )
+                platform_name: str = sqlite_cursor.fetchall()[0][0]
+                is_multi_platform: bool = False
 
-                        current_platform_frame_times: list[list[float]] = []
+                frame_times[f"No {yolo_name}"] = []
+                frame_times[f"{yolo_name} (CPU)"] = []
+                frame_times[f"{yolo_name} (GPU)"] = []
+                frame_times[f"{yolo_name} (CUDA)"] = []
 
-                        for test in all_tests:
-                            sqlite_cursor.execute(
-                                f"""
-                                SELECT
-                                    AVG(FrameTime)
-                                FROM
-                                    FrameTimes
-                                WHERE
-                                    ObjectDetectorType     = {test[0]}
-                                AND ObjectDetectorBackEnd  = {test[1]}
-                                AND ObjectDetectorBlobSize = {test[2]}
-                                GROUP BY
-                                    FrameNumber
-                                """
-                            )
-                            current_platform_frame_times.append([row[0] for row in sqlite_cursor.fetchall()])
+                for test in all_tests:
+                    sqlite_cursor.execute(
+                        f"""
+                        SELECT
+                            AVG(FrameTime)
+                        FROM
+                            FrameTimes
+                        WHERE
+                            ObjectDetectorType     = {test[0]}
+                        AND ObjectDetectorBackEnd  = {test[1]}
+                        AND ObjectDetectorBlobSize = {test[2]}
+                        GROUP BY
+                            FrameNumber
+                        """
+                    )
 
-                    except sqlite3.Error as e:
-                        raise e
+                    if test[0] == 0:
+                        frame_times[f"No {yolo_name}"].append([row[0] for row in sqlite_cursor.fetchall()])
+                    elif test[1] == 1:
+                        frame_times[f"{yolo_name} (CPU)"].append([row[0] for row in sqlite_cursor.fetchall()])
+                    elif test[1] == 2:
+                        frame_times[f"{yolo_name} (GPU)"].append([row[0] for row in sqlite_cursor.fetchall()])
+                    elif test[1] == 3:
+                        frame_times[f"{yolo_name} (CUDA)"].append([row[0] for row in sqlite_cursor.fetchall()])
 
-                    finally:
-                        if sqlite_connection:
-                            sqlite_cursor.close()
-                            sqlite_connection.close()
+            except sqlite3.Error as e:
+                raise e
 
-                    frame_times[platform_name] = current_platform_frame_times
+            finally:
+                if sqlite_connection:
+                    sqlite_cursor.close()
+                    sqlite_connection.close()
 
-            else:
+            for key, value in frame_times.items():
+                if not value:
+                    continue
+
+                average_frames_per_second[key] = []
+                for frame_time in value:
+                    average_frames_per_second[key].append(round(1 / (statistics.mean(frame_time) / time_unit_conversion), 1))
+
+            frame_time_data: FrameTimeData = FrameTimeData(
+                platform_name, is_multi_platform, number_of_frames, frame_times, time_unit
+            )
+            frames_per_second_data: FramesPerSecondData = FramesPerSecondData(
+                platform_name, is_multi_platform, test_names, average_frames_per_second
+            )
+
+            return (frame_time_data, frames_per_second_data)
+
+        def __get_all_platform_data(
+            self,
+            database_file_paths: list[str],
+            time_unit: str,
+            time_unit_conversion: int,
+            number_of_frames: int,
+            test_names: list[str],
+            all_tests: list[tuple[int]],
+        ) -> tuple[FrameTimeData, FramesPerSecondData]:
+            """Gets the platform specific data needed to generate performance graphs for multiple platforms.
+
+            Args:
+                database_file_path (str): The SQLite database path for the multiple platforms.
+                time_unit (str): The unit of the frame times (e.g. ms)
+                time_unit_conversion (int): The conversion factor from time_unit to seconds (e.g. 1000)
+                number_of_frames (int): The number of frames within a single test
+                test_names (list[str]): The name of all tests
+                all_tests (list[tuple[int]]): The properties of all tests
+
+            Returns:
+                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance graphs for a specific platform.
+            """
+
+            frame_times: dict[str, list[list[float]]] = {}
+            average_frames_per_second: dict[str, list[float]] = {}
+
+            platform_name: str = "All Platforms"
+            is_multi_platform: bool = True
+
+            for database_file_path in database_file_paths:
                 try:
-                    sqlite_connection: sqlite3.Connection = sqlite3.connect(database=self.database_file_paths[0])
+                    sqlite_connection: sqlite3.Connection = sqlite3.connect(database=database_file_path)
                     sqlite_cursor: sqlite3.Cursor = sqlite_connection.cursor()
 
-                    frame_times[f"No {yolo_name}"] = []
-                    frame_times[f"{yolo_name} (GPU)"] = []
-                    frame_times[f"{yolo_name} (CPU)"] = []
+                    sqlite_cursor.execute(
+                        """
+                        SELECT DISTINCT
+                            PlatformName
+                        FROM
+                            FrameTimes
+                        """
+                    )
+                    current_platform_name: str = sqlite_cursor.fetchall()[0][0]
+
+                    current_platform_frame_times: list[list[float]] = []
 
                     for test in all_tests:
                         sqlite_cursor.execute(
@@ -629,13 +716,44 @@ class PerformanceGraphs:
                                 FrameNumber
                             """
                         )
+                        current_platform_frame_times.append([row[0] for row in sqlite_cursor.fetchall()])
 
-                        if test[0] == 0:
-                            frame_times[f"No {yolo_name}"].append([row[0] for row in sqlite_cursor.fetchall()])
-                        elif test[1] == 1:
-                            frame_times[f"{yolo_name} (GPU)"].append([row[0] for row in sqlite_cursor.fetchall()])
-                        elif test[1] == 2:
-                            frame_times[f"{yolo_name} (CPU)"].append([row[0] for row in sqlite_cursor.fetchall()])
+                    frame_times[current_platform_name] = current_platform_frame_times
+
+                    sqlite_cursor.execute(
+                        f"""
+                        WITH Cte AS
+                        (
+                            SELECT
+                                ObjectDetectorType                                      AS ObjectDetectorType,
+                                ObjectDetectorBackEnd                                   AS ObjectDetectorBackEnd,
+                                ObjectDetectorBlobSize                                  AS ObjectDetectorBlobSize,
+                                ROUND(1 / (AVG(FrameTime) / {time_unit_conversion}), 1) AS AverageFPS
+
+                            FROM
+                                FrameTimes
+                            GROUP BY
+                                ObjectDetectorType,
+                                ObjectDetectorBackEnd,
+                                ObjectDetectorBlobSize
+                            ORDER BY
+                                ObjectDetectorType     ASC,
+                                ObjectDetectorBackEnd  ASC,
+                                ObjectDetectorBlobSize ASC
+                        )
+                        SELECT
+                            MAX(AverageFPS)
+                        FROM
+                            Cte
+                        GROUP BY
+                            ObjectDetectorType,
+                            ObjectDetectorBlobSize
+                        ORDER BY
+                            ObjectDetectorType     ASC,
+                            ObjectDetectorBlobSize ASC
+                        """
+                    )
+                    average_frames_per_second[current_platform_name] = [row[0] for row in sqlite_cursor.fetchall()]
 
                 except sqlite3.Error as e:
                     raise e
@@ -645,28 +763,21 @@ class PerformanceGraphs:
                         sqlite_cursor.close()
                         sqlite_connection.close()
 
-            average_frames_per_second: dict[str, list[float]] = {}
-
-            for key, value in frame_times.items():
-                average_frames_per_second[key] = []
-                for frame_time in value:
-                    average_frames_per_second[key].append(round(1 / (statistics.mean(frame_time) / time_unit_conversion), 1))
-
             frame_time_data: FrameTimeData = FrameTimeData(
-                platform_display_name, is_multi_platform, number_of_frames, frame_times, time_unit
+                platform_name, is_multi_platform, number_of_frames, frame_times, time_unit
             )
             frames_per_second_data: FramesPerSecondData = FramesPerSecondData(
-                platform_display_name, is_multi_platform, test_names, average_frames_per_second
+                platform_name, is_multi_platform, test_names, average_frames_per_second
             )
 
-            return frame_time_data, frames_per_second_data
+            return (frame_time_data, frames_per_second_data)
 
-        def get_frame_time_data(self) -> list[tuple[FrameTimeData, FramesPerSecondData]]:
-            """Opens/closes a connection to the SQLite database, performs data quality tests, and if data quality tests pass
-            then it gets the the data needed to generate performance graphs.
+        class DatabaseFileNotFoundError(Exception):
+            """Thrown when the SQLite database file is not found."""
 
-            Returns:
-                tuple[FrameTimeData, FramesPerSecondData]: The data needed to generate the frame times and FPS performance graphs.
-            """
-            self.__validate_data()
-            return self.__get_data()
+            pass
+
+        class DataQualityError(Exception):
+            """Thrown when there are data quality errors in the SQLite database."""
+
+            pass

@@ -189,9 +189,12 @@ namespace LaneAndObjectDetection
         m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_VIDEO_INPUT_WIDTH);
         m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_VIDEO_INPUT_HEIGHT);
 
-        m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
+        if (m_videoManagerInformation.m_saveOutput)
+        {
+            ToggleSaveOutput();
+        }
 
-        m_videoManagerInformation.m_saveOutput = false;
+        m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
         m_performance.ClearPerformanceInformation();
     }
@@ -213,9 +216,12 @@ namespace LaneAndObjectDetection
         m_inputVideo.set(cv::CAP_PROP_FRAME_WIDTH, Globals::G_VIDEO_INPUT_WIDTH);
         m_inputVideo.set(cv::CAP_PROP_FRAME_HEIGHT, Globals::G_VIDEO_INPUT_HEIGHT);
 
-        m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
+        if (m_videoManagerInformation.m_saveOutput)
+        {
+            ToggleSaveOutput();
+        }
 
-        m_videoManagerInformation.m_saveOutput = false;
+        m_objectDetector.SetProperties(p_yoloFolderPath, p_objectDetectorTypes, p_objectDetectorBackEnds, p_objectDetectorBlobSizes);
 
         m_performance.ClearPerformanceInformation();
     }

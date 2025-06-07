@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['and_20object_20detection_0',['Lane and Object Detection',['../index.html',1,'']]]
+  ['04_0',['Ubuntu 20.04',['../index.html#autotoc_md5',1,'']]]
 ];

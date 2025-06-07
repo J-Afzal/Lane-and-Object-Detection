@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['cd_0',['CI / CD',['../index.html#autotoc_md5',1,'']]],
-  ['ci_20cd_1',['CI / CD',['../index.html#autotoc_md5',1,'']]]
+  ['10_0',['Windows 10',['../index.html#autotoc_md6',1,'']]]
 ];
