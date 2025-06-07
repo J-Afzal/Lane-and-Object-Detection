@@ -35,6 +35,7 @@ LICENSE         text
 *.psm1          text
 
 # Serialisation
+*.db            binary
 *.json          text
 *.yml           text
 
