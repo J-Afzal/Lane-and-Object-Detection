@@ -28,11 +28,15 @@ var NAVTREE =
     [ "Getting Started", "index.html#autotoc_md1", null ],
     [ "Documentation", "index.html#autotoc_md2", null ],
     [ "General Information", "index.html#autotoc_md3", [
-      [ "Performance Tests", "index.html#autotoc_md4", null ]
+      [ "Performance Tests", "index.html#autotoc_md4", [
+        [ "Ubuntu 20.04", "index.html#autotoc_md5", null ],
+        [ "Windows 10", "index.html#autotoc_md6", null ],
+        [ "All Platforms", "index.html#autotoc_md7", null ]
+      ] ]
     ] ],
-    [ "CI / CD", "index.html#autotoc_md5", null ],
-    [ "Development Setup", "index.html#autotoc_md6", [
-      [ "IDE", "index.html#autotoc_md7", null ]
+    [ "CI / CD", "index.html#autotoc_md8", null ],
+    [ "Development Setup", "index.html#autotoc_md9", [
+      [ "IDE", "index.html#autotoc_md10", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -62,7 +66,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_frame_builder_8cpp_source.html",
-"namespace_lane_and_object_detection_1_1_globals.html#a5992877a16ebf40cb8b2001a98b461c3"
+"namespace_lane_and_object_detection_1_1_globals.html#a574c44e5f939b012be03e9ea87e2396a"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

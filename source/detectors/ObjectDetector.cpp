@@ -32,10 +32,12 @@ namespace LaneAndObjectDetection
             break;
 
         case Globals::ObjectDetectorTypes::STANDARD:
+            m_skipObjectDetection = false;
             m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov7.cfg", p_yoloFolderPath + "yolov7.weights");
             break;
 
         case Globals::ObjectDetectorTypes::TINY:
+            m_skipObjectDetection = false;
             m_net = cv::dnn::readNetFromDarknet(p_yoloFolderPath + "yolov7-tiny.cfg", p_yoloFolderPath + "yolov7-tiny.weights");
             break;
 
@@ -69,6 +71,8 @@ namespace LaneAndObjectDetection
         m_blobSize = static_cast<int32_t>(p_objectDetectorBlobSizes);
 
         m_unconnectedOutputLayerNames = m_net.getUnconnectedOutLayersNames();
+
+        m_objectDetectionInformation.m_objectInformation.clear();
     }
 
     void ObjectDetector::RunObjectDetector(const cv::Mat& p_frame)

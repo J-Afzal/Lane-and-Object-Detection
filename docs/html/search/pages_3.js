@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['general_20information_0',['General Information',['../index.html#autotoc_md3',1,'']]],
-  ['getting_20started_1',['Getting Started',['../index.html#autotoc_md1',1,'']]]
+  ['all_20platforms_0',['All Platforms',['../index.html#autotoc_md7',1,'']]],
+  ['and_20object_20detection_1',['Lane and Object Detection',['../index.html',1,'']]]
 ];
