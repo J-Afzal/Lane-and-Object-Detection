@@ -12,6 +12,7 @@
 .gitattributes  text
 .gitignore      text
 .gitmodules     text
+.lock           text
 .toml           text
 Doxyfile        text
 

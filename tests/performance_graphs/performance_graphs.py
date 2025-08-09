@@ -417,9 +417,7 @@ class PerformanceGraphs:
 
             for i in range(0, len(tests_names) - 1):
                 if sorted(tests_names[i]) != sorted(tests_names[i + 1]):
-                    error_message += (
-                        f"\nAll: Expected identical test names across all platforms but found different test names!"
-                    )
+                    error_message += "\nAll: Expected identical test names across all platforms but found different test names!"
                     break
 
             if error_message:
