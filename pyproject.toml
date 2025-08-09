@@ -1,2 +1,13 @@
-[tool.black]
+[project]
+name = "lane-and-object-detection"
+version = "1.0.0"
+description = "Lane and object detection for use in autonomous vehicles using OpenCV and YOLOv4"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ruff>=0.12.7",
+    "yamllint>=1.37.1",
+]
+
+[tool.ruff]
 line-length = 128
